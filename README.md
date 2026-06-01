@@ -11,7 +11,7 @@ adversarial analysis**.
 [![License: PolyForm NC 1.0.0](https://img.shields.io/badge/license-PolyForm--NC--1.0.0-blue)](LICENSE)
 [![Security research: encouraged](https://img.shields.io/badge/security%20research-encouraged-brightgreen)](SECURITY.md)
 [![Status: experimental](https://img.shields.io/badge/status-experimental-orange)](#-experimental--not-yet-audited)
-<!-- Add a Zenodo DOI badge once the DOI is reserved. -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20496569.svg)](https://doi.org/10.5281/zenodo.20496569)
 
 ---
 

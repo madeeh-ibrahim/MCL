@@ -35,8 +35,8 @@ keywords:
   - cryptanalysis
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.XXXXXXX"
-    description: "Concept DOI (all versions) on Zenodo — RESERVE AND FILL IN"
+    value: "10.5281/zenodo.20496569"
+    description: "Concept DOI (all versions) on Zenodo"
   - type: other
     value: "PCT/IB2026/052737"
     description: "PCT application filed 22 March 2026"
