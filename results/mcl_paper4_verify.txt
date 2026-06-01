@@ -1,0 +1,45 @@
+===============================================================
+Paper 4 - Numerical Claims Reproduction
+===============================================================
+Seed: 12345678901234, (p,q)=(3,5), K=12.0
+---------------------------------------------------------------
+
+Section VI.B - Gauss-Seidel vs Jacobi Lyapunov:
+---------------------------------------------------------------
+                              Measured        Paper claim
+  lambda_1 (GS):              5.7778          5.78
+  lambda_2 (GS):              1.0186          (not stated)
+  lambda_1 (Jacobi):          3.5864          3.59
+  lambda_2 (Jacobi):          2.7643          (not stated)
+  Ratio lambda_GS/lambda_J:   1.6110          1.61
+  Sum lambda_1+lambda_2 GS:   6.7964          6.80
+  Sum lambda_1+lambda_2 J:    6.3508          6.35
+  (GS measurement time:       0.09s)
+  (J  measurement time:       0.06s)
+
+Section VI.C - Chaos Barrier:
+---------------------------------------------------------------
+  Chaos Barrier exponent: 25092.74  (Paper: ~25,102)
+
+  Error growth |error(t)| = eps * exp(lambda * t):
+  eps = 2^-52 = 2.2204e-16
+  t=7 :  8.1537e+01
+  t=10:  2.7490e+09
+  t=20:  3.4034e+34
+  Paper claims: t=7 -> ~83 (matches actual ~82.8)
+                t=10 -> ~10^9
+                t=20 -> ~10^34
+
+KAT Verification (Test Vectors from Appendix):
+---------------------------------------------------------------
+  [PASS] T2 default seed, (3,5), 1KB                    CRC=0x96C7D876 (expect 0x96C7D876)
+  [PASS] T2 default seed, (3,5), 10KB                   CRC=0x1A734C6F (expect 0x1A734C6F)
+  [PASS] T2 default seed, (3,5), 100KB                  CRC=0x5C36C100 (expect 0x5C36C100)
+  [PASS] T2 seed=12345, (3,5), 1KB                      CRC=0x32119B53 (expect 0x32119B53)
+  [PASS] T2 seed=12345, (7,11), 1KB                     CRC=0xD7A3318B (expect 0xD7A3318B)
+  [PASS] T2 pi-seed, (3,5), 10KB                        CRC=0xE2E24E6D (expect 0xE2E24E6D)
+  [PASS] T2 e-seed, (3,5), 10KB                         CRC=0x8D4A3A4E (expect 0x8D4A3A4E)
+
+===============================================================
+RESULT: ALL KAT vectors PASS - paper claims reproduced.
+===============================================================

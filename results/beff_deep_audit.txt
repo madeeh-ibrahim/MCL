@@ -1,0 +1,22 @@
+============================================================================
+  MCL b_eff DEEP AUDIT v6.0.0
+  (p,q)=(3,5) K=12.0  compiler=Apple LLVM 16.0.0 (clang-1600.0.26.6)
+  MCL-BEFF-DEEP-AUDIT-2026-0526-001
+============================================================================
+
+--- PART 1: distribution of b^2 and b_eff (CI + z vs b^2/256) ---
+  steps=120
+  b^2   : mean=1462.5  SD=36.9  95%CI=[1455.9, 1469.1]
+  b_eff : mean=6.533 SD=2.293 SEM=0.209 95%CI=[6.123, 6.944] range=[2,13]
+  uniform pred b^2/256 = 5.713 ; z(b_eff vs pred) = 3.92  => differs from uniform
+  ROBUST security claim: min b_eff observed = 2 (>1).
+
+--- PART 2: real keystream-constrained backward tree (tests b_eff^N) ---
+  depth=3 ; start nodes=1
+  level   survivors    true-path?     branch/node     
+  1       9            SURVIVES       9.00            
+  2       49           SURVIVES       5.44            
+          [representativeness] true-node branch=2 vs wrong-node mean=5.88
+  3       294          SURVIVES       6.00            
+          [representativeness] true-node branch=11 vs wrong-node mean=5.90
+  => if survivors multiply ~b_eff/level AND wrong~true branch, b_eff^N model holds.

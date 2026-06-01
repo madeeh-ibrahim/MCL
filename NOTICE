@@ -1,0 +1,31 @@
+MCL (Madeeh Chaotic Lock)
+Copyright (c) 2026 Madeeh Ibrahim. All rights reserved.
+
+Required Notice: Copyright (c) 2026 Madeeh Ibrahim
+(https://orcid.org/0009-0002-8562-8325).
+
+LICENSING
+This product is made available under TWO instruments; you may rely on whichever
+grants the permission you need (see LICENSE for the full cover-note):
+  (a) the PolyForm Noncommercial License 1.0.0 (see LICENSE); and
+  (b) the MCL Security Research & Evaluation Grant
+      (see SECURITY-RESEARCH-GRANT.md), which additionally permits any party —
+      including commercial organizations — to download, run, analyze, and
+      attempt to break the software and publish the results, free of charge,
+      subject to a citation requirement, for security research only.
+Commercial production or integration use requires a separate paid license; see
+COMMERCIAL.md.
+
+PATENT NOTICE
+The subject matter of this software is the subject of pending patent
+applications:
+  - PCT/IB2026/052737  (filed 22 March 2026)
+  - PCT/IB2026/053253  (filed 1 April 2026)
+  - PCT/IB2026/053673  (filed 14 April 2026)
+"Patent pending." A noncommercial patent license, and a patent license for
+security research, are granted as described in LICENSE, SECURITY-RESEARCH-GRANT.md,
+and PATENTS.md. No commercial patent license is granted by this NOTICE. See
+PATENTS.md for the full patent notice and reservation of rights.
+
+CITATION
+Academic and research use must cite this work; see CITATION.cff.

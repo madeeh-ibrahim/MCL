@@ -1,0 +1,58 @@
+============================================================================
+  MCL VDF FALSIFICATION SUITE v6.0.0
+  (p,q)=(3,5) K=12.0  compiler=Apple LLVM 16.0.0 (clang-1600.0.26.6)
+  MCL-VDF-FALSIFICATION-2026-0526-001
+  Deterministic (no RNG); fast-math rejected by core #error
+============================================================================
+
+===== ATTACK 1: precomputation / NN table (OP3) =====
+  scope: tests delta-ahead predictability of an ARBITRARY on-attractor
+         state from a precomputed table (a learnability/sensitivity probe;
+         a FAIL here is supporting evidence, not a proof of sequentiality).
+  dictionary=300000, queries=4000, mean NN key dist=0.00358, chance=1.5708 rad
+  Delta  pred error       vs chance 
+  1      0.72963          46.4      %
+  2      1.54075          98.1      %
+  4      1.57308          100.1     %
+  7      1.57059          100.0     %
+  12     1.57649          100.4     %
+  => keys close, yet delta>=2 prediction = chance. No interpolation shortcut.
+
+===== ATTACK 2: sensitivity & Jacobi-correction (OP1) =====
+  (a FAIL here is supporting evidence for non-parallelisability, not a proof)
+  (a) lambda (ensemble 60 ICs, 250 clean-regime pts, log-linear LSQ): 5.268  (ref 5.78)
+      saturation step t* = ln(2pi/eps)/lambda ~= 6.0
+  (b) tangent-vector growth rate over B=200 steps: 5.822/step (||prod J|| ~ e^{5.82*B})
+      => forward sensitivity grows exponentially; no contraction factor exists for a
+         Newton/relaxation correction across a useful block (claim is heuristic, not a proof).
+  (c) GS vs Jacobi, 200000 steps:
+      circular corr |rho|=0.002366 (noise floor 0.00736) ; extracted-byte Pearson |r|=0.000367
+      geodesic sep=1.5741 (indep baseline pi/2=1.5708) ; linear sep=2.0944 (indep baseline 2pi/3=2.0944)
+      extracted-byte Hamming=50.018% (indep baseline 50%)
+
+===== ATTACK 3: irreducible data-dependency demonstration (OP5) =====
+  NOTE: this shows the dependency CHAIN is real (you need the true predecessor
+        state); it does NOT rule out a clever predictor -- that is Attack 1's job
+        and an open problem. Not a proof.
+  N=4000000, k=4, segment=1000000 iters, hardware_concurrency=8
+  guessed boundary states matching truth: 0 / 3
+  parallel segment outputs correct: 1 / 4 (only the known start, segment 0)
+  sequential=442.9 ms ; parallel=111.5 ms ; effective(par+redo)=554.3 ms ; net=0.80x
+
+===== ATTACK 4: keystream-constrained backward branching b_eff (OP4) =====
+  (b_eff>1 = keystream-guided backward search still branches; evidence, not proof)
+  POSITIVE control (monotonic K=0.1): b^2=1 b_eff=1  -> VALID (collapses to unique)
+  step   b^2        b_eff   
+  0      1491       6       
+  1      1493       10      
+  2      1491       6       
+  3      1489       7       
+  4      1415       7       
+  5      1415       7       
+  ... (32 steps)
+  mean b^2=1464.2  mean b_eff=7.22  (uniform pred b^2/256=5.72)  range b_eff=[4,12]
+  => b_eff=7.22 > 1: keystream does NOT prune the backward tree to a unique path.
+  (ref: mcl_extraction_security Exp7: b^2~1462, b_eff~6.5)
+
+Summary: four documented attacks fail to break sequentiality => empirical
+support for OP1/OP3/OP4/OP5. NOT a proof. Structured-algebraic cryptanalysis is open.

@@ -1,0 +1,91 @@
+==============================================================================
+  MCL b_eff INDISTINGUISHABILITY VERIFICATION v6.0.0
+  Can the keystream prune the backward tree to the true path?
+  MCL-BEFF-COMPOUNDING-2026-0526-001
+==============================================================================
+
+==============================================================================
+  KEYSTREAM-INDISTINGUISHABILITY OF BACKWARD BRANCHES
+==============================================================================
+
+  At each backward step the keystream constraint leaves b_eff
+  candidate predecessors. Exactly ONE is the true on-attractor
+  state; the rest are spurious roots. The security question is
+  NOT 'does b_eff compound' (any point has ~b_eff preimages --
+  a generic counting fact), but: can the adversary use the
+  keystream to DISTINGUISH the true predecessor from the
+  spurious ones and prune the tree to the unique true path?
+
+  We classify each depth-1 preimage as TRUE (the real s_t) or
+  FALSE, and compare their depth-2 backward branch under the
+  real previous keystream byte. We also check whether FALSE
+  branches SURVIVE to depth 3 and 4 or get pruned away.
+    d2_true ~ d2_false AND false branches survive => the
+      keystream does NOT distinguish them => the effective tree
+      stays ~b_eff-ary (one-wayness evidence).
+    d2_false -> 0 (false pruned, only true branches) => the
+      keystream collapses the tree => backward-determined.
+
+  POSITIVE control (monotonic K=0.1): b_eff(1)=1, false branches=0 (MUST be ~1 / 0)
+    (Uniquely invertible: a single true preimage, no spurious
+    roots -- nothing for the adversary to be confused by.)
+  => Control VALID (uniquely invertible, no false branches).
+
+  anchor  b_eff(1)  d2_true   d2_false  d3_false  d4_false 
+  ------  --------  -------   --------  --------  -------- 
+  0       5         5.00      4.75      6.00      5.75     
+  1       5         5.00      6.25      5.24      5.69     
+  2       5         5.00      5.25      5.52      5.66     
+  3       7         8.00      6.67      5.53      5.93     
+  4       6         5.00      7.00      6.06      5.52     
+  5       7         6.00      6.33      5.45      5.64     
+  6       4         3.00      6.67      5.90      5.82     
+  7       4         4.00      6.00      5.50      5.96     
+  ... (16 anchors total)
+
+  Mean b_eff(1)             = 6.50
+  depth-2 branch, TRUE       = 5.50 (per true preimage)
+  depth-2 branch, FALSE      = 5.81 (per false preimage)
+  distinguishability ratio   = 0.94 +/- 0.35  (true/false across 16 anchors;
+                               bias is ~6% in absolute terms, not the
+                               large one-directional bias pruning needs)
+  depth-3 survival, FALSE    = 5.57 (>1 => false branches persist)
+  depth-4 survival, FALSE    = 5.72 (>1 => still persist deeper)
+
+  VERDICT:
+    PASS. Two independent arguments, neither resting on a
+    noise-widened threshold:
+    (1) The true/false depth-2 gap is small in ABSOLUTE
+        terms: ratio = 0.94 +/- 0.35. The bias is only
+        ~6% and does not hold a consistent direction
+        across anchors (std 0.35). Effective pruning needs
+        a LARGE one-directional bias (ratio >> 1 with the
+        false branches dying) -- the opposite of this.
+    (2) DECISIVE: the false branches do NOT die. They
+        survive to depth 3 (~5.6) and depth 4 (~5.7), so
+        no accumulated bias prunes them away. The keystream
+        cannot collapse the backward search to the unique
+        true path; the effective tree stays ~b_eff-ary
+        (~6.5). This is keystream-indistinguishability
+        evidence supporting the b_eff^N model (Paper 5 X).
+    (Scope: a generic counting search to depth 4; not a
+    proof for all N, nor against a structured attack that
+    exploits algebraic on-attractor tests a counting
+    search ignores.)
+
+==============================================================================
+  CONCLUSION
+==============================================================================
+
+  Exp7 (in mcl_extraction_security.cpp) showed b_eff > 1 at a
+  single backward step. A naive 'does b_eff compound' test is
+  a generic counting fact (any point has ~b_eff preimages) and
+  proves nothing. This file asks the security question instead:
+  can the keystream DISTINGUISH the true predecessor from the
+  spurious ones and prune the tree? A PASS (true and false
+  branches indistinguishable, false branches survive deeper)
+  means it cannot, so the effective backward tree stays wide
+  (~b_eff^N) -- the condition the Paper 5 X one-wayness model
+  needs. Empirical evidence to depth 4, not a formal proof for
+  all N nor against a structured algebraic attack.
+

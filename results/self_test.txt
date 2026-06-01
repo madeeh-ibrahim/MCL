@@ -1,0 +1,13 @@
+
+========================================
+  MCL Engine Self-Test
+========================================
+  Version:   6.0.0
+  Date:      2026-05-26
+  Platform:  Apple-libm
+  KATs:      7 vectors
+
+
+  Result: PASS — all KATs verified
+========================================
+

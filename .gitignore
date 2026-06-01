@@ -1,0 +1,12 @@
+*.bak
+.DS_Store
+CLAUDE.md
+__pycache__/
+*.pyc
+*.o
+*.out
+*.exe
+*.dylib
+*.so
+*.a
+*.zip

@@ -1,0 +1,8 @@
+# MCL — Madeeh Chaotic Lock
+# Security contact for the MCL cryptographic primitive.
+Contact: mailto:madeeh.chaotic.lock@gmail.com
+Contact: https://github.com/madeeh-ibrahim/MCL/security/advisories/new
+Expires: 2027-05-23T23:59:59Z
+Preferred-Languages: en, ar
+Policy: https://github.com/madeeh-ibrahim/MCL/blob/main/SECURITY.md
+Acknowledgments: https://github.com/madeeh-ibrahim/MCL/blob/main/HALL_OF_FAME.md

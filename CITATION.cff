@@ -1,0 +1,87 @@
+cff-version: 1.2.0
+message: >-
+  If you use MCL in academic or research work, please cite it using the metadata
+  below, AND cite the companion paper listed under "preferred-citation". Note:
+  the software is licensed under PolyForm Noncommercial 1.0.0 together with the
+  MCL Security Research & Evaluation Grant (see LICENSE and
+  SECURITY-RESEARCH-GRANT.md); citation is a binding condition of the Grant.
+title: "MCL — Madeeh Chaotic Lock: A Coupled-Chaotic-Oscillator Primitive for Pseudorandom Generation and Authentication"
+abstract: >-
+  MCL is a primitive built on the dynamics of coupled chaotic oscillators,
+  with applications to pseudorandom generation and authentication (i.e., a
+  cryptographic primitive). This repository contains the reference
+  implementation and a verification harness, published for independent
+  scientific verification and analysis.
+type: software
+authors:
+  - family-names: Ibrahim
+    given-names: Madeeh
+    orcid: "https://orcid.org/0009-0002-8562-8325"
+    email: madeeh.chaotic.lock@gmail.com
+    city: Cairo
+    country: EG
+version: 0.1.0
+date-released: "2026-05-23"
+license: PolyForm-Noncommercial-1.0.0
+repository-code: "https://github.com/madeeh-ibrahim/MCL"
+url: "https://github.com/madeeh-ibrahim/MCL"
+keywords:
+  - chaotic dynamical systems
+  - coupled oscillators
+  - nonlinear dynamics
+  - pseudorandom number generation
+  - authentication
+  - cryptography
+  - cryptanalysis
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.XXXXXXX"
+    description: "Concept DOI (all versions) on Zenodo — RESERVE AND FILL IN"
+  - type: other
+    value: "PCT/IB2026/052737"
+    description: "PCT application filed 22 March 2026"
+  - type: other
+    value: "PCT/IB2026/053253"
+    description: "PCT application filed 1 April 2026"
+  - type: other
+    value: "PCT/IB2026/053673"
+    description: "PCT application filed 14 April 2026"
+preferred-citation:
+  type: article
+  title: "MCL: A Coupled-Chaotic-Oscillator Primitive for Pseudorandom Generation and Authentication (Companion Paper 1)"
+  authors:
+    - family-names: Ibrahim
+      given-names: Madeeh
+      orcid: "https://orcid.org/0009-0002-8562-8325"
+  year: 2026
+  doi: "10.5281/zenodo.XXXXXXX"
+  url: "https://zenodo.org/record/XXXXXXX"
+references:
+  - type: article
+    title: "Companion Paper 2 — RESERVE AND FILL IN DOI"
+    authors:
+      - family-names: Ibrahim
+        given-names: Madeeh
+    year: 2026
+    doi: "10.5281/zenodo.XXXXXXX"
+  - type: article
+    title: "Companion Paper 3 — RESERVE AND FILL IN DOI"
+    authors:
+      - family-names: Ibrahim
+        given-names: Madeeh
+    year: 2026
+    doi: "10.5281/zenodo.XXXXXXX"
+  - type: article
+    title: "Companion Paper 4 — RESERVE AND FILL IN DOI"
+    authors:
+      - family-names: Ibrahim
+        given-names: Madeeh
+    year: 2026
+    doi: "10.5281/zenodo.XXXXXXX"
+  - type: article
+    title: "Companion Paper 5 — RESERVE AND FILL IN DOI"
+    authors:
+      - family-names: Ibrahim
+        given-names: Madeeh
+    year: 2026
+    doi: "10.5281/zenodo.XXXXXXX"

@@ -1,0 +1,25 @@
+════════════════════════════════════════════
+ MCL Q30 v6.0.0 — macOS Cross-Platform Test
+════════════════════════════════════════════
+
+Q30 Initial State:
+  θ₁(0) = 0xc8afd74a   (expected: 0xc8afd74a)
+  θ₂(0) = 0x0db2bac6   (expected: 0x0db2bac6)
+  Match Linux? ✓ YES — bit-exact!
+
+Q30 State after 10000 iterations:
+  θ₁ = 0x6f88c52e   (expected: 0x6f88c52e)
+  θ₂ = 0xe06c516c   (expected: 0xe06c516c)
+  Match Linux? ✓ YES — bit-exact!
+
+LUT CRC-32:
+  Computed: 0xde1340cf   (expected: 0xde1340cf)
+  Match Linux? ✓ YES — bit-exact!
+
+Float64 baseline (MCL_T2):
+  CRC-32 (10KB) = 0x1a734c6f
+  Expected on macOS: 0x1A734C6F (Apple-libm)
+  Expected on Linux: 0xF5E977E0 (glibc-libm)
+  Note: Float64 is libm-dependent; cross-platform divergence is expected.
+
+════════════════════════════════════════════

@@ -1,0 +1,170 @@
+
+==============================================================================
+  MCL SAFE ZONE CHARACTERIZATION — Paper 1 §III Verification
+==============================================================================
+
+  Document ID:  MCL-SAFEZONE-VERIFY-2026-0526-001
+  Version:      6.0.0
+  Engine:       mcl_core.hpp (MCL_T2 production engine)
+  Author:       Madeeh Ibrahim, Cairo, Egypt
+  ORCID:        https://orcid.org/0009-0002-8562-8325
+
+  Configuration:
+    Samples:       100000000  (1.0e+08)
+    Seed:          12345678901234
+    K:             12.00
+    (p, q):        (3, 5)
+    ω₁ (phi-1):    0.6180339887498949
+    ω₂ (plastic):  1.3247179572447461
+    Burn-in:       10000
+    GOLD_S1:       20  (Safe Zone lower)
+    GOLD_S2:       36  (Safe Zone upper)
+    Chi² crit:     310.46  (df=255, α=0.01)
+
+==============================================================================
+ EXPERIMENT 1: Sample collection (4 extraction zones, single trajectory)
+==============================================================================
+
+  Allocating 381.5 MB (4 streams × 100000000 bytes)...
+  Generating 100000000 samples per stream...
+
+     10% complete (10000000 samples)
+     20% complete (20000000 samples)
+     30% complete (30000000 samples)
+     40% complete (40000000 samples)
+     50% complete (50000000 samples)
+     60% complete (60000000 samples)
+     70% complete (70000000 samples)
+     80% complete (80000000 samples)
+     90% complete (90000000 samples)
+    100% complete (100000000 samples)
+
+==============================================================================
+ EXPERIMENT 2: Chi-Square goodness-of-fit (α=0.01, df=255, crit=310.46)
+==============================================================================
+
+  Zone            |       Chi²       | Threshold | Result (expected)
+  ----------------|------------------|-----------|------------------
+  LSB  [0-7]      |     709876395.39 |   310.46  | FAIL (FAIL expected)
+  Safe [20-27]    |           246.62 |   310.46  | PASS (PASS expected)
+  Dual XOR        |           239.27 |   310.46  | PASS (PASS expected)
+  MSB  [44-51]    |         35619.49 |   310.46  | FAIL (FAIL expected)
+
+  Improvement factor (LSB → Safe): 2878368x
+  Scientific outcome: PASS — LSB/MSB contaminated, Safe/Dual uniform (as predicted)
+
+==============================================================================
+ EXPERIMENT 3: Bit frequency (ideal = 0.500000)
+==============================================================================
+
+  Zone            | Bit Freq  | |Bias|
+  ----------------|-----------|-------
+  LSB  [0-7]      | 0.273183  | 45.36%  (large bias expected)
+  Safe [20-27]    | 0.500000  | 0.00%  (≈ 0 expected)
+  Dual XOR        | 0.499984  | 0.00%  (≈ 0 expected)
+  MSB  [44-51]    | 0.498044  | 0.39%
+
+  Safe zone bit balance: PASS
+  Dual XOR bit balance:  PASS
+
+==============================================================================
+ EXPERIMENT 4: Shannon entropy (ideal = 8.000000 bits/byte)
+==============================================================================
+
+  Zone            | Entropy   | Loss
+  ----------------|-----------|-----------
+  LSB  [0-7]      | 6.121771  | 23.48% (large loss expected)
+  Safe [20-27]    | 7.999998  | 0.0000% (≈ 0 expected)
+  Dual XOR        | 7.999998  | 0.0000% (≈ 0 expected)
+  MSB  [44-51]    | 7.999746  | 0.0032%
+
+  Finite-sample analysis: E[Ĥ]=7.999998 (N=1.0e+08)
+  Threshold (E[Ĥ] − 10⁻⁴ empirical tol): 7.999900  [capped at production target 7.9999]
+  Safe zone entropy:  PASS (> 7.999900)
+  Dual XOR  entropy:  PASS (> 7.999900)
+
+==============================================================================
+ EXPERIMENT 5: Lag-1 autocorrelation (|r| threshold < 2.58/√N)
+==============================================================================
+
+  Threshold (99% CL): 0.000258
+
+  Zone            |    |r|     | Result
+  ----------------|------------|--------
+  LSB  [0-7]      |   0.022410 | FAIL (expected)
+  Safe [20-27]    |   0.000172 | PASS
+  Dual XOR        |   0.000002 | PASS
+  MSB  [44-51]    |   0.002479 | FAIL (expected)
+
+==============================================================================
+ EXPERIMENT 6: CRC-32 reproducibility (first 10,000 production gen_byte() outputs)
+==============================================================================
+
+  Method:   MCL_T2 production gen_byte() (Goldilocks dual-zone)
+  Length:   10,000 bytes
+  CRC-32:   0x1A734C6F
+
+  Note: CRC-32 may differ across platforms due to libm sin()/cos()
+  ULP differences (Rule O4). Statistical properties remain identical.
+
+==============================================================================
+ EXPERIMENT 7: Lyapunov exponents (Benettin QR, multi-seed, (3,5), K=12)
+==============================================================================
+
+  Reference: Benettin et al., Meccanica 15:9-20, 1980 [1]
+  Iterations per seed: 1,000,000 (QR decomposition, intra-run stderr)
+
+  Seed                 |   λ₁      ±stderr   |   λ₂      ±stderr   | Chaotic?
+  ---------------------|---------------------|---------------------|----------
+  12345678901234       |   5.7778 ±0.0012    |   1.0186 ±0.0005    |   YES
+  98765432109876       |   5.7790 ±0.0012    |   1.0184 ±0.0005    |   YES
+  31415926535897       |   5.7780 ±0.0012    |   1.0180 ±0.0005    |   YES
+  MEAN (inter-seed)    |   5.7783 ±0.0004    |   1.0183 ±0.0002    |
+
+  Chaotic regime (λ₁ > 0 across all seeds): PASS — hyperbolic chaos confirmed
+
+==============================================================================
+ EXPERIMENT 8: Negative controls — test-sensitivity verification
+==============================================================================
+
+  Control 1: WeakDist  (16 of 256 byte values reachable)
+    Chi²:        150000000.00      → FAIL (correctly rejected)
+    Entropy:     4.000000  → FAIL (correctly rejected)
+    Bit freq:    0.500000   (balanced — does not exercise bit freq test)
+
+  Control 2: WeakBias  (bytes in [0,127]; MSB always 0)
+    Bit freq:    0.437500   (ideal 0.5)       → FAIL (correctly rejected)
+
+  Control 3: WeakCorr  (counter = 0,1,2,3,... — uniform but ordered)
+    Chi²:        0.00             (marginal uniformity confirmed)
+    Autocorr(1): 0.976654  (thr 0.000816) → FAIL (correctly rejected)
+
+  Negative controls verdict: PASS — all four statistical tests demonstrate sensitivity
+
+==============================================================================
+ SUMMARY
+==============================================================================
+
+  Experiment                              | Result
+  ----------------------------------------|--------
+  1. Sample collection                    | COMPLETED
+  2. Chi² profile (LSB FAIL, Safe PASS,   | PASS
+     Dual PASS, MSB FAIL)                 |
+  3. Bit frequency (Safe/Dual ≈ 50%)      | PASS
+  4. Entropy (Safe/Dual > adaptive thresh)| PASS
+  5. Autocorrelation (Safe/Dual < thresh) | PASS
+  6. CRC-32 reproducibility               | 0x1A734C6F
+  7. Lyapunov λ₁ > 0 (all seeds)          | PASS
+  8. Negative controls (3 controls,       | PASS
+     4 tests independently validated)     |
+
+  Overall verdict: PASS — Safe Zone characterization validated
+
+  Execution time: 10.5 seconds
+
+==============================================================================
+  MCL-SAFEZONE-VERIFY-2026-0526-001 v6.0.0
+  Madeeh Ibrahim, Cairo, Egypt | ORCID 0009-0002-8562-8325
+  Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673
+==============================================================================
+

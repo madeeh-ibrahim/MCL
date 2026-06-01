@@ -1,0 +1,128 @@
+
+******************************************************************************
+ MCL GENERALITY — MULTI-SYSTEM VERIFICATION v6.0.0
+ Henon + Logistic + Tent: Proving system-agnostic independence
+******************************************************************************
+
+
+==============================================================================
+ SYSTEM 1: COUPLED Henon — strange attractor, discrete, 2D
+==============================================================================
+
+ 6 topologies x 3 seeds x C(6,2)=15 pairs = 45 tests
+ Bytes per channel: 1000000
+
+ --- Seed #1 ---
+ (2,3): ent=7.9998 chi2=214.4 OK
+ (3,5): ent=7.9998 chi2=242.7 OK
+ (5,7): ent=7.9998 chi2=219.3 OK
+ (7,11): ent=7.9998 chi2=225.4 OK
+ (8,13): ent=7.9998 chi2=265.3 OK
+ (11,17): ent=7.9998 chi2=254.3 OK
+ --- Seed #2 ---
+ --- Seed #3 ---
+
+ SYSTEM 1: COUPLED Henon — strange attractor, discrete, 2D: 45 pairs tested, 0 raw-α rejections (early-warning)
+ Max |r| across all pairs: 0.002682
+
+==============================================================================
+ SYSTEM 2: COUPLED Logistic — interval map, 1D, r=3.99
+==============================================================================
+
+ 6 topologies x 3 seeds x C(6,2)=15 pairs = 45 tests
+ Bytes per channel: 1000000
+
+ --- Seed #1 ---
+ (2,3): ent=7.9998 chi2=250.5 OK
+ (3,5): ent=7.9998 chi2=262.0 OK
+ (5,7): ent=7.9998 chi2=249.8 OK
+ (7,11): ent=7.9998 chi2=253.1 OK
+ (8,13): ent=7.9998 chi2=229.0 OK
+ (11,17): ent=7.9998 chi2=304.3 OK
+ --- Seed #2 ---
+ --- Seed #3 ---
+
+ SYSTEM 2: COUPLED Logistic — interval map, 1D, r=3.99: 45 pairs tested, 0 raw-α rejections (early-warning)
+ Max |r| across all pairs: 0.002124
+
+==============================================================================
+ SYSTEM 3: COUPLED Tent — piecewise linear, 1D
+==============================================================================
+
+ 6 topologies x 3 seeds x C(6,2)=15 pairs = 45 tests
+ Bytes per channel: 1000000
+
+ --- Seed #1 ---
+ (2,3): ent=7.9998 chi2=285.4 OK
+ (3,5): ent=7.9998 chi2=244.9 OK
+ (5,7): ent=7.9998 chi2=244.6 OK
+ (7,11): ent=7.9998 chi2=248.4 OK
+ (8,13): ent=7.9998 chi2=294.6 OK
+ (11,17): ent=7.9998 chi2=253.6 OK
+ --- Seed #2 ---
+ --- Seed #3 ---
+
+ SYSTEM 3: COUPLED Tent — piecewise linear, 1D: 45 pairs tested, 0 raw-α rejections (early-warning)
+ Max |r| across all pairs: 0.002161
+
+==============================================================================
+ CROSS-SYSTEM INDEPENDENCE
+==============================================================================
+
+ Testing if channels from DIFFERENT systems are independent.
+
+ Henon vs Logistic (2,3): |r|=0.001371 p=1.7052e-01
+ Henon vs Tent (2,3): |r|=0.001636 p=1.0179e-01
+ Logistic vs Tent (2,3): |r|=0.001239 p=2.1525e-01
+ Henon vs Logistic (3,5): |r|=0.000230 p=8.1801e-01
+ Henon vs Tent (3,5): |r|=0.000276 p=7.8244e-01
+ Logistic vs Tent (3,5): |r|=0.001008 p=3.1345e-01
+ Henon vs Logistic (7,11): |r|=0.000586 p=5.5801e-01
+ Henon vs Tent (7,11): |r|=0.000585 p=5.5849e-01
+ Logistic vs Tent (7,11): |r|=0.000687 p=4.9199e-01
+
+ Cross-system summary: 9 pairs, max|r|=0.001636, min(p)=1.0179e-01, 0 raw-α rej (early-warning)
+
+==============================================================================
+ NEGATIVE CONTROL — identical parameters must correlate
+==============================================================================
+
+ Same system + same (p,q) + same seed → |r| MUST = 1.0
+
+ Henon      r=1.000000 diff=0/1000000 OK — identical
+ Logistic   r=1.000000 diff=0/1000000 OK — identical
+ Tent       r=1.000000 diff=0/1000000 OK — identical
+
+==============================================================================
+ GLOBAL BONFERRONI ANALYSIS
+==============================================================================
+
+ Total pairs: 144 (3 systems + cross-system)
+ Bonferroni threshold: 1.0000e-03 / 144 = 6.9444e-06
+ Bonferroni rejections: 0 / 144  (authoritative)
+
+ Smallest 5 p-values:
+ #1: 7.321213e-03 >= OK
+ #2: 2.266111e-02 >= OK
+ #3: 3.068130e-02 >= OK
+ #4: 3.370018e-02 >= OK
+ #5: 4.132957e-02 >= OK
+
+==============================================================================
+ VERDICT
+==============================================================================
+
+ Systems tested: Henon, Logistic, Tent
+ Independence pairs: 144 (0 Bonferroni rejections)
+ Cross-system pairs: 9
+ Negative control: 3/3 systems passed
+ Per-channel quality: 54/54 channels OK
+
+ +================================================================+
+ | VERDICT: PASS — MCL principle generalizes to 3 systems        |
+ +================================================================+
+
+ Time: 11.5 seconds
+
+ MCL-GENERALITY-2026-0526-001 v6.0.0 | Madeeh Ibrahim, Cairo
+==============================================================================
