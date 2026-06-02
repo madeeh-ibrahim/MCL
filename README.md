@@ -133,10 +133,19 @@ See `SECURITY.md` for the coordinated-disclosure policy and security contact.
 
 MCL is owned and authored by **Madeeh Ibrahim** (sole inventor and project
 owner). The reference implementation and the design described in the companion
-papers are his own work. **External code contributions are currently paused**
-(see `CONTRIBUTING.md`) while specialist legal advice on contribution
-arrangements is obtained; security research and cryptanalysis remain fully open
-via `SECURITY.md`. Any contribution that is accepted is taken under a
+papers are his own work.
+
+**Researchers are warmly invited to use and test the code.** Any party —
+including commercial organizations — may **download, compile, run, benchmark,
+evaluate, and attempt to cryptanalyze** the software, and **publish their
+results**, free of charge, under the **Security Research & Evaluation Grant**
+(see `SECURITY.md` and `LICENSE`), subject only to a citation requirement.
+Commercial *production* use requires a separate license (see `COMMERCIAL.md`).
+
+**External code contributions** (pull requests) **are currently paused** (see
+`CONTRIBUTING.md`) while specialist legal advice on contribution arrangements is
+obtained — this pause concerns contributing code, not using or analyzing it,
+which remain fully open. Any contribution that is accepted is taken under a
 **copyright-assignment** agreement (`CLA.md`), so the project owner remains the
 sole owner and licensor of the project as a whole. This is an interim,
 conservative policy and may be revised after review.
