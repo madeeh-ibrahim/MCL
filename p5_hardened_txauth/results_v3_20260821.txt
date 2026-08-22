@@ -1,0 +1,24 @@
+mcl_txauth_v3_claim4 — Paper-5 profile v3 (patent Claim 4 route)
+engine: MCL v8.1.1 (2026-08-21), UNMODIFIED
+
+  V3-1 deterministic (same TX -> same tag)                   PASS
+  V3-2 tag DEPENDS on the transaction (engine is the MAC)    PASS
+     HD(t1,t2) = 120/256
+  V3-3 D1 closed: full-width TX binding separates the pair   PASS
+     HD = 126/256 (expect ~128)
+  V3-4 calldata mutation changes the tag                     PASS
+  V3-5 D2: 1-bit S_device flip changes the tag               PASS
+     HD = 124/256
+  V3-6 cross-verifier binding (V1 tag != V2 tag)             PASS
+  V3-7 account binding (same key, other account -> different tag) PASS
+  V3-8 different device -> different tag                     PASS
+     uniqueness 500/500 | avalanche mean 127.00/256 (min 102, max 151)
+  V3-9 all tags distinct                                     PASS
+  V3-10 avalanche mean within 128 +/- 6                      PASS
+     per-transaction cost: 3.221 ms (KDF x2 + 12-weight derivation + 10k burn-in + 32B output)
+  V3-11 cost under 10 ms per transaction                     PASS
+
+RESULT: 11 PASS / 0 FAIL
+v3 closes D1 at full width WITHOUT demoting the engine: the transaction
+enters the derivation as the public challenge of Claim 4, the device secret
+as the device-bound value of Claim 28, and the seed stays public per Claim 8.

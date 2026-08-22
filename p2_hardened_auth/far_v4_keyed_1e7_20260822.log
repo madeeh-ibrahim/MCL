@@ -1,0 +1,21 @@
+================================================================
+  Paper-2 protocol FAR — KEYED TWELVE-WEIGHT route (SS-IV.B)
+  MCL-P2-FARV4-2026-0821-001  engine mcl_core v8.1.1 UNMODIFIED
+  2500000 forgeries x 4 target devices | threads 2
+  credential = 256-bit device key -> 12 map-defining weights
+================================================================
+
+FRR gate: 1000 recomputations, 0 mismatches -> FRR = 0 (structural)
+
+target      forgeries     meanHD  near<=32  min/max
+0                   0    128.000         0   87/168 
+1                   0    127.994         0   87/169 
+2                   0    128.009         0   87/167 
+3                   0    127.998         0   88/167 
+
+AGGREGATE: 0 forgeries accepted / 10000000 attempts | mean HD 128.000/256 | near-misses 0 | min/max 87/169
+14205 s (704 attempts/s)
+
+The searchable secret is the 256-bit device key carried in the twelve
+map-defining weights, so a transcript does not reduce the search below
+the key width: this is the width-based closure of referee gap G2.

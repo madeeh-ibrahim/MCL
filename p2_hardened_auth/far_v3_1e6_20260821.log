@@ -1,0 +1,17 @@
+================================================================
+  Paper-2 FAR on the DERIVATION-ROUTE protocol (SS-IV.B as specified)
+  MCL-P2-FARV3-2026-0821-001  engine mcl_core v8.1.1 UNMODIFIED
+  trials 1000000 | threads 2 | credential range [2,1e9) | device (3,5)
+  true R = 046f4ee2...
+================================================================
+
+FRR gate: 1000 recomputations, 0 mismatches -> FRR = 0 (structural)
+
+wrong-credential forgery (fixed session context)
+  trials                    1000000
+  exact 32-byte collisions  0  -> FAR = 0 (< 1/trials)
+  Hamming distance to true  mean 127.995/256 (min 85, max 167)
+  near misses (HD <= 32)    0
+  forged-byte chi2          249.1 (df 255, crit.001 ~330.5)
+
+wall 580.6 s | 1722 trials/s

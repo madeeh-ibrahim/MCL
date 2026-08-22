@@ -1,0 +1,27 @@
+================================================================
+  Paper-2 SS-V.B campaign at the ENGINE LEVEL (parameter sensitivity)
+  MCL-P2-ENGSENS-2026-0821-001   engine mcl_core v8.1.1 UNMODIFIED
+  ~2500000 trials x 17 strategies | threads 7 | parameters fed DIRECTLY to the engine
+================================================================
+
+strategy                                    successes    meanHD near<=32  min/max unfaith
+1  random (p',q')                                   0   127.996        0   86/167        0
+2  correct p, random q'                             0   128.002        0   86/169        0
+3  random p', correct q                             0   127.991        0   89/169        0
+4  preserved sum p'+q'=p+q                          0   127.997        0   86/168        0
+5  preserved product p'q'=pq                        0   127.996        0   88/169        0
+6  preserved ratio p'/q'=p/q                        0   128.008        0   85/169        0
+7  off-by-one p+-1  [weight neighbour]              0   128.003        0   86/168        0
+8  off-by-one q+-1  [weight neighbour]              0   127.997        0   87/167        0
+9  swapped (q,p)                                    0   128.006        0   87/167        0
+10 correct K, random (p',q')                        0   127.998        0   88/168        0
+11 correct (p,q), K'=K+-0.001                       0   128.004        0   88/170        0
+12 previous-session replay  [structural]            0   127.988        0   91/166        0
+13 partial response 128/256  [structural]           0    63.998        0   37/91         0
+14 1000 observed (C,R) then guess  [structural]          0   127.996        0   87/171        0
+15 scaled (2p,2q)                                   0   127.997        0   88/166        0
+16 nearest adjacent coprime                         0   127.994        0   86/168        0
+17 single-BIT flip of p  [weight neighbour]          0   128.005        0   90/166        0
+
+TOTAL: 0 successes / 42500002 trials | near-misses 0 | unfaithful (discarded) 0
+10186 s (4172 trials/s) | CP 95% UB at 0 successes: per-strategy 1.200e-06, aggregate 7.059e-08

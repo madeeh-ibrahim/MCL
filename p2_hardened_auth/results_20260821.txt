@@ -1,0 +1,20 @@
+mcl_auth_hardened — Paper-2 hardened-profile battery (v1.0.0)
+engine: MCL v8.1.1 (2026-08-21)
+
+T-A legit sessions accepted: 1000/1000
+  T-A legitimate flow 1000/1000                              PASS
+  T-B replay of consumed challenge rejected                  PASS
+  T-C stale response in new session rejected                 PASS
+  T-D cross-verifier transfer rejected                       PASS
+  T-E cross-account transfer rejected                        PASS
+  T-F reuse after failure rejected                           PASS
+  T-G double-submit: exactly one acceptance                  PASS
+  T-H1 legacy fold collision reproduced (attack)             PASS
+  T-H2 hardened profile separates the pair (fix)             PASS
+  T-I raw engine response absent from transcript             PASS
+T-J avalanche: mean HD 127.79/256 (min 102, max 153); byte chi2 236.9 (df 255)
+  T-J1 mean avalanche within 128 +/- 3 bits                  PASS
+  T-J2 byte-distribution chi2 in [190, 330]                  PASS
+
+RESULT: 12 PASS / 0 FAIL
+All protocol-logic checks passed. Full Paper-2 SS-VI statistical campaigns on this profile remain the required follow-up.

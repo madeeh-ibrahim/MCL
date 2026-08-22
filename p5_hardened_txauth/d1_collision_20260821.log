@@ -1,0 +1,25 @@
+================================================================
+  Defect D1 — constructed collision on the superseded fold
+  MCL-P5-D1COLL-2026-0821-001   engine mcl_core v8.1.1 UNMODIFIED
+================================================================
+
+searching for an FNV-1a collision (Brent, birthday scale ~2^32)...
+  lambda = 4251484692, mu = 3895062295, probes ~ 16336576577, 359.4 s
+
+COLLISION FOUND — two distinct transactions, identical FNV-1a:
+  payload A      4f4f2eb40f25758d
+  payload B      14349ecffb59edc0
+  FNV1a(canon A) ccdbdbb03dd95505
+  FNV1a(canon B) ccdbdbb03dd95505   equal = YES
+
+SUPERSEDED PATH  Tag = MCL_T2(FNV1a(canon) ^ nonce(c), p, q):
+  tag(A)         2c7dc54ba0095d11d984915a8844b5cbfc5f48e254dec841bb62a0767565faac
+  tag(B)         2c7dc54ba0095d11d984915a8844b5cbfc5f48e254dec841bb62a0767565faac
+  identical = YES   -> D1 REPRODUCED: distinct transactions share one tag
+
+DERIVATION ROUTE (v3)  Tag = MCL_T4(seed_pub, params(KDF(K_eff, ctx))):
+  tag(A)         1264a925713d8aaf52a67a91eae56f0b4a9d0a987b239e283f2101f939681534
+  tag(B)         582a0ddcad0c7a77b7d3b276bc489e55166aba4c251a2ac273c0817afce28358
+  identical = no   Hamming = 132/256   -> D1 CLOSED on a genuine collision pair
+
+VERDICT: attack reproduced on the superseded path AND defeated by the derivation route

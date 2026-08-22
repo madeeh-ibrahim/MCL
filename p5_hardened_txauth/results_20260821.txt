@@ -1,0 +1,31 @@
+mcl_txauth_hardened — Paper-5 hardened tx-auth battery (v1.0.0)
+engine: MCL v8.1.1 (2026-08-21); path = mcl_t4_from_key_device (12-weight)
+
+  D2 S_device is nonzero (A,B)                                 PASS
+L-A legit authorizations: 1000/1000
+  L-A legitimate flow 1000/1000                                PASS
+  D3 replay of consumed nonce rejected                         PASS
+  D3 cross-account transfer rejected                           PASS
+  D3 cross-verifier transfer rejected                          PASS
+  D3 reuse after failure rejected                              PASS
+  D3 double-submit: exactly one acceptance                     PASS
+  Q8 one call-data byte changes the tag (canonical binding, same nonce) PASS
+  Q8b wrong tag rejected at an UNSPENT nonce; honest tag accepted PASS
+  C-1a transactions are distinct yet FNV-1a-equal (real collision) PASS
+  C-1b superseded path yields ONE tag for both (attack reproduced) PASS
+  C-1c hardened path separates the collision pair (D1 closed)  PASS
+  R-1 rebinding without device secret rejected                 PASS
+  R-2 rebinding with device presence accepted                  PASS
+
+--- SS-VI statistical battery (hardened tag, device-bound) ---
+S1 uniqueness: 5000 distinct / 5000 (dups 0)
+  S1 5000/5000 distinct tags                                   PASS
+S2 avalanche: mean 128.09/256 (min 98, max 152)
+  S2 mean avalanche 128 +/- 3 bits                             PASS
+S3 byte chi2 228.4 (df 255, crit.001 ~330.5)
+  S3 byte chi2 in [190, 330]                                   PASS
+S4 FAR (device forgery, K_wrap known): 0/1000000 accepts (FAR 0.000e+00)
+  S4 zero forgeries in 10^6 (device-secret guessing)           PASS
+
+RESULT: 18 PASS / 0 FAIL
+All hardened-path checks passed. Real SHA-256/HMAC; 256-bit device binding via 12-weight T4; full-width TX binding. Large-N Paper-5 SS-VI campaigns (10^8 auth, 40M SIM-swap) remain the required follow-up on THIS path.

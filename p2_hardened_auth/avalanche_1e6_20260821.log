@@ -1,0 +1,21 @@
+================================================================
+  Paper-2 challenge-avalanche at campaign scale (hardened v2)
+  MCL-P2-AVAL-2026-0821-001   engine: mcl_core v8.1.1
+  trials 1000000 | threads 2 | device (p,q)=(3,5)
+================================================================
+
+negative control (identical challenge): HD = 0/256 (expect 0)
+
+WRAPPED response R (transmitted):
+  mean HD  127.9863/256  (min 89, max 165)
+  per-bit flip fraction  min 0.49854  max 0.50131  (ideal 0.5, sigma 0.00050)
+  worst per-bit |z|      2.91  (256 positions; expected worst ~3.0)
+  per-bit chi2 vs Binomial(n,1/2): 245.5 (df 256, crit.001 ~331.8)
+  byte-frequency chi2 255.4 (df 255, crit.001 ~330.5)
+
+RAW engine response (device-internal, never transmitted):
+  mean HD  127.9963/256  (min 88, max 167)
+
+wall 999.2 s | 1001 trials/s
+
+VERDICT: PASS — avalanche and distribution within expectation

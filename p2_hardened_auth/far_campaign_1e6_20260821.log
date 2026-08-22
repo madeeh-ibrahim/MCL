@@ -1,0 +1,25 @@
+================================================================
+  Paper-2 FAR campaign on the HARDENED (v2) profile
+  MCL-P2-FAR-2026-0821-001   engine: mcl_core v8.1.1 (2026-08-21)
+  trials 1000000 | threads 5 | range [2, 1e9) | device (p,q)=(3,5)
+  ctx seed 0x48700eb677431787 | true raw 8f1e47ba | true R 4de2a205
+================================================================
+
+FRR gate: 1000 recomputations, 0 mismatches -> FRR = 0 (structural)
+
+LAYER A — engine response forgery (wrong (p,q), same context)
+  trials                 1000000
+  exact 32-byte collisions  0   -> FAR_A = 0 (< 1/trials)
+  Hamming distance to true  mean 128.007/256 (min 89, max 166)
+  near misses (HD <= 32)    0
+  forged-byte chi2          230.7 (df 255, crit.001 ~330.5)
+
+LAYER B — full protocol forgery, attacker GIVEN K_wrap
+  acceptances               0   -> FAR_B = 0 (< 1/trials)
+
+wall 204.3 s | 4895 trials/s | 204.31 us/trial
+
+Interpretation: FAR_A is the chaotic-parameter sensitivity claim
+(the direct successor to the published v1 campaign); FAR_B shows the
+residual protocol security when transport secrecy is already lost.
+Scale-up: re-run with a larger first argument (10^8 = full stage).
