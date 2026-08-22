@@ -1,0 +1,111 @@
+# MCL Capacity Realization Experiment — measured run (v1.1.0)
+# host: arm64 Darwin | compiler: Apple clang version 16.0.0 (clang-1600.0.26.6)
+# date: 2026-08-12 | build: c++ -std=c++17 -O3 -Wall -Wextra -Wconversion -I ..
+# supersedes: MCL_CAPACITY_REALIZATION_20260812.txt (v1.0.0 run, preserved)
+# v1.1.0 review fixes: Part 5(a) fail-closed duplicate check (every digest hit
+#   resolved exactly by re-derivation; v1.0.0's 4096-entry witness cap removed);
+#   NEW Part 5(d) adjacent-tuple independence (single weight +1, T4 replica
+#   proven byte-identical to MCL_T4_Q30 first); Part 4 widened 1 -> 8 tuples +
+#   family chi-square gate; Part 2 rows decorrelated (c folded into salt +
+#   challenge); Part 6 "key-bound" qualified per [0053]; M_PI -> MCL_PI.
+# determinism: two consecutive runs verified byte-identical.
+
+================================================================
+ MCL CAPACITY REALIZATION EXPERIMENT   MCL-CAPACITY-REALIZATION-2026-0812-001
+ version 1.1.0 | engine 8.1.0
+ nominal key length is not realized security; capacity is
+================================================================
+
+[1] NOMINAL CAPACITY ACCOUNTING (analytic, [0019]-[0020], [0044])
+    key length L                              = 256 bits
+    config A: 2 variables /  2 weights [2,2^30) =  60.00 bits capacity
+    config B: 4 variables / 12 weights [2,2^30) = 360.00 bits capacity
+    N(N-1)*b rule: A -> 2*30 = 60, B -> 12*30 = 360
+  [PASS] config A capacity < L  => a 256-bit key CANNOT be represented (the deficiency)
+  [PASS] config B capacity >= L => the capacity relation of [0019] is satisfied
+
+[2] COUNTING-MODEL VALIDATION (measured first-collision vs analytic)
+    c(bits)   trials   measured mean   analytic sqrt(pi/2)*2^(c/2)   ratio
+       16        8           265.4                        318.3   0.834
+       20        8          1155.2                       1280.9   0.902
+       24        8          5151.8                       5131.1   1.004
+       28        8         19284.1                      20531.8   0.939
+  [PASS] measured first-collision counts match the 2^C counting model (within 2x)
+    => the model is validated on the real KDF; it is the same model that
+       gives 2^60 for config A and 2^360 for config B.
+
+[3] EQUIVALENT-KEY DEMONSTRATION (capacity-bounded security, config A)
+    reduced config: 2 weights in [2,2^12)  => capacity 24.00 bits
+    found after 9443 derivations:
+      key #1150 -> (p,q) = (2982, 3857)
+      key #9443 -> (p,q) = (2982, 3857)
+  [PASS] the two 256-bit keys are DISTINCT
+  [PASS] yet they derive the SAME parameter tuple
+    keystream(key #1150) vs keystream(key #9443): Hamming = 0.00%  (BYTE-IDENTICAL)
+    control, distinct tuple (p,q) = (806, 4028):     Hamming = 50.00%
+  [PASS] distinct keys, same tuple => IDENTICAL output (keys are equivalent)
+  [PASS] control: a distinct tuple gives ~50% Hamming (outputs independent)
+    => realized security is bounded by the PARAMETER space (24 bits),
+       not by the 256-bit key that was supplied.
+
+[4] STATISTICAL CONTROL — the deficient configuration still looks good
+    tuple     (p, q)      entropy (bits/byte)   chi^2 (df=255)
+      #1   (1984, 1142)         7.999819            262.88
+      #2   (  73,  799)         7.999822            258.74
+      #3   (  48,  918)         7.999805            283.95
+      #4   (3548,  968)         7.999820            261.97
+      #5   (3389, 1719)         7.999814            271.30
+      #6   ( 796,   22)         7.999789            306.42
+      #7   (1029, 2197)         7.999843            228.61
+      #8   (3716, 3239)         7.999828            250.31
+    ideal entropy 8.000000; chi^2 reference: 99% = 310.457, 99.9% = 330.520
+    family mean chi^2 = 265.52 (df expectation 255, 4-sigma band [223.06, 286.94])
+  [PASS] all 8 capacity-deficient tuples pass the entropy check (H > 7.99)
+  [PASS] all 8 tuples pass chi-square (each below the 99.9% quantile)
+  [PASS] family mean chi-square consistent with df = 255 (within 4 sigma)
+    => statistical quality and a fully-chaotic range do NOT reveal the
+       capacity deficiency. Requirement-level rules cannot detect it;
+       only the sizing relation of [0019]-[0020] does.
+
+[5] REALIZED CAPACITY OF THE FULL CONFIGURATION (4 vars / 12 weights)
+    sampled 1048576 keys through the production derivation
+    64-bit digest hits = 0 (expected ~3.0e-08 by birthday on the DIGEST,
+      not on the tuple); every hit resolved exactly by re-derivation:
+      true tuple duplicates = 0, benign digest collisions = 0
+  [PASS] no parameter-tuple collision over the sampled budget (fail-closed check)
+    single-bit key avalanche over 48 trials: mean 49.91% (min 48.07%, max 51.44%)
+  [PASS] one flipped key bit => ~50% output change (capacity realized at output)
+    unrelated-key pairs over 24 pairs: mean Hamming 50.01%
+  [PASS] distinct keys => independent output (no hidden collapse of the tuple space)
+  [PASS] explicit-sextet T4 replica is byte-identical to the production engine
+    single-weight +1 perturbation (nearest admissible tuple), 4096 bytes each:
+       p12 49.98%  q12 50.09%  p13 50.30%  q13 50.24%  p14 49.76%  q14 50.00%
+       p23 49.84%  q23 49.84%  p24 49.60%  q24 50.07%  p34 49.57%  q34 49.72%
+    mean 49.92%  (min 49.57%, max 50.30%; per-lane sigma ~0.28%,
+      so the (45,55) gate is ~18 sigma wide)
+  [PASS] one weight, smallest step => ~50% change (independence at minimal distance)
+
+[6] SUMMARY — nominal vs realized, and the extrapolation
+    +----------------------+-----------+-----------+----------------------+
+    | configuration        | key given | capacity  | realized key search  |
+    +----------------------+-----------+-----------+----------------------+
+    | A: 2 vars /  2 wts   | 256 bits  |   60.0 b  | 2^60 (capacity-bound)|
+    | B: 4 vars / 12 wts   | 256 bits  |  360.0 b  | 2^256 (key-bound*)   |
+    +----------------------+-----------+-----------+----------------------+
+    * key-bound per [0053]: the parameter representation does not reduce
+      the recoverable key-search space below the key width L -- a measured
+      property of the REPRESENTATION, not a claim about attack surfaces
+      other than the representation (see the header disclaimer).
+    Both configurations: same key length, same derivation, same chaotic
+    range, both statistically clean (Part 4). They differ by ~196 bits in
+    the representation-imposed key-search bound, solely through the
+    parameter representation.
+    Expected first collision: A ~ 1.35e+09 keys (reachable);  B ~ 1.92e+54 keys (unreachable).
+    Parts 2-3 measured the effect at reduced capacity and validated the
+    model that produces these two numbers; the 2^-360 event is not observed.
+    Part 5(d) additionally pins output independence at the minimal
+    admissible tuple distance (one weight, smallest step).
+
+================================================================
+  SUMMARY: 15 passed, 0 failed
+================================================================

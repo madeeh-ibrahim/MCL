@@ -1,0 +1,47 @@
+================================================================
+  MCL KEYED Q30 -- SCIENTIFIC verification (engine 6.1.0)
+================================================================
+
+[T1] Lyapunov spectrum (continuous analog, analytic Jacobian, Benettin QR)
+  (a) small weights {2,3,5,7,11,13}/{3,5,7,11,13,17}:
+      lambda = [14.060, 2.695, 0.917, -0.240]  positives=3
+  (b) key-derived weights (~2^30):
+      lambda = [87.569, -664.279, -690.706, -690.706]  positives=1
+      sum(lambda) = -1958.122 (= mean ln|det J|, Oseledets)
+  => FAIL: not hyperchaotic (>=2 positive exponents = HYPERCHAOTIC)
+  (note: continuous analog with weights <=2^30 < 2^52, so double-sin is
+   accurate; the Q30 integer engine is the shadowing discretization.)
+
+[T2] Extended statistical battery on the T4-Q30 keystream
+  sample = 64 MiB
+  chi^2 (df=255)        = 226.10  (threshold 330.52)
+  Shannon entropy       = 7.9999976 bits/byte
+  bit frequency         = 0.5000133  (ideal 0.5)
+  runs test z           = -0.6671  (|z|<3.29 ok)
+  autocorr lag 1        = +0.000030
+  autocorr lag 2        = -0.000208
+  autocorr lag 3        = +0.000018
+  autocorr lag 4        = -0.000049
+  autocorr lag 5        = +0.000047
+  autocorr lag 6        = -0.000197
+  autocorr lag 7        = +0.000042
+  autocorr lag 8        = +0.000095
+  spectral SNR          = 9.192  (threshold 15.0, PASS)
+  per-bit chi^2 [b0..b7]: 1.7 3.7 0.7 5.3 2.2 1.3 0.3 0.0 
+  wrote t4q30_sample.bin (64 MiB) -- run:
+     ent t4q30_sample.bin
+     dieharder -g 201 -f t4q30_sample.bin -a   (slow; or PractRand RNG_test)
+
+[T3] Backward branching of the 2-osc Q30 map (image cardinality, full 2^32)
+  image cardinality   = 2695537898 / 2^32  (coverage 62.76%)
+  mean per-coord backward branching b = 1.593 over the image
+  cf. Float64 engine per-coord b ~= 38 (Exp6) -> Q30 is ~24x WEAKER folding
+  VERDICT: the Q30 map IS many-to-one (b=1.59>1) but only WEAKLY. The coarse
+  16-bit LUT linearizes the map (piecewise slope-1), so backward branching is
+  far below Float64. WHETHER the KEYSTREAM-CONSTRAINED b_eff stays >1 (the
+  one-wayness condition; Float64 had ~6) is NOT established for Q30 and is a
+  REAL OPEN RISK -- needs the mcl_beff_compounding methodology ported to Q30.
+
+================================================================
+  SCIENTIFIC verification complete. See per-section verdicts above.
+================================================================

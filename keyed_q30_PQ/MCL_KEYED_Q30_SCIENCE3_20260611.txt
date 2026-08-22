@@ -1,0 +1,22 @@
+================================================================
+  MCL KEYED Q30 -- SCIENTIFIC v3: hyperchaos via Oseledets bound
+================================================================
+  Rigorous: lambda_2 >= (Sum_lambda - lambda_1)/3, so
+  Sum_lambda > lambda_1  =>  lambda_2 > 0  =>  HYPERCHAOTIC.
+
+  (a) small weights: lambda_1=14.0577  Sum=17.4328  Sum-l1=3.3751  l2>=1.1250 -> lambda_2>0 PROVEN
+
+  (b) key-derived weights (~2^30):
+    key 0: lambda_1=87.570  Sum=89.767  Sum-l1=+2.197  =>  lambda_2 >= +0.732  [hyperchaotic]
+    key 1: lambda_1=86.080  Sum=86.087  Sum-l1=+0.006  =>  lambda_2 >= +0.002  [hyperchaotic]
+    key 2: lambda_1=87.155  Sum=86.068  Sum-l1=-1.087  =>  lambda_2 >= -0.362  [inconclusive]
+    key 3: lambda_1=83.567  Sum=86.625  Sum-l1=+3.058  =>  lambda_2 >= +1.019  [hyperchaotic]
+    key 4: lambda_1=83.825  Sum=90.593  Sum-l1=+6.768  =>  lambda_2 >= +2.256  [hyperchaotic]
+    key 5: lambda_1=89.044  Sum=89.879  Sum-l1=+0.835  =>  lambda_2 >= +0.278  [hyperchaotic]
+
+  mean: lambda_1=86.207  Sum=88.170  Sum-l1=+1.963  mean(l2 lower bound)=+0.654
+  worst-case l2 lower bound across keys = -0.362
+
+  VERDICT: hyperchaos proven for 5/6 keys.
+  => INCONCLUSIVE: Sum_lambda not robustly above lambda_1; the /3 bound does
+     not close lambda_2>0. Needs MPFR (>=128-bit) direct QR.

@@ -1,0 +1,17 @@
+================================================================
+  MCL KEYED Q30 -- DEFINITIVE Lyapunov spectrum @ 256-bit (MPFR)
+================================================================
+
+  (a) small weights: lambda = [13.9931, 2.8658, 1.0346, 0.0319]  positives=4
+      (double QR gave l1=14.06,l2=2.70 -> sanity OK)
+
+  (b) key-derived weights (~2^30) -- FULL spectrum, 256-bit:
+    key 0: lambda=[87.570, 2.4459, 1.03, -1.29]  sum=89.761  [HYPERCHAOTIC: l2>0]
+    key 1: lambda=[86.079, 2.2232, 0.74, -2.94]  sum=86.105  [HYPERCHAOTIC: l2>0]
+    key 2: lambda=[87.157, 2.9106, -0.70, -3.29]  sum=86.073  [HYPERCHAOTIC: l2>0]
+    key 3: lambda=[83.567, 6.3950, -0.46, -2.88]  sum=86.626  [HYPERCHAOTIC: l2>0]
+    key 4: lambda=[83.816, 6.4874, 1.18, -0.89]  sum=90.601  [HYPERCHAOTIC: l2>0]
+    key 5: lambda=[89.054, 2.0971, 0.31, -1.56]  sum=89.896  [HYPERCHAOTIC: l2>0]
+
+  VERDICT: lambda_2>0 (hyperchaotic) for 6/6 keys; worst lambda_2 = 2.0971
+  => PASS: T4-Q30 (continuous analog) is HYPERCHAOTIC for all sampled keys (256-bit, definitive).

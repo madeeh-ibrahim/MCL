@@ -1,0 +1,31 @@
+================================================================
+  MCL KEYED Q30 -- SCIENTIFIC v2 (hyperchaos + exact b_eff)
+================================================================
+
+[T1b] Hyperchaos: top-2 Lyapunov exponents (underflow-free 2-vector Benettin)
+  (a) small weights: lambda_1=14.0597  lambda_2=2.7022  -> hyperchaotic
+  (b) key 0 (~2^30 weights): lambda_1=87.569  lambda_2=-677.5273  [NOT]
+  (b) key 1 (~2^30 weights): lambda_1=86.084  lambda_2=-689.6557  [NOT]
+  (b) key 2 (~2^30 weights): lambda_1=87.156  lambda_2=-689.4724  [NOT]
+  (b) key 3 (~2^30 weights): lambda_1=83.566  lambda_2=-690.6957  [NOT]
+  (b) key 4 (~2^30 weights): lambda_1=83.828  lambda_2=-671.3882  [NOT]
+  mean over 5 keys: lambda_1=85.641  lambda_2=-683.7479 ; hyperchaotic in 0/5
+  => MIXED/FAIL: lambda_2 not uniformly positive -- investigate
+
+[T3b] EXACT keystream-constrained b_eff of the 2-osc Q30 map (full backward enum)
+  target 0: valid t2=2, full 2-D preimages=2, byte-consistent=1
+  target 1: valid t2=1, full 2-D preimages=3, byte-consistent=1
+  target 2: valid t2=1, full 2-D preimages=3, byte-consistent=1
+  target 3: valid t2=4, full 2-D preimages=3, byte-consistent=1
+
+  mean 2-D one-step preimages  b_2D  = 2.75  (Float64 ~ b^2 ~ 1444)
+  mean keystream-constrained   b_eff = 1.00  (Float64 Exp7 ~ 6)
+  => RISK CONFIRMED: b_eff<=1 -> the Q30 *stream* keystream collapses the
+     backward tree (state-recoverable). Affects ONLY the stream/PRNG use;
+     T4 key-search (Grover/256-bit) and the no-keystream cascade are NOT
+     affected. Mitigation: do not expose a raw Q30 keystream; use the
+     commitment (cascade/VDF) outputs, or hash the keystream.
+
+================================================================
+  v2 complete.
+================================================================

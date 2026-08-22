@@ -1,0 +1,54 @@
+MCL KEYED Q30 -- [MEASURE] record -- regenerated 2026-06-15
+NOTE: cascade final commitment is now SHA-256-hashed (security hardening, FINDINGS_20260615.md);
+      cascade CRCs (c7/c5) differ from the 2026-06-12 record accordingly. T4-Q30 (t4) unchanged.
+Host: Apple M1 Pro, Apple clang version 16.0.0 (clang-1600.0.26.6)
+
+================================================================
+  MCL KEYED Q30 -- [MEASURE] runner (engine 6.1.0)  arm64/clang -O3
+================================================================
+
+[M1] Sine LUT geometry + quarter-wave compression (Claim 15)
+    full table: 65536 entries x 4 B = 262144 B (256.0 KiB), CRC-32 = 0xDE1340CF (expect 0xDE1340CF)
+    quarter-wave: 16385 entries = 65540 B (64.0 KiB), CRC-32 = 0x5A9E4828
+    reconstructed-full CRC-32 = 0xDE1340CF vs canonical 0xDE1340CF -> BIT-IDENTICAL
+    entry mismatches = 0 / 65536, max |delta| = 0 LSB
+    compression: 262144 B -> 65540 B (4.00x)
+
+[M2] Working memory (Claim 22 / [0043])
+    sizeof(MCL_T4_Q30) engine object   = 72 B (4x uint32 state + 12x uint32 weights + int64 K_phase; uint32 weights => native 32x32 multiply, Claim 13)
+    cascade working state              = 8 B; m=7 schedule = 112 B; total 120 B
+    output buffer (commitment)         = 32 B
+    LUT (const, ROM/NVM-resident)      = 262144 B full / 65540 B quarter-wave
+    all sizes fixed at compile time, independent of output length
+
+[M3] Per-term scaling overflow analysis (Claim 17)
+    admissible K, per-term scaling     : K <= 4*pi = 12.5664 (overflow onset)
+    admissible K, sum-3-then-scale     : K <= 4*pi/3 = 4.1888 (overflow onset)
+    enforced cap K = 12.0              : margin to onset = 4.72%
+    max |sin_q30| entry = 1073741824 (2^30 = 1073741824)
+    worst per-term product at K=12     : 8.807672e+18 of INT64_MAX 9.223372e+18 (ratio 0.9549)
+
+[M4] Latency on this host (arm64, clang, -O3)
+    T4-Q30 full auth (KDF+derive+10000 burn-in+commit32): median 0.384 ms
+    T4-Q30 full auth, hashed output (commit32_oneway): median 0.384 ms
+    cascade m=7 full op (10000+6x256 iters+commit)       : median 0.244 ms
+    T4-Q30 raw iterate                : 38.7 ns/iter (25.8 M iters/s)
+    2-osc Q30 raw iterate             : 18.7 ns/iter (53.6 M iters/s)
+    T4-Q30 keystream                  : 12.28 MiB/s
+
+[M5] Cascade capacity accounting ([0047])
+    ordered coprime (p,q) pair in [2,2^30): 59.28 bits/epoch
+    m=5: schedule representation 296.4 bits; brute-forceable secret min(L,cap) = 256 bits -> post-Grover 128 (Cat-1 needs 128)
+    m=7: schedule representation 415.0 bits; brute-forceable secret min(L,cap) = 256 bits -> post-Grover 128 (Cat-1 needs 128)
+    T4-Q30: 12 x 30 = 360-bit representation >= L=256 -> post-Grover 128 = NIST Category 1
+
+[M6] Bit-identity KATs ([0033])
+    T4-Q30 commit32 CRC = 0x58C99E3E (recorded 0x58C99E3E)
+    cascade m=7 CRC     = 0xF7C81BC4 (recorded 0xF7C81BC4, SHA-256-hashed final commitment)
+MATRIX-KAT arch=arm64 cc=clang lut=0xDE1340CF t4=0x58C99E3E ow=0x88CADF0D c7=0xF7C81BC4 c5=0x0FB04973 ks1MiB=0x4C80F5D3
+
+Done.
+
+=== cross-platform (cascade-hashed) ===
+arm64  -O3 : MATRIX-KAT arch=arm64 cc=clang lut=0xDE1340CF t4=0x58C99E3E ow=0x88CADF0D c7=0xF7C81BC4 c5=0x0FB04973 ks1MiB=0x4C80F5D3
+x86_64 -O3 : MATRIX-KAT arch=x86_64 cc=clang lut=0xDE1340CF t4=0x58C99E3E ow=0x88CADF0D c7=0xF7C81BC4 c5=0x0FB04973 ks1MiB=0x4C80F5D3

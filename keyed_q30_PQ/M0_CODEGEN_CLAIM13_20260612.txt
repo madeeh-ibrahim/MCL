@@ -1,0 +1,19 @@
+# Cortex-M0 (thumbv6m) codegen evidence for Claim 13 -- 2026-06-12
+# clang -target thumbv6m-none-eabi -mcpu=cortex-m0 -ffreestanding -O2 -S
+# FINDING: coupling-argument multiply in the 32-bit form (mcl_arg_w32, the
+#   form now used by MCL_Q30_Sextet/mcl_q30t4_iterate_raw) = 2x native MULS,
+#   ZERO __aeabi_lmul, ZERO FPU ops. The former int64 form needed __aeabi_lmul.
+#   mcl_inc (K*sin>>30, the [0031] scaling multiply, NOT the coupling argument)
+#   legitimately uses one __aeabi_lmul. No floating-point instruction anywhere.
+# ----------------------------------------------------------------------
+FPU ops: 0 (expect 0)
+mcl_arg_w32 body:
+mcl_arg_w32:
+@ %bb.0:
+	muls	r2, r3, r2
+	muls	r0, r1, r0
+	subs	r0, r0, r2
+	bx	lr
+.Lfunc_end1:
+	.size	mcl_arg_w32, .Lfunc_end1-mcl_arg_w32
+	.cantunwind

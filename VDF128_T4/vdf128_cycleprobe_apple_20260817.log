@@ -1,0 +1,16 @@
+MCL-VDF128-CYCLE-2026-0817-001 — combined run log (Apple M2 Max, clang -O3 -DNDEBUG, 2026-08-17)
+Engine: root mcl_core.hpp (read-only) + keyed_q30_PQ/mcl_keyed_q30.hpp v1.0.4 (read-only) + VDF128_T4/mcl_vdf128_t4.hpp
+
+TEST1 control OLD path: CLOSED, cycle lambda = 1671196332 (expected 1671196332)   [4th independent confirmation]
+TEST2 input A: NO closure within 2^33 = 8,589,934,592 steps (255 s, 33.7 M iter/s)
+TEST2 input B: NO closure within 2^33 = 8,589,934,592 steps (255 s, 33.7 M iter/s)
+TEST2 input C: NO closure within 2^33 = 8,589,934,592 steps (255 s, 33.7 M iter/s)
+TEST3 s vs s+2^32: 60/128 bits differ (old path: 0)
+TEST3 1-bit flip: 69/128 bits differ (expect ~64)
+TEST4 throughput: 33.9 M iter/s (29.5 ns/iter)
+TEST5 KAT x = "MCL-VDF128-KAT-1", B = 10000:
+  init state      : b449a763 2dc150e6 6b91a53c 35df83c8
+  post-burn-in    : ebc831f5 1eb89ea5 56ce7969 c2a721f8
+  final (N = 1e5) : 53fe6882 a15c05c1 08cbf5ed a6a12a9a
+  y               : 72b2731b72e82fad4ba5b91601304dd136bda3a657e0e34a0018adbbc2b99e7a
+  determinism     : IDENTICAL across two independent evaluations

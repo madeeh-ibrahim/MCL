@@ -1,0 +1,64 @@
+================================================================
+  MCL KEYED Q30 -- verification harness (engine 6.1.0)
+================================================================
+
+[1] Determinism + integer KAT (platform-independent CRCs)
+  [PASS] T4-Q30 commit32 deterministic
+    T4-Q30 commit CRC-32 = 0x58C99E3E
+    T4-Q30 commit = 848399309a328a0e40caa012d02c6ffc60fcd5efea5fa1e2acc135795baaffc3
+  [PASS] cascade(m=7) deterministic
+    cascade(m=7) CRC-32  = 0xAC441A9A
+    cascade(m=7)  = 51e1931b7f0b8b07a9e4b87491d335b6a8def4fbcb2b2a5f82fd62656708c9ac
+
+[2] T4-Q30 keystream quality (1 MiB)
+    chi^2 = 230.23 (threshold 330.52)   entropy = 7.999842 bits/byte
+  [PASS] T4-Q30 chi^2 below df=255 threshold
+  [PASS] T4-Q30 Shannon entropy > 7.99 bits/byte
+
+[3] Key avalanche (flip 1 of 256 key bits)
+    mean output bit-change = 50.07% (ideal 50%)
+  [PASS] T4-Q30 key avalanche ~50%
+
+[4] Capacity: every one of the 12 T4 weights affects output
+    weights affecting output: 12 / 12 (min bit-change 45.3%)
+  [PASS] all 12 weights change the output (full capacity)
+
+[5] Cascade: every epoch contributes; no intermediate leak
+    epochs affecting final output: 7 / 7 (min bit-change 47.3%)
+  [PASS] every epoch (incl. epoch 0) changes the final output
+    (intermediate state is never externalized -- joint-space precondition holds by construction)
+
+[6] Forward non-monotonicity (two-osc Q30, p=3,q=5) -- INFORMATIONAL
+    scanned 4194304 points: slope sign reversals = 327399, downward steps = 163700
+    INFORMATIONAL only: non-monotone != non-injective. Definitive backward
+    branching is b~1.59 (science [T3], weak); keystream-constrained b_eff for
+    Q30 is UNRESOLVED (open risk). No pass/fail asserted here.
+
+[7] Post-quantum BIT-BUDGET accounting (budget only, not a proof)
+    one Q30 coprime (p,q) pair        = 59.28 classical bits
+    T4-Q30 (capacity 360 bits, key-bounded 256): post-Grover 128, L1=YES
+  [PASS] T4-Q30 capacity >= 256 bits
+  [PASS] T4-Q30 keyed = NIST PQ Level 1 (128 post-Grover)
+    cascade m=5: capacity 296 classical -> 148 post-Grover (joint), L1=YES
+    cascade m=6: capacity 356 classical -> 178 post-Grover (joint), L1=YES
+    cascade m=7: capacity 415 classical -> 207 post-Grover (joint), L1=YES
+    (cascade security = joint FORWARD search from the public seed:
+     no intermediate output [5] + backward branching b>1 (~2.5/2-D step,
+     science [T3]) makes a full-epoch back-peel explode (b^256) and blocks
+     meet-in-the-middle, so the attacker must guess all m (p,q) forward.
+     m>=5 reaches L1; m=7 is extra margin. NOTE: the Q30 STREAM/PRNG use --
+     where the keystream IS observed -- has an UNRESOLVED keystream-
+     constrained b_eff (open risk); this does not affect the cascade or T4.)
+
+[8] Timing (this host) + working-memory footprint
+    T4-Q30 construct+commit  = 0.387 ms/op (this host)
+    cascade(m=7)             = 0.243 ms/op (this host)
+    working state: T4-Q30 = 120 bytes (4x uint32 + 12x int64 + kp)
+    sin LUT (shared, ROM-able) = 262144 bytes
+    (FPU-free: hot path is integer + LUT only; scale ~x125 clock
+     to a 28 MHz Cortex-M0, NO software-double penalty -- unlike
+     the Float64 keyed path)
+
+================================================================
+  SUMMARY: 9 passed, 0 failed
+================================================================

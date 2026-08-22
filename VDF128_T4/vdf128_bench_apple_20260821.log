@@ -1,0 +1,33 @@
+================================================================
+  VDF128_T4 — Eval/Verify CPU benchmark
+  MCL-VDF128-BENCH-2026-0821-001   engine: mcl_core v8.1.1 + sidecar
+  HW: Apple M1 Pro, 8 logical cores
+================================================================
+
+--- PART 1: Eval throughput (sequential, single core) ---
+  burn-in B=10000: 0.396 ms (fixed Eval overhead)
+  N              best (s)     iters/s        ns/iter     
+  1000000        0.0301       3.318e+07      30.136      
+  10000000       0.3003       3.330e+07      30.029      
+  100000000      3.0029       3.330e+07      30.029      
+
+--- PART 2: Verify via checkpoints (k parallel segments) ---
+  Eval(N=1e8, incl. burn-in): 3.0045 s  -> y = a6fb6def...
+  k     verify (s)   speedup      Eval/Verify    bit-exact 
+  1     3.0033       1.00         1.00           yes       
+  2     1.5220       1.97         1.97           yes       
+  4     0.7802       3.85         3.85           yes       
+  8     0.5288       5.68         5.68           yes       
+  16    0.4965       6.05         6.05           yes       
+
+--- PART 3: end-to-end Eval (incl. burn-in + hashing) ---
+  N              wall (s)     note            
+  10000          0.0006       burn-in dominates
+  1000000        0.0303                       
+  10000000       0.3008                       
+  100000000      3.0052                       
+
+Notes: single-core Eval by construction (Gauss-Seidel dependency);
+Verify parallelism is over checkpoint segments, so the Eval/Verify
+wall-clock ratio grows with k up to the core count. FPGA Eval/Verify
+measurement on Tang 138K Pro is a separate, pending record.

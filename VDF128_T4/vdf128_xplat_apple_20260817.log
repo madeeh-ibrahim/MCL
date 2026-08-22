@@ -1,0 +1,40 @@
+MCL-VDF128-XPLAT-2026-0817-001 — cross-architecture / cross-optimization bit-exactness
+Host: Apple M2 Max (arm64), macOS; Apple clang 16.0.0; x86_64 variants executed under Rosetta 2.
+Claim under test: the VDF128_T4 fingerprint is identical across architecture and -O level.
+
+MATRIX (SHA-256 of the fingerprint body, all 8 builds):
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_arm64_O0
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_arm64_O1
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_arm64_O2
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_arm64_O3
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_x86_64_O0
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_x86_64_O1
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_x86_64_O2
+  2cfe46bbe00ecaf4a71aae69c9edffdf  xp_x86_64_O3
+
+RESULT: 8/8 IDENTICAL
+
+FINGERPRINT (identical in every build):
+  W  01939dd1 380b96fc 28e02ca0 226cbf32 3cda1933 3e6de1e7 2fac49ac 31213be2 00c67da9 03dd6895 3c9c1bd2 12b9ff51
+  I  b449a763 2dc150e6 6b91a53c 35df83c8
+  B  ebc831f5 1eb89ea5 56ce7969 c2a721f8
+  F  53fe6882 a15c05c1 08cbf5ed a6a12a9a
+  Y  72b2731b72e82fad4ba5b91601304dd136bda3a657e0e34a0018adbbc2b99e7a
+  L  fold=d0e1fe13 state=9e4742ca 71d947cf c1aa6249 9a3b5135
+  M  multi-input-acc=54c5b4f4
+
+SCOPE — what this does and does NOT establish (read before quoting):
+  ESTABLISHED: identical results under two INSTRUCTION SET ARCHITECTURES
+    (arm64 native, x86_64 codegen) and four optimization levels (-O0..-O3).
+    This exercises the axes that actually threaten an integer engine:
+    instruction selection, integer promotion/narrowing, and optimizer
+    reassociation. VDF128_T4 has NO floating-point and NO libm dependency in
+    the delay loop (integer + LUT + clean-room SHA-256), so the classic
+    libm-divergence failure mode of the Float64 path cannot arise here.
+  NOT ESTABLISHED: a native Linux/glibc run on physical x86_64 hardware, and a
+    second compiler family (GCC). The x86_64 binaries here are Mach-O executed
+    through Rosetta 2 translation; the compiler back end is x86_64, the OS is
+    not. Big-endian hosts remain explicitly gated by the sidecar's
+    MCL_BIG_ENDIAN_ACK guard and are untested.
+  STATUS: partial evidence. The remaining Linux/GCC run stays on the pre-publication
+    checklist and must not be described as done.

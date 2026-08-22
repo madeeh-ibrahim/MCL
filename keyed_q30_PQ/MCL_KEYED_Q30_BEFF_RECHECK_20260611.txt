@@ -1,0 +1,9 @@
+targets=12  mean b_2D=3.250
+ k(bits)  measured_b_eff   predicted 1+(b2D-1)/2^k
+    1        1.9167            2.1250
+    2        1.3333            1.5625
+    4        1.0000            1.1406
+    8        1.0000            1.0088
+
+If measured ~ predicted, b_eff~1 at k=8 is GENERIC (small b_2D + 8-bit byte),
+NOT a Q30-specific one-wayness weakness.
