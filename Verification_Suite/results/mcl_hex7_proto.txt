@@ -1,0 +1,144 @@
+
+==============================================================================
+  MCL LATTICE COUPLED OSCILLATOR v6.0.0
+  MCL-HEX7-2026-0526-001
+  Mode: FULL
+  Started: 2026-05-30 10:48:35 UTC
+  Coupling: Kuramoto (K/degree * SUM sin, separate per neighbor)
+  Update:   Gauss-Seidel, sequential node order 0..N-1
+  Extract:  simultaneous C(N,2) channels from single instance
+==============================================================================
+
+==============================================================================
+  TEST 0: NEGATIVE CONTROL
+==============================================================================
+
+  Same engine+pair:    r=1.000000  OK
+  Same instance ch0/10:|r|=0.003217  OK
+  Constant output chi2:12750000  OK
+  90% similar stream:  r=0.849140  OK
+
+  [PASS] Test 0
+
+==============================================================================
+  TEST 1: OUTPUT QUALITY (ent>7.998, chi2<330)
+==============================================================================
+
+  T2 baseline:    ent=7.999648 chi2=243.24 PASS
+  Hex7 21 ch:     min_ent=7.999551 max_chi2=310.91 fails=0 PASS
+
+  NOTE: Entropy+Chi2 necessary but NOT sufficient.
+        BigCrush required before claiming crypto quality.
+
+  [PASS] Test 1
+
+==============================================================================
+  TEST 2: HEX7 INDEPENDENCE (Bonferroni, 3 seeds)
+==============================================================================
+
+  seed=12345678901234: 210 pairs, max|r|=0.005106, rej=0 PASS
+  seed=98765432109876: 210 pairs, max|r|=0.003382, rej=0 PASS
+  seed=55555555555555: 210 pairs, max|r|=0.004432, rej=0 PASS
+
+  [PASS] Test 2 -- Hex7, 3 seeds
+
+==============================================================================
+  TEST 3: RING(7) INDEPENDENCE (Bonferroni, 3 seeds)
+==============================================================================
+
+  seed=12345678901234: 210 pairs, max|r|=0.004651, rej=0 PASS
+  seed=98765432109876: 210 pairs, max|r|=0.003095, rej=0 PASS
+  seed=55555555555555: 210 pairs, max|r|=0.003815, rej=0 PASS
+
+  [PASS] Test 3 -- Ring(7), 3 seeds
+
+==============================================================================
+  TEST 4: MULTIPLE (p,q)
+==============================================================================
+
+  (p,q)        min_ent    max_chi    max|r|     rej    ok    
+  ------       -------    -------    ------     ---    --    
+  (3,5)        7.998888   308.23     0.006799   0      PASS
+  (7,11)       7.999020   271.03     0.007397   0      PASS
+  (13,17)      7.998869   313.54     0.006967   0      PASS
+  (97,101)     7.998828   325.47     0.007487   0      PASS
+  (997,1009)   7.998907   302.56     0.006932   0      PASS
+
+  [PASS] Test 4 -- 5 pairs
+
+==============================================================================
+  TEST 5: THROUGHPUT
+==============================================================================
+
+  T2 (mcl_core):      5.92 MB/s | 2 sin/iter | 1 ch | 40 B | 4.0 sin/ch-byte
+  Ring(7):           26.16 MB/s | 14 sin/iter | 21 ch | 80 B | 1.33 sin/ch-byte
+  Hex7:              23.63 MB/s | 24 sin/iter | 21 ch | 80 B | 2.29 sin/ch-byte
+
+  [INFO] Test 5
+
+==============================================================================
+  TEST 6: SATURATION
+==============================================================================
+
+  Coupling: (K/degree)*SUM sin(p*tj - q*ti)  |  DECIMATION=2
+  T2 baseline: 4.0 sin/ch-byte
+
+  Topology   Nodes  sin/i    Chans    sin/ch-byte  min_ent   
+  --------   -----  -----    -----    -----------  -------   
+  Ring(3)    3      6        3        4.00         7.998006  
+  Ring(5)    5      10       10       2.00         7.997910  
+  Ring(7)    7      14       21       1.33         7.997858  
+  Ring(9)    9      18       36       1.00         7.997822  
+  Ring(13)   13     26       78       0.67         7.997715  
+  Hex7       7      24       21       2.29         7.997754  
+
+  Formula: sin/ch-byte = sin_per_iter * DECIMATION / n_channels
+  Ring(N): sin/iter=2N, channels=N(N-1)/2
+  => sin/ch-byte = 2N * 2 / (N(N-1)/2) = 8/(N-1)
+  This scaling is combinatorial (C(N,2) grows as N^2).
+  The real question: do ALL channels remain independent?
+  (Verified for N=7 in Tests 2+3, unverified for N>7)
+
+  [INFO] Test 6
+
+==============================================================================
+  TEST 7: MEMORY
+==============================================================================
+
+  For 21 independent channels:
+
+    T2 (21 instances)       21 ch   840 bytes (logical)
+    Ring(7)                 21 ch    80 bytes (logical)
+    Hex7                    21 ch    80 bytes (logical)
+
+  At scale:
+    1M users:
+      T2 (21 instances)          0.78 GB
+      Ring(7)                    0.07 GB
+      Hex7                       0.07 GB
+    100M users:
+      T2 (21 instances)         78.23 GB
+      Ring(7)                    7.45 GB
+      Hex7                       7.45 GB
+
+  CAVEAT: T2 with different (p,q) also gives unlimited channels.
+  Lattice advantage = N(N-1)/2 channels from SINGLE (p,q)+seed.
+
+  [INFO] Test 7
+
+==============================================================================
+  RESULTS: 5/5 PASS | 9.3 sec
+
+  LIMITATIONS (resolve before patent claims):
+    1. BigCrush not yet run on any lattice engine
+    2. Goldilocks [20,36] Safe Zone unvalidated for lattice XOR
+    3. Frequency linear independence assumed, not proven
+    4. Maximum useful N not established (tested only N <= 13)
+    5. Lyapunov exponent not computed for lattice topologies
+    6. Kuramoto K/degree normalization chosen, not optimized
+
+  Doc ID:  MCL-HEX7-2026-0526-001 v6.0.0
+  Author:  Madeeh Ibrahim, Cairo, Egypt
+  Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673
+==============================================================================
+

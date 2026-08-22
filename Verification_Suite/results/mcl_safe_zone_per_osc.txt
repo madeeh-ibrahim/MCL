@@ -1,0 +1,112 @@
+
+==============================================================================
+  MCL Safe Zone Per-Oscillator Verification
+  MCL-SAFEZONE-PEROSC-2026-0526-001 v6.0.0
+==============================================================================
+
+  Configuration:
+    Seed:         12345678901234 (DEFAULT_SEED)
+    K:            12.0000
+    (p, q):       (3, 5)
+    Burn-in:      10000
+    Decimation:   2
+    N samples:    100000000
+    χ² threshold: 310.46 (df=255, α=0.01)
+
+  Generating 100000000 samples...
+    10% complete
+    20% complete
+    30% complete
+    40% complete
+    50% complete
+    60% complete
+    70% complete
+    80% complete
+    90% complete
+    100% complete
+  Generation complete: 21.90 sec
+
+  Per-bit Byte-Level χ² Table (df=255, threshold = 310.46):
+  ========================================================================
+  | Bit |       θ₁ alone        |       θ₂ alone        |
+  | pos |       χ²        |  V    |       χ²        |  V    |
+  ------------------------------------------------------------------------
+  |   0 |        2.09e+08 | FAIL    |        1.85e+08 | FAIL    |
+  |   1 |        7.00e+07 | FAIL    |        6.52e+07 | FAIL    |
+  |   2 |        1.76e+07 | FAIL    |        1.60e+07 | FAIL    |
+  |   3 |        3.65e+06 | FAIL    |        3.29e+06 | FAIL    |
+  |   4 |        8.50e+05 | FAIL    |        8.11e+05 | FAIL    |
+  |   5 |        2.16e+05 | FAIL    |        2.22e+05 | FAIL    |
+  |   6 |        5.53e+04 | FAIL    |        5.79e+04 | FAIL    |
+  |   7 |        1.42e+04 | FAIL    |        1.49e+04 | FAIL    |
+  |   8 |        3.90e+03 | FAIL    |        3.98e+03 | FAIL    |
+  |   9 |        1.17e+03 | FAIL    |        1.20e+03 | FAIL    |
+  |  10 |        5.21e+02 | FAIL    |        4.97e+02 | FAIL    |
+  |  11 |        3.19e+02 | FAIL    |        3.28e+02 | FAIL    |
+  |  12 |        2.65e+02 | PASS    |        2.92e+02 | PASS    |
+  |  13 |        2.58e+02 | PASS    |        2.77e+02 | PASS    |
+  |  14 |        2.84e+02 | PASS    |        2.39e+02 | PASS    |
+  |  15 |        2.67e+02 | PASS    |        2.20e+02 | PASS    |
+  |  16 |        2.82e+02 | PASS    |        2.42e+02 | PASS    |
+  |  17 |        2.90e+02 | PASS    |        2.52e+02 | PASS    |
+  |  18 |        2.68e+02 | PASS    |        2.40e+02 | PASS    |
+  |  19 |        2.29e+02 | PASS    |        2.43e+02 | PASS    |
+  |  20 |        2.49e+02 | PASS    |        2.73e+02 | PASS    |
+  |  21 |        2.74e+02 | PASS    |        2.27e+02 | PASS    |
+  |  22 |        2.59e+02 | PASS    |        2.23e+02 | PASS    |
+  |  23 |        2.54e+02 | PASS    |        2.47e+02 | PASS    |
+  |  24 |        1.95e+02 | PASS    |        2.81e+02 | PASS    |
+  |  25 |        2.18e+02 | PASS    |        2.66e+02 | PASS    |
+  |  26 |        2.09e+02 | PASS    |        2.70e+02 | PASS    |
+  |  27 |        2.15e+02 | PASS    |        2.88e+02 | PASS    |
+  |  28 |        2.31e+02 | PASS    |        2.28e+02 | PASS    |
+  |  29 |        2.31e+02 | PASS    |        2.76e+02 | PASS    |
+  |  30 |        2.32e+02 | PASS    |        2.67e+02 | PASS    |
+  |  31 |        2.24e+02 | PASS    |        2.44e+02 | PASS    |
+  |  32 |        2.40e+02 | PASS    |        2.53e+02 | PASS    |
+  |  33 |        2.54e+02 | PASS    |        2.36e+02 | PASS    |
+  |  34 |        2.63e+02 | PASS    |        2.67e+02 | PASS    |
+  |  35 |        2.87e+02 | PASS    |        3.37e+02 | FAIL    |
+  |  36 |        2.86e+02 | PASS    |        3.71e+02 | FAIL    |
+  |  37 |        4.11e+02 | FAIL    |        4.16e+02 | FAIL    |
+  |  38 |        2.61e+03 | FAIL    |        2.58e+03 | FAIL    |
+  |  39 |        8.07e+03 | FAIL    |        7.68e+03 | FAIL    |
+  |  40 |        1.85e+04 | FAIL    |        1.84e+04 | FAIL    |
+  |  41 |        1.57e+05 | FAIL    |        1.55e+05 | FAIL    |
+  |  42 |        5.11e+05 | FAIL    |        5.13e+05 | FAIL    |
+  |  43 |        1.23e+06 | FAIL    |        1.23e+06 | FAIL    |
+  |  44 |        9.92e+06 | FAIL    |        9.92e+06 | FAIL    |
+  |  45 |        2.21e+07 | FAIL    |        2.21e+07 | FAIL    |
+  |  46 |        6.55e+07 | FAIL    |        6.55e+07 | FAIL    |
+  |  47 |        1.93e+08 | FAIL    |        1.93e+08 | FAIL    |
+  |  48 |        4.82e+08 | FAIL    |        4.82e+08 | FAIL    |
+  |  49 |        1.03e+09 | FAIL    |        1.03e+09 | FAIL    |
+  |  50 |        2.11e+09 | FAIL    |        2.11e+09 | FAIL    |
+  |  51 |        4.27e+09 | FAIL    |        4.27e+09 | FAIL    |
+  ========================================================================
+
+  Empirical Safe Zone (largest contiguous region χ² < 310.46):
+  ------------------------------------------------------------
+    θ₁ alone: [12, 36] = 25 bits
+    θ₂ alone: [12, 34] = 23 bits
+
+  Comparison (K=12.0):
+  ------------------------------------------------------------------------
+    Prototype init (decimal multipliers 0.1, 0.2):
+        θ₁ = [11, 35] = 25 bits  |  θ₂ = [12, 35] = 24 bits
+    Production init (mcl_core.hpp hash_seed):
+        θ₁ = [12, 35] = 24 bits  |  θ₂ = [12, 36] = 25 bits
+    THIS RUN (production hash_seed init):
+        θ₁ = [12, 36] = 25 bits  |  θ₂ = [12, 34] = 23 bits
+
+  [PASS] NEG CTRL bit 0 fails as expected (LSB rounding artifacts)
+  [PASS] NEG CTRL bit 51 fails as expected (exponent correlation)
+  [PASS] Safe Zone of width 25 bits found (>= 18 required)
+
+  ============================================================================
+  GLOBAL VERDICT: PASS
+  Failures:       0
+  Document:       MCL-SAFEZONE-PEROSC-2026-0526-001 v6.0.0
+  Reference:      Paper 1 §III.C, §III.D
+  ============================================================================
+

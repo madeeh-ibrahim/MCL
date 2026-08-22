@@ -1,0 +1,86 @@
+Platform: macOS Apple Silicon
+Compiler: clang 16.0.0
+BURNIN: 10000   DECIMATION: 2   iter/engine: 10064
+
+=============================================================
+  PHASE 1 — VARIANTS  (10 rounds × 5000 engines, shuffled)
+=============================================================
+  round  0  V1_mono     855.1 µs
+  round  0  V3_attacker     847.2 µs
+  round  0  V4_paired    1746.6 µs
+  round  0  V2_genuine     866.1 µs
+  round  1  V3_attacker     892.3 µs
+  round  1  V1_mono     849.2 µs
+  round  1  V2_genuine     848.9 µs
+  round  1  V4_paired    1751.5 µs
+  round  2  V3_attacker     862.9 µs
+  round  2  V1_mono     849.6 µs
+  round  2  V2_genuine     899.6 µs
+  round  2  V4_paired    1709.1 µs
+  round  3  V4_paired    1749.3 µs
+  round  3  V2_genuine     849.0 µs
+  round  3  V1_mono     850.0 µs
+  round  3  V3_attacker     848.1 µs
+  round  4  V3_attacker     905.0 µs
+  round  4  V1_mono     864.5 µs
+  round  4  V4_paired    1802.9 µs
+  round  4  V2_genuine     916.9 µs
+  round  5  V1_mono     860.3 µs
+  round  5  V4_paired    1726.5 µs
+  round  5  V2_genuine     917.8 µs
+  round  5  V3_attacker     863.7 µs
+  round  6  V1_mono     854.4 µs
+  round  6  V2_genuine     846.6 µs
+  round  6  V4_paired    1721.8 µs
+  round  6  V3_attacker     862.7 µs
+  round  7  V2_genuine     910.0 µs
+  round  7  V4_paired    1738.7 µs
+  round  7  V1_mono     862.5 µs
+  round  7  V3_attacker     880.9 µs
+  round  8  V2_genuine     856.7 µs
+  round  8  V3_attacker     874.7 µs
+  round  8  V1_mono     928.8 µs
+  round  8  V4_paired    1749.7 µs
+  round  9  V4_paired    1778.0 µs
+  round  9  V2_genuine     874.4 µs
+  round  9  V3_attacker     881.2 µs
+  round  9  V1_mono     970.6 µs
+
+  --- medians ---
+  V1  monolithic (literal 3,5)       :    860.3 µs/engine
+  V2  wrapped genuine (literal)      :    874.4 µs/engine
+  V3  wrapped attacker (runtime ap,aq):    874.7 µs/engine
+  V4  paired (genuine+attacker, total):   1749.3 µs/trial = 874.7 µs/eng
+
+  --- ratios ---
+  V1/V2 = 0.984   (expect ~1.00 if NO TU/inlining effect)
+  V3/V2 = 1.000   (>1.00 means runtime params slow iterate)
+  V4/(V2+V3) = 1.000   (=1.00 if V4 is exactly genuine+attacker)
+
+=============================================================
+  PHASE 2 — THERMAL  (6 Bench-6-style runs back-to-back)
+  لو الزَمَن يَنزَلِق صُعوداً ⇒ thermal/DVFS
+  لو ثابِت ⇒ ليس thermal
+=============================================================
+  run 0     879.2 µs/engine   (delta from run 0:  +0.00%)
+  run 1     888.1 µs/engine   (delta from run 0:  +1.02%)
+  run 2     885.4 µs/engine   (delta from run 0:  +0.70%)
+  run 3     881.8 µs/engine   (delta from run 0:  +0.29%)
+  run 4     963.1 µs/engine   (delta from run 0:  +9.54%)
+  run 5     924.8 µs/engine   (delta from run 0:  +5.19%)
+
+  Total thermal drift: +5.19%
+  ⇒ THERMAL THROTTLING DETECTED (run 5 is 5.2% slower than run 0)
+
+=============================================================
+  VERDICT
+=============================================================
+  TU/inlining effect (V1 vs V2):       ✗ NOT detected  (ratio 0.984)
+  Constant-prop effect (V3 vs V2):     ✗ NOT detected  (ratio 1.000)
+  Thermal throttling (Phase 2):        ✓ DETECTED  (drift +5.19%)
+
+  ⇒ ROOT CAUSE: thermal throttling. Bench 6 (last in sequence)
+    runs slower than simswap (single-test) due to CPU heat/DVFS.
+    FIX: add sleep(30) before Bench 6, or run Bench 6 alone.
+
+sink: 143

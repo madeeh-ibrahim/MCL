@@ -1,0 +1,144 @@
+
+==============================================================================
+  MCL DYNAMIC PARAMETER HOPPING - UNIFIED SUITE v6.0.0
+  22 Tests - Free Experiment (results ARE the empirical record)
+==============================================================================
+
+  N=500K, BPH=1000, warmup=50, schedule=6 topos, hops=500
+  N=500K -> corr_threshold = 0.01000 (block: 0.05000)
+
+
+==============================================================================
+ PART A: HOPPING QUALITY
+==============================================================================
+
+  [PASS] A1: Post-hop entropy threshold             7.999660 bits/byte (thr=7.999)
+  [PASS] A2: Post-hop chi2 < 330.5                  235.6 (threshold 330.5)
+
+==============================================================================
+ A3: MICRO-WARMUP SUFFICIENCY CURVE
+==============================================================================
+
+  W      |r|          Hamming%    
+  --------------------------------
+  0      0.004852     49.74        (neg ctrl)
+  5      0.000098     49.91       
+  10     0.001576     49.99       
+  25     0.002882     49.88       
+  50     0.011443     50.00        <- default
+  100    0.003386     49.76       
+  200    0.010366     49.94       
+  [PASS] A3: W=50 sufficient                        |r| at W=50: 0.011443 (thr=0.05000)
+
+==============================================================================
+ A4: HOPPING vs STATIC INDEPENDENCE
+==============================================================================
+
+  [PASS] A4: Hop vs static independent              max|r|=0.003217 vs 6 static ch
+
+==============================================================================
+ A5: DIFFERENT SCHEDULES -> INDEPENDENT
+==============================================================================
+
+  [PASS] A5: Schedule independence                  max|r|=0.003107 (3 schedules)
+
+==============================================================================
+ A6: HOP BOUNDARY INVISIBILITY
+==============================================================================
+
+  sigma=0.034115, |bnd-mid|=0.001105, range [7.4323, 7.6973]
+  [PASS] A6: Boundary invisible                     |bnd-mid|=0.001105 < 3sigma=0.102344
+
+==============================================================================
+ A7: NEGATIVE CONTROL
+==============================================================================
+
+  |r| W=0: 0.004852, |r| W=50: 0.011443, H(W0 vs W50): 49.95%
+  [PASS] A7: Zero warmup differs from W=50          W=0 |r|=0.0049 vs W=50 |r|=0.0114
+
+==============================================================================
+ A8: HOP FREQUENCY SCALING
+==============================================================================
+
+    100 B/hop ( 5000 hops): ent=7.999572 chi=296.8 OK
+    500 B/hop ( 1000 hops): ent=7.999631 chi=256.0 OK
+   1000 B/hop (  500 hops): ent=7.999660 chi=235.6 OK
+   5000 B/hop (  100 hops): ent=7.999612 chi=268.8 OK
+  [PASS] A8: All hop frequencies pass               100-5000 B/hop
+  [PASS] A9: Windowed entropy uniform               [7.4668, 7.6794] (1000 non-overlapping)
+  [PASS] A10: Deterministic (sender=receiver)       0/500000 errors
+  [PASS] A11: Cross-seed hop independence           max|r|=0.001643 (2 seeds)
+
+==============================================================================
+ A12: HOPPING + MULTIPLEXING
+==============================================================================
+
+  6 hopping receivers, mux entropy=7.999641, max|r|=0.001855
+  [PASS] A12: Hop+multiplex combined                ent=7.9996, max|r|=0.001855
+
+==============================================================================
+ PART B: POST-QUANTUM HOPPING SECURITY
+==============================================================================
+
+  [PASS] B1: Fresh MCL != hopping MCL (5 segs)      worst |r|=0.065065 (thresh=0.1265), H=51.75%
+  [PASS] B2: Cross-segment |r| < EVT                max|r|=0.105378 (EVT=0.1265, 595 pairs)
+  [PASS] B3: Topology unidentifiable                20.5% (random=16.7%)
+  Fixed 6-topo cycle: 1292 bits (log2(6) x 500)
+  Random nmax=1000: 9607 bits (19.2 x 500) - max capacity
+  [PASS] B4: Schedule entropy > 128                 cycle=1292 bits, capacity=9607 bits
+  Without hop: 10128 iters | With hop: 1035000 iters (102.2x)
+  [PASS] B5: Grover cost increased                  102.2x oracle cost (+3.34 PQ bits)
+  [PASS] B6: Forward secrecy (4-sigma threshold)    worst |r|=0.0651 < 4/sqrt(1000)=0.1265
+  mean|r| at boundary: 0.049830, away: 0.047024, diff: 0.002807
+  [PASS] B7: Boundary undetectable                  diff=0.002807
+
+==============================================================================
+ B8: MULTIPLEX INVISIBILITY N-SWEEP
+==============================================================================
+
+  N=500K: max|r|=0.003315 (nf=0.001414)
+  N=1000K: max|r|=0.002896 (nf=0.001000)
+  N=3000K: max|r|=0.001572 (nf=0.000577)
+  [PASS] B8: Channel invisible in multiplex         worst max|r|=0.003315
+  [PASS] B9: Same-ratio pairs independent           max|r|=0.002355 (6 pairs, ratio 2/3)
+
+==============================================================================
+ B10: POST-QUANTUM SECURITY SUMMARY
+==============================================================================
+
+  PQ (conservative): 73.6 bits
+  PQ (enhanced):     105.6 bits
+  Oracle with hop: 102.2x | Sched entropy: 1292 bits
+  [PASS] B10: PQ security above AES-128             73.6 bits > 64 (AES-128 PQ)
+
+==============================================================================
+ UNIFIED HOPPING VERIFICATION SUMMARY
+==============================================================================
+
+  Tests passed: 22 / 22
+
+  KEY NUMBERS (free experiment results):
+    Hop entropy:           7.999660 bits/byte
+    Hop chi2:              235.6
+    W=50 |r|:              0.011443
+    Boundary sigma:        0.034115 bits/byte
+    Boundary |bnd-mid|:    0.001105 bits/byte
+    Freq scaling:          100-5000 B/hop all pass
+    Reproducibility:       0 errors
+    Mux max|r| (hop):      0.001855
+    Mux entropy (hop):     7.999641
+    Cross-seg max|r|:      0.105378
+    Topo ID attack:        20.5% (random=16.7%)
+    Forward secrecy H:     51.75%
+    Boundary detect diff:  0.002807
+    Same-ratio max|r|:     0.002355
+    PQ (conservative):     73.6 bits
+
+ +================================================================+
+ | VERDICT: PASS - all 22 hopping tests verified                   |
+ +================================================================+
+
+  Time: 19.0 seconds
+
+  MCL-HOP-UNIFIED-2026-0526-001 v6.0.0 | Madeeh Ibrahim, Cairo
+==============================================================================

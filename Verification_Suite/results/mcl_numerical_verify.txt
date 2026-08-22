@@ -1,0 +1,132 @@
+
+******************************************************************************
+ MCL NUMERICAL REFERENCE VERIFICATION v6.0.0
+ Multiplex invisibility, same-ratio independence, hop boundary σ
+******************************************************************************
+
+
+==============================================================================
+ EXPERIMENT A: Multiplex Channel Invisibility + Same-Ratio Independence
+==============================================================================
+
+ Channels: 20 topologies, seed=12345678901234
+ Same-ratio pair: (4,6) vs (6,9) — both ratio 2/3
+
+ N (bytes)    noise_floor    max|r|_mux     |r|_same_ratio Ref check     
+ ------------------------------------------------------------------------
+ ch[ 0] (2,3): |r| = 0.000244
+ ch[ 1] (3,5): |r| = 0.000556
+ ch[ 2] (5,7): |r| = 0.003306
+ ch[ 3] (7,11): |r| = 0.000661
+ ch[ 4] (8,13): |r| = 0.001179
+ ... (13 channels) ...
+ ch[18] (61,71): |r| = 0.002933
+ ch[19] (67,73): |r| = 0.000038
+ max|r| = 0.003315, mean|r| = 0.001384
+ noise_floor = 0.001414, EVT(20ch) = 0.003462
+
+ 500000       0.001414       0.003315       0.000059       PASS
+ 1000000      0.001000       0.002896       0.000601       PASS
+ 3000000      0.000577       0.001572       0.000731       PASS
+ 10000000     0.000316       0.000724       0.000606       PASS
+
+ Same-ratio (4,6) vs (6,9) across 3 seeds (N=500000):
+ seed 12345678901234: |r| = 0.000059
+ seed 98765432109876: |r| = 0.000659
+ seed 31415926535897: |r| = 0.000719
+
+==============================================================================
+ N >= 3,000,000 RECOMMENDATION VERIFICATION
+==============================================================================
+
+ Question: at what N does max|r| stabilize below noise_floor?
+
+ N            noise_floor    max|r|(6ch)    ratio    valid   Stable?
+ ------------------------------------------------------------------------
+ 100000       0.003162       0.008128       2.57     15/15   YES — within EVT
+ 250000       0.002000       0.004809       2.40     15/15   YES — within EVT
+ 500000       0.001414       0.002864       2.02     15/15   YES — within EVT
+ 1000000      0.001000       0.001850       1.85     15/15   YES — within EVT
+ 2000000      0.000707       0.001108       1.57     15/15   YES — within EVT
+ 3000000      0.000577       0.001058       1.83     15/15   YES — within EVT
+ 5000000      0.000447       0.000889       1.99     15/15   YES — within EVT
+ 10000000     0.000316       0.000785       2.48     15/15   YES — within EVT
+
+ CONCLUSION: At N >= 3M, max|r|/noise_floor ratios were all
+ below the EVT bound (3.0) for 15 pairs.
+ N >= 3000000 is a justified recommendation.
+
+==============================================================================
+ EXPERIMENT B: Hop Boundary Invisibility — Windowed Entropy
+==============================================================================
+
+ Stream: 200K bytes, hop (3,5)→(7,11) at byte 100K
+ Window: W=500 bytes, step S=100
+ Hop burnin: 50 iterations
+
+ Results:
+ Total windows: 1996
+ Pre-hop mean entropy: 7.582844 (995 windows)
+ Boundary mean entropy: 7.614366 (11 windows)
+ Post-hop mean entropy: 7.577906 (990 windows)
+ Overall mean entropy: 7.580568
+ Min entropy (any win): 7.448394
+ Max entropy (any win): 7.691812
+ σ (overlapping S=100): 0.033889 bits/byte (1996 windows)
+ σ (non-overlapping S=500): 0.033855 bits/byte (400 windows)
+ NOTE: overlapping windows inflate σ due to autocorrelation
+ non-overlapping σ is the independent measurement
+ |pre - post| diff: 0.004938 bits/byte
+ |boundary - overall|: 0.033798 bits/byte
+
+ Reference verification:
+ Reference: σ ≈ 0.03 bits/byte
+ Measured (overlapping): σ = 0.0339 bits/byte
+ Measured (non-overlapping): σ = 0.0339 bits/byte ✓ CONSISTENT
+ Reference: max diff 0.067 b/B Measured: 0.0049 bits/byte ✓ CONSISTENT
+ Boundary invisible: YES — within 3σ (k=3.0 × σ_nonoverlap = 0.1016)
+
+ Entropy around hop boundary (window index 1000):
+ Window Position Entropy Note
+ ----------------------------------------------------
+ 990      99000         7.585871 
+ 991      99100         7.608198 
+ 992      99200         7.587650 
+ 993      99300         7.603612 
+ 994      99400         7.597522 
+ 995      99500         7.617981 
+ 996      99600         7.618896 ← STRADDLE
+ 997      99700         7.589921 ← STRADDLE
+ 998      99800         7.628296 ← STRADDLE
+ 999      99900         7.606664 ← STRADDLE
+ 1000     100000        7.630554 ← first all-post
+ 1001     100100        7.638606 
+ 1002     100200        7.606902 
+ 1003     100300        7.609470 
+ 1004     100400        7.621019 
+ 1005     100500        7.589721 
+ 1006     100600        7.610051 
+ 1007     100700        7.602154 
+ 1008     100800        7.612142 
+ 1009     100900        7.648030 
+ 1010     101000        7.647631 
+
+==============================================================================
+ REFERENCE VALUE VERIFICATION SUMMARY
+==============================================================================
+
+ max|r| ch vs mux at 500K:  0.003315 PASS (bound 0.0075, ref 0.0050)
+ |r| same-ratio (3 seeds):  0.000719 PASS (bound 0.0075)
+ N >= 3000000 recommendation:  JUSTIFIED (EVT convergence)
+ σ windowed entropy:        0.0339 bits/byte PASS (ref 0.030 ± 0.010)
+ max|μ_pre−μ_post|:         0.0049 bits/byte PASS (ref 0.067, bound 0.1005)
+ hop boundary invisible:    YES (|μ_bnd−μ_all|=0.0338, k=3.0σ)
+
+ +================================================================+
+ | VERDICT: PASS — all reference values verified                 |
+ +================================================================+
+
+ Time: 82.6 seconds
+
+ MCL-NUM-VERIFY-2026-0526-001 v6.0.0 | Madeeh Ibrahim, Cairo
+==============================================================================

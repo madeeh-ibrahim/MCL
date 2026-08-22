@@ -1,0 +1,58 @@
+
+******************************************************************************
+  MCL Burn-In Convergence Sweep
+  MCL-BURNIN-SWEEP-2026-0526-001 v6.0.0
+******************************************************************************
+
+  Configuration:
+    Seed:          12345678901234 (DEFAULT_SEED)
+    K:             12.0000
+    (p, q):        (3, 5)
+    Decimation:    2
+    Bytes per B:   1000000
+    B values:      {0, 100, 1k, 5k, 10k, 50k}
+    χ² threshold:  310.46 (df=255, α=0.01)
+    Attractor:     diameter ≈ 2π ≈ 6.2832 rad
+
+  [B = 0] running...
+  [B = 100] running...
+  [B = 1000] running...
+  [B = 5000] running...
+  [B = 10000] running...
+  [B = 50000] running...
+  All sweeps complete: 1.25 sec
+
+  Convergence Table (divergence: mean ± SE over 16 seeds):
+  ===============================================================================================
+  |      B |    divergence(rad) |       chi2 |    entropy |   bit_freq | chi2 verdict |
+  -----------------------------------------------------------------------------------------------
+  |      0 |   0.0000 ±  0.0000 |     233.19 |   7.999832 |   0.499976 | PASS |
+  |    100 |   1.2352 ±  0.2169 |     233.16 |   7.999832 |   0.499975 | PASS |
+  |   1000 |   1.2713 ±  0.2482 |     234.69 |   7.999831 |   0.499976 | PASS |
+  |   5000 |   1.3085 ±  0.2289 |     231.39 |   7.999833 |   0.499977 | PASS |
+  |  10000 |   0.9674 ±  0.1876 |     237.23 |   7.999829 |   0.499970 | PASS |
+  |  50000 |   1.2293 ±  0.2061 |     248.26 |   7.999821 |   0.499992 | PASS |
+  ===============================================================================================
+
+  Saturation Analysis:
+  ----------------------------------------------------------------------
+    Full angular range:    6.2832 rad (full circle 2π)
+    Saturation reference:  3.1416 rad (half circle = max diameter)
+
+    B=0     : mean = 0.0000 ± 0.0000 rad (  0.0% of π, CI [  0.0%,   0.0%]) — transient (1-ULP regime)
+    B=100   : mean = 1.2352 ± 0.2169 rad ( 39.3% of π, CI [ 25.5%,  53.1%]) — SATURATED (CI overlaps π/2)
+    B=1000  : mean = 1.2713 ± 0.2482 rad ( 40.5% of π, CI [ 24.7%,  56.3%]) — SATURATED (CI overlaps π/2)
+    B=5000  : mean = 1.3085 ± 0.2289 rad ( 41.7% of π, CI [ 27.1%,  56.2%]) — SATURATED (CI overlaps π/2)
+    B=10000 : mean = 0.9674 ± 0.1876 rad ( 30.8% of π, CI [ 18.9%,  42.7%]) — SATURATED (CI overlaps π/2)
+    B=50000 : mean = 1.2293 ± 0.2061 rad ( 39.1% of π, CI [ 26.0%,  52.3%]) — SATURATED (CI overlaps π/2)
+
+  [PASS] B=10000: χ² = 237.23 < 310.46 (production value uniform)
+  [PASS] B=10000: mean divergence = 0.9674 ± 0.1876 rad >= 0.7854 (saturated)
+  [PASS] NEG CTRL B=0: divergence = 0.0000 rad < 0.7854 (transient state)
+
+  ============================================================================
+  GLOBAL VERDICT: PASS
+  Failures:       0
+  Document:       MCL-BURNIN-SWEEP-2026-0526-001 v6.0.0
+  ============================================================================
+

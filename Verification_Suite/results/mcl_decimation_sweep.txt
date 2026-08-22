@@ -1,0 +1,59 @@
+
+******************************************************************************
+  MCL Decimation Sweep Verification
+  MCL-DECIM-SWEEP-2026-0526-001 v6.0.0
+******************************************************************************
+
+  Configuration:
+    Seed:         12345678901234 (DEFAULT_SEED)
+    K:            12.0000
+    (p, q):       (3, 5)
+    Burn-in:      10000
+    Bytes per D:  10000000
+    D values:     {1, 2, 3, 4}
+    Lag values:   {1, 2, 4, 8, 16, 32}
+    χ² threshold: 310.46 (df=255, α=0.01)
+    3σ noise floor for r: 0.0009487
+
+  [D = 1] generating 10000000 bytes...
+  [D = 2] generating 10000000 bytes...
+  [D = 3] generating 10000000 bytes...
+  [D = 4] generating 10000000 bytes...
+  All sweeps complete: 9.46 sec
+
+  [NEG CTRL 1] generating WeakBiased stream...
+  [NEG CTRL 2] generating WeakAutocorrelated stream...
+
+  Per-D Statistics (negative controls = last two rows):
+  ===============================================================================================
+  | D |       chi2 |  entropy | bit_freq |    r_lag1 |    r_lag2 |    r_lag4 |    r_lag8 |
+  -----------------------------------------------------------------------------------------------
+  | 1 |     268.27 | 7.999981 | 0.500055 | +0.000609 | -0.000587 | -0.000365 | +0.000400 |
+  | 2 |     253.42 | 7.999982 | 0.500026 | -0.000747 | -0.000187 | +0.000145 | -0.000053 |
+  | 3 |     233.48 | 7.999983 | 0.499987 | -0.000439 | -0.000160 | +0.000077 | +0.000355 |
+  | 4 |     252.22 | 7.999982 | 0.500024 | -0.000341 | +0.000079 | -0.000523 | +0.000337 |
+  | B |   2.53e+07 |   ----   |   ----   | -0.005543 |   ----    |   ----    |   ----    |
+  | A |     787.04 |   ----   |   ----   | +0.499752 |   ----    |   ----    |   ----    |
+  ===============================================================================================
+  (B = WeakBiased: should fail χ²; A = WeakAutocorrelated: should fail lag-1)
+
+  Decorrelation Verdict per D:
+  ------------------------------------------------------------
+    D=1: |r_lag1| = 0.0006092  (3σ = 0.0009487)  |r| within noise floor
+    D=2: |r_lag1| = 0.0007465  (3σ = 0.0009487)  |r| within noise floor
+    D=3: |r_lag1| = 0.0004390  (3σ = 0.0009487)  |r| within noise floor
+    D=4: |r_lag1| = 0.0003408  (3σ = 0.0009487)  |r| within noise floor
+
+  [PASS] D=2 χ² = 253.42 < 310.46 (uniform)
+  [PASS] D=2 lag-1 |r| = 0.0007465 < 3σ (within noise floor)
+  [PASS] D=3: χ²=233.48, lag-1 |r|=0.0004390
+  [PASS] D=4: χ²=252.22, lag-1 |r|=0.0003408
+  [PASS] NEG CTRL 1: WeakBiased detected (χ²=2.53e+07, lag-1 |r|=0.0055428)
+  [PASS] NEG CTRL 2: WeakAutocorrelated lag-1 detected (|r|=0.4998, χ²=787.04)
+
+  ============================================================================
+  GLOBAL VERDICT: PASS
+  Failures:       0
+  Document:       MCL-DECIM-SWEEP-2026-0526-001 v6.0.0
+  ============================================================================
+

@@ -1,0 +1,29 @@
+=== Robust-combiner / non-degradation demonstration  (N = 8,000,000 bytes/stream) ===
+
+[1] Each keystream is statistically random (ideal: ent 8.0, chi2<310, monobit .5, r~0):
+  K_MCL  (MCL_T2 layer)              ent=7.999974  chi2= 285.12  monobit=0.500130  r_lag1=+0.000207  [OK]
+  K_AES  (AES-256-CTR layer)         ent=7.999978  chi2= 240.29  monobit=0.499933  r_lag1=-0.000431  [OK]
+
+[2] Independence — MCL adds DIVERSITY, not correlated redundancy:
+  cross-correlation r(K_MCL, K_AES) = -0.000397   (ideal 0; noise floor ~ 3.54e-04)
+  K_AES XOR K_MCL  (combined keystream) ent=7.999979  chi2= 236.80  monobit=0.500071  r_lag1=+0.000074  [OK]
+
+[3] Non-degradation — a deliberately LOW-entropy plaintext, layered:
+  P  (plaintext, structured)         ent=-0.000000  chi2=2040000000.00  monobit=0.250000  r_lag1=+nan  [**]
+  C = P XOR K_AES XOR K_MCL  (ciphertext) ent=7.999979  chi2= 236.80  monobit=0.499930  r_lag1=-0.000101  [OK]
+
+[4] Attacker breaks ONE layer (knows that keystream exactly):
+  AES broken -> C XOR K_AES = P XOR K_MCL ent=7.999974  chi2= 285.12  monobit=0.500037  r_lag1=+0.000055  [OK]
+  MCL broken -> C XOR K_MCL = P XOR K_AES ent=7.999978  chi2= 240.29  monobit=0.499994  r_lag1=-0.000800  [OK]
+
+[5] Attacker breaks BOTH layers:
+  BOTH broken -> C XOR K_AES XOR K_MCL = P ent=-0.000000  chi2=2040000000.00  monobit=0.250000  r_lag1=+nan  [**]
+
+=== VERDICT ===
+  independence (MCL ⟂ AES)            : PASS  (r=-3.97e-04)
+  non-degradation (1 broken ⇒ hidden) : PASS  (residual entropy 8.0000/8.0000 bits/byte ≈ 8)
+  need BOTH to recover P               : PASS  (only both-broken yields P, ent -0.0000)
+
+  => As an additional layer with an independent key, MCL cannot weaken the
+     base cipher (combiner is non-degrading) and adds an independent factor:
+     compromising AES alone leaves the plaintext hidden behind MCL, and vice versa.
