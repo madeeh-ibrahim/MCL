@@ -5,6 +5,7 @@
 This Access Agreement ("Agreement") governs the delivery of the MCL adversarial
 toolkit (the files `mcl_attack_suite`, `mcl_adv_attack`, `mcl_steganalysis`,
 `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish`,
+`mcl_simswap_v3` (added 2026-08-22),
 together the "Toolkit") by Madeeh Ibrahim ("Maintainer")
 to the person identified below ("Recipient"). It supplements, and does not
 replace, the Security Research & Evaluation Grant (the "Grant") and

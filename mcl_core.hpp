@@ -4,9 +4,12 @@
  * MCL (Madeeh Chaotic Lock) — Cryptographic Reference Implementation — Core
  * ============================================================================
  *
- * Document ID:   MCL-CORE-2026-0526-001
- * Version:       6.0.0
- * Date:          May 26, 2026, 07:15 UTC
+ * Document ID:   MCL-CORE-2026-0712-001
+ * Version:       8.1.1  (docs-only patent-list update over 8.1.0 additive: sec.4b device-bound keyed derivation;
+ *                 no existing function modified — all v8.0.0 KATs unchanged)
+ * Date:          August 21, 2026
+ * ============================================================================
+ *
  * Build:         live compile timestamp via mcl_build_timestamp()
  *                (string only — does not affect any CRC/KAT/numeric result)
  * Author:        Madeeh Ibrahim, Independent Researcher, Cairo, Egypt
@@ -21,12 +24,13 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673,
+ *                 PCT/IB2026/058860 (filed 21 August 2026).
  * ============================================================================
  *
  * PATENT NOTICE: This software embodies and implements inventions
  * claimed in pending international patent applications PCT/IB2026/052737,
- * PCT/IB2026/053253, and PCT/IB2026/053673. The methods, systems,
+ * PCT/IB2026/053253, PCT/IB2026/053673, and PCT/IB2026/058860. The methods, systems,
  * and apparatus described in these applications are protected
  * independently of this software. See PATENTS.md for details.
  * ============================================================================
@@ -64,7 +68,7 @@
  * rng.gen_bytes(buf, 1024);
  * (3) Choosing (p, q):
  *     REQUIRED:
- *     - 2 <= p, q <= 2^62
+ *     - 2 <= p, q <= 2^53  (v8.1.3; exact-double bound)
  *     - p != q
  *     RECOMMENDED:
  *     - gcd(p, q) = 1 (coprime weights are recommended for optimal channel
@@ -74,11 +78,14 @@
  *     on (p,q) range selection (search "(p,q) RECOVERY ATTACK SCALING").
  * (4) Choosing K: K_DEFAULT = 12.0 is the validated default. Custom K must
  * satisfy K >= K_min(p,q) = MCL_K_MIN_NUMERATOR/(p+q). The constructor
- * enforces this. NOTE: K_min is necessary but not sufficient -- for
- * cryptographic safety, use K >= MCL_K_RECOMMENDED_FLOOR = 1.0.
+ * enforces this. NOTE: K_min is necessary but not sufficient -- narrow
+ * periodic/quasi-periodic windows persist ABOVE K_min for some topologies
+ * (e.g. (3,5) at K~1.22/2.60/3.79/5.73; (2,3) across K~1.28-2.08). For
+ * cryptographic safety, use K >= MCL_K_RECOMMENDED_FLOOR = 6.0 (the
+ * empirically window-free floor for tested topologies), or K = 12 (default).
  * (5) Common errors and what they mean:
  * "FATAL: MCL seed must be non-zero" -> pass seed != 0
- * "FATAL: invalid coupling weights" -> check 2 <= p,q <= 2^62, p!=q
+ * "FATAL: invalid coupling weights" -> check 2 <= p,q <= 2^53, p!=q
  * "FATAL: K below K_min" -> raise K (ideally to K_DEFAULT)
  * "FATAL: invalid K (=nan)" -> uninitialized K variable
  * (6) Higher-dimensional engines: MCL_T3, MCL_T4 use struct-based config:
@@ -138,23 +145,213 @@
 // Update the date string whenever any of the three numbers change. The
 // inline accessor functions are constexpr-friendly so they may be used
 // in static_assert and at compile time.
-#define MCL_VERSION_MAJOR  6
-#define MCL_VERSION_MINOR  0
-#define MCL_VERSION_PATCH  0
-#define MCL_VERSION_STRING "6.0.0"
-#define MCL_VERSION_DATE   "2026-05-26"
+#define MCL_VERSION_MAJOR  8
+#define MCL_VERSION_MINOR  1
+#define MCL_VERSION_PATCH  3
+#define MCL_VERSION_STRING "8.1.3"
+#define MCL_VERSION_DATE   "2026-08-22"
+// 8.1.3 (2026-08-22): CONTRACT-NARROWING (no KAT/keystream change) --
+//   MCL_PQ_MAX lowered from 2^62 to 2^53. Rationale: the Float64 path computes
+//   (double)p * t, and integers above 2^53 are not exactly representable, so
+//   the old bound ADMITTED inputs that silently lost precision (the old comment
+//   at the MCL_T2 ctor already said so). The enforced bound now equals the
+//   exact-integer bound of IEEE-754 double; the Q30 path keeps MCL_Q30_PQ_MAX
+//   = 2^30. Any p,q in (2^53, 2^62] that previously constructed an engine now
+//   aborts with the standard "invalid coupling weights" message. Every KAT,
+//   CRC and keystream for in-range parameters is byte-identical (keyed
+//   derivation draws weights in [2, 2^30)). The "~2^123 identity space" figure
+//   (coprime pairs up to 2^62) is an ACCOUNTING number, not an engine bound;
+//   the engine-enforced identity space is coprime pairs up to 2^53 (~2^105).
+//   Also DOCS: header sweep count "919-pair" corrected to 489 (the corrected
+//   figure of the 2026-07-11 periodic-window record). Prior bytes archived at
+//   _backups/mcl_core_v8.1.2_pre_pqmax53_20260822.hpp (sha256 d630ed130df3...).
+// 8.1.2 (2026-08-22): DOCS-ONLY -- SECURITY WARNING added to vdf_compute_q30()
+//   (sec.16.1): the retired two-oscillator Q30 VDF path has a TRANSLATION
+//   SYMMETRY that is reachable from the seed (for (p,q)=(3,5): an order-16
+//   group; seeds <= 2^52 pass hash_seed unchanged and t_i = s*omega_i, so the
+//   15 seeds s + k*2^28*omega1^-1 yield outputs equal to output(s) plus
+//   constants, word for word). Measured on this engine 2026-08-22 (Doc IDs
+//   MCL-T4-CYCLE-2026-0822-002/003/004, record
+//   T4_CycleStructure/T4_CYCLE_RECORD_20260822.md sec.5a). The raw path was
+//   already retired from every VDF role (Paper 4 sec.VII.E'); VDF128-T4
+//   (SHA-256 injection + finalisation, public weights with a trivial symmetry
+//   group) is the normative integer VDF. No code, KAT, or behavioral change;
+//   bytes of the prior version archived at
+//   _backups/mcl_core_v8.1.1_pre_vdfwarn_20260822.hpp (sha256 718d62658bcc...).
+// 8.1.1 (2026-08-21): DOCS-ONLY -- banner patent list updated: fourth
+//   application FILED as PCT/IB2026/058860 on 21 Aug 2026 (was the unfiled
+//   "Patent-4" gate). No code, KAT, or behavioral change; bytes of the prior
+//   version archived at _backups/mcl_core_v8.1.0_pre_patent4num_20260821.hpp
+//   (sha256 c171af4c...).
+// 8.1.0 (2026-07-17): ADDITIVE -- sec.4b device-bound keyed derivation
+//   (Route-A realization of the PCT-04 device-binding embodiment): a 256-bit
+//   device secret enters the WEIGHT DERIVATION, not the seed, via
+//   K_eff = mcl_kdf256(key, "MCL-KeyDevice-v1", device_secret). Three new
+//   inline functions only (mcl_keff_from_key_device,
+//   mcl_t2_params_from_key_device, mcl_t4_params_from_key_device); NO
+//   existing function is modified, the numerical output of every
+//   pre-existing path is byte-for-byte UNCHANGED, and every v8.0.0 KAT/CRC
+//   remains valid. MINOR bump per the policy above.
+//   VERSION NOTE (metadata reconciliation, 2026-07-18): the 2026-07-17 build
+//   that added sec.4b (sha256 647510e9..b4) carried the 8.1.0 banner but
+//   still reported "8.0.0"/"2026-07-12" through the version macros, and
+//   MCL_DOCUMENT_ID had remained at the pre-renumbering
+//   MCL-CORE-2026-0526-001 (the 8.0.0 entry below records the advance to
+//   -0712-001). This build reconciles both (comment/macro metadata only; no
+//   code or numerical change). Pin release artifacts by SHA-256, never by
+//   version string alone.
+// 8.0.0 (2026-07-12): RELEASE RENUMBERING for the deposit/publication package
+//   (author direction). NO code, API, or numerical change of any kind relative
+//   to 7.0.4 (sha256 3c3909f7..d5a) beyond this version/Document-ID metadata:
+//   output remains byte-for-byte identical to every 7.0.x / 6.1.0 build for
+//   all valid inputs, and every KAT is unchanged. Collects the 2026-07-12
+//   hardening campaign (7.0.3 + 7.0.4: F1-F7, QA-1/QA-2/QA-3) under a single
+//   clean release number. Document ID advanced MCL-CORE-2026-0526-001 ->
+//   MCL-CORE-2026-0712-001; the companion sidecar keyed_q30_PQ/
+//   mcl_keyed_q30.hpp (v1.0.2) now references this engine of record.
+// 7.0.4 (2026-07-12): HARDENING FOLLOW-UP (same-day QA round, items QA-2/QA-3).
+//   Numerical output byte-for-byte UNCHANGED for every valid input
+//   (re-verified: KATs, determinism fingerprint, cross-arch Q30). Contents:
+//   - QA-2: mcl_make_validated_t2() now honors its "never aborts" contract for
+//     POLICY arguments too: probe_iters <= 0 returns std::nullopt (previously
+//     it fell through to compute_lyapunov's FATAL abort). A non-finite
+//     sigma/min_lambda already rejected via the !(...) comparison. This is a
+//     deliberate, documented exception to the fail-loud caller-bug convention:
+//     this factory's whole contract is fail-closed validation.
+//   - QA-3: vdf_verify_bounded() / vdf_verify_q30_bounded() -- caller-policy
+//     N_delay ceilings for the PLAIN verifiers, mirroring
+//     vdf_verify_transcript_bounded (F5): a shape-valid hostile claim with
+//     N_delay ~ 2^62 otherwise recomputes "forever" (resource-exhaustion DoS).
+//     Rejected fail-closed BEFORE the burn-in+delay loop; max_delay < 0
+//     disables the bound. Additive API only.
+//   - Doc: vdf_verify_transcript_bounded's comment now states that max_k < 0
+//     likewise disables the checkpoint-count bound (behavior unchanged).
+// 7.0.3 (2026-07-12): SECURITY-HARDENING PATCH from the full post-remediation
+//   review + QA round (external report: FIXES_REPORT_20260712.md). Numerical
+//   output byte-for-byte UNCHANGED for every valid input (float KATs, Q30 VDF,
+//   keyed keystream, self-test KATs re-verified identical): every change is a
+//   guard that only rejects inputs that previously crashed, aborted, or were
+//   UB, or is additive API / documentation. Contents:
+//   - F3: mcl_q30_K_phase() rejects non-finite K UNCONDITIONALLY (a NaN K
+//     passed the (K<=0||K>12) release guard -- every NaN comparison is false --
+//     and reached an undefined float->int64 cast in NDEBUG builds).
+//   - F2: mcl_valid_t2_params() shared predicate; vdf_verify() now fails
+//     closed (null expected / negative N / invalid params -> false, never
+//     abort); vdf_verify_transcript() refactored onto the same predicate.
+//   - F5: vdf_verify_transcript_bounded() -- caller-policy ceilings on
+//     N_delay / checkpoint count, rejected fail-closed BEFORE the recompute.
+//   - F4: mcl_kdf256() caps label/info at 1 MiB each (size_t wrap of the
+//     preimage length -> under-allocation -> wild memcpy).
+//   - F1: mcl_make_validated_t2() -- construction-time Lyapunov-validated
+//     factory; the correct per-instance guard for the periodic/quasi-periodic
+//     K-windows that persist above K_min (see its comment block). +<optional>.
+//   - F6: T3/T4 constructor comments now carry the K-window caveat.
+//   - F7: #warning (MSVC: pragma message) when MCL_UNSAFE_ALLOW_INVALID is
+//     compiled in, so a research flag can never ship silently.
+//   - QA-1 (new in this bump): vdf_verify_q30() -- the verifier documented for
+//     CROSS-PLATFORM use, i.e. the most untrusted-input-facing one -- now
+//     fails closed like its Float64 twin, via the shared predicate
+//     mcl_valid_q30_vdf_params(). Previously a null `expected` was a SEGV and
+//     a hostile (seed,p,q,K) tuple tripped vdf_compute_q30's abort guards: a
+//     denial-of-service in the API meant to check untrusted claims.
+//   VERSION NOTE: an interim 2026-07-12 build carried F1-F7 while still
+//   labeled "7.0.2" (sha256 a7566473..d6). This 7.0.3 supersedes it. Pin
+//   release artifacts by SHA-256, never by version string alone.
+// 7.0.2 (2026-07-11): DOCUMENTATION/ADVISORY PATCH. Numerical output byte-for-
+//   byte UNCHANGED -- no engine byte stream, KAT, or CRC is touched; the only
+//   edits are comments, two advisory constants, and one stderr diagnostic
+//   string, none of which are read by iterate()/gen_byte() (which use the
+//   caller's K). MD5 of the file changes; the engine of record is numerically
+//   identical to v7.0.1. Corrects a now-falsified safety claim:
+//   - Independent multi-method verification (C++ QR; an independent Python
+//     two-trajectory Lyapunov re-implemented from the map equations; and the
+//     chi^2 byte metric) established that narrow periodic/quasi-periodic
+//     windows persist ABOVE K=1.0 for some topologies -- e.g. (3,5) resonates
+//     at K~1.22 (chi^2~1.7M, lambda<0) and K~2.595 (chi^2~3.1M), is quasi-
+//     periodic at K~3.79/5.73 (lambda~0), and (2,3) has a band across
+//     K~1.28-2.08. A fine (step 0.005) sweep confirms K in [6,20] is window-
+//     free for the tested pairs. Evidence bundle in
+//     05_Scientific_Papers/Reviews/FivePersona_Detailed_20260711/VERIFY_*.
+//   - MCL_K_RECOMMENDED_FLOOR: 1.0 -> 6.0 (its old comment "above this, all
+//     tested topologies are chaotic" was false). ADVISORY only; the hard
+//     sentinel K_min = MCL_K_MIN_NUMERATOR/(p+q) is UNCHANGED.
+//   - MCL_T2_K_RECOMMENDED: 2.0 -> 6.0 (its old comment "above empirical
+//     periodic windows" was false: K=2.595 > 2.0 still resonates).
+//   - K_min FATAL diagnostic now advises K >= 6.0 (was 1.0).
+//   No claim is affected: the keyed Patent-4 engine fixes K=12 (window-free
+//   range); a 489-pair weight-space sweep at K=12 found 0 non-chaotic pairs (v8.1.3: figure corrected from 919).
+// 7.0.1 (2026-07-07): API-hardening PATCH from the external + internal review
+//   round. Numerical output unchanged (differential harness re-verified
+//   byte-identical); no frozen vector is affected.
+//   - mcl_kdf256: unconditional FATAL guards for null key/label, and for
+//     null info/out with nonzero lengths (strlen(nullptr)/memcpy(nullptr)
+//     were reachable caller bugs).
+//   - mcl_sha256: unconditional FATAL guards for (msg == nullptr && len > 0)
+//     and for null out.
+//   - vdf_compute_checkpointed: unconditional FATAL guard for a null
+//     checkpoints array with k > 0 (writing through it is memory corruption,
+//     never a research scenario), and the interval computation is k-safe
+//     even under MCL_UNSAFE_ALLOW_INVALID (no k = 0 division).
+//   - RELEASE GATE banner added (internal until Patent-4 filing);
+//     removed 2026-07-10 by author instruction during release preparation.
+//   - sec.16 cross-reference: the keyed fixed-point realization MCL_T4_Q30
+//     lives in the companion sidecar keyed_q30_PQ/mcl_keyed_q30.hpp.
+// 7.0.0 (2026-07-06): Pre-publication hardening release. The numerical output
+//   of EVERY pre-existing valid path is byte-for-byte UNCHANGED (verified with
+//   a differential baseline harness against v6.1.0 covering all seven engines,
+//   the keyed paths, Q30, both VDFs, hierarchical derivation, and all
+//   statistics) -- all frozen KAT/CRC vectors remain valid. MAJOR bump for the
+//   API/behavioral additions:
+//   - NEW vdf_verify_transcript(): seed-anchored, tamper-evident verification
+//     of checkpointed VDF transcripts. Closes the vdf_verify_segment
+//     fabricated-start-state soundness gap; the segment API now carries an
+//     explicit UNSOUND-when-standalone warning.
+//   - vdf_compute_checkpointed(): optional checkpoints_written out-param (the
+//     previous doc promised a return count that did not exist; N < k now
+//     reports 0 explicitly instead of failing silently).
+//   - Stricter validation: MCL_T4 ctor enforces the 2^62 upper bound (T2/T3
+//     parity); distance_correlation/spectral_test validate inputs and fail
+//     closed on degenerate lengths (and the sample dCov^2 is clamped at 0,
+//     so rare rounding on valid-length independent inputs can no longer
+//     yield NaN); generate_topologies/compute_lyapunov guard non-positive
+//     sizes; ALL ctor parameter asserts unified INSIDE the
+//     MCL_UNSAFE_ALLOW_INVALID guard (debug research builds now behave as
+//     documented without requiring -DNDEBUG).
+//   - Key-material hygiene: SHA-256 rewritten as heap-free streaming
+//     compression; the KDF and keyed factories secure_zero every intermediate
+//     that carries key or key-derived secrets; MCL_T2_Omega move-assignment
+//     now erases the source's w1_/w2_ (parity with its move constructor).
+//   - Q30 hot path re-expressed in fully-defined unsigned arithmetic
+//     (bit-identical output; removes C++17 implementation-defined
+//     negative-shift/narrowing reliance).
+//   - mcl_self_test(): new VDF-transcript positive + tamper/forgery negative
+//     controls.
+//   - Documentation corrections: integer-Q30 battery-testing status (BigCrush
+//     Run 2 was the Float64 LUT multiplex, NOT the integer engine), keyspace
+//     collision accounting, derive_child range [2, max_val-1], stale-comment
+//     and residue sweep.
+// 6.1.0 (2026-06-11): ADDED the 256-bit keyed post-quantum key path (SHA-256
+//   KDF -> keyed MCL_T2_Omega / MCL_T4; sec.3.1 and the keyed factories).
+//   MINOR bump: NEW functionality only -- the numerical output of every
+//   pre-existing constructor/path is byte-for-byte UNCHANGED, so all frozen
+//   KAT/CRC vectors (mcl_kat_vectors[], Q30 LUT/VDF) remain valid. NOTE for
+//   manuscripts: the "engine of record" is now v6.1.0; the §-citations of
+//   v6.0.0 numerical results are unaffected (same numbers).
 
 // ---------------------------------------------------------------------------
 // PROVENANCE / TRACEABILITY METADATA (per MCL Header Update Rules sec.3)
 // ---------------------------------------------------------------------------
-// - MCL_DOCUMENT_ID and MCL_VERSION_DATE are FROZEN with the 6.0.0 release
-//   (unified version per the rules: no independent per-file version numbers).
+// - MCL_DOCUMENT_ID is FROZEN with the 2026-07-12 document series (unified
+//   numbering per the rules: no independent per-file version numbers; it
+//   advanced from the 2026-05-26 series at the 8.0.0 renumbering -- see the
+//   8.0.0 changelog entry).
+//   MCL_VERSION_DATE tracks the engine version above.
 // - MCL_BUILD_TIMESTAMP is the LIVE compile time. It is a printed string only;
 //   it NEVER enters any computation, so all CRC/KAT/numeric results are
 //   unaffected by it. For a reproducible build that must not embed the wall
 //   clock, define it on the command line, e.g.:
 //       g++ ... -DMCL_BUILD_TIMESTAMP='"2026-05-26T00:00:00Z"' ...
-#define MCL_DOCUMENT_ID    "MCL-CORE-2026-0526-001"
+#define MCL_DOCUMENT_ID    "MCL-CORE-2026-0712-001"
 #ifndef MCL_BUILD_TIMESTAMP
 #define MCL_BUILD_TIMESTAMP (__DATE__ " " __TIME__)
 #endif
@@ -241,9 +438,10 @@ inline const char*           mcl_build_timestamp(){ return MCL_BUILD_TIMESTAMP; 
 
 // BIT-EXACT FLOATING-POINT COMPARISONS:
 // MCL deliberately uses `==` and `!=` on doubles in several categories of
-// sites (a clean `-Wfloat-equal` build currently reports 19 such sites; the
-// count grows as `is_invalid()`/iterate() sentinels are added per engine --
-// all are intentional and fall into the categories below):
+// sites (v7.0.0: a clean `-Wfloat-equal` build reports 8 warnings with
+// current g++/clang -- the double-vs-double sites; the kc_ == 0.0 sentinel
+// comparisons against a literal are additional intentional sites that these
+// compilers do not flag. All fall into the categories below):
 // - Moved-from / erased sentinels (kc_/K_ == 0.0): detects the specific bit
 // pattern set by erase()/erase_identity()/move-ctor and by is_invalid().
 // This is NOT an approximate comparison; the IEEE 754 double 0.0 is the
@@ -252,8 +450,8 @@ inline const char*           mcl_build_timestamp(){ return MCL_BUILD_TIMESTAMP; 
 // - VDF verification: t1 == t1_end checks deterministic trajectory replay.
 // Same IEEE 754 platform => bit-identical result.
 
-// Compiling with `-Wfloat-equal` produces these warnings (19 at present),
-// all intentional. To silence:
+// Compiling with `-Wfloat-equal` produces these warnings (8 measured on the
+// v7.0.0 build with g++ 15 / Apple clang), all intentional. To silence:
 // #pragma GCC diagnostic ignored "-Wfloat-equal" (GCC/Clang)
 // MCL does NOT enable this warning by default in its build system.
 // Every such site has a comment naming its role.
@@ -266,6 +464,7 @@ inline const char*           mcl_build_timestamp(){ return MCL_BUILD_TIMESTAMP; 
 #include <cassert>
 #include <limits>
 #include <string>
+#include <optional>
 #include <vector>
 #include <array>
 #include <chrono>
@@ -280,22 +479,14 @@ inline const char*           mcl_build_timestamp(){ return MCL_BUILD_TIMESTAMP; 
 // and older Clang (<=12) or stricter compilers may warn or reject.
 
 // We define MCL_UNLIKELY(x) that:
-// - Uses C++20 [[unlikely]] when __cplusplus >= 202002L
-// - Falls back to __builtin_expect on GCC/Clang when not C++20
+// - Uses __builtin_expect on GCC/Clang (available in every standard mode,
+//   so C++17 and C++20 builds get the same branch hint)
 // - Falls back to plain (x) on other compilers (zero hint, no harm)
-
-// Then we replace `if (MCL_UNLIKELY(cond)) {` with `if (MCL_UNLIKELY(cond)) {`
-// throughout the file.
-#if __cplusplus >= 202002L
- // C++20: use the standard attribute on the if-statement
-  #define MCL_UNLIKELY(x) (x)
-  #define MCL_UNLIKELY_ATTR [[unlikely]]
-#elif defined(__GNUC__) || defined(__clang__)
+// All cold guard paths in this file are written `if (MCL_UNLIKELY(cond)) {`.
+#if defined(__GNUC__) || defined(__clang__)
   #define MCL_UNLIKELY(x) (__builtin_expect(!!(x), 0))
-  #define MCL_UNLIKELY_ATTR
 #else
   #define MCL_UNLIKELY(x) (x)
-  #define MCL_UNLIKELY_ATTR
 #endif
 
 // ============================================================================
@@ -376,16 +567,27 @@ acknowledge and silence this warning."
 // g++ -O3 -DNDEBUG -DMCL_UNSAFE_ALLOW_INVALID ...
 // This disables runtime parameter guards, allowing the engine to run
 // with degenerate parameters and produce observable (weak) output.
-// IMPORTANT: -DNDEBUG is REQUIRED for this to fully take effect. The macro
-// gates the runtime fprintf+abort guards, but several plain assert()s
-// (e.g. p>=2, p!=q in the ctors) sit OUTSIDE the macro guard and still fire
-// in a debug build. Verified: a debug build with -DMCL_UNSAFE_ALLOW_INVALID
-// and p==q still aborts via assert at the ctor; with -DNDEBUG it runs.
+// v7.0.0: ALL engine parameter asserts now sit INSIDE the macro guard, so a
+// debug build with -DMCL_UNSAFE_ALLOW_INVALID behaves like the documented
+// research mode without also requiring -DNDEBUG. (Before v7.0.0, several
+// plain assert()s sat outside the guard and still fired in debug builds.)
 // T2/T3/T4 are structurally safe with any p,q -- mod2pi+sin confines
 // state to [0,2pi). Invalid parameters produce weak output but never
 // UB, NaN, or memory corruption.
 
 // seed=0 is ALWAYS fatal (abort in hash_seed, regardless of any macro).
+
+// Emit a loud diagnostic if the unsafe research build is enabled, so a stray
+// -DMCL_UNSAFE_ALLOW_INVALID in a production build system is never silent.
+// (A hard #error in release builds is deliberately NOT added yet: the K-sweep
+// research tools compile with this macro and must keep building.)
+#if defined(MCL_UNSAFE_ALLOW_INVALID)
+#  if defined(_MSC_VER)
+#    pragma message("WARNING: MCL_UNSAFE_ALLOW_INVALID enabled -- runtime parameter validation is DISABLED (research build)")
+#  else
+#    warning "MCL_UNSAFE_ALLOW_INVALID enabled -- runtime parameter validation is DISABLED (research build)"
+#  endif
+#endif
 
 // ============================================================================
 // TIMING SIDE-CHANNEL NOTICE
@@ -446,7 +648,7 @@ constexpr int DECIMATION = 2;
 // the full subtraction we require p, q <= 2^30.
 
 // This is dramatically smaller than the
-// nominal range [2, 2^62]. The full range describes the IDENTITY SPACE
+// nominal ACCOUNTING range [2, 2^62] (engine-enforced: [2, 2^53], v8.1.3). The accounting range describes the IDENTITY SPACE
 // (number of distinct device IDs available); the Q30 engine implements the
 // OPERATIONAL SECURITY range. The distinction between identity space and
 // security level is documented in the accompanying paper (Section IV).
@@ -515,7 +717,17 @@ constexpr int64_t MCL_Q30_PQ_MAX = (1LL << 30); // 2^30 = 1,073,741,824
 // - Adding a stricter empirical floor would impose our specific test
 // conditions (seed, simulation length) on all users.
 // - The honest answer is that K_min is necessary, not sufficient.
-#define MCL_K_RECOMMENDED_FLOOR 1.0 // Above this, all tested topologies are chaotic
+#define MCL_K_RECOMMENDED_FLOOR 6.0 // Empirically window-free floor for tested
+// topologies. CORRECTION (v7.0.2, 2026-07-11): the former value 1.0 with the
+// comment "above this, all tested topologies are chaotic" was FALSE -- narrow
+// periodic windows (lambda<0, chi^2 in the millions) persist above K=1.0 for
+// some topologies: (3,5) at K~1.22 and 2.595, quasi-periodic at 3.79/5.73;
+// (2,3) across K~1.28-2.08. A fine (step 0.005) sweep confirms K in [6,20] is
+// window-free for the tested pairs, so 6.0 is the honest advisory floor. This
+// is an ADVISORY constant only (not a runtime guard); the hard sentinel is
+// K_min = MCL_K_MIN_NUMERATOR/(p+q), unchanged. Verified independently (C++ QR,
+// an independent Python two-trajectory re-implementation from the map
+// equations, and the chi^2 byte metric); see the Reviews/ evidence bundle.
 
 // RUNTIME PARAMETER STATUS:
 
@@ -800,11 +1012,10 @@ constexpr int64_t MCL_Q30_PQ_MAX = (1LL << 30); // 2^30 = 1,073,741,824
 constexpr double MCL_K_MIN_PHYS = 1e-12;
 
 // ============================================================================
-// [-DEEP-V2] EMPIRICALLY-DERIVED RECOMMENDED MINIMUMS
+// EMPIRICALLY-DERIVED RECOMMENDED MINIMUMS
 // ============================================================================
-// User asked: "should we set a safe minimum K well clear of resonance windows?"
-
-// Answer: YES, but as DOCUMENTATION, not as runtime block.
+// Design question: should a safe minimum K be set well clear of the
+// resonance windows? Decision: YES -- as DOCUMENTATION, not a runtime block.
 
 // Method: dense K sweep (step <= 0.001) per engine with default coupling,
 // looking for chi^2 > 1000 (catastrophic, not statistical noise). The
@@ -831,7 +1042,10 @@ constexpr double MCL_K_MIN_PHYS = 1e-12;
 // IMPORTANT: these recommendations are for DEFAULT couplings / parameters.
 // A different coupling triple may have its windows elsewhere. Users
 // targeting non-default couplings MUST validate empirically.
-constexpr double MCL_T2_K_RECOMMENDED = 2.0; // above empirical periodic windows
+constexpr double MCL_T2_K_RECOMMENDED = 6.0; // empirically window-free floor
+// (v7.0.2, 2026-07-11): was 2.0 with the comment "above empirical periodic
+// windows" -- FALSE: (3,5) at K=2.595 (> 2.0) still resonates (chi^2 ~3.1M,
+// lambda<0). Only K >= 6.0 is confirmed window-free for the tested topologies.
 constexpr double MCL_T3_K_RECOMMENDED = 0.2; // above the dense [0.03, 0.18] band
 constexpr double MCL_T4_K_RECOMMENDED = 0.5; // above sparse marginal failures
 constexpr double MCL_TENT_K_RECOMMENDED = 0.05; // matches TENT_K default
@@ -842,7 +1056,7 @@ constexpr double MCL_TENT_K_RECOMMENDED = 0.05; // matches TENT_K default
 // the safe band [0.005, 0.015] is so narrow that the default
 // HENON_K = 0.01 IS the recommendation.
 
-constexpr int64_t MCL_PQ_MAX = (int64_t{1} << 62); // 2^62 ~= 4.6e18
+constexpr int64_t MCL_PQ_MAX = (int64_t{1} << 53); // 2^53 ~= 9.0e15 (v8.1.3; was 2^62 -- see changelog). Exact-integer bound of IEEE-754 double: (double)p*t is exact only for p <= 2^53.
 
 // Named struct for MCL_T2 / MCL_T2_Omega construction.
 
@@ -895,7 +1109,11 @@ constexpr double CHI2_THRESHOLD_STRICT = 310.46; // df=255, alpha=0.01 (stricter
 // Spectral SNR threshold: for white noise of length N with K frequencies,
 // the max spectral peak follows an extreme value distribution.
 // SNR < 15 corresponds to p > 0.01 (conservative empirical bound).
-// Validated by negative control in mcl_postquantum_verification.
+// Validated by negative control in the spectral_test() self-check (sec.8).
+// NOTE: spectral_test is a CLASSICAL white-noise/SNR randomness check, NOT a
+// quantum-security test. For post-quantum work-factor accounting use
+// mcl_pq_security() / mcl_pair_secret_bits() (sec.3.1). (The previously named
+// "mcl_postquantum_verification" routine never existed in this header.)
 constexpr double SPECTRAL_SNR_THRESHOLD = 15.0;
 
 // Default seed (E6)
@@ -923,6 +1141,10 @@ constexpr double TENT_K = 0.05;
 // Frequency pool -- 12 irrational constants (E3b)
 // Each from a distinct algebraic extension over Q (Kronecker independence).
 // Do NOT substitute entries. sqrt5-2 deliberately excluded (dependent with phi-1).
+// LITERAL-PRECISION NOTE: entries are FROZEN bit-exact AS WRITTEN. Some
+// 16-digit decimals parse one ULP away from the correctly rounded double of
+// the named mathematical constant; that is intentional -- all KATs and
+// campaign results pin the parsed doubles, not the mathematical reals.
 // BREAKING CHANGE: Field order is {name, value} -- differs from
 // mcl_omega_independence v1.0.1 which used {value, name}.
 // All files MUST use this definition via #include "mcl_core.hpp".
@@ -930,7 +1152,7 @@ struct FreqEntry { const char* name; double value; };
 inline const FreqEntry* freq_pool() {
  static const FreqEntry pool[] = {
  {"phi-1", 0.6180339887498949}, // phi - 1
- {"rho", 1.3247179572447461}, // Plastic constant
+ {"rho", 1.3247179572447460}, // Plastic constant (same double as OMEGA_2: 0x3FF5320B74ECA44B)
  {"sqrt2-1", 0.4142135623730950}, // sqrt2 - 1
  {"e-2", 0.7182818284590452}, // e - 2
  {"pi-3", 0.1415926535897932}, // pi - 3
@@ -949,6 +1171,10 @@ constexpr int N_FREQ_POOL = 12;
 // ============================================================================
 // sec.2 TOPOLOGY / COUPLING TABLES (E5, E5b, E5c -- never modify existing entries)
 // ============================================================================
+// NOTE on {8,13}: INTENTIONAL, not a typo for {11,13}. It is the only entry
+// with a composite p (8 and 13 are consecutive Fibonacci numbers, coprime by
+// construction) and appears with identical results in every validation
+// campaign since April 2026 (Lyapunov, VDF, and generality logs).
 
 struct Topology { int64_t p, q; };
 
@@ -1009,9 +1235,9 @@ constexpr int N_T4_SEXTETS = 8;
 // Phase reduction to [0, 2pi) -- handles negative values correctly
 // Note on negative zero: mod2pi(-2kpi) = -0.0 for some k.
 // IEEE 754 treats -0.0 == +0.0 numerically, but they have different bit
-// patterns. This does NOT affect MCL output because the next iteration
+// patterns. This does NOT affect MCL output: the next iteration
 // immediately adds omega + K.sin to t, producing a positive result and
-// eliminating the sign bit. Verified at -O3. No fix needed.
+// eliminating the sign bit (verified at -O3).
 inline double mod2pi(double x) noexcept {
  x = std::fmod(x, MCL_TWO_PI);
  return x < 0.0 ? x + MCL_TWO_PI : x;
@@ -1032,7 +1258,7 @@ inline int popcount8(uint8_t x) noexcept {
 }
 
 // secure_zero -- portable cryptographic memory erasure
-// Required by
+// Required by the MCL cryptographic-erasure contract (see PATENTS.md):
 // "wherein said coupled chaotic dynamical system engine performs
 // cryptographic erasure of all internal dynamical state variables
 // upon completion of each authentication tag computation, preventing
@@ -1045,10 +1271,10 @@ inline int popcount8(uint8_t x) noexcept {
 // - asm("" ::: "memory") clobber is added on GCC/Clang as a belt-and-
 // braces compiler barrier -- this prevents reordering of any memory
 // access across the erasure point.
-// - On C++23+ platforms, std::memset_explicit() would be the standard
-// primitive; we fall back to the volatile-pointer technique to support
-// C++17 deployments (the current compilation target per the file
-// headers in the test files).
+// - C23 standardizes memset_explicit() (a C primitive; no published C++
+// standard provides an equivalent), so the volatile-pointer technique
+// remains the portable approach for the C++17 compilation target used
+// throughout this project.
 
 // SECURITY NOTE: this erases the C++-visible state. It does NOT guarantee
 // erasure of:
@@ -1058,15 +1284,14 @@ inline int popcount8(uint8_t x) noexcept {
 // stronger guarantees use platform-
 // specific cache-flush intrinsics)
 // - DMA-mapped buffers (require platform-specific care)
-// For HSM/TEE deployment per , additional hardware-level
+// For HSM/TEE deployment, additional hardware-level
 // erasure (e.g., ARMv8 DC ZVA, x86 CLFLUSH) should be layered on top.
 inline void secure_zero(void* p, std::size_t n) noexcept {
     if (p == nullptr || n == 0) return;
     volatile unsigned char* vp = static_cast<volatile unsigned char*>(p);
- // Use explicit counter loop to avoid the n-- underflow
- // that -fsanitize=integer flags on the final iteration (0 - 1 wraps to
- // SIZE_MAX). This is technically defined behavior for unsigned arithmetic,
- // but the cleaner form is also faster (no off-by-one) and silence-clean.
+ // Explicit counted loop: the equivalent n-- countdown wraps to SIZE_MAX
+ // on its final iteration (defined behavior for unsigned arithmetic, but
+ // flagged by -fsanitize=integer); the counted form is sanitizer-clean.
     for (std::size_t i = 0; i < n; ++i) {
         vp[i] = 0;
     }
@@ -1086,17 +1311,16 @@ inline void secure_zero(void* p, std::size_t n) noexcept {
 // nor check its result, because:
 // (1) Failure of stderr write does not change behavior -- std::abort()
 // still terminates the process.
-// (2) Casting 44 call sites to (void) clutters the code without
-// improving correctness.
+// (2) Casting the dozens of call sites (60 at the v7.0.0 count) to (void)
+// clutters the code without improving correctness.
 // (3) The static analyzer warning [cert-err33-c] flags this pattern,
 // but it is a documentation/style suggestion in this context,
 // not an actual defect.
 
-// We provide MCL_FATAL_PRINT() helper macro that
-// explicitly discards the fprintf return via (void). New code in this
-// file should prefer MCL_FATAL_PRINT() over raw fprintf+abort. The 44
+// The MCL_FATAL_PRINT() helper below explicitly discards the fprintf
+// return via (void); new code may prefer it over raw fprintf+abort. The
 // existing call sites are NOT migrated because the change would inflate
-// the diff and the convention is already documented.
+// the diff and the convention is documented here.
 
 // If a future refactor moves these fprintfs to non-fatal contexts, the
 // (void) cast SHOULD be added, or the result checked.
@@ -1204,6 +1428,213 @@ inline int64_t gcd_compute(int64_t a, int64_t b) {
  return a;
 }
 
+// ============================================================================
+// sec.3.1 SHA-256 (FIPS 180-4) + 256-bit KEYED PARAMETER DERIVATION
+// ============================================================================
+// PURPOSE (post-quantum key path, added in 6.1.0):
+// MCL is a SYMMETRIC primitive; its only generic quantum threat is Grover,
+// which square-roots the search over the brute-forceable SECRET. The DEFAULT
+// secret -- a single coprime pair (p,q) -- is only ~59 classical bits at the
+// production range [2,1e9] (~30 bits post-Grover), below even NIST PQ Category 1
+// (AES-128 = 64 post-Grover bits). The highest category, Category 5 (AES-256 =
+// 128 post-Grover bits), needs a >=256-bit brute-forceable secret. The keyed
+// paths below let the SECRET be a full 256-bit master key, expanded by a
+// CRYPTOGRAPHIC KDF (SHA-256 in MGF1/counter mode) into the engine parameters
+// that PERSIST through burn-in -- the coupling weights (p,q) and, for T2_Omega,
+// the angular frequencies (w1,w2). Initial conditions are intentionally NOT
+// used to carry secret bits: the 10^4-iteration burn-in (positive Lyapunov,
+// shadowing) washes them out, so only map-defining PARAMETERS hold durable
+// entropy.
+//
+// Grover then searches the 256-bit KEY (2^256 -> 2^128) rather than the
+// parameters, PROVIDED the engine can faithfully CARRY >=256 bits of derived
+// parameter entropy. T2_Omega's capacity is ~208 bits (p,q,w1,w2, each capped
+// near 2^52 by the IEEE-754 mantissa / the 2^53 trajectory-collapse onset) ->
+// ~104 post-Grover: meets Category 3 (AES-192 = 96) but BELOW Category 5 (128).
+// T4's 12 independent weights carry >=256 bits comfortably -> the full 2^128
+// post-Grover floor. Use mcl_t4_from_key() (sec.4) for NIST PQ Category 5 (the
+// highest category, AES-256-equivalent).
+//
+// SHA-256 is a standard FIPS 180-4 primitive; this is a clean-room textbook
+// implementation, self-tested against the "abc" KAT in mcl_self_test(). It is
+// used ONLY by the keyed key-derivation path; the legacy seed/(p,q) engines
+// and all frozen numerical KATs are unaffected.
+inline void mcl_sha256(const uint8_t* msg, size_t len, uint8_t out[32]) {
+ // Contract guards (v7.0.1): msg may be null ONLY when len == 0; out is
+ // always required. Violations are caller bugs -> unconditional abort
+ // (same policy as mcl_validate_buf; not gated by MCL_UNSAFE_ALLOW_INVALID).
+ if (MCL_UNLIKELY((msg == nullptr && len > 0) || out == nullptr)) {
+   std::fprintf(stderr, "FATAL: mcl_sha256 invalid arguments "
+                "(msg=%p, len=%zu, out=%p)\n",
+                (const void*)msg, len, (const void*)out);
+   std::abort();
+ }
+ static const uint32_t Kc[64] = {
+   0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+   0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+   0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+   0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+   0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+   0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+   0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+   0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+ };
+ uint32_t h[8] = {0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,
+                  0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19};
+ auto rotr = [](uint32_t x, int n) -> uint32_t { return (x >> n) | (x << (32 - n)); };
+ // v7.0.0: streaming compression. Full 64-byte blocks are consumed directly
+ // from the caller's buffer; only the final padded block(s) touch a stack
+ // buffer, and every intermediate that can carry key material (padded tail,
+ // message schedule w[], chaining state h[]) is secure_zero'd on exit. The
+ // previous implementation heap-copied the whole padded message (including
+ // the raw master key when called from the KDF) and freed it without
+ // zeroing. The digest is byte-identical (same FIPS 180-4 algorithm).
+ uint32_t w[64];
+ auto compress = [&](const uint8_t* blk) {
+   for (int i = 0; i < 16; i++)
+     w[i] = ((uint32_t)blk[4*i]   << 24) | ((uint32_t)blk[4*i+1] << 16)
+          | ((uint32_t)blk[4*i+2] <<  8) |  (uint32_t)blk[4*i+3];
+   for (int i = 16; i < 64; i++) {
+     uint32_t s0 = rotr(w[i-15],7) ^ rotr(w[i-15],18) ^ (w[i-15] >> 3);
+     uint32_t s1 = rotr(w[i-2],17) ^ rotr(w[i-2],19) ^ (w[i-2] >> 10);
+     w[i] = w[i-16] + s0 + w[i-7] + s1;
+   }
+   uint32_t a=h[0],b=h[1],c=h[2],d=h[3],e=h[4],f=h[5],g=h[6],hh=h[7];
+   for (int i = 0; i < 64; i++) {
+     uint32_t S1 = rotr(e,6) ^ rotr(e,11) ^ rotr(e,25);
+     uint32_t ch = (e & f) ^ (~e & g);
+     uint32_t t1 = hh + S1 + ch + Kc[i] + w[i];
+     uint32_t S0 = rotr(a,2) ^ rotr(a,13) ^ rotr(a,22);
+     uint32_t maj = (a & b) ^ (a & c) ^ (b & c);
+     uint32_t t2 = S0 + maj;
+     hh=g; g=f; f=e; e=d+t1; d=c; c=b; b=a; a=t1+t2;
+   }
+   h[0]+=a; h[1]+=b; h[2]+=c; h[3]+=d; h[4]+=e; h[5]+=f; h[6]+=g; h[7]+=hh;
+ };
+ size_t off = 0;
+ for (; off + 64 <= len; off += 64) compress(msg + off);
+ // FIPS 180-4 padding for the final partial block, built on the stack:
+ // 0x80, zero fill, 64-bit big-endian bit length. rem <= 63, so the padded
+ // tail is exactly one block (rem <= 55) or two blocks (rem >= 56).
+ uint8_t tail[128];
+ size_t rem = len - off;
+ if (rem) std::memcpy(tail, msg + off, rem);
+ tail[rem] = 0x80;
+ size_t tlen = (rem <= 55) ? 64 : 128;
+ for (size_t i = rem + 1; i < tlen - 8; i++) tail[i] = 0;
+ uint64_t bitlen = (uint64_t)len * 8;
+ for (int i = 0; i < 8; i++)
+   tail[tlen - 1 - (size_t)i] = (uint8_t)(bitlen >> (i * 8));
+ for (size_t o = 0; o < tlen; o += 64) compress(tail + o);
+ for (int i = 0; i < 8; i++) {
+   out[4*i]   = (uint8_t)(h[i] >> 24);
+   out[4*i+1] = (uint8_t)(h[i] >> 16);
+   out[4*i+2] = (uint8_t)(h[i] >>  8);
+   out[4*i+3] = (uint8_t)(h[i]);
+ }
+ secure_zero(tail, sizeof(tail));
+ secure_zero(w, sizeof(w));
+ secure_zero(h, sizeof(h)); // digest already copied to out
+}
+
+// MGF1/counter-mode XOF over a 256-bit key with a domain-separation label and
+// optional public "info" (e.g. an auth challenge -- binds it cryptographically):
+//   block_i = SHA-256( key[32] || label || info || be32(i) )
+//   output  = block_0 || block_1 || ...
+// Standard mask-generation construction (PKCS#1 MGF1 shape). Each block hashes a
+// distinct fixed-length preimage, so it is not length-extendable for this use.
+inline void mcl_kdf256(const uint8_t key[32], const char* label,
+                       const uint8_t* info, size_t infolen,
+                       uint8_t* out, size_t outlen) {
+ // Contract guards (v7.0.1): key and label must be non-null (strlen on a
+ // null label is UB); info may be null only when infolen == 0; out may be
+ // null only when outlen == 0. Caller bugs -> unconditional abort.
+ if (MCL_UNLIKELY(key == nullptr || label == nullptr
+                  || (info == nullptr && infolen > 0)
+                  || (out == nullptr && outlen > 0))) {
+   std::fprintf(stderr, "FATAL: mcl_kdf256 invalid arguments "
+                "(key=%p, label=%p, info=%p infolen=%zu, out=%p outlen=%zu)\n",
+                (const void*)key, (const void*)label,
+                (const void*)info, infolen, (const void*)out, outlen);
+   std::abort();
+ }
+ size_t lab = std::strlen(label);
+ // v7.0.2 (F4): cap label/info lengths so 'total' below cannot wrap size_t
+ // (a wrapped total under-allocates, then the memcpy writes wild). 1 MiB each
+ // is astronomically above any legitimate KDF input; mirrors mcl_validate_buf.
+ constexpr size_t MCL_KDF_MAX_LEN = 1u << 20; // 1 MiB
+ if (MCL_UNLIKELY(lab > MCL_KDF_MAX_LEN || infolen > MCL_KDF_MAX_LEN)) {
+   std::fprintf(stderr, "FATAL: mcl_kdf256 input too large "
+                "(lab=%zu, infolen=%zu, max=%zu)\n",
+                lab, infolen, (size_t)MCL_KDF_MAX_LEN);
+   std::abort();
+ }
+ const size_t total = 32 + lab + infolen + 4;
+ // v7.0.0: the preimage buffer holds the RAW MASTER KEY, so it lives on the
+ // stack for every in-file use (labels <= 16 B, info = 8 B) with a heap
+ // fallback only for oversized caller-supplied label/info; both paths are
+ // secure_zero'd before return (previously a heap vector freed unzeroed).
+ uint8_t stack_in[160];
+ std::vector<uint8_t> heap_in;
+ uint8_t* in = stack_in;
+ if (total > sizeof(stack_in)) { heap_in.resize(total); in = heap_in.data(); }
+ std::memcpy(in, key, 32);
+ if (lab) std::memcpy(in + 32, label, lab);
+ if (infolen) std::memcpy(in + 32 + lab, info, infolen);
+ size_t cpos = 32 + lab + infolen;
+ uint32_t counter = 0;
+ size_t produced = 0;
+ uint8_t block[32] = {};
+ while (produced < outlen) {
+   in[cpos + 0] = (uint8_t)(counter >> 24);
+   in[cpos + 1] = (uint8_t)(counter >> 16);
+   in[cpos + 2] = (uint8_t)(counter >>  8);
+   in[cpos + 3] = (uint8_t)(counter);
+   mcl_sha256(in, total, block);
+   size_t take = std::min((size_t)32, outlen - produced);
+   std::memcpy(out + produced, block, take);
+   produced += take;
+   counter++;
+ }
+ secure_zero(block, sizeof(block));
+ secure_zero(in, total); // erase the key-bearing preimage (stack or heap)
+}
+
+// Post-quantum security accounting (replaces the informal "Grover sqrt on seed"
+// note). Given the number of independent secret bits that actually reach the
+// persistent engine parameters, report the post-Grover work factor and the NIST
+// PQ category reached. NIST anchors Categories 1/3/5 to exhaustive key search on
+// AES-128/192/256, i.e. >=64/96/128 post-Grover bits respectively (Category 5 is
+// the highest). A 256-bit symmetric key => 128 post-Grover => Category 5 (the
+// quantum cost equals AES-256's, NOT a 128-bit cipher's classical cost; the
+// earlier "Level 1" label conflated those and was wrong by four categories).
+// This is a quantitative quantum-cost helper; it does NOT certify against
+// structural cryptanalysis.
+struct MCL_PQReport {
+ double secret_bits;       // brute-forceable classical secret bits
+ double post_grover_bits;  // = secret_bits / 2  (Grover quadratic speedup)
+ bool   meets_category1;   // post_grover_bits >= 64   (AES-128 equivalent)
+ bool   meets_category3;   // post_grover_bits >= 96   (AES-192 equivalent)
+ bool   meets_category5;   // post_grover_bits >= 128  (AES-256 equiv., highest)
+};
+inline MCL_PQReport mcl_pq_security(double secret_bits) {
+ MCL_PQReport r;
+ r.secret_bits = secret_bits;
+ r.post_grover_bits = secret_bits * 0.5;
+ r.meets_category1 = (r.post_grover_bits >= 64.0);
+ r.meets_category3 = (r.post_grover_bits >= 96.0);
+ r.meets_category5 = (r.post_grover_bits >= 128.0);
+ return r;
+}
+// Classical secret bits of a single coprime (p,q) pair from [2, max_val]
+// (ordered, density 6/pi^2) -- the DEFAULT (non-keyed) auth secret. Even
+// max_val=1e18 gives only ~119 bits -> ~59 post-Grover (below even Category 1).
+inline double mcl_pair_secret_bits(double max_val) {
+ if (max_val <= 2.0) return 0.0;
+ double pairs = (6.0 / (MCL_PI * MCL_PI)) * (max_val - 1.0) * (max_val - 1.0);
+ return std::log2(pairs);
+}
+
 // Output section separator
 inline void sep(const char* title) {
  std::printf("\n==============================================================================\n");
@@ -1257,17 +1688,14 @@ public:
  : p_(p), q_(q), kc_(kc)
  {
  assert(seed != 0 && "Seed must be non-zero");
- // Tightened from p,q > 0 to p,q >= 2 to match
+ // Parameter contract (checked below; asserts live inside the
+ // MCL_UNSAFE_ALLOW_INVALID guard together with the runtime checks):
  // The lower bound is a numerical / dynamical contract: p=1 produces
  // output that LOOKS uniform but is theoretically degenerate (reduced
  // state-space exploration). Block at the boundary.
- // Upper bound: 2 <= p, q <= 2^62. Beyond 2^62, the (double)p*t cast
- // loses precision (mantissa 52-bit) and produces deterministic output
+ // Upper bound: 2 <= p, q <= 2^53 (v8.1.3). Beyond 2^53, the (double)p*t cast
+ // loses precision (53-bit significand) and would produce deterministic output
  // that LOOKS statistically random but lies outside the operating regime.
- assert(p >= 2 && q >= 2 && "coupling weights must be >= 2");
- assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^62");
- assert(p != q && "p and q must be distinct");
- assert(std::isfinite(kc) && kc > 0.0 && "K must be finite and > 0");
  // K_min(p,q) = MCL_K_MIN_NUMERATOR/(p+q) — see derivation block above.
  // Below K_min, lambda_max < 0 and the system enters a non-chaotic regime.
  // Output may LOOK uniform statistically but is theoretically predictable.
@@ -1276,31 +1704,40 @@ public:
  // CAVEAT -- K_min is NECESSARY, not SUFFICIENT.
  // Empirical sweep shows that even K > K_min has occasional "periodic
  // windows" (Feigenbaum stability windows in chaotic systems). For
- // (p=3, q=5), a dense K sweep [0.5, 1.0] shows several K values where
- // chi^2 > 10^7 (extremely degenerate output) interspersed with passing
- // values. ABOVE K = 2.0 (well above K_min = 0.63 for (3,5)), almost
- // ALL K values produce uniform output. The default K = 12.0
- // is in the safe-for-all zone.
+ // (p=3, q=5), a dense K sweep shows several K values where chi^2 > 10^7
+ // (extremely degenerate output) interspersed with passing values. These
+ // windows PERSIST WELL ABOVE K = 2.0 and above K_min for some topologies:
+ // verified for (3,5) at K~1.22/2.60 (resonance, lambda<0) and K~3.79/5.73
+ // (quasi-periodic, lambda~0), and for (2,3) across K~1.28-2.08. K >=
+ // MCL_K_RECOMMENDED_FLOOR (6.0) is the empirically window-free advisory range
+ // for the tested topology set; the default K = 12.0 is the validated
+ // safe-for-all-tested value. (Supersedes the earlier "above K=2.0 almost all
+ // uniform" note, which the 2.595/3.79/5.73 windows falsify; consistent with
+ // the K-domain notes above and MCL_K_RECOMMENDED_FLOOR.)
 
  // This check enforces the LOWER bound (no negative-Lyapunov regime)
  // but does NOT guarantee chaos at every K above K_min. Users requiring
  // empirical chaos verification should run statistical tests on their
  // chosen K. The K_DEFAULT (12.0) is empirically validated.
  //
- // v5.0.0: K_min_pq + assert moved INSIDE the MCL_UNSAFE_ALLOW_INVALID
- // guard. Previously (v4.1.0) both were outside, making the assert fire
- // even when MCL_UNSAFE_ALLOW_INVALID was defined -- inconsistent with
- // the 14 other parameter guards in this file. K-sweep verifiers
- // (mcl_k_sweep_unified) require K below K_min(p,q) by design and now
- // work with the standard MCL_UNSAFE_ALLOW_INVALID flag alone.
+ // v5.0.0 moved the K_min assert INSIDE the MCL_UNSAFE_ALLOW_INVALID
+ // guard; v7.0.0 moved the remaining p/q/K asserts inside as well, so a
+ // debug build with -DMCL_UNSAFE_ALLOW_INVALID is fully permissive
+ // (research mode) while default builds keep every check. K-sweep
+ // verifiers (mcl_k_sweep_unified) require K below K_min(p,q) by design
+ // and work with the standard MCL_UNSAFE_ALLOW_INVALID flag alone.
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ assert(p >= 2 && q >= 2 && "coupling weights must be >= 2");
+ assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^53");
+ assert(p != q && "p and q must be distinct");
+ assert(std::isfinite(kc) && kc > 0.0 && "K must be finite and > 0");
  const double K_min_pq = MCL_K_MIN_NUMERATOR / ((double)p + (double)q); // avoid int64_t addition near INT64_MAX
  assert(kc >= K_min_pq
    && "K must be >= K_min(p,q) = MCL_K_MIN_NUMERATOR/(p+q) for chaotic regime");
  if (p < 2 || q < 2 || p > MCL_PQ_MAX || q > MCL_PQ_MAX || p == q) {
  std::fprintf(stderr, "FATAL: MCL_T2 invalid coupling weights "
- "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^62, p != q "
- ".\n", (long long)p, (long long)q);
+ "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^53, p != q.\n",
+ (long long)p, (long long)q);
  std::abort();
  }
  if (!std::isfinite(kc) || kc <= 0.0) {
@@ -1317,9 +1754,9 @@ public:
  std::fprintf(stderr, "FATAL: MCL_T2 K=%.6g below K_min=%.6g for "
  "(p=%lld, q=%lld). Below K_min, lambda_max < 0 and system "
  "is non-chaotic. NOTE: K_min is necessary "
- "but NOT sufficient -- K just above K_min may still produce "
- "degenerate output for some topologies. Use K >= "
- "MCL_K_RECOMMENDED_FLOOR (1.0) for cryptographic safety, or "
+ "but NOT sufficient -- narrow periodic windows persist above "
+ "K_min for some topologies. Use K >= "
+ "MCL_K_RECOMMENDED_FLOOR (6.0) for cryptographic safety, or "
  "K = K_DEFAULT (12) for the default setting.\n",
  kc, K_min_pq, (long long)p, (long long)q);
  std::abort();
@@ -1329,13 +1766,13 @@ public:
  t1_ = mod2pi((double)s * OMEGA_1);
  t2_ = mod2pi((double)s * OMEGA_2);
  for (int i = 0; i < BURNIN; i++) iterate();
- // E8: numerical guard after burn-in (debug builds only)
+ // numerical guard after burn-in (debug builds only)
  assert(std::isfinite(t1_) && std::isfinite(t2_) && "T2 diverged in burn-in");
  }
 
- // Destructor: cryptographic erasure of internal state
- // Required by ("performs cryptographic erasure of all
- // internal dynamical state variables upon completion").
+ // Destructor: cryptographic erasure of internal state, per the erasure
+ // contract ("performs cryptographic erasure of all internal dynamical
+ // state variables upon completion").
  // Note: this fires on scope exit, exception unwind, and explicit delete.
  ~MCL_T2() noexcept {
  secure_zero(&t1_, sizeof(t1_));
@@ -1352,8 +1789,8 @@ public:
  // Without this, two engines with same (p, q, K) but different seeds
  // produce IDENTICAL bytes after erase() -- a complete identity collapse.
 
- // Per ("upon completion of each authentication tag
- // computation"), erase() is FINAL. The engine must not be reused.
+ // Per the erasure contract ("upon completion of each authentication
+ // tag computation"), erase() is FINAL. The engine must not be reused.
  // Re-use requires constructing a fresh engine with a new seed.
  void erase() noexcept {
  secure_zero(&t1_, sizeof(t1_));
@@ -1363,7 +1800,7 @@ public:
 
  // Full erasure including device-identity coupling parameters.
  // Use only when discarding the entire engine identity (e.g., on
- // device decommission per (d)).
+ // device decommission).
  // erase_identity audit: erase() already zeros kc_, t1_, t2_;
  // here we add the identity parameters (p, q). Avoids redundant zero of kc_.
  void erase_identity() noexcept {
@@ -1416,8 +1853,8 @@ public:
  // is fully deterministic. To prevent this fail-quiet hazard, gen_byte()
  // and iterate() check for the moved-from sentinel (kc_ == 0) and abort.
 
- // Why kc_ == 0 specifically: K=0 is forbidden by
- // ("K >= 1.0 for two-oscillator system"), so it cannot occur via legitimate
+ // Why kc_ == 0 specifically: K=0 is forbidden by the parameter contract
+ // (K must be positive and >= K_min), so it cannot occur via legitimate
  // construction. After move, kc_ is explicitly secure_zero'd, making it
  // a reliable sentinel.
 
@@ -1461,23 +1898,23 @@ public:
 
  // Dynamic parameter hopping: change (p,q) mid-stream, preserve state
  void hop(int64_t new_p, int64_t new_q, int warmup = 50) {
- assert(new_p >= 2 && new_q >= 2 && new_p != new_q && "hop: p,q must be >= 2");
- // [-DEEP] hop() previously checked only lower bound and p!=q.
- // Missing: upper bound (PQ_MAX) and K_min validity for the NEW (p,q).
- // Without these, hop() can move into a non-chaotic region while keeping
- // the existing K -- the engine then produces non-chaotic output silently.
- assert(new_p <= MCL_PQ_MAX && new_q <= MCL_PQ_MAX
-   && "hop: p, q must be <= 2^62 ");
- // v5.0.0: new_K_min + assert moved INSIDE the MCL_UNSAFE_ALLOW_INVALID
- // guard (consistent with rest of core; see MCL_T2 ctor for full rationale).
+ // hop() validates the FULL contract for the NEW (p,q): lower bound,
+ // upper bound (PQ_MAX), distinctness, and K_min validity under the
+ // EXISTING K. Without the K_min check, hop() could silently move the
+ // engine into a non-chaotic region. All checks live inside the
+ // MCL_UNSAFE_ALLOW_INVALID guard (see the ctor for the rationale).
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ assert(new_p >= 2 && new_q >= 2 && new_p != new_q
+   && "hop: p,q must be >= 2 and distinct");
+ assert(new_p <= MCL_PQ_MAX && new_q <= MCL_PQ_MAX
+   && "hop: p, q must be <= 2^53");
  const double new_K_min = MCL_K_MIN_NUMERATOR / ((double)new_p + (double)new_q);
  assert(kc_ >= new_K_min
    && "hop: existing K is below K_min for new (p,q) -- non-chaotic regime");
  if (new_p < 2 || new_q < 2 || new_p > MCL_PQ_MAX || new_q > MCL_PQ_MAX
      || new_p == new_q) {
  std::fprintf(stderr, "FATAL: MCL_T2::hop invalid weights "
-   "(new_p=%lld, new_q=%lld). Required: 2 <= p,q <= 2^62, p != q.\n",
+   "(new_p=%lld, new_q=%lld). Required: 2 <= p,q <= 2^53, p != q.\n",
    (long long)new_p, (long long)new_q);
  std::abort();
  }
@@ -1492,9 +1929,8 @@ public:
  for (int i = 0; i < warmup; i++) iterate();
  }
 
- // Parameter accessors (for postquantum parameter attack)
- // Added [[nodiscard]] + is_invalid for API uniformity
- // across the 7 engines.
+ // Parameter accessors (for parameter-space analysis and diagnostics).
+ // [[nodiscard]] + is_invalid provide API uniformity across the 7 engines.
  [[nodiscard]] int64_t get_p() const noexcept { return p_; }
  [[nodiscard]] int64_t get_q() const noexcept { return q_; }
  [[nodiscard]] bool is_invalid() const noexcept { return kc_ == 0.0; }
@@ -1525,25 +1961,25 @@ public:
  double w1, double w2, double kc = K_DEFAULT)
  : p_(p), q_(q), kc_(kc), w1_(w1), w2_(w2)
  {
- assert(seed != 0 && p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2");
- assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^62");
- // reject NaN/Inf/non-positive K and invalid w1/w2
- assert(std::isfinite(kc) && kc > 0.0 && "K must be finite and > 0");
- assert(std::isfinite(w1) && std::isfinite(w2) && "w1, w2 must be finite");
- // w1 != w2 (broken-symmetry requirement).
+ assert(seed != 0 && "Seed must be non-zero");
+ // w1 != w2 (broken-symmetry requirement):
  // w1 == w2 makes the two oscillators governed by an identical equation
  // (both flux invariants identical), losing the distinguishing dynamical
  // property. Output may look uniform but lies outside the operating regime.
+ // All parameter asserts live INSIDE the MCL_UNSAFE_ALLOW_INVALID guard
+ // (v7.0.0; see the MCL_T2 ctor for the rationale).
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ assert(p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2, distinct");
+ assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^53");
+ assert(std::isfinite(kc) && kc > 0.0 && "K must be finite and > 0");
+ assert(std::isfinite(w1) && std::isfinite(w2) && "w1, w2 must be finite");
  assert(w1 != w2 && "w1 != w2 (broken symmetry required)");
  // K_min(p,q) = MCL_K_MIN_NUMERATOR/(p+q) — chaos threshold
- // v5.0.0: K_min_pq + assert moved INSIDE the MCL_UNSAFE_ALLOW_INVALID
- // guard (consistent with rest of core; see MCL_T2 ctor for full rationale).
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  const double K_min_pq = MCL_K_MIN_NUMERATOR / ((double)p + (double)q);
  assert(kc >= K_min_pq && "K must be >= K_min(p,q) = MCL_K_MIN_NUMERATOR/(p+q)");
  if (p < 2 || q < 2 || p > MCL_PQ_MAX || q > MCL_PQ_MAX || p == q) {
  std::fprintf(stderr, "FATAL: MCL_T2_Omega invalid coupling weights "
- "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^62, p != q.\n",
+ "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^53, p != q.\n",
  (long long)p, (long long)q);
  std::abort();
  }
@@ -1620,7 +2056,7 @@ public:
  }
  // erase_identity for T2_Omega -- full decommission.
  // Note: includes w1, w2 (custom omega -- also part of identity).
- // erase() already zeros kc_; removed redundant call here.
+ // erase() covers kc_.
  void erase_identity() noexcept {
  erase();
  secure_zero(&p_, sizeof(p_));
@@ -1650,6 +2086,10 @@ public:
      secure_zero(&o.t1_, sizeof(o.t1_));
      secure_zero(&o.t2_, sizeof(o.t2_));
      secure_zero(&o.kc_, sizeof(o.kc_));
+     // w1_/w2_ are key-derived secrets on the keyed path: erase them from
+     // the source exactly as the move CONSTRUCTOR does (v7.0.0 parity fix).
+     secure_zero(&o.w1_, sizeof(o.w1_));
+     secure_zero(&o.w2_, sizeof(o.w2_));
    }
    return *this;
  }
@@ -1661,6 +2101,77 @@ public:
  [[nodiscard]] double get_w2() const noexcept { return w2_; }
  [[nodiscard]] bool is_invalid() const noexcept { return kc_ == 0.0; }
 };
+
+// ============================================================================
+// 256-bit KEYED CONSTRUCTION (post-quantum key path) -- MCL_T2_Omega
+// ============================================================================
+// Derives (p, q, w1, w2) from a 256-bit master key via the SHA-256 KDF (sec.3.1),
+// so the brute-forceable SECRET is the 256-bit key, expanded into parameters
+// that PERSIST through burn-in. K is fixed at K_DEFAULT (deriving K adds little
+// entropy and risks the K_min boundary). Carried entropy:
+//   p,q   each in [2, 2^52)  -> ~52 bits each (below the 2^53 collapse onset)
+//   w1,w2 each a 53-bit mantissa fraction in (0, 1]
+// raw span 52+52+53+53 ~= 210 bits; all security accounting uses the
+// CONSERVATIVE floor ~208 classical bits -> ~104 post-Grover (the figure
+// carried in the papers). This is a ~74-bit improvement
+// over the default single-(p,q) auth secret (~30 post-Grover); it meets NIST
+// Category 3 (AES-192 = 96 post-Grover) but is BELOW Category 5 (AES-256 = 128),
+// because T2's parameter CAPACITY (~208 bits) cannot hold a full 256-bit secret.
+// For Category 5 (the highest) use mcl_t4_from_key() below.
+//
+// `challenge` is an optional PUBLIC value (e.g. an auth nonce) bound into the
+// derivation cryptographically; the secret is the key alone.
+struct MCL_KeyedParamsT2 { int64_t p, q; double w1, w2; double K; };
+
+inline MCL_KeyedParamsT2 mcl_t2_params_from_key(const uint8_t key[32],
+                                                uint64_t challenge = 0) {
+ uint8_t info[8];
+ for (int i = 0; i < 8; i++) info[i] = (uint8_t)(challenge >> (i * 8));
+ uint8_t kd[32];
+ mcl_kdf256(key, "MCL-T2-Omega-v1", info, sizeof(info), kd, sizeof(kd));
+ auto le64 = [](const uint8_t* b) -> uint64_t {
+   uint64_t v = 0;
+   for (int i = 0; i < 8; i++) v |= (uint64_t)b[i] << (i * 8);
+   return v;
+ };
+ const int64_t PQ_RANGE = (int64_t)((1ULL << 52) - 2); // p,q in [2, 2^52)
+ // Modulo reduction of a 64-bit lane into PQ_RANGE carries a relative bias
+ // of ~2^-12 (entropy loss < 0.001 bit per lane) -- negligible; documented
+ // for adversarial review rather than "fixed" with rejection sampling,
+ // which would break the frozen keyed KATs.
+ int64_t p = 2 + (int64_t)(le64(kd +  0) % (uint64_t)PQ_RANGE);
+ int64_t q = 2 + (int64_t)(le64(kd +  8) % (uint64_t)PQ_RANGE);
+ if (q == p) q = 2 + ((q - 2 + 1) % PQ_RANGE);
+ // make (p,q) coprime by bumping q (preserves ~full entropy; stays in range)
+ while (gcd_compute(p, q) != 1) {
+   q = 2 + ((q - 2 + 1) % PQ_RANGE);
+   if (q == p) q = 2 + ((q - 2 + 1) % PQ_RANGE);
+ }
+ // w1,w2 in (0, 1]: 53-bit fraction from the high bits. The +1 avoids exact
+ // 0; the upper boundary 1.0 is reachable with probability 2^-53 per lane
+ // and is a valid angular frequency (finite, nonzero).
+ double w1 = (double)((le64(kd + 16) >> 11) + 1) * (1.0 / 9007199254740992.0);
+ double w2 = (double)((le64(kd + 24) >> 11) + 1) * (1.0 / 9007199254740992.0);
+ if (w1 == w2) w2 = w1 * 0.5 + 0.25; // broken symmetry (astronomically rare)
+ if (w1 == w2) w2 = 0.75; // remap fixed point (w1 == 0.5 exactly): force distinct
+ MCL_KeyedParamsT2 out{p, q, w1, w2, K_DEFAULT};
+ secure_zero(kd, sizeof(kd)); // erase the key-derived KDF lanes
+ secure_zero(&p,  sizeof(p));  secure_zero(&q,  sizeof(q));   // erase the
+ secure_zero(&w1, sizeof(w1)); secure_zero(&w2, sizeof(w2));  // local copies
+ return out;
+}
+
+// Convenience factory: a burned-in MCL_T2_Omega keyed by a 256-bit master key.
+// `seed` is a PUBLIC salt for the initial state (washed out by burn-in); the
+// secret is `key`. Returns by move (MCL_T2_Omega is movable, non-copyable).
+inline MCL_T2_Omega mcl_t2_from_key(const uint8_t key[32],
+                                    uint64_t challenge = 0,
+                                    uint64_t seed = DEFAULT_SEED) {
+ MCL_KeyedParamsT2 kp = mcl_t2_params_from_key(key, challenge);
+ MCL_T2_Omega eng(seed, kp.p, kp.q, kp.w1, kp.w2, kp.K);
+ secure_zero(&kp, sizeof(kp)); // erase the key-derived parameter copy
+ return eng;
+}
 
 // ---------- MCL_T3: Three-Oscillator Extension ----------
 
@@ -1675,16 +2186,19 @@ public:
  : p12_(ct.p12), q12_(ct.q12), p13_(ct.p13), q13_(ct.q13),
  p23_(ct.p23), q23_(ct.q23), kc_(kc)
  {
- assert(seed != 0);
+ assert(seed != 0 && "Seed must be non-zero");
+ // Parameter asserts live INSIDE the MCL_UNSAFE_ALLOW_INVALID guard
+ // (v7.0.0; see the MCL_T2 ctor for the rationale).
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  assert(ct.p12 != ct.q12 && ct.p13 != ct.q13 && ct.p23 != ct.q23);
- // E9: all coupling weights must be positive (2 <= p,q <= 2^62)
+ // all coupling weights must satisfy 2 <= p,q <= 2^53
  assert(ct.p12 >= 2 && ct.q12 >= 2 && ct.p13 >= 2 && ct.q13 >= 2
  && ct.p23 >= 2 && ct.q23 >= 2 && "T3 coupling weights must be >= 2");
- // enforce upper bound 2^62 per
+ // enforce upper bound 2^53 (exact-double contract; see MCL_PQ_MAX)
  assert(ct.p12 <= MCL_PQ_MAX && ct.q12 <= MCL_PQ_MAX
    && ct.p13 <= MCL_PQ_MAX && ct.q13 <= MCL_PQ_MAX
    && ct.p23 <= MCL_PQ_MAX && ct.q23 <= MCL_PQ_MAX
-   && "T3 coupling weights must be <= 2^62 ");
+   && "T3 coupling weights must be <= 2^53");
  // reject NaN/Inf/non-positive K
  assert(std::isfinite(kc) && kc > 0.0 && "K must be finite and > 0");
  // Empirically-derived physical lower bound. Below this,
@@ -1692,10 +2206,16 @@ public:
  // (silent K-disappearance). Verified by direct
  // measurement. See MCL_K_MIN_PHYS comment for derivation.
  // T3-specific K_min(p,q) formula does not exist in any source we trust;
- // this physical bound is the most defensible enforcement.
+ // this physical bound is the most defensible ENFORCEMENT -- but note it sits
+ // far below the dynamically-safe range. Like T2, T3 has periodic/quasi-periodic
+ // windows ABOVE this floor (documented catastrophic band ~[0.03,0.18] for the
+ // default coupling): MCL_K_MIN_PHYS only prevents ULP K-disappearance, it does
+ // NOT guarantee chaos. Use K >= MCL_T3_K_RECOMMENDED (0.2) or K_DEFAULT (12),
+ // and validate a custom K empirically. (No mcl_make_validated_t2 equivalent
+ // exists for T3 yet -- a T3/T4 factory needs 3x3/4x4 Lyapunov machinery not in
+ // this header; see mcl_make_validated_t2's note.)
  assert(kc >= MCL_K_MIN_PHYS && "T3 K must be >= MCL_K_MIN_PHYS (1e-12) "
    "to avoid silent K-disappearance below ULP(2pi)");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  if (ct.p12 < 2 || ct.q12 < 2 || ct.p13 < 2 || ct.q13 < 2
  || ct.p23 < 2 || ct.q23 < 2
  || ct.p12 > MCL_PQ_MAX || ct.q12 > MCL_PQ_MAX
@@ -1703,7 +2223,7 @@ public:
  || ct.p23 > MCL_PQ_MAX || ct.q23 > MCL_PQ_MAX
  || ct.p12 == ct.q12 || ct.p13 == ct.q13 || ct.p23 == ct.q23) {
  std::fprintf(stderr, "FATAL: MCL_T3 invalid coupling weights "
- "(must be 2 <= p,q <= 2^62, p != q)\n");
+ "(must be 2 <= p,q <= 2^53, p != q)\n");
  std::abort();
  }
  if (!std::isfinite(kc) || kc <= 0.0) {
@@ -1761,10 +2281,10 @@ public:
  std::array<double, 3> state() const { return {t1_, t2_, t3_}; }
 
  void hop(const CouplingTriple& ct, int warmup = 50) {
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  assert(ct.p12 != ct.q12 && ct.p13 != ct.q13 && ct.p23 != ct.q23);
  assert(ct.p12 >= 2 && ct.q12 >= 2 && ct.p13 >= 2 && ct.q13 >= 2
- && ct.p23 >= 2 && ct.q23 >= 2 && "T3 hop: coupling weights must be positive");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ && ct.p23 >= 2 && ct.q23 >= 2 && "T3 hop: coupling weights must be >= 2");
  if (ct.p12 < 2 || ct.q12 < 2 || ct.p13 < 2 || ct.q13 < 2
  || ct.p23 < 2 || ct.q23 < 2
  || ct.p12 > MCL_PQ_MAX || ct.q12 > MCL_PQ_MAX
@@ -1794,8 +2314,7 @@ public:
  secure_zero(&t3_, sizeof(t3_));
  secure_zero(&kc_, sizeof(kc_)); // sentinel fire
  }
- // Full decommission -- zeros all 6 coupling weights.
- // erase() already zeros kc_; removed redundant call.
+ // Full decommission -- zeros all 6 coupling weights. erase() covers kc_.
  void erase_identity() noexcept {
  erase();
  secure_zero(&p12_, sizeof(p12_)); secure_zero(&q12_, sizeof(q12_));
@@ -1854,28 +2373,43 @@ public:
  p14_(cs.p14), q14_(cs.q14), p23_(cs.p23), q23_(cs.q23),
  p24_(cs.p24), q24_(cs.q24), p34_(cs.p34), q34_(cs.q34), kc_(kc)
  {
- assert(seed != 0);
+ assert(seed != 0 && "Seed must be non-zero");
+ // Parameter asserts live INSIDE the MCL_UNSAFE_ALLOW_INVALID guard
+ // (v7.0.0; see the MCL_T2 ctor for the rationale).
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  assert(cs.p12 != cs.q12 && cs.p13 != cs.q13 && cs.p14 != cs.q14);
  assert(cs.p23 != cs.q23 && cs.p24 != cs.q24 && cs.p34 != cs.q34);
- // E9: all coupling weights must be positive (2 <= p,q <= 2^62)
+ // all coupling weights must satisfy 2 <= p,q <= 2^53
  assert(cs.p12 >= 2 && cs.q12 >= 2 && cs.p13 >= 2 && cs.q13 >= 2
- && cs.p14 >= 2 && cs.q14 >= 2 && "T4 pairs 1-2,1-3,1-4 must be positive");
+ && cs.p14 >= 2 && cs.q14 >= 2 && "T4 pairs 1-2,1-3,1-4 must be >= 2");
  assert(cs.p23 >= 2 && cs.q23 >= 2 && cs.p24 >= 2 && cs.q24 >= 2
- && cs.p34 >= 2 && cs.q34 >= 2 && "T4 pairs 2-3,2-4,3-4 must be positive");
+ && cs.p34 >= 2 && cs.q34 >= 2 && "T4 pairs 2-3,2-4,3-4 must be >= 2");
  // reject NaN/Inf/non-positive K
  assert(std::isfinite(kc) && kc > 0.0 && "K must be finite and > 0");
- // physical lower bound (see MCL_K_MIN_PHYS comment)
+ // physical lower bound (see MCL_K_MIN_PHYS comment). As with T2/T3 this only
+ // prevents ULP K-disappearance and does NOT guarantee chaos -- T4 has sparse
+ // marginal failures below ~0.5. Use K >= MCL_T4_K_RECOMMENDED (0.5) or
+ // K_DEFAULT (12); validate a custom K empirically (no T4 validated factory yet).
  assert(kc >= MCL_K_MIN_PHYS && "T4 K must be >= MCL_K_MIN_PHYS (1e-12)");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ // v7.0.0: 2^62 upper bound enforced (T2/T3 parity; previously missing in
+ // the T4 ctor although hop() already checked it).
  if (cs.p12 < 2 || cs.q12 < 2 || cs.p13 < 2 || cs.q13 < 2
  || cs.p14 < 2 || cs.q14 < 2 || cs.p23 < 2 || cs.q23 < 2
  || cs.p24 < 2 || cs.q24 < 2 || cs.p34 < 2 || cs.q34 < 2
+ || cs.p12 > MCL_PQ_MAX || cs.q12 > MCL_PQ_MAX
+ || cs.p13 > MCL_PQ_MAX || cs.q13 > MCL_PQ_MAX
+ || cs.p14 > MCL_PQ_MAX || cs.q14 > MCL_PQ_MAX
+ || cs.p23 > MCL_PQ_MAX || cs.q23 > MCL_PQ_MAX
+ || cs.p24 > MCL_PQ_MAX || cs.q24 > MCL_PQ_MAX
+ || cs.p34 > MCL_PQ_MAX || cs.q34 > MCL_PQ_MAX
  || cs.p12 == cs.q12 || cs.p13 == cs.q13 || cs.p14 == cs.q14
  || cs.p23 == cs.q23 || cs.p24 == cs.q24 || cs.p34 == cs.q34) {
- std::fprintf(stderr, "FATAL: MCL_T4 invalid coupling weights\n");
+ std::fprintf(stderr, "FATAL: MCL_T4 invalid coupling weights "
+ "(required: 2 <= p,q <= 2^53 for all six pairs, p != q per pair)\n");
  std::abort();
  }
- // each (p,q) pair must be coprime.
+ // NOTE: coprimality gcd(p,q)=1 is RECOMMENDED but NOT enforced (matches
+ // the T2/T3/Coupled* policy; Sextet 6 is a deliberate non-coprime entry).
  if (!std::isfinite(kc) || kc <= 0.0) {
  std::fprintf(stderr, "FATAL: MCL_T4 invalid K (=%.17g). "
  "Must be finite and > 0.\n", kc);
@@ -1938,13 +2472,13 @@ public:
  }
 
  void hop(const CouplingSextet& cs, int warmup = 50) {
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  assert(cs.p12 != cs.q12 && cs.p13 != cs.q13 && cs.p14 != cs.q14);
  assert(cs.p23 != cs.q23 && cs.p24 != cs.q24 && cs.p34 != cs.q34);
  assert(cs.p12 >= 2 && cs.q12 >= 2 && cs.p13 >= 2 && cs.q13 >= 2
- && cs.p14 >= 2 && cs.q14 >= 2 && "T4 hop: pairs 1-2,1-3,1-4 must be positive");
+ && cs.p14 >= 2 && cs.q14 >= 2 && "T4 hop: pairs 1-2,1-3,1-4 must be >= 2");
  assert(cs.p23 >= 2 && cs.q23 >= 2 && cs.p24 >= 2 && cs.q24 >= 2
- && cs.p34 >= 2 && cs.q34 >= 2 && "T4 hop: pairs 2-3,2-4,3-4 must be positive");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ && cs.p34 >= 2 && cs.q34 >= 2 && "T4 hop: pairs 2-3,2-4,3-4 must be >= 2");
  if (cs.p12 < 2 || cs.q12 < 2 || cs.p13 < 2 || cs.q13 < 2
  || cs.p14 < 2 || cs.q14 < 2 || cs.p23 < 2 || cs.q23 < 2
  || cs.p24 < 2 || cs.q24 < 2 || cs.p34 < 2 || cs.q34 < 2
@@ -1981,8 +2515,7 @@ public:
  secure_zero(&t4_, sizeof(t4_));
  secure_zero(&kc_, sizeof(kc_)); // sentinel fire
  }
- // Full decommission -- zeros all 12 coupling weights.
- // erase() already zeros kc_; removed redundant call.
+ // Full decommission -- zeros all 12 coupling weights. erase() covers kc_.
  void erase_identity() noexcept {
  erase();
  secure_zero(&p12_, sizeof(p12_)); secure_zero(&q12_, sizeof(q12_));
@@ -2038,6 +2571,132 @@ public:
 };
 
 // ============================================================================
+// 256-bit KEYED CONSTRUCTION (post-quantum key path) -- MCL_T4  [NIST PQ Cat 5]
+// ============================================================================
+// KEYSPACE PROOF -- why the keyed T4 path reaches NIST PQ Category 5 (highest):
+//
+//   1. The SECRET is a 256-bit master key (2^256 classical states).
+//   2. mcl_t4_params_from_key expands it with the SHA-256 KDF (sec.3.1) into
+//      12 coupling weights, one per disjoint 8-byte KDF lane, each reduced into
+//      [2, 2^40). The 12 weights span a representation space of 12*40 = 480
+//      bits >> 256. Collision accounting (stated precisely): for any FIXED
+//      key, the probability that some OTHER key maps to the same 12-tuple is
+//      ~2^256 / 2^480 = 2^-224 (union bound, KDF modeled as random). Over the
+//      whole keyspace the EXPECTED number of colliding key pairs is
+//      C(2^256,2)/2^480 ~= 2^31, so the map is not literally injective on all
+//      2^256 keys -- but the expected key-entropy loss from those pairs is
+//      ~2^-224 bits: negligible.
+//   3. Hence the brute-forceable secret is the FULL 256-bit key, NOT the weight
+//      tuple: a Grover key search costs sqrt(2^256) = 2^128 oracle calls.
+//        => mcl_pq_security(256).post_grover_bits = 128 => meets_category5 = true.
+//   4. No entropy is lost to IEEE-754 precision: each weight (< 2^40) is far
+//      below the 2^53 trajectory-collapse onset (sec.3.1), so distinct weights
+//      yield distinct dynamics; and burn-in does NOT erode the secret because
+//      the 12 weights define the map at every iteration (unlike initial state).
+//
+//   CONTRAST (none reach Category 5): the default single-(p,q) auth secret is
+//   ~30-59 post-Grover bits (below even Category 1 = 64); the keyed T2 path
+//   (mcl_t2_from_key) is ~104 post-Grover = Category 3 but below Category 5
+//   (T2 capacity ~208 bits < 256). Only the keyed T4 path carries a full
+//   256-bit secret. A runnable check is in mcl_self_test() (keyspace assertion).
+//
+//   NOTE: the integer KDF/weight derivation is platform-independent and is
+//   KAT-locked; the subsequent Float64 byte STREAM is libm-dependent (same as
+//   every Float64 engine -- see the PLATFORM NOTE on mcl_kat_vectors).
+inline CouplingSextet mcl_t4_params_from_key(const uint8_t key[32],
+                                             uint64_t challenge = 0) {
+ uint8_t info[8];
+ for (int i = 0; i < 8; i++) info[i] = (uint8_t)(challenge >> (i * 8));
+ uint8_t kd[96]; // 12 weights * 8 bytes
+ mcl_kdf256(key, "MCL-T4-Sextet-v1", info, sizeof(info), kd, sizeof(kd));
+ constexpr int64_t W_RANGE = (int64_t)((1ULL << 40) - 2); // weights in [2, 2^40)
+ // 64-bit lane % W_RANGE carries ~2^-24 relative modulo bias (entropy loss
+ // < 1e-6 bit per lane) -- negligible; documented for adversarial review
+ // rather than "fixed" with rejection sampling (which would break the KATs).
+ auto weight = [&](int lane) -> int64_t {
+   uint64_t v = 0;
+   for (int i = 0; i < 8; i++) v |= (uint64_t)kd[lane*8 + i] << (i * 8);
+   return 2 + (int64_t)(v % (uint64_t)W_RANGE);
+ };
+ int64_t w[12];
+ for (int i = 0; i < 12; i++) w[i] = weight(i);
+ // Each coupling pair (p_ij, q_ij) must satisfy p != q (MCL_T4 contract). Bump
+ // q within range on the rare collision (keeps the lane independent, in range).
+ auto fix_pair = [](int64_t& p, int64_t& q) {
+   if (p == q) q = 2 + ((q - 2 + 1) % W_RANGE);
+ };
+ fix_pair(w[0],  w[1]);  fix_pair(w[2],  w[3]);  fix_pair(w[4],  w[5]);
+ fix_pair(w[6],  w[7]);  fix_pair(w[8],  w[9]);  fix_pair(w[10], w[11]);
+ CouplingSextet out{ w[0],w[1], w[2],w[3], w[4],w[5],
+                     w[6],w[7], w[8],w[9], w[10],w[11] };
+ secure_zero(kd, sizeof(kd)); // erase key-derived KDF lanes
+ secure_zero(w, sizeof(w));   // erase intermediate weight copies
+ return out;
+}
+
+// Convenience factory: a burned-in MCL_T4 keyed by a 256-bit master key.
+// This is the recommended NIST PQ Category 5 configuration (see proof above).
+// `seed` is a PUBLIC salt (washed out by burn-in); the secret is `key`.
+inline MCL_T4 mcl_t4_from_key(const uint8_t key[32],
+                              uint64_t challenge = 0,
+                              uint64_t seed = DEFAULT_SEED) {
+ CouplingSextet cs = mcl_t4_params_from_key(key, challenge);
+ MCL_T4 eng(seed, cs, K_DEFAULT);
+ secure_zero(&cs, sizeof(cs)); // erase the key-derived parameter copy
+ return eng;
+}
+
+// ============================================================================
+// sec.4b DEVICE-BOUND KEYED DERIVATION (v8.1.0, additive)
+// ============================================================================
+// Route-A realization of the device-binding embodiment (PCT-04 [0018] /
+// draft Claim 28): a 256-bit device-bound secret enters the WEIGHT
+// DERIVATION, not the seed. Pattern 1 ("K_eff"): primary key and device
+// secret are combined into an effective key by the same KDF under a
+// dedicated domain label; the effective key then drives the unchanged
+// derivation above. Purely additive: no existing function is modified,
+// so every v8.0.0 KAT remains byte-identical.
+// Contrast (measured): a device secret folded into the seed is capped by
+// the uint64_t seed interface (<= 64 bits of effect); here the full
+// 256 bits reach the durable map-defining weights.
+
+inline void mcl_keff_from_key_device(const uint8_t key[32],
+                                     const uint8_t device_secret[32],
+                                     uint8_t keff_out[32]) {
+ mcl_kdf256(key, "MCL-KeyDevice-v1", device_secret, 32, keff_out, 32);
+}
+
+inline MCL_KeyedParamsT2 mcl_t2_params_from_key_device(
+        const uint8_t key[32], const uint8_t device_secret[32],
+        uint64_t challenge = 0) {
+ uint8_t keff[32];
+ mcl_keff_from_key_device(key, device_secret, keff);
+ MCL_KeyedParamsT2 kp = mcl_t2_params_from_key(keff, challenge);
+ secure_zero(keff, sizeof(keff));
+ return kp;
+}
+
+inline CouplingSextet mcl_t4_params_from_key_device(
+        const uint8_t key[32], const uint8_t device_secret[32],
+        uint64_t challenge = 0) {
+ uint8_t keff[32];
+ mcl_keff_from_key_device(key, device_secret, keff);
+ CouplingSextet cs = mcl_t4_params_from_key(keff, challenge);
+ secure_zero(keff, sizeof(keff));
+ return cs;
+}
+
+inline MCL_T4 mcl_t4_from_key_device(const uint8_t key[32],
+                                     const uint8_t device_secret[32],
+                                     uint64_t challenge = 0,
+                                     uint64_t seed = DEFAULT_SEED) {
+ CouplingSextet cs = mcl_t4_params_from_key_device(key, device_secret, challenge);
+ MCL_T4 eng(seed, cs, K_DEFAULT);
+ secure_zero(&cs, sizeof(cs)); // erase the key-derived parameter copy
+ return eng;
+}
+
+// ============================================================================
 // sec.5 GENERALITY ENGINES -- Non-oscillator chaotic systems
 
 // All use the SAME MCL framework: integer (p,q), sin() coupling,
@@ -2056,8 +2715,9 @@ public:
 // 1. Check engine.ok() (or engine.is_invalid()) before first use, OR
 // 2. Rely on the fact that gen_byte()/gen_bytes() will abort with
 // "FATAL: CoupledHenon diverged" if state is non-finite.
-// This dual behavior is documented in the API stability report
-// as a "mixed error contract" item; preserved for backward compat.
+// This dual behavior (silent flag at construction, hard abort at first
+// use) is a deliberate mixed error contract, preserved for backward
+// compatibility with existing research callers.
 class CoupledHenon {
  double x1_, y1_, x2_, y2_;
  int64_t p_, q_;
@@ -2067,19 +2727,21 @@ public:
  CoupledHenon(uint64_t seed, int64_t p, int64_t q, double K = HENON_K)
  : p_(p), q_(q), K_(K), a_(HENON_A), b_(HENON_B), diverged_(false)
  {
- assert(seed != 0 && p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2");
- assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^62");
- assert(std::isfinite(K) && K > 0.0 && "K must be finite and > 0");
- assert(K >= MCL_K_MIN_PHYS && "CoupledHenon K must be >= MCL_K_MIN_PHYS (1e-12)");
+ assert(seed != 0 && "Seed must be non-zero");
  // Runtime guard for coupling weights -- survives NDEBUG.
  // Unlike T2/T3/T4 where mod2pi constrains state to [0,2pi),
  // Henon's unbounded attractor basin makes invalid parameters
  // dangerous even without divergence detection during burn-in.
  // seed=0 is handled by hash_seed -> abort (separate protection).
+ // Parameter asserts live INSIDE the guard (v7.0.0; see the MCL_T2 ctor).
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ assert(p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2, distinct");
+ assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^53");
+ assert(std::isfinite(K) && K > 0.0 && "K must be finite and > 0");
+ assert(K >= MCL_K_MIN_PHYS && "CoupledHenon K must be >= MCL_K_MIN_PHYS (1e-12)");
  if (p < 2 || q < 2 || p > MCL_PQ_MAX || q > MCL_PQ_MAX || p == q) {
  std::fprintf(stderr, "FATAL: CoupledHenon invalid coupling weights "
- "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^62, p != q.\n",
+ "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^53, p != q.\n",
  (long long)p, (long long)q);
  std::abort();
  }
@@ -2149,10 +2811,9 @@ public:
  mcl_validate_buf(buf, n); // nullptr check
  for (int64_t i = 0; i < n; i++) buf[i] = gen_byte();
  }
- // ok() previously checked only attractor escape (diverged_).
- // After erase()/move-from, the engine has K_=0 sentinel set, so ok() should
- // also reflect that. Otherwise: post-erase ok() = true, contradicting
- // is_invalid() = true. Now ok() = "engine is healthy AND usable".
+ // ok() == "engine is healthy AND usable": false after attractor escape
+ // (diverged_), and also false after erase()/move-from (K_ == 0 sentinel),
+ // so ok() and is_invalid() can never contradict each other.
  bool ok() const { return !diverged_ && K_ != 0.0; }
 
  // API uniformity additions (backward-compatible).
@@ -2177,9 +2838,8 @@ public:
  secure_zero(&y2_, sizeof(y2_));
  secure_zero(&K_, sizeof(K_)); // sentinel fire
  }
- // Full decommission -- zeros (p, q) device identity.
- // Also zeros a_, b_ for consistency (though they are public constants).
- // erase() already zeros K_; removed redundant call.
+ // Full decommission -- zeros (p, q) device identity, plus a_, b_ for
+ // consistency (though they are public constants). erase() covers K_.
  void erase_identity() noexcept {
  erase();
  secure_zero(&p_, sizeof(p_));
@@ -2200,6 +2860,9 @@ public:
    secure_zero(&o.y2_, sizeof(o.y2_));
    secure_zero(&o.K_,  sizeof(o.K_));
  }
+ // Move-ASSIGNMENT is deleted for the sec.5 generality engines (move-
+ // construction suffices for factory returns); the sec.4 production
+ // engines define both. Deliberate API asymmetry, not an oversight.
  CoupledHenon& operator=(CoupledHenon&&) = delete;
 };
 
@@ -2212,7 +2875,7 @@ public:
 // iteration, making divergence mathematically impossible for any finite
 // input. The state is structurally confined to (0,1) by construction.
 // Adding ok() would falsely imply a failure mode that cannot occur,
-// misleading callers into unnecessary error handling. (Rule E8)
+// misleading callers into unnecessary error handling.
 class CoupledLogistic {
  double x1_, x2_;
  int64_t p_, q_;
@@ -2221,14 +2884,16 @@ public:
  CoupledLogistic(uint64_t seed, int64_t p, int64_t q, double K = LOGISTIC_K)
  : p_(p), q_(q), K_(K), r_(LOGISTIC_R)
  {
- assert(seed != 0 && p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2");
- assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^62");
+ assert(seed != 0 && "Seed must be non-zero");
+ // Parameter asserts live INSIDE the guard (v7.0.0; see the MCL_T2 ctor).
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ assert(p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2, distinct");
+ assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^53");
  assert(std::isfinite(K) && K > 0.0 && "K must be finite and > 0");
  assert(K >= MCL_K_MIN_PHYS && "CoupledLogistic K must be >= MCL_K_MIN_PHYS (1e-12)");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  if (p < 2 || q < 2 || p > MCL_PQ_MAX || q > MCL_PQ_MAX || p == q) {
  std::fprintf(stderr, "FATAL: CoupledLogistic invalid coupling weights "
- "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^62, p != q.\n",
+ "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^53, p != q.\n",
  (long long)p, (long long)q);
  std::abort();
  }
@@ -2249,8 +2914,8 @@ public:
  x1_ = std::fmod((double)s * OMEGA_1, 1.0) * 0.8 + 0.1;
  x2_ = std::fmod((double)s * OMEGA_2, 1.0) * 0.8 + 0.1;
  for (int i = 0; i < BURNIN; i++) iterate();
- // E8: defense-in-depth -- fmod+clamp prevents divergence mathematically,
- // but assert guards against unforeseen edge cases
+ // defense-in-depth -- fmod+clamp prevents divergence mathematically,
+ // but the assert guards against unforeseen edge cases
  assert(std::isfinite(x1_) && std::isfinite(x2_) && "Logistic diverged in burn-in");
  }
  // TIMING: The clamp branches below are data-dependent and
@@ -2292,7 +2957,7 @@ public:
  [[nodiscard]] int64_t get_q() const noexcept { return q_; }
  [[nodiscard]] bool is_invalid() const noexcept { return K_ == 0.0; }
 
- // cryptographic erasure .
+ // cryptographic erasure
  ~CoupledLogistic() noexcept {
  secure_zero(&x1_, sizeof(x1_));
  secure_zero(&x2_, sizeof(x2_));
@@ -2303,9 +2968,8 @@ public:
  secure_zero(&x2_, sizeof(x2_));
  secure_zero(&K_, sizeof(K_)); // sentinel fire
  }
- // Full decommission -- zeros (p, q) device identity.
- // Also zeros r_ for consistency (though it is a public constant).
- // erase() already zeros K_; removed redundant call.
+ // Full decommission -- zeros (p, q) device identity, plus r_ for
+ // consistency (though it is a public constant). erase() covers K_.
  void erase_identity() noexcept {
  erase();
  secure_zero(&p_, sizeof(p_));
@@ -2328,7 +2992,7 @@ public:
 
 // DESIGN NOTE: No diverged_ flag or ok() method -- same rationale as
 // CoupledLogistic. The fmod + clamp to [1e-10, 1-1e-10] structurally
-// prevents divergence for any finite input. (Rule E8)
+// prevents divergence for any finite input.
 class CoupledTent {
  double x1_, x2_;
  int64_t p_, q_;
@@ -2337,14 +3001,16 @@ public:
  CoupledTent(uint64_t seed, int64_t p, int64_t q, double K = TENT_K)
  : p_(p), q_(q), K_(K)
  {
- assert(seed != 0 && p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2");
- assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^62");
+ assert(seed != 0 && "Seed must be non-zero");
+ // Parameter asserts live INSIDE the guard (v7.0.0; see the MCL_T2 ctor).
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
+ assert(p >= 2 && q >= 2 && p != q && "coupling weights p,q must be >= 2, distinct");
+ assert(p <= MCL_PQ_MAX && q <= MCL_PQ_MAX && "p, q must be <= 2^53");
  assert(std::isfinite(K) && K > 0.0 && "K must be finite and > 0");
  assert(K >= MCL_K_MIN_PHYS && "CoupledTent K must be >= MCL_K_MIN_PHYS (1e-12)");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
  if (p < 2 || q < 2 || p > MCL_PQ_MAX || q > MCL_PQ_MAX || p == q) {
  std::fprintf(stderr, "FATAL: CoupledTent invalid coupling weights "
- "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^62, p != q.\n",
+ "(p=%lld, q=%lld). Required: 2 <= p,q <= 2^53, p != q.\n",
  (long long)p, (long long)q);
  std::abort();
  }
@@ -2365,8 +3031,8 @@ public:
  x1_ = std::fmod((double)s * OMEGA_1, 1.0) * 0.8 + 0.1;
  x2_ = std::fmod((double)s * OMEGA_2, 1.0) * 0.8 + 0.1;
  for (int i = 0; i < BURNIN; i++) iterate();
- // E8: defense-in-depth -- fmod+clamp prevents divergence mathematically,
- // but assert guards against unforeseen edge cases
+ // defense-in-depth -- fmod+clamp prevents divergence mathematically,
+ // but the assert guards against unforeseen edge cases
  assert(std::isfinite(x1_) && std::isfinite(x2_) && "Tent diverged in burn-in");
  }
  void iterate() {
@@ -2403,7 +3069,7 @@ public:
  [[nodiscard]] int64_t get_q() const noexcept { return q_; }
  [[nodiscard]] bool is_invalid() const noexcept { return K_ == 0.0; }
 
- // cryptographic erasure .
+ // cryptographic erasure
  ~CoupledTent() noexcept {
  secure_zero(&x1_, sizeof(x1_));
  secure_zero(&x2_, sizeof(x2_));
@@ -2414,8 +3080,7 @@ public:
  secure_zero(&x2_, sizeof(x2_));
  secure_zero(&K_, sizeof(K_)); // sentinel fire
  }
- // Full decommission -- zeros (p, q) device identity.
- // erase() already zeros K_; removed redundant call.
+ // Full decommission -- zeros (p, q) device identity. erase() covers K_.
  void erase_identity() noexcept {
  erase();
  secure_zero(&p_, sizeof(p_));
@@ -2433,10 +3098,10 @@ public:
 };
 
 // ============================================================================
-// sec.6 STATISTICS (S1-S5)
+// sec.6 STATISTICS
 // ============================================================================
 
-// S1: Pearson r -- 2-pass formula (never 1-pass for large N stability)
+// Pearson r -- 2-pass formula (never 1-pass for large N stability)
 // Stat-utility input validator. Same hardening as
 // gen_bytes : nullptr -> abort with explanatory message;
 // n < 0 -> abort (likely signed/unsigned bug);
@@ -2482,8 +3147,8 @@ inline void mcl_validate_stat_buf(const void* p, int64_t n,
  return cov / std::sqrt(va * vb);
 }
 
-// S3: Shannon entropy
-// freq[256]: int -> int64_t to prevent silent overflow at N > 2^31.
+// Shannon entropy
+// freq[256] is int64_t to prevent silent overflow at N > 2^31.
 // At PractRand 4 TB scale (N = 4e12 bytes), a single bin could receive
 // > 2^31 entries even under uniform distribution, causing int wrap-around.
 // Guard against n=0 (returns 0 entropy explicitly).
@@ -2503,7 +3168,7 @@ inline void mcl_validate_stat_buf(const void* p, int64_t n,
 }
 
 // Chi-Square uniformity (df=255)
-// freq[256]: int -> int64_t (same rationale as shannon_entropy).
+// freq[256] is int64_t (same rationale as shannon_entropy).
 // Guard against n=0 (otherwise division by zero -> NaN).
 [[nodiscard]] inline double chi_square(const uint8_t* data, int64_t n) {
  mcl_validate_stat_buf(data, n, "chi_square");
@@ -2531,8 +3196,8 @@ inline void mcl_validate_stat_buf(const void* p, int64_t n,
 }
 
 // Bit frequency (proportion of 1-bits)
-// Use popcount8() instead of an inner bit-loop. 8x speedup,
-// identical numerical result. popcount8 is defined in sec.3 above.
+// Uses popcount8() (sec.3) rather than an inner bit-loop; identical
+// numerical result.
 // Guard against n=0 (otherwise 0/0 -> NaN).
 [[nodiscard]] inline double bit_frequency(const uint8_t* data, int64_t n) {
  mcl_validate_stat_buf(data, n, "bit_frequency");
@@ -2542,7 +3207,7 @@ inline void mcl_validate_stat_buf(const void* p, int64_t n,
  return (double)ones / ((double)n * 8.0);
 }
 
-// S2: p-value from |r| under H_0 (independence)
+// p-value from |r| under H_0 (independence)
 // For large n: z = |r|.sqrtn ~ N(0,1), p = erfc(z/sqrt2)
 inline double pvalue_from_r(double abs_r, int64_t n) {
  double z = abs_r * std::sqrt((double)n);
@@ -2592,8 +3257,7 @@ inline double autocorrelation(const uint8_t* data, int64_t n, int lag) {
 // moments, not NIST SP 800-22's simplified σ=2√(2n)π(1-π) (which differs by
 // ~√2). The form used here is the correctly-calibrated one: verified that z
 // has std ~= 1.0 under H0 over thousands of random sequences, so |z| maps to
-// a standard-normal p-value. (Earlier comments cited "NIST 2.3"; that was
-// imprecise -- the statistic is the classical runs z, which is sound.)
+// a standard-normal p-value (the classical runs z statistic).
 // Guard against n_bytes <= 0.
 // int overflow fix: prev_byte/prev_bit kept as int64_t (a naive int cast
 // truncates when n_bytes > INT_MAX/8 ~= 268MB), with an explicit guard
@@ -2614,6 +3278,10 @@ inline double runs_test_z(const uint8_t* data, int64_t n_bytes) {
  ones += (data[i] >> bit) & 1;
  double pi = (double)ones / (double)total_bits;
  double tau = 2.0 / std::sqrt((double)total_bits);
+ // SENTINEL: 999.0 signals "frequency precondition failed" (|pi - 0.5| >=
+ // tau) -- it is NOT a z-score. Callers must treat 999.0 as
+ // PRECONDITION-FAIL. (Kept numeric for API stability with existing
+ // experiment files; a NaN return would break their comparisons.)
  if (std::abs(pi - 0.5) >= tau) return 999.0;
 
  int64_t runs = 1;
@@ -2644,6 +3312,12 @@ inline double runs_test_z(const uint8_t* data, int64_t n_bytes) {
 // Subsampled to n_sub points for O(n_sub^2) computation.
 inline double distance_correlation(const uint8_t* a, const uint8_t* b,
  int64_t N, int n_sub = 2000) {
+ mcl_validate_stat_buf(a, N, "distance_correlation (a)");
+ mcl_validate_stat_buf(b, N, "distance_correlation (b)");
+ // v7.0.0 fail-closed guard: N == 0 previously reached an integer division
+ // by zero (UB: SIGFPE on x86, silent garbage/NaN on ARM); n_sub <= 0
+ // likewise. dCor of an empty sample is defined here as 0.
+ if (N <= 0 || n_sub <= 0) return 0.0;
  size_t n = (size_t)std::min((int64_t)n_sub, N);
  int64_t stride = std::max((int64_t)1, N / (int64_t)n);
  std::vector<double> x(n), y(n);
@@ -2675,6 +3349,9 @@ inline double distance_correlation(const uint8_t* a, const uint8_t* b,
  double nn = (double)n * (double)n;
  dcov2 /= nn; dvarx2 /= nn; dvary2 /= nn;
  if (dvarx2 < 1e-20 || dvary2 < 1e-20) return 0;
+ // The sample dCov^2 can round to a tiny negative value for independent
+ // inputs; clamp so the sqrt cannot return NaN.
+ if (dcov2 < 0.0) dcov2 = 0.0;
  return std::sqrt(dcov2 / std::sqrt(dvarx2 * dvary2));
 }
 
@@ -2742,6 +3419,11 @@ struct LyapResult {
 // Extending to T3/T4 requires a larger Jacobian (3x3 or 4x4) and QR.
 inline LyapResult compute_lyapunov(uint64_t seed, int64_t p, int64_t q,
  double K, int64_t n_iter) {
+ if (n_iter <= 0) { // v7.0.0: previously 0/0 -> NaN results
+ std::fprintf(stderr, "FATAL: compute_lyapunov n_iter=%lld (must be >= 1)\n",
+   (long long)n_iter);
+ std::abort();
+ }
  double t1, t2;
  mcl_init_state(seed, t1, t2);
  for (int i = 0; i < BURNIN; i++)
@@ -2768,6 +3450,16 @@ inline LyapResult compute_lyapunov(uint64_t seed, int64_t p, int64_t q,
  res.iters = n_iter;
  double var1 = sum1sq / N - res.l1 * res.l1;
  double var2 = sum2sq / N - res.l2 * res.l2;
+ // stderr uses the iid formula var/N. This is CALIBRATED here, not
+ // optimistic: QR re-orthonormalization decorrelates successive
+ // log-stretches (measured autocorrelation time tau ~= 1.01), so no
+ // effective-sample-size correction is needed. Applies to the Jacobi
+ // variant below as well.
+ // NOTE: sanitizer-instrumented builds (-fsanitize=undefined,address) may
+ // perturb the QR pipeline's floating-point scheduling and shift lambda in
+ // the 3rd decimal (~1 sigma; measured identically on v6.1.0 and v7.0.0).
+ // Engine byte streams are unaffected even under sanitizers. Use plain
+ // optimized builds for citable Lyapunov numbers.
  res.l1_stderr = std::sqrt(std::max(0.0, var1) / N);
  res.l2_stderr = std::sqrt(std::max(0.0, var2) / N);
  return res;
@@ -2786,7 +3478,9 @@ inline LyapResult compute_lyapunov(uint64_t seed, int64_t p, int64_t q,
 // operation (PRNG, authentication, VDF). The MCL system always uses the
 // Gauss-Seidel update (mcl_iterate_raw / jacobian_gs).
 //
-// Empirical result (Paper 4 sec.VI.B, validated cross-platform):
+// Empirical result (Paper 4 sec.VI.B, validated cross-platform; measured
+// with compute_lyapunov / compute_lyapunov_jacobi at the default validation
+// topology, K = K_DEFAULT, 10^7 iterations):
 //   lambda_GS     = 5.78  (from jacobian_gs)
 //   lambda_Jacobi = 3.59  (from this function)
 //   ratio         = 1.61
@@ -2806,6 +3500,11 @@ inline Mat2 jacobian_jacobi(double t1, double t2, int64_t p, int64_t q, double K
 
 inline LyapResult compute_lyapunov_jacobi(uint64_t seed, int64_t p, int64_t q,
  double K, int64_t n_iter) {
+ if (n_iter <= 0) { // v7.0.0: previously 0/0 -> NaN results
+ std::fprintf(stderr, "FATAL: compute_lyapunov_jacobi n_iter=%lld (must be >= 1)\n",
+   (long long)n_iter);
+ std::abort();
+ }
  double t1, t2;
  mcl_init_state(seed, t1, t2);
  for (int i = 0; i < BURNIN; i++)
@@ -2838,7 +3537,8 @@ inline LyapResult compute_lyapunov_jacobi(uint64_t seed, int64_t p, int64_t q,
 }
 
 // ============================================================================
-// sec.8 SPECTRAL TEST (Goertzel DFT -- from postquantum + orth_verify)
+// sec.8 SPECTRAL TEST (Goertzel DFT) -- CLASSICAL randomness/SNR test (orth_verify).
+// Not a post-quantum test; see mcl_pq_security() (sec.3.1) for quantum accounting.
 // ============================================================================
 
 struct SpectralResult {
@@ -2851,6 +3551,11 @@ struct SpectralResult {
 
 inline SpectralResult spectral_test(const uint8_t* data, int64_t data_len,
  int num_freqs) {
+ mcl_validate_stat_buf(data, data_len, "spectral_test");
+ // v7.0.0 fail-closed guard: degenerate input previously produced a
+ // SPURIOUS PASS (N = 0 -> noise = 0 -> snr = 0 < threshold -> "pass",
+ // plus mean = 0/0 = NaN). Empty or too-short input now FAILS explicitly.
+ if (data_len < 4 || num_freqs < 1) return {0.0, 0, 0.0, 0.0, false};
  int N = (int)std::min(data_len, (int64_t)65536);
  double mean = 0;
  for (int i = 0; i < N; i++) mean += data[i];
@@ -2908,6 +3613,9 @@ inline const char* classify_regime(double eff_k, bool pass, double chi2) {
 
 inline std::vector<Topology> generate_topologies(int count) {
  std::vector<Topology> topos;
+ // v7.0.0: count <= 0 returns empty (a negative count previously threw
+ // std::length_error from reserve((size_t)negative)).
+ if (count <= 0) return topos;
  topos.reserve((size_t)count);
 
  // Collision-free dedup using exact (p,q) pairs -- no hash function needed
@@ -2957,8 +3665,7 @@ inline std::vector<Topology> generate_topologies(int count) {
  int64_t p = 2 + (int64_t)(next_rng() % (uint64_t)range);
  int64_t q = 2 + (int64_t)(next_rng() % (uint64_t)range);
  if (p == q) continue;
- // Explicit assign to avoid GCC parser quirk that voids
- // [[nodiscard]] on gcd_compute at other call sites (same as for chi_square).
+ // Named result for readability; consumed by the coprimality filter below.
  int64_t gcd = gcd_compute(p, q);
  if (gcd != 1) continue;
  if (seen.insert({p, q}).second) {
@@ -2998,7 +3705,9 @@ inline void mcl_iterate_raw(double& t1, double& t2,
 
 // Jacobi (parallel) iterate -- intentionally WRONG variant for comparison.
 // Both oscillators use OLD states (no sequential dependency).
-// Used to prove Gauss-Seidel superiority in postquantum analysis.
+// Used to prove Gauss-Seidel superiority in the non-parallelizability
+// analysis (Paper 4): lambda_GS / lambda_Jacobi ~= 1.61. (This is a CLASSICAL
+// dynamical comparison, not a quantum-security analysis.)
 inline void mcl_iterate_jacobi(double& t1, double& t2,
  int64_t p, int64_t q, double K = K_DEFAULT) {
  double a1 = (double)p * t2 - (double)q * t1;
@@ -3070,10 +3779,9 @@ struct DerivedKey {
 // Bijective 64-bit hash with full avalanche. Public domain constants
 // from Sebastiano Vigna's SplitMix64 / Stafford's "MIX13".
 // Ensures that consecutive indices produce maximally different outputs.
-// Comment was previously "MurmurHash3 finalizer" but
-// MurmurHash3 fmix64 uses different constants (0xff51afd7ed558ccd /
-// 0xc4ceb9fe1a85ec53, which appear in hash_seed below). This is the
-// SplitMix64 variant -- corrected for adversarial-review traceability.
+// NOT MurmurHash3's fmix64: that finalizer uses different constants
+// (0xff51afd7ed558ccd / 0xc4ceb9fe1a85ec53, which appear in hash_seed,
+// sec.3). Named per Stafford's variant catalog for traceability.
 inline uint64_t fmix64(uint64_t k) {
     k ^= k >> 30;
     k *= 0xBF58476D1CE4E5B9ULL;
@@ -3084,14 +3792,13 @@ inline uint64_t fmix64(uint64_t k) {
 }
 
 // derive_child: parent (p,q) + seed S + index i -> child (p_child, q_child)
-// Parent (p,q) + seed S + index i -> Child (p_child, q_child)
 // Each derived child is immediately usable for PRNG, auth, encrypt,
 // multiplex, and forward secrecy (multi-function keys).
 inline DerivedKey derive_child(uint64_t seed, int64_t p_parent, int64_t q_parent,
                                int64_t index, int64_t max_val = 1000000,
                                double K = K_DEFAULT) {
-    assert(max_val >= 4 && "max_val must be >= 4 for distinct p,q in [2,max_val]");
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+    assert(max_val >= 4 && "max_val must be >= 4 for distinct p,q in [2,max_val-1]");
     if (max_val < 4) {
         std::fprintf(stderr, "FATAL: derive_child max_val must be >= 4 (got %lld)\n",
             (long long)max_val);
@@ -3115,7 +3822,11 @@ inline DerivedKey derive_child(uint64_t seed, int64_t p_parent, int64_t q_parent
         raw[8 + b] ^= (uint8_t)(idx_h2 >> (b * 8));
     }
 
- // Step 5: Map to valid coupling weights in [2, max_val]
+ // Step 5: Map to valid coupling weights in [2, max_val-1] (the modulus is
+ // max_val-2, so max_val itself is NOT reachable -- consistent with the
+ // "Guaranteed" note below and the published child-range statements).
+ // The c % (max_val-2) reduction carries ~2^-44 relative modulo bias at the
+ // default max_val = 10^6 -- negligible; noted for adversarial review.
     uint64_t c1 = 0, c2 = 0;
     std::memcpy(&c1, raw, 8);
     std::memcpy(&c2, raw + 8, 8);
@@ -3236,7 +3947,20 @@ inline DerivedKey derive_path(uint64_t seed, int64_t p_root, int64_t q_root,
 //   - Mean trajectory divergence after 10,000 iterations ~= 2.08 radians
 //   - See compute_lyapunov() (GS) and compute_lyapunov_jacobi()
 //     (defined below) for empirical reproduction.
-// Post-quantum: Shor inapplicable, Grover gives only sqrt speedup on seed.
+// Post-quantum posture (v6.1.0):
+//  - Shor is INAPPLICABLE: MCL is symmetric -- no factoring / discrete-log /
+//    lattice / hidden-subgroup structure for period-finding to attack.
+//  - VDF SEQUENTIALITY is quantum-robust: Grover speeds up SEARCH, not the
+//    DEPTH of an inherently sequential recurrence, so the delay survives.
+//  - The only generic quantum threat is GROVER over the brute-forceable SECRET,
+//    which it square-roots. In auth that secret is the coupling weights (p,q),
+//    NOT the seed (the seed is the PUBLIC challenge). A single (p,q) is only
+//    ~59 classical / ~30 post-Grover bits at [2,1e9] (up to ~119/~59 at
+//    [2,1e18]) -- below even NIST PQ Category 1 (AES-128 = 64 post-Grover). A
+//    KEYED VDF inherits this: widen the secret to 256 bits via mcl_t4_from_key()
+//    (sec.4) for Category 5 (AES-256, the highest). Use mcl_pq_security()
+//    (sec.3.1) for the work-factor accounting. Note the secret in auth is
+//    the coupling weights / key -- the seed is the PUBLIC challenge.
 
 
 // ============================================================================
@@ -3253,8 +3977,8 @@ struct VDFResult {
 // N is freely configurable and independent of B (the burn-in constant).
 inline VDFResult vdf_compute(uint64_t seed, int64_t p, int64_t q,
                              int64_t N_delay, double K = K_DEFAULT) {
-    assert(N_delay >= 0 && "VDF delay must be non-negative");
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+    assert(N_delay >= 0 && "VDF delay must be non-negative");
     if (N_delay < 0) {
         std::fprintf(stderr, "FATAL: VDF delay must be non-negative (N=%lld)\n",
             (long long)N_delay);
@@ -3285,8 +4009,10 @@ inline VDFResult vdf_compute(uint64_t seed, int64_t p, int64_t q,
 }
 
 // VDFCheckpoint: intermediate state at a given iteration.
-// Enables partial verification: verifier recomputes one segment
-// and checks consistency between adjacent checkpoints.
+// Checkpoints enable SEGMENT-WISE verification WITHIN a seed-anchored
+// transcript (see vdf_verify_transcript below). Checkpoint states expose
+// theta1/theta2 by design -- required for verification, not a leak (VDF
+// output is public).
 struct VDFCheckpoint {
  double theta1, theta2; // internal oscillator state
  int64_t iteration; // iteration number at this checkpoint
@@ -3295,13 +4021,26 @@ struct VDFCheckpoint {
 // vdf_compute_checkpointed: VDF with intermediate state snapshots.
 // Publishes k checkpoints at intervals of N/k iterations.
 // Caller allocates checkpoints array of size k.
-// Returns number of checkpoints written (may be < k if N < k).
+// The optional out-param checkpoints_written (v7.0.0) reports how many
+// checkpoint slots were actually filled: exactly k when N_delay >= k, and 0
+// when N_delay < k (the interval underflows to 0, no snapshots are taken,
+// and the caller's array is left untouched -- previously this case was
+// silent). The function returns the VDFResult; an earlier doc line wrongly
+// promised the count as the return value.
 inline VDFResult vdf_compute_checkpointed(
     uint64_t seed, int64_t p, int64_t q,
     int64_t N_delay, VDFCheckpoint* checkpoints, int k,
-    double K = K_DEFAULT) {
-    assert(N_delay >= 0 && k > 0);
+    double K = K_DEFAULT, int* checkpoints_written = nullptr) {
+    // v7.0.1: a null checkpoint array with k > 0 is memory corruption, not a
+    // research scenario -- unconditional abort (mcl_validate_buf policy;
+    // the contract is "caller allocates checkpoints array of size k").
+    if (MCL_UNLIKELY(checkpoints == nullptr && k > 0)) {
+        std::fprintf(stderr, "FATAL: vdf_compute_checkpointed checkpoints "
+            "array must be non-null (k=%d; caller allocates size k)\n", k);
+        std::abort();
+    }
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+    assert(N_delay >= 0 && k > 0);
     if (N_delay < 0 || k <= 0) {
         std::fprintf(stderr, "FATAL: VDF invalid params (N=%lld, k=%d)\n",
             (long long)N_delay, k);
@@ -3314,9 +4053,10 @@ inline VDFResult vdf_compute_checkpointed(
 
     MCL_T2 eng(seed, p, q, K);
 
- // Note: at this point we know k > 0 (validated above), so the check is
- // simply N_delay > 0. interval = 0 means no checkpoints will be saved.
-    int64_t interval = (N_delay > 0) ? N_delay / k : 0;
+ // interval = 0 means no checkpoints will be saved (N_delay < k or
+ // N_delay == 0). The k > 0 term keeps the division defined even under
+ // MCL_UNSAFE_ALLOW_INVALID builds, where the k-validation guard is off.
+    int64_t interval = (N_delay > 0 && k > 0) ? N_delay / k : 0;
     int cp_idx = 0;
 
     for (int64_t i = 0; i < N_delay; i++) {
@@ -3331,6 +4071,7 @@ inline VDFResult vdf_compute_checkpointed(
     }
 
     eng.gen_bytes(result.output, 32);
+    if (checkpoints_written) *checkpoints_written = cp_idx;
     result.elapsed_sec = std::chrono::duration<double>(
         std::chrono::steady_clock::now() - t0).count();
     return result;
@@ -3339,6 +4080,15 @@ inline VDFResult vdf_compute_checkpointed(
 // vdf_verify_segment: verify one segment between two checkpoints.
 // Recomputes from start state for segment_iters iterations and
 // compares the resulting state against the end checkpoint.
+//
+// SECURITY -- UNSOUND WHEN USED STANDALONE. Nothing in this function binds
+// t*_start to the seed: a cheating prover can fabricate ANY self-consistent
+// (start, end) state pair -- including an entire fabricated checkpoint
+// chain -- and every segment will "verify". Segment checks are meaningful
+// ONLY within a transcript whose head is anchored to the seed-derived
+// post-burn-in trajectory and whose tail is bound to the 32-byte output.
+// Use vdf_verify_transcript() below for sound verification; never accept a
+// VDF transcript on the basis of segment checks alone.
 inline bool vdf_verify_segment(double t1_start, double t2_start,
                                double t1_end, double t2_end,
                                int64_t p, int64_t q, int64_t segment_iters,
@@ -3353,18 +4103,192 @@ inline bool vdf_verify_segment(double t1_start, double t2_start,
     return (t1 == t1_end && t2 == t2_end);
 }
 
-// vdf_verify: recompute and compare.
-// Any party can verify by independent recomputation.
+// vdf_verify_transcript (v7.0.0): SOUND end-to-end verification of a
+// checkpointed VDF transcript, anchored to the PUBLIC inputs
+// (seed, p, q, N_delay, K).
+//
+// Verifies, in order:
+//   1. ANCHOR -- the trajectory is recomputed from the seed (constructor
+//        burn-in), so a fabricated start state cannot verify;
+//   2. CHAIN  -- every checkpoint (iteration number AND both state words,
+//        bit-exact) must match the prover's schedule (interval = N/k);
+//   3. OUTPUT -- the final 32-byte value must equal expected_output.
+// Fails closed (returns false, never aborts) on any invalid parameter,
+// shape, or content mismatch -- safe to call on fully untrusted transcript
+// tuples. Total work is one full recomputation (B + N iterations): the
+// checkpoints buy tamper LOCALIZATION and audit granularity, not a work
+// discount -- this candidate VDF has no known shortcut verifier (Paper 4).
+// N_delay = 0 produces no checkpoints, so a checkpointed transcript cannot
+// represent it; verify N = 0 results with plain vdf_verify().
+// Same-IEEE-754-platform contract as vdf_verify_segment; use the Q30 VDF
+// (sec.16.1) for cross-platform verification.
+// mcl_valid_t2_params: shared fail-closed predicate mirroring the MCL_T2
+// constructor's dynamical contract (seed != 0, 2 <= p,q <= MCL_PQ_MAX (2^53), p != q,
+// finite K > 0, K >= K_min(p,q)). Constructors abort() on violation (fail-loud);
+// untrusted-input verifiers (vdf_verify, vdf_verify_transcript) call this to
+// return false (fail-closed) instead of tripping those aborts and becoming a
+// DoS vector. Note: like the ctor, this accepts any K >= K_min -- the K >= 6.0
+// window-free floor is advisory only (see MCL_K_RECOMMENDED_FLOOR), never
+// enforced here. Single source of the contract, shared by both verifiers.
+inline bool mcl_valid_t2_params(uint64_t seed, int64_t p, int64_t q,
+                                double K) noexcept {
+    if (seed == 0 || p < 2 || q < 2 || p == q) return false;
+    if (p > MCL_PQ_MAX || q > MCL_PQ_MAX) return false;
+    if (!std::isfinite(K) || K <= 0.0) return false;
+    const double K_min_pq = MCL_K_MIN_NUMERATOR / ((double)p + (double)q);
+    return K >= K_min_pq;
+}
+
+inline bool vdf_verify_transcript(uint64_t seed, int64_t p, int64_t q,
+                                  int64_t N_delay,
+                                  const VDFCheckpoint* checkpoints, int k,
+                                  const uint8_t expected_output[32],
+                                  double K = K_DEFAULT) {
+    if (N_delay < 0 || k <= 0 || checkpoints == nullptr
+        || expected_output == nullptr)
+        return false;
+    // Reject invalid engine parameters HERE (shared predicate) so an adversarial
+    // transcript tuple returns false instead of tripping the MCL_T2 ctor's
+    // fprintf+abort guards -- a verifier must never be a DoS vector.
+    if (!mcl_valid_t2_params(seed, p, q, K)) return false;
+    // Anchor: burn-in from the public seed (same path as vdf_compute*).
+    MCL_T2 eng(seed, p, q, K);
+    // Reproduce the prover's checkpoint schedule exactly.
+    int64_t interval = (N_delay > 0) ? N_delay / k : 0;
+    int cp_idx = 0;
+    for (int64_t i = 0; i < N_delay; i++) {
+        eng.iterate();
+        if (interval > 0 && ((i + 1) % interval == 0) && cp_idx < k) {
+            // Bit-exact double comparison is intentional: deterministic
+            // replay on the same IEEE 754 platform (see vdf_verify_segment).
+            if (checkpoints[cp_idx].iteration != i + 1
+                || checkpoints[cp_idx].theta1 != eng.theta1()
+                || checkpoints[cp_idx].theta2 != eng.theta2())
+                return false;
+            cp_idx++;
+        }
+    }
+    // Shape check: with interval > 0 the schedule fills exactly k slots. A
+    // transcript claiming k > 0 checkpoints for N_delay < k (interval == 0)
+    // is malformed and MUST fail -- none of its entries were checked above.
+    if (cp_idx != k) return false;
+    uint8_t out[32];
+    eng.gen_bytes(out, 32);
+    bool ok = (std::memcmp(out, expected_output, 32) == 0);
+    secure_zero(out, sizeof(out));
+    return ok;
+}
+
+// vdf_verify_transcript_bounded (F5): resource-policy wrapper. The core verifier
+// does one full recomputation (B + N_delay iterations), so a hostile transcript
+// with N_delay ~ 2^62 is "valid in shape" yet runs effectively forever -- a
+// resource-exhaustion DoS distinct from the abort DoS the core already prevents.
+// A ceiling is a DEPLOYMENT policy, not a property of the VDF, so it lives here
+// rather than in the core math: the caller supplies its own max_delay (and a
+// max_k cap on checkpoint count). Anything above is rejected fail-closed BEFORE
+// the expensive loop. Pass max_delay < 0 to disable the delay bound; max_k < 0
+// likewise disables the checkpoint-count bound (v7.0.4 doc fix).
+inline bool vdf_verify_transcript_bounded(uint64_t seed, int64_t p, int64_t q,
+                                          int64_t N_delay, int64_t max_delay,
+                                          const VDFCheckpoint* checkpoints, int k,
+                                          int max_k,
+                                          const uint8_t expected_output[32],
+                                          double K = K_DEFAULT) {
+    if (max_delay >= 0 && (N_delay < 0 || N_delay > max_delay)) return false;
+    if (max_k >= 0 && (k < 0 || k > max_k)) return false;
+    return vdf_verify_transcript(seed, p, q, N_delay, checkpoints, k,
+                                 expected_output, K);
+}
+
+// vdf_verify: recompute and compare. Any party can verify by independent
+// recomputation. Fails closed (returns false, never aborts) on any invalid
+// parameter or null pointer -- safe to call on fully untrusted (seed,p,q,N,K)
+// tuples, matching vdf_verify_transcript's contract.
 inline bool vdf_verify(uint64_t seed, int64_t p, int64_t q,
                        int64_t N_delay, const uint8_t* expected,
                        double K = K_DEFAULT) {
+    if (expected == nullptr || N_delay < 0) return false;
+    if (!mcl_valid_t2_params(seed, p, q, K)) return false;
     VDFResult r = vdf_compute(seed, p, q, N_delay, K);
     return std::memcmp(r.output, expected, 32) == 0;
+}
+
+// vdf_verify_bounded (v7.0.4, QA-3): resource-policy twin of
+// vdf_verify_transcript_bounded (F5), for the PLAIN verifier. vdf_verify
+// recomputes B + N_delay iterations, so a shape-valid hostile claim with
+// N_delay ~ 2^62 runs effectively forever even though every parameter passes
+// validation -- a resource-exhaustion DoS distinct from the abort DoS that F2
+// already closed. As with F5, a ceiling is a DEPLOYMENT policy, not a property
+// of the VDF, so it lives in this wrapper: the caller supplies max_delay, and
+// anything above it is rejected fail-closed BEFORE the burn-in+delay
+// recompute. Pass max_delay < 0 to disable the bound (the caller then owns
+// the resource risk).
+inline bool vdf_verify_bounded(uint64_t seed, int64_t p, int64_t q,
+                               int64_t N_delay, int64_t max_delay,
+                               const uint8_t* expected,
+                               double K = K_DEFAULT) {
+    if (max_delay >= 0 && (N_delay < 0 || N_delay > max_delay)) return false;
+    return vdf_verify(seed, p, q, N_delay, expected, K);
+}
+
+// ---------------------------------------------------------------------------
+// mcl_make_validated_t2: the CORRECT window guard -- validate, don't threshold.
+//
+// The MCL_T2 constructor enforces the NECESSARY bound K >= K_min(p,q), but it
+// cannot see the periodic/quasi-periodic windows that persist ABOVE K_min for
+// some topologies (e.g. (3,5) at K~1.22/2.60/3.79/5.73). A blanket K >= 6 floor
+// is the WRONG fix: it is both too strict -- (5,7) at K=3.79 measures lambda_1
+// ~= 4.5 and (7,11) at K=2.595 ~= 4.4, fully chaotic BELOW 6 -- and merely
+// empirical (6.0 is a window-free floor for a tested topology SET, not a
+// theorem). The safe K-set is a function of (p,q), so the only correct guard is
+// a PER-INSTANCE empirical check on the actual (seed, p, q, K).
+//
+// This runs a construction-time Lyapunov probe and returns the engine only if
+// lambda_1 is CONFIDENTLY above min_lambda: (l1 - sigma*l1_stderr) > min_lambda.
+// The statistical margin is what rejects the quasi-periodic windows: their
+// lambda_1 ~= 0 with a stderr band straddling 0, so they fail even though they
+// PASS a chi^2 byte test (K=3.79 has chi^2 ~= 269, well within uniform, yet
+// lambda_1 = 0 -- a chi^2-only guard would wrongly accept it).
+//
+// Fails closed: returns std::nullopt (never aborts) so the caller decides how to
+// react -- and (v7.0.4, QA-2) that promise covers the POLICY arguments too:
+// probe_iters <= 0 and non-finite sigma/min_lambda reject as nullopt rather
+// than reaching any internal FATAL guard. (Deliberate exception to the
+// fail-loud caller-bug convention: this factory IS the fail-closed path.)
+// Cost: ~probe_iters extra iterations -- intended for key/VDF SETUP, not
+// hot construction. WHAT THIS CERTIFIES: a CONFIDENTLY POSITIVE Lyapunov
+// exponent -- i.e. genuine chaos (sensitive dependence), which rejects the
+// resonance (lambda<0) and quasi-periodic (lambda~=0) windows. It does NOT
+// certify a cryptographic STRENGTH level: min_lambda = 0.0 (default) accepts
+// weakly-chaotic instances (e.g. (2,3) at K=1.5 measures lambda~=0.93 --
+// legitimately chaotic yet far from K=12's lambda~=5.8). The default is
+// deliberately 0.0 (the principled chaos boundary) and NOT a positive "safe"
+// constant, because the line between legitimate weak chaos and a window is
+// genuinely fuzzy and topology-dependent -- any fixed margin would wrongly
+// reject some valid low-K configs. If your deployment needs a strength margin,
+// pass an explicit min_lambda (in our (3,5)/(2,3)/(5,7)/(7,11) measurements 1.0
+// cleanly separated every window from every healthy config); that threshold is
+// YOUR security policy, not ours to hardcode. K defaults to K_DEFAULT (12.0),
+// always validated -- the factory earns its keep on a custom K.
+inline std::optional<MCL_T2> mcl_make_validated_t2(
+        uint64_t seed, int64_t p, int64_t q, double K = K_DEFAULT,
+        double min_lambda = 0.0,
+        int64_t probe_iters = 2000000,
+        double sigma = 6.0) {
+    if (!mcl_valid_t2_params(seed, p, q, K)) return std::nullopt;
+    // v7.0.4 (QA-2): policy args are fail-closed too -- a probe_iters <= 0
+    // must not fall through to compute_lyapunov's FATAL abort.
+    if (probe_iters <= 0) return std::nullopt;
+    const LyapResult lr = compute_lyapunov(seed, p, q, K, probe_iters);
+    if (!(lr.l1 - sigma * lr.l1_stderr > min_lambda)) return std::nullopt;
+    return MCL_T2(seed, p, q, K);
 }
 
 
 // ============================================================================
 // sec.15 AVALANCHE MEASUREMENT UTILITIES
+// (sec.14 is intentionally unused -- historical numbering, preserved so
+// that existing cross-references to sec.15-17 stay valid.)
 
 // For measuring chaos propagation depth per mantissa bit position.
 // ============================================================================
@@ -3385,16 +4309,22 @@ inline double mcl_add_ulp(double v) noexcept {
 // sec.16 Q30 FIXED-POINT INTEGER ENGINE
 
 // Fully integer MCL implementation:
-// - uint32_t phase angles: [0, 2^3^2) maps to [0, 2pi)
+// - uint32_t phase angles: [0, 2^32) maps to [0, 2pi)
 // Modular overflow of uint32_t provides mod 2pi for free.
 // - int32_t sin lookup table: 65536 entries in Q30 fixed-point
-// Q30 means value = integer / 2^3^0, range [-1.0, +1.0)
+// Q30 means value = integer / 2^30, range [-1.0, +1.0)
 // - int64_t intermediates: prevent overflow in p*theta products
-// - ZERO floating-point operations in iterate() or gen_byte()
+// - ZERO floating-point operations in the iteration hot path
+// (mcl_q30_iterate_raw) and the Q30 VDF commitment (sec.16.1); doubles
+// appear only in one-time setup (LUT build, K_phase conversion).
 
-// Statistical validation: entropy 7.999796 bits/byte, chi^2=282.41,
-// max|r|=0.002502 across 10 pairwise tests at 1M bytes/channel.
-// BigCrush 160/160 confirmed (Paper 1, Run 2).
+// Statistical validation of THIS integer engine: entropy 7.999796
+// bits/byte, chi^2 = 282.41, max|r| = 0.002502 across 10 pairwise tests at
+// 1M bytes/channel. NOTE: full battery testing (BigCrush / PractRand) of
+// the integer Q30 engine is still PENDING. The published BigCrush 160/160
+// result (Paper 1, Run 2) was measured on the Float64 two-channel
+// multiplex with LUT-based sin -- a DIFFERENT realization; it does NOT
+// cover this integer engine.
 
 // Cross-platform bit-exactness validation (April 26, 2026):
 // Comprehensive 18-test matrix covering:
@@ -3428,17 +4358,25 @@ inline double mcl_add_ulp(double v) noexcept {
 // - Cross-platform bit-exact deployment (the canonical engine for
 // any protocol whose verifier is on a different platform from the
 // prover).
+
+// KEYED fixed-point realization: the 72-byte, FPU-free keyed engine
+// MCL_T4_Q30 (256-bit master key -> twelve Q30 integer coupling weights;
+// the Category-5 configuration referenced in Papers 4/5) is implemented in
+// the companion sidecar header keyed_q30_PQ/mcl_keyed_q30.hpp, kept
+// separate as Patent-4-gated material; it ships alongside this header in
+// the public release after filing. THIS file provides the keyed Float64
+// realization (mcl_t4_from_key, sec.4) and the raw Q30 substrate below.
 // ============================================================================
 
 // Static sin lookup table (shared across all Q30 instances)
 
 // Cross-platform reproducibility: the LUT must be deterministic across
 // libm implementations for the bit-exactness claim of sec.16 to hold. The
-// std::sin() approach below IS reproducible for this LUT, but NOT for the
-// hand-wavy reason once stated here ("every entry |frac| > 0.05"). That is
-// false -- ~6676 entries lie within 0.05 of a truncation boundary, and the
-// two sin extrema (i=16384, 49152) land EXACTLY on the boundary 2^30.
-// The correct reasons it is robust (all measured directly):
+// std::sin() approach below IS reproducible for this LUT. Note that ~6676
+// entries lie within 0.05 of a truncation boundary and the two sin extrema
+// (i=16384, 49152) land EXACTLY on the boundary 2^30 -- yet none of this
+// endangers reproducibility. The reasons it is robust (all measured
+// directly):
 // (1) The sin extrema evaluate to EXACTLY +/-1.0 (the true value 1 - ~2e-33
 //     is within half a ULP of 1.0, so any sane libm returns 1.0 exactly);
 //     sin*2^30 = +/-2^30 exactly, identical everywhere.
@@ -3464,7 +4402,7 @@ struct MCL_Q30_Table {
     MCL_Q30_Table() {
         for (int i = 0; i < 65536; i++) {
             double angle = MCL_TWO_PI * (double)i / 65536.0;
- lut[i] = (int32_t)(std::sin(angle) * 1073741824.0); // 2^3^0
+ lut[i] = (int32_t)(std::sin(angle) * 1073741824.0); // 2^30
         }
     }
  // CACHE-TIMING NOTE: lut access is indexed by
@@ -3512,7 +4450,7 @@ inline uint32_t mcl_q30_omega2() {
 // p < 2^31 to fit in int64_t. The subtraction p*t2 - q*t1 can amplify
 // by 2x in worst case, so we require p, q <= MCL_Q30_PQ_MAX = 2^30.
 
-// / nominal range [2, 2^62] describes
+// The nominal range [2, 2^62] describes
 // the IDENTITY space (number of distinct device IDs). The Q30 engine
 // implements the OPERATIONAL range. This is consistent with MCL Tech
 // Reference sec.11.1 (identity space != security level).
@@ -3528,7 +4466,7 @@ inline uint32_t mcl_q30_omega2() {
 
 // CAVEAT: this raw Q30 path does NOT enforce:
 // - p != q (caller must check)
-// - gcd(p,q) = 1 (; caller must check)
+// - gcd(p,q) = 1 (caller must check)
 // - K_phase above K_min (chaoticity)
 // This is intentional: mcl_q30_iterate_raw is a low-level building block
 // for expert callers who need fine control. The MCL_T2/MCL_T2_Omega/etc.
@@ -3541,9 +4479,9 @@ inline void mcl_q30_iterate_raw(uint32_t& t1, uint32_t& t2,
                                  int64_t p, int64_t q, int64_t K_phase) {
  // Q30 parameter bounds check -- survives NDEBUG via the runtime guard
  // pattern used elsewhere in this file (see MCL_T2 constructor).
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
     assert(p > 0 && q > 0 && p <= MCL_Q30_PQ_MAX && q <= MCL_Q30_PQ_MAX
            && "Q30: p, q must be in (0, 2^30]");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
     if (p <= 0 || q <= 0 || p > MCL_Q30_PQ_MAX || q > MCL_Q30_PQ_MAX) {
         std::fprintf(stderr,
             "FATAL: mcl_q30_iterate_raw p=%lld, q=%lld out of [1, 2^30] "
@@ -3562,13 +4500,24 @@ inline void mcl_q30_iterate_raw(uint32_t& t1, uint32_t& t2,
  // K_phase x sin_q30(a1) is in Q30-phase hybrid:
  // K_phase has units [phase_int/radian], sin_q30 has units [Q30]
  // Product has units [phase_int x Q30], shift >>30 -> [phase_int]
-    int32_t inc1 = (int32_t)(((int64_t)K_phase * (int64_t)tab.sin_q30(a1)) >> 30);
-    t1 += mcl_q30_omega1() + (uint32_t)inc1;
+    // v7.0.0 fully-defined-behavior form (bit-identical output, verified
+    // against all frozen Q30 fingerprints and KATs): the signed product P
+    // is converted to uint64_t (defined: reduction mod 2^64), logically
+    // shifted, and truncated mod 2^32. For every int64 value P:
+    //   (uint32_t)((uint64_t)P >> 30) == (uint32_t)(P >> 30)   [arithmetic]
+    // because for negative P the logical shift adds exactly 2^34, and
+    // 2^34 mod 2^32 = 0. This removes the previous reliance on arithmetic
+    // right-shift of a negative value and on out-of-range int64 -> int32
+    // narrowing, both implementation-defined until C++20.
+    uint32_t inc1 = (uint32_t)(
+        (uint64_t)((int64_t)K_phase * (int64_t)tab.sin_q30(a1)) >> 30);
+    t1 += mcl_q30_omega1() + inc1;
 
     uint32_t a2 = (uint32_t)((int64_t)p * (int64_t)t1
                             - (int64_t)q * (int64_t)t2);
-    int32_t inc2 = (int32_t)(((int64_t)K_phase * (int64_t)tab.sin_q30(a2)) >> 30);
-    t2 += mcl_q30_omega2() + (uint32_t)inc2;
+    uint32_t inc2 = (uint32_t)(
+        (uint64_t)((int64_t)K_phase * (int64_t)tab.sin_q30(a2)) >> 30);
+    t2 += mcl_q30_omega2() + inc2;
 }
 
 // Compute K_phase from K_real.
@@ -3576,11 +4525,21 @@ inline void mcl_q30_iterate_raw(uint32_t& t1, uint32_t& t2,
 // mcl_q30_iterate_raw reaches INT64_MAX at K ~= 12.566 and overflows beyond
 // it; the 12.0 cap leaves ~5% headroom.
 inline int64_t mcl_q30_K_phase(double K_real) {
-    assert(K_real > 0.0 && K_real <= 12.0
-        && "K_phase: K must be in (0, 12] (int64_t overflow at K ~= 12.566)");
+    // NaN/Inf guard is UNCONDITIONAL (outside MCL_UNSAFE_ALLOW_INVALID):
+    // research mode permits weak/degenerate DYNAMICAL parameters, but never a
+    // non-finite K, which would make the float->int64 cast below undefined
+    // behavior. A NaN slips past the (K<=0 || K>12) test below because every
+    // comparison with NaN is false.
+    if (!std::isfinite(K_real)) {
+        std::fprintf(stderr, "FATAL: mcl_q30_K_phase K=%.17g must be finite\n",
+            K_real);
+        std::abort();
+    }
 #if !defined(MCL_UNSAFE_ALLOW_INVALID)
+    assert(K_real > 0.0 && K_real <= 12.0
+        && "K_phase: K must be finite and in (0, 12] (int64_t overflow at K ~= 12.566)");
     if (K_real <= 0.0 || K_real > 12.0) {
-        std::fprintf(stderr, "FATAL: mcl_q30_K_phase invalid K=%.6f "
+        std::fprintf(stderr, "FATAL: mcl_q30_K_phase invalid K=%.17g "
             "(must be in (0, 12])\n", K_real);
         std::abort();
     }
@@ -3616,9 +4575,10 @@ inline int64_t mcl_q30_K_phase(double K_real) {
 inline void mcl_q30_init_state(uint64_t seed, uint32_t& t1, uint32_t& t2) {
     uint64_t s = hash_seed(seed);
 
- // Compile-time-evaluable Q.32 angular-frequency constants:
- // OMEGA_Q32_1 = round(OMEGA_1 / 2pi x 2^32) = mcl_q30_omega1()
- // OMEGA_Q32_2 = round(OMEGA_2 / 2pi x 2^32) = mcl_q30_omega2()
+ // Q.32 angular-frequency constants (TRUNCATING cast in mcl_q30_omega1/2,
+ // matching the validated fingerprints):
+ // OMEGA_Q32_1 = trunc(OMEGA_1 / 2pi x 2^32) = mcl_q30_omega1()
+ // OMEGA_Q32_2 = trunc(OMEGA_2 / 2pi x 2^32) = mcl_q30_omega2()
  // Both are < 2^32, so the cast in mcl_q30_omega1/2 is safe.
     uint64_t w1 = (uint64_t)mcl_q30_omega1();
     uint64_t w2 = (uint64_t)mcl_q30_omega2();
@@ -3680,13 +4640,32 @@ inline void mcl_q30_init_state(uint64_t seed, uint32_t& t1, uint32_t& t2) {
 // p != q, K >= K_min(p,q). The raw Q30 primitive deliberately does NOT check
 // these (it is an expert building block), so vdf_compute_q30 adds the guard
 // itself -- otherwise a VDF could be built on degenerate params (e.g. p==q).
+//
+// *** SECURITY WARNING (v8.1.2, 2026-08-22) -- RETIRED FROM EVERY VDF ROLE ***
+// This two-oscillator raw-state path is NOT a usable VDF and is kept ONLY as
+// a cross-platform DETERMINISM vector (Paper 4, Vector 4) and for the
+// self-cryptanalysis record. Two measured breaks:
+//   (1) cycle: at (3,5), K=12 the orbit closes at lambda = 1,671,196,332
+//       (~2^30.6), so any N beyond the cycle scale is a ~constant-time shortcut;
+//   (2) related inputs: every coupling argument is (p*t_j - q*t_i) mod 2^32,
+//       so state translations b with p*b_2 == q*b_1 and p*b_1 == q*b_2 commute
+//       with the map forever. For (3,5) that is an order-16 group
+//       ((p^2-q^2)*a == 0 -> a = k*2^28), and because hash_seed(s) == s for
+//       s <= 2^52 and t_i = s*omega_i, ALL 15 non-trivial elements are
+//       reachable by seed offsets D = k*2^28*omega1^-1 (mod 2^32):
+//       output(seed + D) == output(seed) + (a,b) word for word -- verified
+//       (HD 20/256, N = 1e5). Sequential work is therefore not enforced for
+//       the 15 related inputs of every seed.
+// Use VDF128-T4 (VDF128_T4/mcl_vdf128_t4.hpp: SHA-256 input injection, 128-bit
+// state, SHA-256-finalised output, public weights with a trivial symmetry group)
+// for any VDF deployment. Record: T4_CycleStructure/T4_CYCLE_RECORD_20260822.md.
 inline VDFResult vdf_compute_q30(uint64_t seed, int64_t p, int64_t q,
                                  int64_t N_delay, double K = K_DEFAULT) {
+#if !defined(MCL_UNSAFE_ALLOW_INVALID)
     assert(N_delay >= 0 && "VDF delay must be non-negative");
     assert(p >= 2 && q >= 2 && p != q && "vdf_compute_q30: need p,q>=2 and p!=q");
     assert(p <= MCL_Q30_PQ_MAX && q <= MCL_Q30_PQ_MAX
         && "vdf_compute_q30: p,q must be <= 2^30 (Q30 operational range)");
-#if !defined(MCL_UNSAFE_ALLOW_INVALID)
     if (N_delay < 0) {
         std::fprintf(stderr, "FATAL: vdf_compute_q30 delay must be non-negative "
             "(N=%lld)\n", (long long)N_delay);
@@ -3739,13 +4718,50 @@ inline VDFResult vdf_compute_q30(uint64_t seed, int64_t p, int64_t q,
     return result;
 }
 
+// mcl_valid_q30_vdf_params (v7.0.3, QA-1): shared fail-closed predicate
+// mirroring vdf_compute_q30's PRODUCTION contract exactly -- the shared
+// dynamical contract (seed != 0, p,q >= 2, p != q, finite K > 0, K >=
+// K_min(p,q); see mcl_valid_t2_params) plus the two Q30-specific bounds:
+// p,q <= MCL_Q30_PQ_MAX (2^30 operational range) and K <= 12.0 (the
+// mcl_q30_K_phase cap; int64 phase overflow at K ~= 12.566). Like the Float64
+// predicate, this enforces the production contract even in a
+// MCL_UNSAFE_ALLOW_INVALID build: a verifier of untrusted claims never
+// loosens its contract for research convenience.
+inline bool mcl_valid_q30_vdf_params(uint64_t seed, int64_t p, int64_t q,
+                                     double K) noexcept {
+    if (!mcl_valid_t2_params(seed, p, q, K)) return false;
+    if (p > MCL_Q30_PQ_MAX || q > MCL_Q30_PQ_MAX) return false;
+    return K <= 12.0;
+}
+
 // vdf_verify_q30: recompute via the integer engine and compare. Unlike
-// vdf_verify (Float64), this verifies correctly ACROSS platforms.
+// vdf_verify (Float64), this verifies correctly ACROSS platforms. Fails closed
+// (returns false, never aborts, never dereferences null) on any invalid
+// parameter or null pointer -- safe to call on fully untrusted
+// (seed,p,q,N,K) tuples, matching vdf_verify / vdf_verify_transcript.
+// (v7.0.3, QA-1: previously this forwarded hostile tuples straight into
+// vdf_compute_q30's fprintf+abort guards -- an abort-DoS in the one verifier
+// documented for cross-platform use -- and memcmp'd through a null
+// `expected`, a SEGV in release builds.)
 inline bool vdf_verify_q30(uint64_t seed, int64_t p, int64_t q,
                            int64_t N_delay, const uint8_t* expected,
                            double K = K_DEFAULT) {
+    if (expected == nullptr || N_delay < 0) return false;
+    if (!mcl_valid_q30_vdf_params(seed, p, q, K)) return false;
     VDFResult r = vdf_compute_q30(seed, p, q, N_delay, K);
     return std::memcmp(r.output, expected, 32) == 0;
+}
+
+// vdf_verify_q30_bounded (v7.0.4, QA-3): resource-policy twin for the Q30
+// (cross-platform) verifier -- same rationale and convention as
+// vdf_verify_bounded above: caller-supplied N_delay ceiling, rejected
+// fail-closed before the recompute; max_delay < 0 disables the bound.
+inline bool vdf_verify_q30_bounded(uint64_t seed, int64_t p, int64_t q,
+                                   int64_t N_delay, int64_t max_delay,
+                                   const uint8_t* expected,
+                                   double K = K_DEFAULT) {
+    if (max_delay >= 0 && (N_delay < 0 || N_delay > max_delay)) return false;
+    return vdf_verify_q30(seed, p, q, N_delay, expected, K);
 }
 
 // ============================================================================
@@ -3789,9 +4805,10 @@ struct MCL_KAT {
 };
 
 // Dual-platform reference vectors. Both columns were originally computed on
-// mcl_core.hpp v4.1.0 and re-validated through the 6.0.0 release (the guard/
-// comment-only changes since v4.1.0 do not alter numerical output for valid
-// parameters; the glibc column was re-confirmed PASS on this build). The two
+// mcl_core.hpp v4.1.0 and re-validated through the 7.0.0 release (guard,
+// erasure, and comment changes never alter numerical output for valid
+// parameters; v7.0.0 additionally re-verified byte-identity against v6.1.0
+// with a differential harness across every engine and path). The two
 // CRCs differ because of
 // ULP-level sin() differences between glibc-libm and Apple-libm; this is
 // a known consequence of the math.h sin() path and is documented in
@@ -3904,6 +4921,104 @@ inline bool mcl_self_test() {
         }
     }
 
+    // v6.1.0: 256-BIT KEYED POST-QUANTUM PATH KATs (all platform-independent:
+    // SHA-256 + integer KDF + integer parameter derivation are libm-free).
+
+    // (c) SHA-256 against the FIPS 180-4 "abc" gold vector.
+    {
+        uint8_t h[32];
+        mcl_sha256(reinterpret_cast<const uint8_t*>("abc"), 3, h);
+        static const uint8_t want[32] = {
+            0xba,0x78,0x16,0xbf,0x8f,0x01,0xcf,0xea,0x41,0x41,0x40,0xde,0x5d,0xae,0x22,0x23,
+            0xb0,0x03,0x61,0xa3,0x96,0x17,0x7a,0x9c,0xb4,0x10,0xff,0x61,0xf2,0x00,0x15,0xad };
+        if (std::memcmp(h, want, 32) != 0) {
+            std::fprintf(stderr, "MCL self-test FAIL (SHA-256 abc KAT): "
+                "implementation disagrees with FIPS 180-4.\n");
+            all_pass = false;
+        }
+    }
+
+    // (d) Keyed derivation KAT for the fixed test key {0,1,...,31}: locks the
+    //     SHA-256 KDF and the T2/T4 integer parameter mapping (labels included).
+    {
+        uint8_t key[32];
+        for (int i = 0; i < 32; i++) key[i] = (uint8_t)i;
+
+        uint8_t kd[64];
+        mcl_kdf256(key, "MCL-KAT", nullptr, 0, kd, 64);
+        uint32_t kdf_crc = compute_crc32(kd, 64);
+        if (kdf_crc != 0x973472CAu) {
+            std::fprintf(stderr, "MCL self-test FAIL (KDF KAT): expected "
+                "CRC=0x973472CA got=0x%08X\n", kdf_crc);
+            all_pass = false;
+        }
+
+        MCL_KeyedParamsT2 t2 = mcl_t2_params_from_key(key, 0);
+        if (t2.p != 865118605453148LL || t2.q != 3657781221074353LL
+            || gcd_compute(t2.p, t2.q) != 1) {
+            std::fprintf(stderr, "MCL self-test FAIL (keyed T2 params): "
+                "got p=%lld q=%lld (expected 865118605453148, 3657781221074353, coprime)\n",
+                (long long)t2.p, (long long)t2.q);
+            all_pass = false;
+        }
+
+        CouplingSextet cs = mcl_t4_params_from_key(key, 0);
+        uint32_t t4_crc = compute_crc32(reinterpret_cast<const uint8_t*>(&cs), sizeof(cs));
+        if (t4_crc != 0xC03CD1D4u) {
+            std::fprintf(stderr, "MCL self-test FAIL (keyed T4 weights): "
+                "expected CRC=0xC03CD1D4 got=0x%08X\n", t4_crc);
+            all_pass = false;
+        }
+    }
+
+    // (e) Post-quantum accounting sanity: keyed T4 (256-bit secret) meets NIST
+    //     PQ Category 5 (highest); keyed T2 (~208-bit) meets Category 3 but not
+    //     Category 5; the default single-(p,q) path meets no category.
+    if (!mcl_pq_security(256.0).meets_category5
+        || mcl_pq_security(208.0).meets_category5
+        || !mcl_pq_security(208.0).meets_category3
+        || mcl_pq_security(mcl_pair_secret_bits(1e9)).meets_category1) {
+        std::fprintf(stderr, "MCL self-test FAIL (PQ accounting): "
+            "mcl_pq_security category thresholds inconsistent with NIST "
+            "(Cat1/3/5 = 64/96/128 post-Grover).\n");
+        all_pass = false;
+    }
+
+    // (f) v7.0.0: VDF transcript verification -- one positive control and
+    //     three negative controls (tampered checkpoint, tampered output,
+    //     wrong-seed forgery: the historical vdf_verify_segment soundness
+    //     gap). Platform-independent logic: the transcript is produced and
+    //     verified in-process with the same libm, so no fixed vectors are
+    //     needed.
+    {
+        VDFCheckpoint cps[4];
+        int written = 0;
+        VDFResult r = vdf_compute_checkpointed(DEFAULT_SEED, 3, 5, 1000,
+                                               cps, 4, K_DEFAULT, &written);
+        bool pos = (written == 4)
+            && vdf_verify_transcript(DEFAULT_SEED, 3, 5, 1000, cps, 4,
+                                     r.output);
+        VDFCheckpoint saved = cps[1];
+        cps[1].theta1 = mcl_add_ulp(cps[1].theta1);
+        bool bad_cp = vdf_verify_transcript(DEFAULT_SEED, 3, 5, 1000, cps, 4,
+                                            r.output);
+        cps[1] = saved;
+        uint8_t tampered[32];
+        std::memcpy(tampered, r.output, 32);
+        tampered[0] ^= 0x01;
+        bool bad_out = vdf_verify_transcript(DEFAULT_SEED, 3, 5, 1000, cps, 4,
+                                             tampered);
+        bool forged = vdf_verify_transcript(DEFAULT_SEED + 1, 3, 5, 1000,
+                                            cps, 4, r.output);
+        if (!pos || bad_cp || bad_out || forged) {
+            std::fprintf(stderr,
+                "MCL self-test FAIL (VDF transcript): pos=%d tampered_cp=%d "
+                "tampered_out=%d forged=%d (want 1,0,0,0)\n",
+                pos ? 1 : 0, bad_cp ? 1 : 0, bad_out ? 1 : 0, forged ? 1 : 0);
+            all_pass = false;
+        }
+    }
+
     return all_pass;
 }
 
@@ -3920,7 +5035,7 @@ inline bool mcl_self_test() {
 //   measured property            value          role
 //   ------------------------------------------------------------------------
 //   forward preimage branching   b   ~= 38/step  necessary condition (b^2 ~= 1444)
-//   constrained branching        b_eff ~= 6 > 1  *critical* one-wayness quantity
+//   constrained branching        b_eff ~= 6.5 > 1 *critical* one-wayness quantity
 //   window independence          MI(A;B) ~= 0    confirms non-injectivity
 //   avalanche (bits>=20 -> out)  0.50            full diffusion to output bits
 //

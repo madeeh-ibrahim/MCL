@@ -19,7 +19,7 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
  * PURPOSE: Verify MCL's resistance to quantum computing attacks.

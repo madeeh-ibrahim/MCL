@@ -19,7 +19,7 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ACCEPTABLE USE: For lawful security research against your own copy
  *   of MCL only. The author is not responsible for misuse. See the
  *   Acceptable Use section of SECURITY-RESEARCH-GRANT.md.
@@ -191,6 +191,11 @@ static void attack3(){
     std::printf("  NOTE: this shows the dependency CHAIN is real (you need the true predecessor\n");
     std::printf("        state); it does NOT rule out a clever predictor -- that is Attack 1's job\n");
     std::printf("        and an open problem. Not a proof.\n");
+    std::printf("  HONESTY NOTE: the \"guessed boundary states\" line below is a NEGATIVE-CONTROL\n");
+    std::printf("        SANITY BASELINE, not an attack result. It seeds UNRELATED states and so\n");
+    std::printf("        trivially matches 0 boundaries -- it only confirms boundary states are\n");
+    std::printf("        not hit by accident. The real argument is the parallel-segment result\n");
+    std::printf("        (only the KNOWN start verifies) plus the sequential/parallel timing.\n");
     const int64_t N=4000000; const int k=4;
     unsigned hc=std::thread::hardware_concurrency();
     bool timing_valid = hc>=static_cast<unsigned>(k);
@@ -226,8 +231,9 @@ static void attack3(){
         if(gsep2(o1[bz],o2[bz],tc1[bz+1],tc2[bz+1])<tol) seg_ok++;}
     std::printf("  N=%lld, k=%d, segment=%lld iters, hardware_concurrency=%u\n",
                 static_cast<long long>(N),k,static_cast<long long>(seg),hc);
-    std::printf("  guessed boundary states matching truth: %d / %d\n",matches,k-1);
-    std::printf("  parallel segment outputs correct: %d / %d (only the known start, segment 0)\n",seg_ok,k);
+    std::printf("  [negative-control baseline] unrelated-seed states matching a true\n");
+    std::printf("        boundary: %d / %d  (expected 0 -- NOT an attack metric, see note above)\n",matches,k-1);
+    std::printf("  [real result] parallel segment outputs correct: %d / %d (only the known start, segment 0)\n",seg_ok,k);
     if(timing_valid){
         std::printf("  sequential=%.1f ms ; parallel=%.1f ms ; effective(par+redo)=%.1f ms ; net=%.2fx\n",
                     seq_ms,par_ms,par_ms+seq_ms,seq_ms/(par_ms+seq_ms));

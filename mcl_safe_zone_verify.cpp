@@ -19,7 +19,7 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
  * PURPOSE: Empirically characterizes the Safe Zone bit-extraction regions of
@@ -814,7 +814,7 @@ int main(int argc, char* argv[]) {
     std::printf("\n==============================================================================\n");
     std::printf("  %s v%s\n", DOC_ID, DOC_VERSION);
     std::printf("  Madeeh Ibrahim, Cairo, Egypt | ORCID 0009-0002-8562-8325\n");
-    std::printf("  Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673\n");
+    std::printf("  Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860\n");
     std::printf("==============================================================================\n\n");
 
     // Rule E7: return code reflects pass/fail

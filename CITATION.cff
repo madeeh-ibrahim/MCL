@@ -20,8 +20,8 @@ authors:
     email: madeeh.chaotic.lock@gmail.com
     city: Cairo
     country: EG
-version: 0.1.0
-date-released: "2026-05-23"
+version: 0.2.0
+date-released: "2026-08-22"
 license: PolyForm-Noncommercial-1.0.0
 repository-code: "https://github.com/madeeh-ibrahim/MCL"
 url: "https://github.com/madeeh-ibrahim/MCL"
@@ -46,6 +46,9 @@ identifiers:
   - type: other
     value: "PCT/IB2026/053673"
     description: "PCT application filed 14 April 2026"
+  - type: other
+    value: "PCT/IB2026/058860"
+    description: "PCT application filed 21 August 2026"
 preferred-citation:
   type: article
   title: "Empirically-Validated Safe Zone Extraction from Coupled Chaotic Oscillators for Cryptographic-Quality Pseudorandom Number Generation"

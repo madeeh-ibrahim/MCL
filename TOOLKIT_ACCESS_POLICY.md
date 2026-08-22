@@ -149,3 +149,21 @@ Every attack the toolkit performs is described in the public companion papers.
 If you do not wish to request toolkit access, you can reconstruct the analyses
 from the papers and the public reference implementation. The gate adds
 convenience and traceability; it does not gate the underlying knowledge.
+
+---
+
+## Addendum — 2026-08-22 (repository v0.2.0)
+
+One additional file joins the gated group under the same policy and agreement:
+
+| # | File | What it does |
+|---|---|---|
+| 7 | `mcl_simswap_v3.cpp` (v1.1) | Paper 2 §V.B targeted SIM-swap / credential-cloning campaign harness (18 candidate-generation strategies against the derivation-route protocol). Same genre as item 2 (`mcl_simswap_verify.cpp`). |
+
+Its **results are public**: `p2_hardened_auth/SIMSWAP_V3_RECORD_20260821.md` and the
+campaign logs in `p2_hardened_auth/` ship in the open repository; only the generator
+source is distributed on request. The June-2026 lattice / return-map attack scripts
+(`Verfications codes June 2026/`, `SideChannel_Screen/` CPA tooling, and the nine
+`VDF_security/` probe programs) remain out of scope of the open archive, as before;
+their findings are disclosed in the companion papers (Paper 2 §VIII, Paper 4 §VII.E′,
+Paper 5 §X) and in the public records under `T4_CycleStructure/` and `ReturnMap_Attack/`.

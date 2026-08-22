@@ -19,7 +19,7 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
  * PURPOSE: Reproduce all numerical claims in Paper 4 (VDF Sequential Function)
@@ -103,13 +103,37 @@ int main() {
     double eps = std::ldexp(1.0, -52);
     printf("  Error growth |error(t)| = eps * exp(lambda * t):\n");
     printf("  eps = 2^-52 = %.4e\n", eps);
+    double barrier_t7 = 0.0;
     for (int t : {7, 10, 20}) {
         double err = eps * std::exp(lambda * t);
+        if (t == 7) barrier_t7 = err;
         printf("  t=%-2d:  %.4e\n", t, err);
     }
     printf("  Paper claims: t=7 -> ~83 (matches actual ~82.8)\n");
     printf("                t=10 -> ~10^9\n");
     printf("                t=20 -> ~10^34\n\n");
+
+    // ===========================================================
+    // v7.0.1: ASSERT the reproduced DYNAMICAL claims, not only the KATs.
+    // Before this, the values above were printed vs the paper column but
+    // never checked, so the "paper claims reproduced" verdict rested on the
+    // KAT CRCs alone. Tolerances bound the run-to-run Lyapunov noise (a few
+    // 1e-3) with margin, while still catching any real regression.
+    // ===========================================================
+    printf("Dynamical-claim checks (measured vs Paper 4, with tolerance):\n");
+    printf("---------------------------------------------------------------\n");
+    bool dyn_pass = true;
+    auto dyn_check = [&](const char* name, double got, double want, double tol) {
+        bool ok = std::fabs(got - want) <= tol;
+        if (!ok) dyn_pass = false;
+        printf("  [%s] %-28s measured=%.4f  paper=%.4f  (tol %.3f)\n",
+               ok ? "PASS" : "FAIL", name, got, want, tol);
+    };
+    dyn_check("lambda_1 (GS)",       gs.l1,        5.78, 0.05);
+    dyn_check("lambda_1 (Jacobi)",   jc.l1,        3.59, 0.05);
+    dyn_check("ratio GS/Jacobi",     gs.l1/jc.l1,  1.61, 0.03);
+    dyn_check("chaos barrier t=7",   barrier_t7,   82.8, 8.0);
+    printf("\n");
     
     // ===========================================================
     // KAT Verification (Test Vectors from Appendix)
@@ -130,12 +154,18 @@ int main() {
     }
     printf("\n");
     printf("===============================================================\n");
-    if (all_pass) {
-        printf("RESULT: ALL KAT vectors PASS - paper claims reproduced.\n");
+    // Honest verdict: BOTH the KAT byte streams AND the reproduced dynamical
+    // claims (lambda, ratio, chaos barrier) must hold.
+    bool overall = all_pass && dyn_pass;
+    if (overall) {
+        printf("RESULT: KAT vectors PASS and dynamical claims reproduced within tolerance.\n");
     } else {
-        printf("RESULT: One or more KAT vectors FAILED.\n");
+        printf("RESULT: FAILED -- %s%s%s.\n",
+               all_pass ? "" : "KAT vector(s) mismatched",
+               (!all_pass && !dyn_pass) ? "; " : "",
+               dyn_pass ? "" : "dynamical claim(s) outside tolerance");
     }
     printf("===============================================================\n");
-    
-    return all_pass ? 0 : 1;
+
+    return overall ? 0 : 1;
 }

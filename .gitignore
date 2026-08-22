@@ -10,3 +10,6 @@ __pycache__/
 *.so
 *.a
 *.zip
+
+# v0.2.0: ship the NIST STS evidence archive cited by Paper 1 Appendix A (exception to *.zip)
+!M1_M2_apple_verification/nist_sts_experiments_apple_20260721.zip

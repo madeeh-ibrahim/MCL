@@ -19,7 +19,7 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
  * PURPOSE: Experimental verification of the MCL Verifiable Delay Function
@@ -447,9 +447,37 @@ static void test_05_checkpoints() {
     std::printf("  Checkpointed output == plain output: %s\n",
         output_match ? "YES" : "NO");
 
-    bool pass = (seg_fail == 0) && output_match;
+    // v7.0.1: REJECTION CONTROLS. Honest segments passing is necessary but not
+    // sufficient -- a broken "always-accept" verifier would also pass the block
+    // above. A real verifier must REJECT tampering and off-seed forgeries.
+    std::printf("\n  Rejection controls (must all reject/anchor):\n");
+
+    // (a) 1-ULP checkpoint tamper -> the segment into it must be REJECTED.
+    VDFCheckpoint bad = cps[1];
+    bad.theta1 = mcl_add_ulp(bad.theta1);
+    bool tamper_rej = !vdf_verify_segment(cps[0].theta1, cps[0].theta2,
+        bad.theta1, bad.theta2, 3, 5, cps[1].iteration - cps[0].iteration);
+    std::printf("    1-ULP checkpoint tamper rejected      : %s\n",
+        tamper_rej ? "YES" : "NO (BUG)");
+
+    // (b) Seed-anchored transcript verifier: ACCEPT the honest transcript.
+    bool tr_honest = vdf_verify_transcript(DEFAULT_SEED, 3, 5, N, cps, K_CP, r.output);
+    std::printf("    vdf_verify_transcript(honest) accepted: %s\n",
+        tr_honest ? "YES" : "NO (BUG)");
+
+    // (c) Fabricated-root forgery: a self-consistent transcript of a DIFFERENT
+    //     seed must be REJECTED when presented as this seed's VDF (Paper 4 IV.D
+    //     Strategy 3 -- the gap the seed anchor closes).
+    VDFCheckpoint fcps[T5_N_CHECKPOINTS];
+    VDFResult fr = vdf_compute_checkpointed(DEFAULT_SEED ^ 0xFULL, 3, 5, N, fcps, K_CP);
+    bool forge_rej = !vdf_verify_transcript(DEFAULT_SEED, 3, 5, N, fcps, K_CP, fr.output);
+    std::printf("    fabricated-root transcript rejected   : %s\n",
+        forge_rej ? "YES" : "NO (SOUNDNESS BREAK)");
+
+    bool pass = (seg_fail == 0) && output_match
+                && tamper_rej && tr_honest && forge_rej;
     test_result(5, pass, pass ?
-        "All segments verified + output matches" :
+        "Honest segments verified + output matches + tamper/forgery rejected" :
         "Checkpoint verification failed");
 }
 
@@ -783,7 +811,7 @@ int main(int argc, char* argv[]) {
     std::printf("\n  Mode:    %s\n", g_full_mode ? "FULL" : "QUICK");
     std::printf("  Doc ID:  %s v%s\n", DOC_ID, DOC_VERSION);
     std::printf("  Author:  Madeeh Ibrahim, Cairo, Egypt\n");
-    std::printf("  Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673\n");
+    std::printf("  Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860\n");
     std::printf("==============================================================================\n\n");
     return g_failed > 0 ? 1 : 0;
 }

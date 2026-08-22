@@ -11,6 +11,7 @@ pending international (PCT) patent applications:
 | PCT/IB2026/052737  | 22 March 2026  |
 | PCT/IB2026/053253  | 1 April 2026   |
 | PCT/IB2026/053673  | 14 April 2026  |
+| PCT/IB2026/058860  | 21 August 2026 |
 
 Applicant / Inventor: **Madeeh Ibrahim** (Cairo, Egypt),
 ORCID https://orcid.org/0009-0002-8562-8325.

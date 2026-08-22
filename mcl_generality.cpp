@@ -19,7 +19,7 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
  * PURPOSE: Verify that the MCL coupling principle generalizes beyond
@@ -217,7 +217,7 @@ int main() {
  {"Henon",    "strange attractor, discrete, 2D",
  [](uint64_t s, int64_t p, int64_t q, uint8_t* b, int64_t n) -> bool {
  CoupledHenon g(s, p, q); g.gen_bytes(b, n); return g.ok(); }},
- {"Logistic", "interval map, 1D, r=3.99",
+ {"Logistic", "interval map, 1D, r=4.0",
  [](uint64_t s, int64_t p, int64_t q, uint8_t* b, int64_t n) -> bool {
  CoupledLogistic g(s, p, q); g.gen_bytes(b, n); return true; }},
  {"Tent",     "piecewise linear, 1D",
