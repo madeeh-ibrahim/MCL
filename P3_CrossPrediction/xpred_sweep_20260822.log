@@ -1,0 +1,9 @@
+MCL-P3-XPRED-2026-0822-001 — cross-prediction R^2 sweep (Apple M1 Pro)
+engine mcl_core v8.1.3 UNMODIFIED | (p,q)=(3,5) | N=40000 | H=12 | ridge 1e-8 | out-of-sample second half
+
+K         cos(next)  sin(next)       byte    control
+0.70        1.00000    1.00000    1.00000   -0.00046
+1.50        0.30404    0.31674   -0.01656   -0.02015
+3.00        0.06531    0.07169   -0.01828   -0.01696
+6.00       -0.00622   -0.00942   -0.01571   -0.01618
+12.00      -0.01279   -0.01422   -0.01709   -0.01621

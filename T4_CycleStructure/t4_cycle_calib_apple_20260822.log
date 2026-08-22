@@ -1,0 +1,21 @@
+================================================================
+  MCL T4-Q30 reduced-width cycle-structure study
+  MCL-T4-CYCLE-2026-0822-001   engine mcl_core 8.1.1 (2026-08-21) UNMODIFIED + keyed sidecar
+  mode=calib keys=4 reduction=both  exhaustive w<=6  brent w=8..14  budget=16*sqrt(N)
+================================================================
+weight sets (p12 q12 p13 q13 p14 q14 p23 q23 p24 q24 p34 q34):
+  key0: 665688781 1035324723 558874912 674804781 415740537 407156447 415528119 102116605 21704988 874185725 7894912 258566532
+  key1: 666746739 757472922 229106382 541427040 536335204 657465878 736226356 892259141 858117464 579329416 199406492 238768286
+  key2: 861147891 141355866 597642243 903581448 83575687 864760644 565078835 609037620 312653313 69849912 309496392 531535553
+  key3: 43248730 997786762 893669297 810948347 108029328 299812548 734925615 220252911 360471145 125023497 941530109 288279517
+[SELFTEST] w=32: R1==engine PASS, R2==engine PASS (100,000 iterations)  state=d9f10e90 fcebba29 5e7d67f9 47344492
+[SELFTEST] 2-osc w=32: R1==engine PASS, R2==engine PASS
+
+[PART D] 2-osc (p,q)=(3,5) K=12 at FULL width w=32, mode=R1, 4 seeds — seed 0 = DEFAULT_SEED = the record's TEST1 seed (must reproduce lambda 1,671,196,332); other seeds are expected to share it with prob ~0.76 each
+  seed 0: lambda=1671196332 mu=75864346 rho=1747060678  (108 s)  <== matches record
+  seed 1: lambda=1671196332 mu=254734029 rho=1925930361  (114 s)  <== matches record
+  seed 2: lambda=1671196332 mu=763951021 rho=2435147353  (122 s)  <== matches record
+  seed 3: lambda=1671196332 mu=475182142 rho=2146378474  (118 s)  <== matches record
+  distinct terminal cycles across seeds: 3   E[rho]=5.383e+09
+
+DONE (462 s)

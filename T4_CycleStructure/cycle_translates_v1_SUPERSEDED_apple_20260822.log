@@ -1,0 +1,11 @@
+MCL-T4-CYCLE-2026-0822-005 cycle-translate check (2-osc (3,5), K=12)
+  seed 0 entry state = 7bfcab57 5c939b16
+  seed 1 entry state = 91b0e2d8 8db73e35
+  seed 2 entry state = b2aae1ec af275726
+  seed 3 entry state = f2aae1ec 6f275726
+  seed 0 cycle walk of 1671196332 steps returned to entry: YES (lambda confirmed)
+  seed 1: TRANSLATE of seed-0 cycle
+  seed 2: NOT a translate within G (hypothesis FALSE)
+  seed 3: TRANSLATE of seed-0 cycle
+     seed 1: cycle_s = cycle_0 + g_k with k=13 (a=d0000000), met at offset 129287738
+     seed 3: cycle_s = cycle_0 + g_k with k=15 (a=f0000000), met at offset 227494409

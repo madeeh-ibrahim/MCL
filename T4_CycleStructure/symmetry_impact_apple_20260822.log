@@ -1,0 +1,25 @@
+MCL-T4-CYCLE-2026-0822-003  symmetry impact on the SEED interface, engine mcl_core 8.1.1 UNMODIFIED
+
+omega_i (32-bit phase increments): 422466573 905531195 283142007 490992516  parity: odd odd odd EVEN
+(c) keys with >=1 seed-reachable translation symmetry (D multiple of 2^24): 16 / 4096 = 0.391%; histogram of #symmetric offsets per key [0,1,2,..,8+]: 4080 16 0 0 0 0 0 0 0
+(a) key #164, seed offset D=0x80000000: post-burn-in state difference = (80000000 80000000 80000000 00000000); predicted b_i=D*omega_i = (80000000 80000000 80000000 00000000) => SYMMETRY CONFIRMED ON THE REAL ENGINE (constant state offset forever)
+    gen_bytes: 65536 / 65536 bytes differ; most frequent byte-XOR value 0x80 occurs 65536 times (uniform would be ~256) => STRUCTURED KEYSTREAM RELATION (related-seed distinguisher)
+(b) commit32 raw for the two seeds: Hamming distance 4 / 256 (random ~128; small/structured = related-seed relation in the raw interface)
+(d) 2-osc: seed offset D=1342177280 (0x50000000) realises group element (a=10000000,b=70000000)
+(d) 2-osc: seed offset D=2684354560 (0xa0000000) realises group element (a=20000000,b=e0000000)
+(d) 2-osc: seed offset D=4026531840 (0xf0000000) realises group element (a=30000000,b=50000000)
+(d) 2-osc: seed offset D=1073741824 (0x40000000) realises group element (a=40000000,b=c0000000)
+(d) 2-osc: seed offset D=2415919104 (0x90000000) realises group element (a=50000000,b=30000000)
+(d) 2-osc: seed offset D=3758096384 (0xe0000000) realises group element (a=60000000,b=a0000000)
+(d) 2-osc: seed offset D=805306368 (0x30000000) realises group element (a=70000000,b=10000000)
+(d) 2-osc: seed offset D=2147483648 (0x80000000) realises group element (a=80000000,b=80000000)
+(d) 2-osc: seed offset D=3489660928 (0xd0000000) realises group element (a=90000000,b=f0000000)
+(d) 2-osc: seed offset D=536870912 (0x20000000) realises group element (a=a0000000,b=60000000)
+(d) 2-osc: seed offset D=1879048192 (0x70000000) realises group element (a=b0000000,b=d0000000)
+(d) 2-osc: seed offset D=3221225472 (0xc0000000) realises group element (a=c0000000,b=40000000)
+(d) 2-osc: seed offset D=268435456 (0x10000000) realises group element (a=d0000000,b=b0000000)
+(d) 2-osc: seed offset D=1610612736 (0x60000000) realises group element (a=e0000000,b=20000000)
+(d) 2-osc: seed offset D=2952790016 (0xb0000000) realises group element (a=f0000000,b=90000000)
+(d) 2-osc (3,5): seed-reachable non-trivial symmetries: 15 of 15
+    vdf_compute_q30(seed) vs vdf_compute_q30(seed+D), N=1e5: Hamming distance 20 / 256; word relation t1'=t1+a, t2'=t2+b in all 4 blocks: HOLDS (related-input relation in the raw 2-osc VDF output)
+    consequence: output(seed+D) is derivable from output(seed) by adding constants -- the sequential-work assumption fails for the 15 related inputs of every seed on the raw 2-osc path (superseded in P4 by VDF128-T4 + SHA finalisation; vdf_compute_q30 API still exists)

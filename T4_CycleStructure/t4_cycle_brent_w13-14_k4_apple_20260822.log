@@ -1,0 +1,42 @@
+================================================================
+  MCL T4-Q30 reduced-width cycle-structure study
+  MCL-T4-CYCLE-2026-0822-001   engine mcl_core 8.1.1 (2026-08-21) UNMODIFIED + keyed sidecar
+  mode=brent keys=4 reduction=both  exhaustive w<=6  brent w=13..14  budget=16*sqrt(N)
+================================================================
+weight sets (p12 q12 p13 q13 p14 q14 p23 q23 p24 q24 p34 q34):
+  key0: 665688781 1035324723 558874912 674804781 415740537 407156447 415528119 102116605 21704988 874185725 7894912 258566532
+  key1: 666746739 757472922 229106382 541427040 536335204 657465878 736226356 892259141 858117464 579329416 199406492 238768286
+  key2: 861147891 141355866 597642243 903581448 83575687 864760644 565078835 609037620 312653313 69849912 309496392 531535553
+  key3: 43248730 997786762 893669297 810948347 108029328 299812548 734925615 220252911 360471145 125023497 941530109 288279517
+[SELFTEST] w=32: R1==engine PASS, R2==engine PASS (100,000 iterations)  state=d9f10e90 fcebba29 5e7d67f9 47344492
+[SELFTEST] 2-osc w=32: R1==engine PASS, R2==engine PASS
+
+[PART B] Brent sampling, T4 keyed, mode=R1-truncated
+  w   state seeds(tot) closed  mean rho       mean lambda    mean mu        min/max rho  termcyc/key E[rho]=sqrt(piN/2) ratio   
+  (termcyc/key = min..max number of DISTINCT terminal cycles reached by the seeds of ONE weight set; giant component => small numbers are EXPECTED)
+  13  52    128    128     77544874.6     41091362.2     36453512.4     5520445/182394228   3..6     84108488.0     0.922   
+      (1020.2 s)
+  14  56    64     64      334662333.6    210037716.5    124624617.0    20946425/815633218   1..4     336433952.0    0.995   
+      (2296.6 s)
+
+[PART C] R1 least-squares fits over 2 widths (random-mapping slope = 0.5 for both):
+  log2(mean lambda) = -5.3063 + 0.58844 * state_bits    [model intercept log2 sqrt(pi/8) = -0.6743]
+  log2(mean rho)    = -1.2163 + 0.52740 * state_bits    [model intercept log2 sqrt(pi/2) = 0.3257]
+  128-bit state (T4 w=32): predicted lambda 2^70.01 (record extrapolation 2^63.33 = sqrt(pi 2^128/8)), predicted rho 2^66.29 (model 2^64.33)
+   cross-map sanity check (NOT a control — different map): T4 fit at 64 state bits gives lambda 2^32.35; 2-osc w=32 MEASURED 1,671,196,332 = 2^30.64 (model E[lambda] 2^31.33)
+
+[PART B] Brent sampling, T4 keyed, mode=R2-native
+  w   state seeds(tot) closed  mean rho       mean lambda    mean mu        min/max rho  termcyc/key E[rho]=sqrt(piN/2) ratio   
+  (termcyc/key = min..max number of DISTINCT terminal cycles reached by the seeds of ONE weight set; giant component => small numbers are EXPECTED)
+  13  52    128    128     30952050.1     12423430.9     18528619.2     3029323/61353186   2..9     84108488.0     0.368   
+      (377.2 s)
+  14  56    64     64      167693445.3    133822281.0    33871164.3     38771697/307857468   2..5     336433952.0    0.498   
+      (1324.9 s)
+
+[PART C] R2 least-squares fits over 2 widths (random-mapping slope = 0.5 for both):
+  log2(mean lambda) = -21.0128 + 0.85730 * state_bits    [model intercept log2 sqrt(pi/8) = -0.6743]
+  log2(mean rho)    = -6.8068 + 0.60943 * state_bits    [model intercept log2 sqrt(pi/2) = 0.3257]
+  128-bit state (T4 w=32): predicted lambda 2^88.72 (record extrapolation 2^63.33 = sqrt(pi 2^128/8)), predicted rho 2^71.20 (model 2^64.33)
+   cross-map sanity check (NOT a control — different map): T4 fit at 64 state bits gives lambda 2^33.85; 2-osc w=32 MEASURED 1,671,196,332 = 2^30.64 (model E[lambda] 2^31.33)
+
+DONE (5019 s)

@@ -1,0 +1,6 @@
+source A: P(weight even) per lane: 0.504 0.512 0.473 0.461 0.508 0.527 0.445 0.473 0.539 0.523 0.504 0.496
+   P(p-q even) per pair: 0.492 0.496 0.480 0.465 0.539 0.430   9-condition fraction 0.7812% (theory 0.195%)
+source B: P(weight even) per lane: 0.488 0.477 0.500 0.477 0.500 0.520 0.559 0.516 0.527 0.492 0.477 0.520
+   P(p-q even) per pair: 0.504 0.555 0.473 0.520 0.527 0.480   9-condition fraction 0.3906% (theory 0.195%)
+source C: P(weight even) per lane: 0.503 0.498 0.500 0.498 0.500 0.499 0.503 0.503 0.497 0.499 0.500 0.502
+   P(p-q even) per pair: 0.501 0.499 0.501 0.503 0.500 0.501   9-condition fraction 0.2060% (theory 0.195%)

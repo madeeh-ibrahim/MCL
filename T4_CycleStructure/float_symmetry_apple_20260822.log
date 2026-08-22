@@ -1,0 +1,13 @@
+MCL-T4-CYCLE-2026-0822-006  Float64-path symmetry check, engine mcl_core 8.1.3 UNMODIFIED
+
+(A) Float64 key-derived weight sets over 65536 SHA-256 keys: exact-arithmetic half-turn class (pi,pi,pi,0): 129 (0.197%, theory 2^-9=0.195%); (pi,pi,pi,pi): 1031 (1.573%, theory 2^-6=1.56%)
+
+(B) 2-osc Float64 (3,5) K=12: drift of the exact-arithmetic symmetry b=(2pi/16, 2pi*7/16) under double rounding
+    seed 0: n=0:0.0e+00 1:4.2e-13 2:3.2e-12 5:1.5e-03 10:2.5e+00 20:1.1e+00 30:6.2e-01 40:3.1e+00 50:2.9e+00 75:3.1e+00 100:2.0e+00 200:3.1e+00 1000:2.2e+00 10000:1.7e+00 
+    seed 1: n=0:4.4e-16 1:3.7e-14 2:1.7e-11 5:4.6e-04 10:3.1e+00 20:3.0e+00 30:1.9e+00 40:2.1e+00 50:2.9e+00 75:2.2e+00 100:1.2e+00 200:1.5e+00 1000:3.0e+00 10000:2.5e+00 
+    seed 2: n=0:0.0e+00 1:5.1e-13 2:1.5e-10 5:1.2e-02 10:2.3e+00 20:2.4e+00 30:1.1e+00 40:1.3e+00 50:2.9e+00 75:2.6e+00 100:2.8e+00 200:2.8e+00 1000:1.1e+00 10000:2.5e+00 
+    reading: drift ~1e-16 at n=0 growing to O(1) within tens of steps => the symmetry is NOT preserved by floating-point arithmetic; no exact state relation survives burn-in.
+
+(C) seed-offset reachability over D in [1,2^28): best residual for (pi,pi,pi,0): 1.755e-02 rad at D=247411942; for (pi,pi,pi,pi): 2.398e-02 rad at D=100119090  (exact reachability needs ~1e-16; a 2^28 search of 4 incommensurate phases is expected to reach only ~(2pi/2)/(2^28)^(1/4) ~ 2e-2)
+    parity-class key #851 on the REAL MCL_T4 (Float64): seeds s vs s+D_best: mean byte HD 3.997/8 (random 4.0), most frequent byte-XOR count 299/65536 (uniform ~256) => NO related-seed relation
+    same key, seeds s vs s+2^31 (the Q30 weak pair) on Float64: mean byte HD 4.002/8 => NO relation (Q30 weak pair does not transfer)
