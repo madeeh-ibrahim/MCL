@@ -1,0 +1,24 @@
+=== MCL Paper-2 L2 re-verification (engine v6.0.0, seed 12345678901234, K=12.0) ===
+
+[gen] 20 channels x 10000000 bytes (same seed, t2_topos pairs)...
+
+--- (1) Multiplex uniformity (df=255, crit=330.52) ---
+  mux_empty  : chi2 =   265.72   entropy = 7.999981 bits/byte
+  mux_msg    : chi2 =   233.16   entropy = 7.999983 bits/byte   <- steganographic case (§VII.B)
+  paper §VII.B prints: chi2 = 241.39, entropy = 7.999983
+
+--- (2) Correlation (N=10000000 samples) ---
+  max |r| channel-to-multiplex = 0.000724  (channel 4 = (8,13) vs 20-way mux)
+  max |r| channel-to-channel   = 0.000870  (pair (19,29) x (61,71), 190 pairs)
+  paper §VII.B prints: max channel-to-multiplex |r| = 0.000559
+
+--- (3) Next-byte (bigram) prediction, held-out (train 2000000 / test 2000000) ---
+  prediction accuracy = 0.3961%   (random baseline 1/256 = 0.3906%)
+  paper Table 6 / §X.C prints: byte prediction 0.406% (random 0.39%);
+  archived mcl_attack_suite (held-out): 0.388% (random 0.3906%)
+
+--- (4) Incorrect-parameter authentication Hamming (3421 wrong pairs) ---
+  mean = 0.5010   std = 0.0312   min = 0.39062   max = 0.60938
+  paper §IV.C prints: mean 0.4998 +/- 0.0031 (min 0.39844, max 0.61328)
+
+=== done ===

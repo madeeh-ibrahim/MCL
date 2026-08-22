@@ -1,0 +1,31 @@
+=============================================================
+ MCL COUPLING-PHASE MARGINAL EQUIDISTRIBUTION v1.0.0
+ Doc ID: MCL-PSI-EQUIDIST-2026-0703-001
+ Engine: mcl_core.hpp v6.0.0 (archived) | (p,q,K)=(3,5,12.0)
+ Burn-in 10000 | N = 10000000 iterations | 256 bins | 3 seeds
+ Target: <ln|cos psi_1|> within 0.1% of -ln2 = -0.6931471806
+=============================================================
+
+SEED 12345678901234
+  psi_1: TV = 0.004803 (L1 = 0.009606)  chi2(df=255) =   1463.72
+         <ln|cos psi_1|> = -0.692998   dev vs -ln2 = +0.021%
+  psi_2: TV = 0.004753 (L1 = 0.009506)  chi2(df=255) =   1294.11
+         <ln|cos psi_2|> = -0.698174   dev vs -ln2 = -0.725%
+
+SEED 98765432109876
+  psi_1: TV = 0.005026 (L1 = 0.010052)  chi2(df=255) =   1573.52
+         <ln|cos psi_1|> = -0.693353   dev vs -ln2 = -0.030%
+  psi_2: TV = 0.004827 (L1 = 0.009655)  chi2(df=255) =   1378.48
+         <ln|cos psi_2|> = -0.697849   dev vs -ln2 = -0.678%
+
+SEED 31415926535897
+  psi_1: TV = 0.004665 (L1 = 0.009330)  chi2(df=255) =   1409.32
+         <ln|cos psi_1|> = -0.693018   dev vs -ln2 = +0.019%
+  psi_2: TV = 0.004893 (L1 = 0.009785)  chi2(df=255) =   1369.58
+         <ln|cos psi_2|> = -0.697746   dev vs -ln2 = -0.663%
+
+POOLED (3 x 10^7)
+  psi_1: TV = 0.004630  chi2 = 3946.66  <ln|cos|> = -0.693123 (dev +0.003%)
+  psi_2: TV = 0.004619  chi2 = 3558.71  <ln|cos|> = -0.697923 (dev -0.689%)
+
+VERDICT: PASS — psi_1 functional within 0.1% of -ln 2 on every seed

@@ -1,0 +1,109 @@
+=== MCL byte-level Safe-Zone scan (N=10^8, seed 12345678901234, Apple libm) ===
+Engine v6.0.0 archived | (p,q,K)=(3,5,12) | 8-bit sliding window
+
+  theta_1 (single): byte-level χ²(df=255), crit = 310.46
+    start  0 (bits  0- 7): χ² = 209268665.46  FAIL
+    start  1 (bits  1- 8): χ² =  70049810.31  FAIL
+    start  2 (bits  2- 9): χ² =  17651162.18  FAIL
+    start  3 (bits  3-10): χ² =   3651605.50  FAIL
+    start  4 (bits  4-11): χ² =    850123.35  FAIL
+    start  5 (bits  5-12): χ² =    216144.17  FAIL
+    start  6 (bits  6-13): χ² =     55313.27  FAIL
+    start  7 (bits  7-14): χ² =     14379.77  FAIL
+    start  8 (bits  8-15): χ² =      3882.63  FAIL
+    start  9 (bits  9-16): χ² =      1223.12  FAIL
+    start 10 (bits 10-17): χ² =       573.09  FAIL
+    start 11 (bits 11-18): χ² =       283.27  PASS
+    start 12 (bits 12-19): χ² =       211.78  PASS
+    start 13 (bits 13-20): χ² =       218.23  PASS
+    start 14 (bits 14-21): χ² =       219.81  PASS
+    start 28 (bits 28-35): χ² =       232.90  PASS
+    start 29 (bits 29-36): χ² =       232.02  PASS
+    start 30 (bits 30-37): χ² =       203.21  PASS
+    start 31 (bits 31-38): χ² =       212.15  PASS
+    start 32 (bits 32-39): χ² =       245.92  PASS
+    start 33 (bits 33-40): χ² =       248.38  PASS
+    start 34 (bits 34-41): χ² =       270.14  PASS
+    start 35 (bits 35-42): χ² =       277.79  PASS
+    start 36 (bits 36-43): χ² =       285.50  PASS
+    start 37 (bits 37-44): χ² =       416.95  FAIL
+    start 38 (bits 38-45): χ² =      2710.86  FAIL
+    start 39 (bits 39-46): χ² =      8345.69  FAIL
+    start 40 (bits 40-47): χ² =     18730.70  FAIL
+    start 41 (bits 41-48): χ² =    156669.59  FAIL
+    start 42 (bits 42-49): χ² =    512392.67  FAIL
+    start 43 (bits 43-50): χ² =   1227721.43  FAIL
+    start 44 (bits 44-51): χ² =   9920853.30  FAIL
+  => byte-level Safe Zone: [11, 36] = 26 bits
+
+  theta_2 (single): byte-level χ²(df=255), crit = 310.46
+    start  0 (bits  0- 7): χ² = 185430742.26  FAIL
+    start  1 (bits  1- 8): χ² =  65218604.10  FAIL
+    start  2 (bits  2- 9): χ² =  16030756.74  FAIL
+    start  3 (bits  3-10): χ² =   3284857.72  FAIL
+    start  4 (bits  4-11): χ² =    808738.41  FAIL
+    start  5 (bits  5-12): χ² =    221097.23  FAIL
+    start  6 (bits  6-13): χ² =     58176.79  FAIL
+    start  7 (bits  7-14): χ² =     15123.17  FAIL
+    start  8 (bits  8-15): χ² =      3931.79  FAIL
+    start  9 (bits  9-16): χ² =      1258.14  FAIL
+    start 10 (bits 10-17): χ² =       509.27  FAIL
+    start 11 (bits 11-18): χ² =       336.41  FAIL
+    start 12 (bits 12-19): χ² =       274.49  PASS
+    start 13 (bits 13-20): χ² =       253.62  PASS
+    start 14 (bits 14-21): χ² =       224.60  PASS
+    start 28 (bits 28-35): χ² =       250.00  PASS
+    start 29 (bits 29-36): χ² =       278.07  PASS
+    start 30 (bits 30-37): χ² =       250.71  PASS
+    start 31 (bits 31-38): χ² =       229.15  PASS
+    start 32 (bits 32-39): χ² =       243.11  PASS
+    start 33 (bits 33-40): χ² =       245.80  PASS
+    start 34 (bits 34-41): χ² =       259.12  PASS
+    start 35 (bits 35-42): χ² =       326.26  FAIL
+    start 36 (bits 36-43): χ² =       336.20  FAIL
+    start 37 (bits 37-44): χ² =       421.68  FAIL
+    start 38 (bits 38-45): χ² =      2706.84  FAIL
+    start 39 (bits 39-46): χ² =      7838.96  FAIL
+    start 40 (bits 40-47): χ² =     18252.35  FAIL
+    start 41 (bits 41-48): χ² =    154778.82  FAIL
+    start 42 (bits 42-49): χ² =    511851.07  FAIL
+    start 43 (bits 43-50): χ² =   1228122.34  FAIL
+    start 44 (bits 44-51): χ² =   9923292.64  FAIL
+  => byte-level Safe Zone: [12, 34] = 23 bits
+
+  XOR (theta_1 ^ theta_2)  [methodology check -> must give [6,39]]: byte-level χ²(df=255), crit = 310.46
+    start  0 (bits  0- 7): χ² =  65324099.92  FAIL
+    start  1 (bits  1- 8): χ² =  13581099.22  FAIL
+    start  2 (bits  2- 9): χ² =   1051545.98  FAIL
+    start  3 (bits  3-10): χ² =     41831.69  FAIL
+    start  4 (bits  4-11): χ² =      3089.90  FAIL
+    start  5 (bits  5-12): χ² =       493.48  FAIL
+    start  6 (bits  6-13): χ² =       302.98  PASS
+    start  7 (bits  7-14): χ² =       255.02  PASS
+    start  8 (bits  8-15): χ² =       220.51  PASS
+    start  9 (bits  9-16): χ² =       254.02  PASS
+    start 10 (bits 10-17): χ² =       266.33  PASS
+    start 11 (bits 11-18): χ² =       254.36  PASS
+    start 12 (bits 12-19): χ² =       254.58  PASS
+    start 13 (bits 13-20): χ² =       225.36  PASS
+    start 14 (bits 14-21): χ² =       241.04  PASS
+    start 28 (bits 28-35): χ² =       207.57  PASS
+    start 29 (bits 29-36): χ² =       201.30  PASS
+    start 30 (bits 30-37): χ² =       236.15  PASS
+    start 31 (bits 31-38): χ² =       262.33  PASS
+    start 32 (bits 32-39): χ² =       263.77  PASS
+    start 33 (bits 33-40): χ² =       246.37  PASS
+    start 34 (bits 34-41): χ² =       254.63  PASS
+    start 35 (bits 35-42): χ² =       243.67  PASS
+    start 36 (bits 36-43): χ² =       239.75  PASS
+    start 37 (bits 37-44): χ² =       250.09  PASS
+    start 38 (bits 38-45): χ² =       259.33  PASS
+    start 39 (bits 39-46): χ² =       249.03  PASS
+    start 40 (bits 40-47): χ² =       502.44  FAIL
+    start 41 (bits 41-48): χ² =       784.85  FAIL
+    start 42 (bits 42-49): χ² =      2334.87  FAIL
+    start 43 (bits 43-50): χ² =      4760.33  FAIL
+    start 44 (bits 44-51): χ² =    594243.54  FAIL
+  => byte-level Safe Zone: [6, 39] = 34 bits
+
+Text claims: theta_1 = [11,35] = 25 ; theta_2 = [12,35] = 24 ; XOR = [6,39] = 34

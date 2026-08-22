@@ -1,0 +1,4 @@
+derive_child (bare)         :    927.5 us/derivation  =  1078.2 derivations/sec
+derive_child_safe (+Step-4) :  20969.3 us/derivation  =    47.7 derivations/sec
+Step-4 validation overhead  :  20041.8 us (95.6% of safe path)
+(sink=244961982)

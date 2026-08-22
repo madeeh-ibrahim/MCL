@@ -1,0 +1,44 @@
+engine v6.0.0 (frozen), N=1e8 samples/seed, D=2, df=255 crit=310.46
+
+seed 12345678901234:
+  A (8-bit, 20^36)  chi2 =   294.05
+  B (8-bit, 6^31)   chi2 =   255.76
+  C (32-bit, 6^20)  chi2 =   299.38  (4N pooled bytes)
+  intra-mantissa pairs (bit 20+i vs 36+i), i=0..7:
+    i=0 cov=+2.116e-05 chi2(1)=  0.716 indep
+    i=1 cov=+1.351e-05 chi2(1)=  0.292 indep
+    i=2 cov=-2.363e-05 chi2(1)=  0.893 indep
+    i=3 cov=+7.682e-06 chi2(1)=  0.094 indep
+    i=4 cov=+2.448e-07 chi2(1)=  0.000 indep
+    i=5 cov=-8.695e-05 chi2(1)= 12.096 CORR
+    i=6 cov=+2.219e-06 chi2(1)=  0.008 indep
+    i=7 cov=-1.925e-05 chi2(1)=  0.593 indep
+
+seed 31415926535897:
+  A (8-bit, 20^36)  chi2 =   232.89
+  B (8-bit, 6^31)   chi2 =   260.22
+  C (32-bit, 6^20)  chi2 =   292.36  (4N pooled bytes)
+  intra-mantissa pairs (bit 20+i vs 36+i), i=0..7:
+    i=0 cov=-6.314e-06 chi2(1)=  0.064 indep
+    i=1 cov=-1.721e-06 chi2(1)=  0.005 indep
+    i=2 cov=+3.215e-05 chi2(1)=  1.654 indep
+    i=3 cov=+6.513e-06 chi2(1)=  0.068 indep
+    i=4 cov=+1.873e-05 chi2(1)=  0.561 indep
+    i=5 cov=+2.784e-05 chi2(1)=  1.240 indep
+    i=6 cov=+1.459e-05 chi2(1)=  0.341 indep
+    i=7 cov=+2.574e-05 chi2(1)=  1.060 indep
+
+seed 27182818284590:
+  A (8-bit, 20^36)  chi2 =   283.50
+  B (8-bit, 6^31)   chi2 =   267.60
+  C (32-bit, 6^20)  chi2 =   229.07  (4N pooled bytes)
+  intra-mantissa pairs (bit 20+i vs 36+i), i=0..7:
+    i=0 cov=+2.575e-05 chi2(1)=  1.061 indep
+    i=1 cov=+1.075e-05 chi2(1)=  0.185 indep
+    i=2 cov=-1.219e-05 chi2(1)=  0.238 indep
+    i=3 cov=+2.577e-05 chi2(1)=  1.063 indep
+    i=4 cov=-2.432e-05 chi2(1)=  0.946 indep
+    i=5 cov=-1.281e-06 chi2(1)=  0.003 indep
+    i=6 cov=+8.167e-07 chi2(1)=  0.001 indep
+    i=7 cov=-3.502e-05 chi2(1)=  1.962 indep
+

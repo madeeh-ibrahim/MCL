@@ -1,0 +1,80 @@
+=== MCL single-oscillator per-bit Safe-Zone scan (N=10^8, seed 12345678901234) ===
+Engine v6.0.0 archived | (p,q,K)=(3,5,12) | Apple libm
+
+  theta_1 per-bit χ²(df=1), crit = 3.841:
+    bit  0: χ² = 69619105.241  FAIL
+    bit  1: χ² = 34851541.306  FAIL
+    bit  2: χ² = 10377701.445  FAIL
+    bit  3: χ² =  1958711.092  FAIL
+    bit  4: χ² =   419632.143  FAIL
+    bit  5: χ² =   106763.733  FAIL
+    bit  6: χ² =    27191.416  FAIL
+    bit  7: χ² =     6726.788  FAIL
+    bit  8: χ² =     1746.939  FAIL
+    bit  9: χ² =      420.471  FAIL
+    bit 10: χ² =      105.794  FAIL
+    bit 11: χ² =       30.070  FAIL
+    bit 12: χ² =        3.061  PASS
+    bit 13: χ² =        0.686  PASS
+    bit 14: χ² =        0.259  PASS
+    bit 15: χ² =        1.180  PASS
+    bit 33: χ² =        0.001  PASS
+    bit 34: χ² =        2.575  PASS
+    bit 35: χ² =        0.658  PASS
+    bit 36: χ² =        1.205  PASS
+    bit 37: χ² =        0.065  PASS
+    bit 38: χ² =        1.258  PASS
+    bit 39: χ² =        2.077  PASS
+    bit 40: χ² =        0.386  PASS
+    bit 41: χ² =       23.275  FAIL
+    bit 42: χ² =       11.288  FAIL
+    bit 43: χ² =        7.802  FAIL
+    bit 44: χ² =       23.645  FAIL
+    bit 45: χ² =     2156.172  FAIL
+    bit 46: χ² =     3107.550  FAIL
+    bit 47: χ² =     2706.226  FAIL
+    bit 48: χ² =   119644.181  FAIL
+    bit 49: χ² =   202485.240  FAIL
+    bit 50: χ² =   204083.122  FAIL
+    bit 51: χ² =  7472868.566  FAIL
+  => longest contiguous per-bit Safe Zone: [12, 40] = 29 bits
+
+  theta_2 per-bit χ²(df=1), crit = 3.841:
+    bit  0: χ² = 54167000.479  FAIL
+    bit  1: χ² = 32851334.851  FAIL
+    bit  2: χ² =  9321063.011  FAIL
+    bit  3: χ² =  1633162.337  FAIL
+    bit  4: χ² =   355928.219  FAIL
+    bit  5: χ² =   102288.798  FAIL
+    bit  6: χ² =    27839.189  FAIL
+    bit  7: χ² =     7236.258  FAIL
+    bit  8: χ² =     1710.004  FAIL
+    bit  9: χ² =      510.335  FAIL
+    bit 10: χ² =      114.362  FAIL
+    bit 11: χ² =       55.726  FAIL
+    bit 12: χ² =       11.342  FAIL
+    bit 13: χ² =        4.737  FAIL
+    bit 14: χ² =        0.766  PASS
+    bit 15: χ² =        0.169  PASS
+    bit 33: χ² =        0.294  PASS
+    bit 34: χ² =        0.063  PASS
+    bit 35: χ² =       12.493  FAIL
+    bit 36: χ² =        1.660  PASS
+    bit 37: χ² =        0.302  PASS
+    bit 38: χ² =        0.539  PASS
+    bit 39: χ² =        2.833  PASS
+    bit 40: χ² =        2.348  PASS
+    bit 41: χ² =        4.323  FAIL
+    bit 42: χ² =        9.890  FAIL
+    bit 43: χ² =        6.461  FAIL
+    bit 44: χ² =       13.831  FAIL
+    bit 45: χ² =     2183.730  FAIL
+    bit 46: χ² =     2724.882  FAIL
+    bit 47: χ² =     2626.809  FAIL
+    bit 48: χ² =   117984.968  FAIL
+    bit 49: χ² =   204227.890  FAIL
+    bit 50: χ² =   203328.125  FAIL
+    bit 51: χ² =  7464439.259  FAIL
+  => longest contiguous per-bit Safe Zone: [14, 34] = 21 bits
+
+Text claim: theta_1 = [11,35] = 25 bits ; theta_2 = [12,35] = 24 bits

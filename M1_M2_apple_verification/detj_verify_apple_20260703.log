@@ -1,0 +1,40 @@
+=============================================================
+ MCL DETERMINANT COMPANION LAWS VERIFICATION v1.0.0
+ Doc ID: MCL-DETJ-VERIFY-2026-0703-001
+ Engine: mcl_core.hpp v6.0.0 (archived) | QR = engine compute_lyapunov
+=============================================================
+
+PART A — trajectory identities at (3,5,12), seed 12345678901234, 10^7 iters
+  (3c) closed form vs engine det J : max rel err = 9.395e-15  (machine precision, EXACT)
+  (3f) closed form vs Jacobi det J : max rel err = 2.181e-16  (machine precision, EXACT)
+  QR:            lambda_1 = 5.7787   lambda_2 = 1.0183   sum = 6.7970
+  <ln|tr J|>   = 5.7761   vs lambda_1        -> dev -0.046%
+  <ln|det J|>  = 6.7970   vs QR sum 6.7970   -> diff -0.00000 (Oseledets)
+  (3b) 2ln(pK/2) = 5.7807 vs lambda_1        -> dev +0.035%
+  (3d) 2ln(qK/2) = 6.8024 vs sum             -> dev +0.079%
+
+PART B — topology sweep at K = 12 (3-seed means, 10^7 iters each)
+  (p,q)     l2_mean    2ln(q/p)   err3e%   sum_mean   2ln(qK/2)  err3d%
+  ----------------------------------------------------------------------
+  ( 2, 3)    +0.8059    +0.8109    -0.62     5.7765     5.7807   -0.07
+  ( 3, 5)    +1.0182    +1.0217    -0.33     6.7971     6.8024   -0.08
+  ( 5, 7)    +0.6724    +0.6729    -0.08     7.4782     7.4753   +0.04
+  ( 7,11)    +0.9034    +0.9040    -0.06     8.3787     8.3793   -0.01
+  ( 8,13)    +0.9706    +0.9710    -0.05     8.7098     8.7134   -0.04
+  (11,17)    +0.8704    +0.8706    -0.03     9.2502     9.2499   +0.00
+  (13,19)    +0.7589    +0.7590    -0.01     9.4741     9.4724   +0.02
+  (17,23)    +0.6045    +0.6046    -0.01     9.8541     9.8545   -0.00
+  ( 5, 3)    -1.0225    -1.0217    -0.08     5.7763     5.7807   -0.08  [reversed]
+  ( 3, 2)    -0.8111    -0.8109    -0.03     4.9694     4.9698   -0.01  [reversed]
+  worst |err| (8 coprime, standard): (3e) 0.62%  (3d) 0.08%
+  paper claims: (3e) <= 0.62% ; (3d) <= 0.08%
+
+PART C — (3e) K-asymptotics at (3,5), 3-seed means
+  K       l2_mean    dev vs 2ln(5/3)=1.0217
+    6.0    +1.0107    -1.07%
+   12.0    +1.0182    -0.33%
+   20.0    +1.0207    -0.09%
+   50.0    +1.0215    -0.01%
+  paper claims: -1.06% @K=6, -0.30% @K=12, -0.01% @K=50 (from below)
+
+VERDICT: PASS — all (3c)-(3f) claims verified on this platform

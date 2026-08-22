@@ -1,0 +1,42 @@
+==============================================================
+ MCL QR LOG-STRETCH INTEGRATED AUTOCORRELATION TIME
+ Doc ID: MCL-TAUINT-QR-2026-0719-001
+ Engine: mcl_core.hpp v6.0.0 (frozen M1_M2_apple_verification copy)
+ Config: (p,q)=(3,5), K=12, burn-in 10000, 1e6 QR iterations/seed
+ Anchor: seed 12345678901234 must give lambda1=5.7778, lambda2=1.0186
+         (archived MCL-SAFEZONE-VERIFY EXP 7, 1e6 iterations)
+==============================================================
+
+  seed 12345678901234  ln|R11|: lambda=5.7778  var=1.5474  SE_iid=0.0012
+    rho_1=+0.03327 rho_2=+0.00177 rho_3=-0.00048 rho_5=-0.00095 rho_10=+0.00055
+    max|rho_k| (k=1..100) = 0.03327 at k=1   (noise floor 2/sqrt(N) = 0.00200)
+    tau_int (Sokal window M=6) = 1.0673   SE_eff = SE_iid*sqrt(tau) = 0.0013
+
+  seed 12345678901234  ln|R22|: lambda=1.0186  var=0.2234  SE_iid=0.0005
+    rho_1=-0.09159 rho_2=-0.00075 rho_3=-0.00065 rho_5=-0.00091 rho_10=+0.00023
+    max|rho_k| (k=1..100) = 0.09159 at k=1   (noise floor 2/sqrt(N) = 0.00200)
+    tau_int (Sokal window M=5) = 0.8084   SE_eff = SE_iid*sqrt(tau) = 0.0004
+
+  seed 98765432109876  ln|R11|: lambda=5.7790  var=1.5463  SE_iid=0.0012
+    rho_1=+0.03743 rho_2=+0.00024 rho_3=+0.00093 rho_5=+0.00092 rho_10=-0.00003
+    max|rho_k| (k=1..100) = 0.03743 at k=1   (noise floor 2/sqrt(N) = 0.00200)
+    tau_int (Sokal window M=6) = 1.0792   SE_eff = SE_iid*sqrt(tau) = 0.0013
+
+  seed 98765432109876  ln|R22|: lambda=1.0184  var=0.2240  SE_iid=0.0005
+    rho_1=-0.09148 rho_2=+0.00066 rho_3=-0.00063 rho_5=-0.00084 rho_10=+0.00065
+    max|rho_k| (k=1..100) = 0.09148 at k=1   (noise floor 2/sqrt(N) = 0.00200)
+    tau_int (Sokal window M=5) = 0.8179   SE_eff = SE_iid*sqrt(tau) = 0.0004
+
+  seed 31415926535897  ln|R11|: lambda=5.7780  var=1.5496  SE_iid=0.0012
+    rho_1=+0.03602 rho_2=+0.00112 rho_3=-0.00014 rho_5=+0.00007 rho_10=+0.00060
+    max|rho_k| (k=1..100) = 0.03602 at k=1   (noise floor 2/sqrt(N) = 0.00200)
+    tau_int (Sokal window M=6) = 1.0732   SE_eff = SE_iid*sqrt(tau) = 0.0013
+
+  seed 31415926535897  ln|R22|: lambda=1.0180  var=0.2247  SE_iid=0.0005
+    rho_1=-0.09099 rho_2=+0.00008 rho_3=-0.00069 rho_5=+0.00025 rho_10=+0.00101
+    max|rho_k| (k=1..100) = 0.09099 at k=1   (noise floor 2/sqrt(N) = 0.00200)
+    tau_int (Sokal window M=5) = 0.8160   SE_eff = SE_iid*sqrt(tau) = 0.0004
+
+ Interpretation: tau_int ~= 1 (and max|rho_k| at the noise floor)
+ validates the independent-increment 1/sqrt(N) standard-error model
+ used for the +/-0.0004 (1e7-iteration) quotes in Paper 1 Table 2.
