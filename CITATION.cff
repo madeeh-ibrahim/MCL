@@ -20,8 +20,8 @@ authors:
     email: madeeh.chaotic.lock@gmail.com
     city: Cairo
     country: EG
-version: 0.2.0
-date-released: "2026-08-22"
+version: 0.2.1
+date-released: "2026-09-02"
 license: PolyForm-Noncommercial-1.0.0
 repository-code: "https://github.com/madeeh-ibrahim/MCL"
 url: "https://github.com/madeeh-ibrahim/MCL"
@@ -35,7 +35,7 @@ keywords:
   - cryptanalysis
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.20496569"
+    value: "10.5281/zenodo.20496568"
     description: "Concept DOI (all versions) on Zenodo"
   - type: other
     value: "PCT/IB2026/052737"
@@ -57,8 +57,8 @@ preferred-citation:
       given-names: Madeeh
       orcid: "https://orcid.org/0009-0002-8562-8325"
   year: 2026
-  doi: "10.5281/zenodo.20496685"
-  url: "https://zenodo.org/record/20496685"
+  doi: "10.5281/zenodo.20496684"
+  url: "https://doi.org/10.5281/zenodo.20496684"
 references:
   - type: article
     title: "Topological Channel Orthogonality in Coupled Chaotic Oscillators: Multi-Channel Cryptography and Hardware Authentication"
@@ -66,25 +66,25 @@ references:
       - family-names: Ibrahim
         given-names: Madeeh
     year: 2026
-    doi: "10.5281/zenodo.20496910"
+    doi: "10.5281/zenodo.20496909"
   - type: article
     title: "Parameter-Induced Statistical Independence in Coupled Chaotic Oscillators: An Anti-Synchronization Paradigm"
     authors:
       - family-names: Ibrahim
         given-names: Madeeh
     year: 2026
-    doi: "10.5281/zenodo.20496912"
+    doi: "10.5281/zenodo.20496911"
   - type: article
     title: "A Candidate Post-Quantum Sequential Function from Coupled Oscillator Dynamics"
     authors:
       - family-names: Ibrahim
         given-names: Madeeh
     year: 2026
-    doi: "10.5281/zenodo.20496914"
+    doi: "10.5281/zenodo.20496913"
   - type: article
     title: "Hierarchical Deterministic Key Derivation and Hardware-Bound Transaction Authentication via Coupled Chaotic Dynamics"
     authors:
       - family-names: Ibrahim
         given-names: Madeeh
     year: 2026
-    doi: "10.5281/zenodo.20496916"
+    doi: "10.5281/zenodo.20496915"

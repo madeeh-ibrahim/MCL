@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.0, 2026-08-22)
+# MCL — Public Code Archive · MANIFEST (v0.2.1, 2026-09-02 — metadata-only update of v0.2.0)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `e55582884b8b210f6a3ee7ae4f5745e02cddd3cd720d2fc94b31f5b54ea32446` |  |
-| `CITATION.cff` | `6fc946e2c618db429e62af521f851e4a2aa91a1dc1db461d59ed98e053dbfee5` |  |
+| `CHANGELOG.md` | `ad145db73dc4e439d07b8bbda3c10a6824f9efe16317d6e73316ec160db222df` |  |
+| `CITATION.cff` | `f3ff48ddab68b5e967d872b91e6edb3bf0d016f9c96251b6390dcc6f9d8a63c0` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -45,7 +45,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
-| `README.md` | `d9d0ef572555deb38d8c315f7b720eed9c94cc2319d9feaf9248a73d46b5ab68` |  |
+| `README.md` | `8f8535a540fda27cdce1b95faf2abb8093077a054803d8c75a1623d925074e25` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `SECURITY.md` | `fb923ca3236106a55b6c62e9ba404a46b1054b9f6338884425af82af0048dd37` |  |

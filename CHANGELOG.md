@@ -5,6 +5,21 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.1 — 2026-09-02 (metadata only; no code change)
+
+* `CITATION.cff` and the README DOI badge now cite the Zenodo **concept DOIs**
+  (`10.5281/zenodo.20496568` for this repository; `…20496684`, `…20496909`,
+  `…20496911`, `…20496913`, `…20496915` for the five companion papers). A concept
+  DOI is stable across versions and always resolves to the latest one; the
+  version DOIs cited before (`…20496569`, `…20496685`, …) point permanently at the
+  2026-06-01 v0.1.0 / v1 records. `CITATION.cff` `version`/`date-released` bumped.
+* Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c…`, MD5
+  `5d8b49ee11aa0bfb8b0bda3f47fa16e3`); every KAT/keystream identical to v0.2.0.
+  Paper 1 pins its measurements to the engine of record 6.0.0 (MD5
+  `241db79ecf8a42897eb9a8399cf37929`, release v0.1.0) and cites this release as
+  the current, byte-identical implementation.
+* `MANIFEST.md`: SHA-256 rows of the three edited files refreshed.
+
 ## v0.2.0 — 2026-08-22
 
 ### Engine `mcl_core.hpp`: 6.0.0 → **8.1.3** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`)
