@@ -397,7 +397,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P3_ReviewMeasurements_20260903/RECORD_REVIEW_MEASUREMENTS_20260903.md` | `96c4aa44ab9e88b03e1bc37763d88d5ba4135b76463814140c1c0ed2e9708836` | Paper 3 — review measurements for the external-review adjudication — 2026-09-03 |
+| `P3_ReviewMeasurements_20260903/RECORD_REVIEW_MEASUREMENTS_20260903.md` | `86e7c4ec4f3185a62064aeb30ea0c9417c71908d6e648632d2d405fb3ef5764b` | Paper 3 — review measurements for the external-review adjudication — 2026-09-03 |
 | `P3_ReviewMeasurements_20260903/phaselock/header_patch.diff` | `b88bdef989562c212091be4806c7919f9fc087475c6a1b63f33bb8a37b224169` |  |
 | `P3_ReviewMeasurements_20260903/phaselock/reson.cpp` | `d08ec2d15d1c0b25aaada12edb36a6ea83be7014e733abef7c82d1dc9dd659b3` |  |
 | `P3_ReviewMeasurements_20260903/phaselock/reson_fig1grid.csv` | `1126204833da2e412110e3892c52a186da093aa367cedf1389fa8871f10932c5` |  |
