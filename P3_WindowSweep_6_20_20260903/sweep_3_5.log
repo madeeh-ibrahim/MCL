@@ -1,0 +1,2 @@
+# (3,5) K in [6.000,20.000] step 0.005, 200000 QR iters, seed 12345678901234, engine mcl_core.hpp (public v0.2.1)
+# points=2801 windows(l1<=0.02)=0 min_l1=4.4151 at K=6.000

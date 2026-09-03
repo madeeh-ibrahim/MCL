@@ -5,6 +5,25 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.2 — 2026-09-03
+
+Paper 3 (Physical Review E) pre-publication records. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged.
+
+### Added
+
+- `P3_ReviewMeasurements_20260903/` — direct phase-locking diagnostics on the Paper 3 Fig. 1 grid (`phaselock/`: unwrapped winding ratio W, order parameter R_α of the coupling argument, exact period, λ₁, byte-level χ²; 144 cells; record MCL-P3-PHASELOCK-2026-0903-001) and raw-phase cross-dependence tests (`rawphase/`: Pearson on cos/sin θ, lagged cross-correlation, mutual information, joint-density χ², distance correlation on 8 channel pairs plus identical / next-state / noisy controls; record MCL-P3-RAWPHASE-2026-0903-001). The two C++ tools read the engine's phases through a one-line read-only patch to a scratch copy of the header (`header_patch.diff` in each folder); no engine arithmetic is touched.
+- `P3_WindowSweep_6_20_20260903/` — K ∈ [6, 20] at step 0.005 for (2,3), (3,5), (5,7), (7,11), 2 × 10⁵ QR iterations per point, criterion λ₁ ≤ 0.02: zero periodic windows (record MCL-P3-WINSWEEP-2026-0903-001).
+- `P3_Fig3_Regeneration_20260903/` — Paper 3 Fig. 3 regenerated from a real run (20 canonical coprime channels × 10⁷ bytes, seed 12345678901234, K = 12): pairwise-|r| CSV, generator, figure script and PNG (record MCL-P3-FIG3-2026-0903-001; max |r| = 0.000870, mean 0.000265).
+- `P3_NonlinearDependence_20260603/` — the June-2026 nonlinear-dependence campaign cited in Paper 3 §V.I: five test programs (mutual information, distance correlation, lagged cross-correlation, block-joint χ², lag autocorrelation), 66 channel pairs, `results_v3/` records and campaign manifest. Engine copy of 6.0.0 omitted (git tag `v0.1.0`; KAT-identical T2 path to 8.1.3).
+- `results/mcl_k_independence.txt` — first archived run of `Verification_Suite/mcl_k_independence.cpp` on engine 8.1.3 (1,137 pairs, 0 rejections; the 22 per-configuration maxima are bit-identical to the April and June 2026 records). Built with `-DMCL_UNSAFE_ALLOW_INVALID` because the wide-K sweep starts below the runtime sentinel.
+
+### Changed
+
+- `Verification_Suite/README.md`: build flag and result path for `mcl_k_independence.cpp`.
+- `keyed_q30_PQ/`: full `dieharder -a` battery on engine 8.1.3 + sidecar 1.0.6 — **117 PASSED / 0 WEAK / 0 FAILED** (`MCL_KEYED_Q30_DIEHARDER_20260903.txt`, dieharder 3.31.1); `README.md` and `STATUS.md` updated (the 13-test June subset is retained unchanged as a historical record).
+- SPDX short headers (the `add_spdx_headers.sh` form) added to the six new tool files.
+- `CITATION.cff`: `version: 0.2.2`, `date-released: 2026-09-03`. `MANIFEST.md` regenerated with per-file SHA-256.
+
 ## v0.2.1 — 2026-09-02 (metadata only; no code change)
 
 * `CITATION.cff` and the README DOI badge now cite the Zenodo **concept DOIs**

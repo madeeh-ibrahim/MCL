@@ -1,0 +1,14 @@
+# MCL v3 — Lag autocorrelation (per channel), N=1e7, maxlag=100, 12 channels
+channel    rho(1)         tau_dec   N_eff/N      verdict
+(2,3)      -1.351315e-05  1         1.000027      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(3,5)      -7.465196e-04  2         1.001871      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(5,7)      7.542659e-05   1         0.999849      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(7,11)     1.397385e-04   1         0.999721      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(8,13)     -3.670885e-04  2         1.001260      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(11,17)    9.476515e-05   1         0.999811      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(3,2)      -9.439592e-05  1         1.000189      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(5,3)      -5.583001e-05  1         1.000112      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(4,6)      1.913330e-04   1         0.999617      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(6,9)      7.550163e-05   1         0.999849      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(13,19)    1.356784e-04   1         0.999729      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)
+(17,23)    -2.387751e-04  1         1.000478      PASS  (rho1<0.01 & tau_dec<=3 & N_eff>0.95N)

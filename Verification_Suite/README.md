@@ -6,7 +6,7 @@ The older working verification programs (engine `mcl_core.hpp` v6.0.0→v6.1.0, 
 |---|---|---|
 | `mcl_burnin_sweep.cpp` | burn-in iteration sweep → justifies the 10⁴ burn-in constant | 📌 §1 |
 | `mcl_decimation_sweep.cpp` | decimation sweep → justifies D = 2 | 📌 §1 |
-| `mcl_k_independence.cpp` | coupling-strength independence → justifies K = 12 | 📌 §1 |
+| `mcl_k_independence.cpp` | coupling-strength independence → justifies K = 12; Paper 3 §V.D (1,137 pairs). Build with `-DMCL_UNSAFE_ALLOW_INVALID` (the wide-K sweep starts at K = 1.0, below the runtime sentinel); archived log `../results/mcl_k_independence.txt` (2026-09-03, bit-identical to the April/June records) | 📌 §1 |
 | `mcl_hex7_proto.cpp` | 7-oscillator prototype → N-oscillator generalization beyond N=4 (§4 / [0018a]) | 📌 §1 |
 | `mcl_gs_jacobi_independence.cpp` | Gauss-Seidel vs Jacobi → the sequential-advantage / VDF basis | |
 | `mcl_lyap_ratio.cpp` | GS/Jacobi Lyapunov ratio (> 1.5) | |

@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.1, 2026-09-02 — metadata-only update of v0.2.0)
+# MCL — Public Code Archive · MANIFEST (v0.2.2, 2026-09-03)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 258 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 294 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (45 files)
 
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `ad145db73dc4e439d07b8bbda3c10a6824f9efe16317d6e73316ec160db222df` |  |
-| `CITATION.cff` | `f3ff48ddab68b5e967d872b91e6edb3bf0d016f9c96251b6390dcc6f9d8a63c0` |  |
+| `CHANGELOG.md` | `9e5c858217575fd351d4e1b196b21e2de26a80125833aacae2f56b475ded70ab` |  |
+| `CITATION.cff` | `f48e549d2c4bd87d6fd911c0a4bbac2006ef56c40405274459659f21af38aa3c` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -45,11 +45,11 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
-| `README.md` | `8f8535a540fda27cdce1b95faf2abb8093077a054803d8c75a1623d925074e25` |  |
+| `README.md` | `836ae4cc7137ed946d09caee028d42b9d4695e3d0cb07d42f0df369cf536ec00` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `SECURITY.md` | `fb923ca3236106a55b6c62e9ba404a46b1054b9f6338884425af82af0048dd37` |  |
-| `TOOLKIT_ACCESS_AGREEMENT.md` | `e8fbc3509ccca828e4c1f7c22cd82635801efd0516726f21074ecb29c3a7a7c8` |  |
+| `TOOLKIT_ACCESS_AGREEMENT.md` | `3cf1b9ac0ecf0b2b3aeebb98728dbedaabb1e9342106662fd661215b16d7c08e` |  |
 | `TOOLKIT_ACCESS_POLICY.md` | `83a93bc5db57c8a49c18df96a36772c725fab173984fca543dac525d618e1433` |  |
 | `TOOLKIT_ACCESS_REQUEST_TEMPLATE.md` | `2da1c63b20eadbb243d187550b0f7372ebaccebb16a56abccb57eb1ee4ef9225` |  |
 | `add_spdx_headers.sh` | `74ee8ace7e6a8f65957d57b6860acfd7f4eebc370d0f8e46a9b9cbd793cc7c2b` |  |
@@ -78,7 +78,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `q30_macos_validation.cpp` | `d58b0c11796a4036e6b3a216b1a4d4784d7840385358b10c9a30c93fd32354f3` | Validate MCL Q30 (fixed-point engine) cross-platform bit-exactness |
 | `self_test.cpp` | `9971324ad99bde6dea410b2f969443b85db07b77600ca797dd6d2eb2c9ca53bd` | Run the MCL engine built-in self-test verifying all Known Answer |
 
-### results  (27 files)
+### results  (28 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -91,6 +91,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `results/mcl_dynamical_signatures.txt` | `4ae1450f5a1c8308d63685a1ac54eb4b2de6973911f28087beb5f4697978747d` |  |
 | `results/mcl_generality.txt` | `70fafa524cd44e84cf35eee5e764d007860b1ae7e660b133ebd21a84161d04b9` |  |
 | `results/mcl_hd_verify.txt` | `a59a830313f1303117b1df372cd7b0ad39db86d6531a08b27b5caf6d2756aa1d` |  |
+| `results/mcl_k_independence.txt` | `5a039cfac35684ad7cadecadbd375c51f527d9cb3172df2c4a795d9fa5aad58c` |  |
 | `results/mcl_k_sweep_unified.txt` | `eb681d8ca165bb6f3ed6cbe034b769bdc35c0133cb9b3ceb28d9d442e0b06051` |  |
 | `results/mcl_lyapunov.txt` | `7f826b5cd87b6844aeb85c6c1acc8598a2b8a4b4fb553bcd3f7a2f9c52e7fd71` |  |
 | `results/mcl_lyapunov_lambda2_verify.txt` | `594f59955435eb632bb3072619b5974c693bdc883a1d0f6a1d348862fff26087` |  |
@@ -110,7 +111,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `results/self_test.txt` | `f77482b4c178ed4ec759e09e1d68ef183f24387117b98dbf043bc0c2f95630c6` |  |
 | `results/self_test_v8.1.3_20260822.txt` | `ec20df38c1630e6a60109c99908137cc3d8d0d23108796ccbf5b8bac57eaf92a` |  |
 
-### keyed_q30_PQ  (32 files)
+### keyed_q30_PQ  (33 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -119,6 +120,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/MCL_CAPACITY_REALIZATION_20260812_v1.1.0.txt` | `672535dc365e7046bf88065efa44a56146ce949b5579c8d3fa4ddc68ca636726` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_BEFF_RECHECK_20260611.txt` | `212fecde6d6bc6d10c4bca9a1624f50bc3ed1baf0130425774f8438030e9a38c` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_DIEHARDER_20260611.txt` | `2a2e214691216e44dc438ba975e301fe2d5045682c345f226e25ad6022e13d53` |  |
+| `keyed_q30_PQ/MCL_KEYED_Q30_DIEHARDER_20260903.txt` | `27fb8771136328072ed13454236beeeb897bfd685ac1c7262f39d37b344c7708` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_LYAP_SWEEP_20260616.txt` | `b8b6f9afe37f87ac344714fceac94a8b712143f86469b93b1f8300a4c0643998` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_MEASURE_20260612.txt` | `771226a6ace705e00513eaa4ac6298ec7a28fcf9fb402c4a05a51b5b65cf33c3` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_MPFR_LYAP_20260611.txt` | `a540c45c7e97e716b53a7ea3dee41d4d700e69640065f5a114f672e2059bf4d7` |  |
@@ -127,8 +129,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/MCL_KEYED_Q30_SCIENCE3_20260611.txt` | `861b4247ca3f2983beacc7c1593c03ca6b1cd9414218758a16cc5ea3d577dec6` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_SCIENCE_20260611.txt` | `e7d1b57a3cdcd5c272048efc298a0335882df04dd27b2d6b2bc0739da1dcb36e` |  |
 | `keyed_q30_PQ/NOSYM_V106_RECORD_20260822.md` | `bc56e7eb28a32ccf61947d87a1417ae87eba7c57e80cfe34a85ea6df9ce1abdb` | sidecar v1.0.6 — رفض التناظر القابل للوصول من البذرة في `mcl_t4_q30_params_from_key` — 2026-08-22 |
-| `keyed_q30_PQ/README.md` | `e4c8f8279e9210cb1f3ecfff8fa5ca42943da35cd9ef5b9d5cc471a9081a7c8a` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
-| `keyed_q30_PQ/STATUS.md` | `9f48d84b610daa26b1aae507abb604d1fcaf52dfbd77b71c17c2c505f655af76` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
+| `keyed_q30_PQ/README.md` | `7bc88cc5244b9882f8184dd1b2bb7f1531a7dca42307cbc9923df9cf232c9567` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
+| `keyed_q30_PQ/STATUS.md` | `4eb95618e0dd0163c1a9aa87a74fffa3af3a391dcac38958bf2c163e3184cc88` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
 | `keyed_q30_PQ/dump_keyN.cpp` | `ef0a8649cd46f413b631188b12b8457457b51464d0aca832a587010675d11672` |  |
 | `keyed_q30_PQ/lyap_2osc_signcheck.py` | `c34b8e36fcbc2c773ad444e7f7b676a01789c32704873a0b66aa328d3922291d` |  |
 | `keyed_q30_PQ/lyap_independent_check.py` | `77199d6bf3d0a46250daede2a1019eb5af03d5b17508a5cb1ce0730aebc5d8fc` |  |
@@ -298,7 +300,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `Verification_Suite/README.md` | `d3cdf396c6edfcd27b96aa4493fad4e8d54eefb534c0531acb3d01b6c1018a49` | Verification_Suite — legacy science/verification tests |
+| `Verification_Suite/README.md` | `ac6a8505bfc877ff059054bf73e47cc5520ae8b9b5fe54487d7687ae8b470a8e` | Verification_Suite — legacy science/verification tests |
 | `Verification_Suite/bench_diagnose.cpp` | `5852bf88575ff5011cd098b40a00ad14de278713bb50cafa31a6ecc0c726b330` |  |
 | `Verification_Suite/mcl_auth_verify.cpp` | `6290a40aa40ccd0c306f324cad7716c40ef186aff7b5ae2b61b4bdf515e7ec7e` |  |
 | `Verification_Suite/mcl_burnin_sweep.cpp` | `24982c1da2f41cc85d6e1f69e303b0f1c7fd934a832b3cc8d887cc2562ab1207` |  |
@@ -360,6 +362,60 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `LICENSES/LicenseRef-MCL-Security-Research-Grant.txt` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `LICENSES/PolyForm-Noncommercial-1.0.0.txt` | `ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8` |  |
+
+### P3_Fig3_Regeneration_20260903  (5 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P3_Fig3_Regeneration_20260903/RECORD_FIG3_20260903.md` | `08fa9679d5d004cf5842934cf371d4a33d40bd7138f43cc3b2ef059513d1e3a1` | Paper 3 — Figure 3 regeneration record — 2026-09-03 |
+| `P3_Fig3_Regeneration_20260903/fig3_matrix.cpp` | `02ca769f39eaf06cb83149ef9a9c99af432ee5cbe81a7f4b22ea28235df3c181` |  |
+| `P3_Fig3_Regeneration_20260903/fig3_matrix_seed12345678901234_20260903.csv` | `173db621c18f09fe1b4ac385cbb37ead93e996e1a48e065fafcf0b409d99c25d` |  |
+| `P3_Fig3_Regeneration_20260903/make_paper3_fig3.py` | `3281ce36d30f47b1a8c6f6fd963f99ecd1397d39bdbcdf3a55d991deea827182` |  |
+| `P3_Fig3_Regeneration_20260903/paper3_fig3.png` | `110cc7b0de4bfcea428acfdca99267cd7e505427422c5f86c33d7fbe21b8092a` |  |
+
+### P3_NonlinearDependence_20260603  (15 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P3_NonlinearDependence_20260603/.DS_Store` | `cb462ff909e4a54f274ed4db9088836bfb5a08f38361b5219f9cdc64f0a7fc63` |  |
+| `P3_NonlinearDependence_20260603/Paper3_v3_MANIFEST.md` | `562de9fd892e9cf95d71a157cbcdd3539de0cae53f002e9fbc0072d9e8a986e1` | Paper 3 v3 — Nonlinear Dependence Test Suite: MANIFEST |
+| `P3_NonlinearDependence_20260603/README.md` | `184f9bc3bd263dff657ddc6d05a615126a9a098786f7fb71c08c5d281a02bc0c` | P3_NonlinearDependence_20260603 — Paper 3 nonlinear-dependence campaign (June 2026) |
+| `P3_NonlinearDependence_20260603/mcl_block_joint_test.cpp` | `473c6247e02d7dd7237c2c02ef68007c01df600ef87fd7578b42a9cce6d497f7` |  |
+| `P3_NonlinearDependence_20260603/mcl_distance_correlation_test.cpp` | `17e3f2a0c39755a1534de60fda07a6f731b781e72c3646020eb921e078f5c518` |  |
+| `P3_NonlinearDependence_20260603/mcl_lag_autocorrelation_test.cpp` | `a45ad1f891bf0b97e1410fe2b694c606581e55299502862bcbe5d44620d93894` |  |
+| `P3_NonlinearDependence_20260603/mcl_lagged_crosscorr_test.cpp` | `e6d47e0cd463935358cc74ae6ab225476ed593438fc31bbd0dd5327e254a74e4` |  |
+| `P3_NonlinearDependence_20260603/mcl_mutual_information_test.cpp` | `3e1f0e942bb95e683bf813e0b7dfa32333810b50dbfe7505c56b3784dd7d81dc` |  |
+| `P3_NonlinearDependence_20260603/results_v3/AGGREGATE_v3.md` | `fbc409d4f6b6dd3a9de0896d41fa9c3e1490bd789c3cf6160d2d2fa18daf316c` | MCL Paper-3 v3 — Nonlinear Dependence Campaign (AGGREGATE, REVISED) |
+| `P3_NonlinearDependence_20260603/results_v3/Paper3_Nonlinear_Dependence_Results.md` | `0a6c20b50bff0f202c787b4f5e595b092789428e09f62fe4e93a4bb81802ff3b` | Paper 3 — Supplementary Results: Nonlinear Dependence Test Suite |
+| `P3_NonlinearDependence_20260603/results_v3/results_block_joint.txt` | `574991de23a09cf4f7e6b67721fbe571bd408405168289026208204274bd68cd` |  |
+| `P3_NonlinearDependence_20260603/results_v3/results_distance_correlation.txt` | `9f31713987a0ef3503cc74782a1d267d62adaefebf790cd77fefd7d3b24c165d` |  |
+| `P3_NonlinearDependence_20260603/results_v3/results_lag_autocorrelation.txt` | `2aa8ff462aa7b7b82f117dcbd89840c0f56f392b86df4c640fb56395b20e7c05` |  |
+| `P3_NonlinearDependence_20260603/results_v3/results_lagged_crosscorr.txt` | `3c3ae82e46ee535313098b9ef51f3f9fca6f1723847a055acca7f4700ecca311` |  |
+| `P3_NonlinearDependence_20260603/results_v3/results_mutual_information.txt` | `40c124a4a07c53b9931e63e2696ffd197e9a9b99c86ca2682384e7220c381c85` |  |
+
+### P3_ReviewMeasurements_20260903  (8 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P3_ReviewMeasurements_20260903/RECORD_REVIEW_MEASUREMENTS_20260903.md` | `96c4aa44ab9e88b03e1bc37763d88d5ba4135b76463814140c1c0ed2e9708836` | Paper 3 — review measurements for the external-review adjudication — 2026-09-03 |
+| `P3_ReviewMeasurements_20260903/phaselock/header_patch.diff` | `b88bdef989562c212091be4806c7919f9fc087475c6a1b63f33bb8a37b224169` |  |
+| `P3_ReviewMeasurements_20260903/phaselock/reson.cpp` | `d08ec2d15d1c0b25aaada12edb36a6ea83be7014e733abef7c82d1dc9dd659b3` |  |
+| `P3_ReviewMeasurements_20260903/phaselock/reson_fig1grid.csv` | `1126204833da2e412110e3892c52a186da093aa367cedf1389fa8871f10932c5` |  |
+| `P3_ReviewMeasurements_20260903/rawphase/analyze.py` | `47e8b0bc84c0be4db54e5f9dcdd8fcc5987d589eb37078a4fc8d5214ed0b369a` |  |
+| `P3_ReviewMeasurements_20260903/rawphase/header_patch.diff` | `b88bdef989562c212091be4806c7919f9fc087475c6a1b63f33bb8a37b224169` |  |
+| `P3_ReviewMeasurements_20260903/rawphase/rawphase.cpp` | `2bc671f2e71361de6a918dfec5d208037b7636c8de55198313301f5e8ac5b0ad` |  |
+| `P3_ReviewMeasurements_20260903/rawphase/rawphase_results_20260903.txt` | `6170155d567af3998fea1e7b5538dd36973cf24c99bc64d28aebb4cc99051b15` |  |
+
+### P3_WindowSweep_6_20_20260903  (6 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P3_WindowSweep_6_20_20260903/RECORD_WINDOWSWEEP_20260903.md` | `f59b4dba3489304cb7604eb612dcc9b6bdd43a8f7dbf7e87a21eabf91e8c277b` | Paper 3 §III.A — K-window sweep over the validated range [6, 20] at step 0.005 — 2026-09-03 |
+| `P3_WindowSweep_6_20_20260903/sweep.cpp` | `27939d092e8bfc48b27aedaf4c2f450e226700b82d28dfed8b47aeda5e29279f` |  |
+| `P3_WindowSweep_6_20_20260903/sweep_2_3.log` | `61a762b1ad6c2421c312651a0ef7e426052eade47995dd7cb9dbb8dc539ca071` |  |
+| `P3_WindowSweep_6_20_20260903/sweep_3_5.log` | `a8f29a48a673f6e90f709a4fde7a2b63548a78bf8505e55220d3374c8560e594` |  |
+| `P3_WindowSweep_6_20_20260903/sweep_5_7.log` | `b12c6cf04d314e1a5e532322598f0527add80c3ce42305576158a3014ecdf05d` |  |
+| `P3_WindowSweep_6_20_20260903/sweep_7_11.log` | `f2e23bd5bb599d8755e290244e3c199629dce36e05bf6e4aec172193b60744ee` |  |
 
 ---
 *Generated 2026-08-22 by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860).*

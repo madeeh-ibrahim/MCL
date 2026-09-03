@@ -1,0 +1,4 @@
+1679c1679
+<  double t1_, t2_;
+---
+> public: double t1_, t2_; // REVIEW PATCH: exposed for read-only measurement

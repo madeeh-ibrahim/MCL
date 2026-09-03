@@ -34,6 +34,14 @@ adversarial analysis**.
 
 ---
 
+## What's new in v0.2.2 (3 September 2026)
+
+Paper 3 pre-publication records, engine unchanged (8.1.3): direct phase-locking and raw-phase dependence
+measurements (`P3_ReviewMeasurements_20260903/`), the step-0.005 window sweep of K ∈ [6, 20]
+(`P3_WindowSweep_6_20_20260903/`), the regenerated Fig. 3 data (`P3_Fig3_Regeneration_20260903/`), the June-2026
+nonlinear-dependence campaign (`P3_NonlinearDependence_20260603/`) and the first archived `mcl_k_independence` run
+(`results/mcl_k_independence.txt`). Details: [`CHANGELOG.md`](CHANGELOG.md).
+
 ## What's new in v0.2.0 (22 August 2026)
 
 The June-2026 release (`v0.1.0`) shipped engine **6.0.0**. This release ships

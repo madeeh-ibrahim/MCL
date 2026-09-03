@@ -207,7 +207,7 @@ Both risks were investigated to a definitive answer (not closed by hand-waving):
    state-update map is normal for a keystream generator (LFSRs, counters, strong
    permutations are all invertible); "state-recoverable from the keystream" does
    **not** follow from b_eff=1 — it was never tested, and `ent` + `dieharder`
-   (42 PASSED / 1 WEAK / 0 FAILED) show no statistical weakness.
+   (full battery: 117 PASSED / 0 WEAK / 0 FAILED, 2026-09-03) show no statistical weakness.
    The **real, correct finding** is just that the Q30 map is far LESS folding than
    Float64 (b_2D ≈ 3.25 vs ~1444; 16-bit LUT linearizes it). That matters ONLY for
    *map-based one-wayness* (HD derivation on the bare map) — which **no MCL
@@ -222,8 +222,9 @@ Both risks were investigated to a definitive answer (not closed by hand-waving):
    method than full enumeration); the 2-osc b_eff=1 already mandates hashing any
    exposed Q30 stream, so this is for completeness.
 3. T4-Q30 statistics: internal 64 MiB battery + `ent` (entropy 7.999998/byte,
-   χ²=226, serial corr 3e-5) + `dieharder` (13 tests streamed: **42 PASSED /
-   1 WEAK / 0 FAILED** — the WEAK is expected noise, paired re-run passed).
+   χ²=226, serial corr 3e-5) + `dieharder` full `-a` battery (**117 PASSED / 0 WEAK /
+   0 FAILED**, dieharder 3.31.1, 2026-09-03, engine 8.1.3 + sidecar 1.0.6;
+   supersedes the 13-test June 2026 subset).
    **UPDATE 2026-06-23 (supersedes the earlier "NOT yet PractRand / not
    installable" note):** PractRand 0.95 WAS built and run on the keyed
    `MCL_T4_Q30` keystream (key `{0..31}`) — **clean through 32 GB (2³⁵ B),
@@ -240,7 +241,9 @@ Both risks were investigated to a definitive answer (not closed by hand-waving):
    32 GB-clean evidence. NOTE: this covers the KEYED 4-oscillator T4-Q30
    keystream; the BARE 2-oscillator `mcl_q30_iterate_raw` core (the VDF
    substrate) is a DIFFERENT engine and remains battery-PENDING (see
-   `mcl_core.hpp` sec.16). Results: `MCL_KEYED_Q30_DIEHARDER_20260611.txt`.
+   `mcl_core.hpp` sec.16). Results: `MCL_KEYED_Q30_DIEHARDER_20260903.txt` (full battery; the June
+   13-test subset `MCL_KEYED_Q30_DIEHARDER_20260611.txt` is retained unchanged
+   as a historical record).
 
 ## Next steps (not done here)
 
