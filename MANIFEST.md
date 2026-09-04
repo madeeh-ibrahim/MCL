@@ -26,12 +26,13 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 310 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 312 files (+ this MANIFEST), SHA-256 of every file
 
-### (root)  (45 files)
+### (root)  (46 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
+| `.DS_Store` | `914778c38b40def497ea87b865a0578e7d000ec0cc375f7278272b08c42b7641` |  |
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
 | `CHANGELOG.md` | `f51e17d15b64cb4811d1d02f3ec4e4fcc3ba4c9c0285f6c25a3fa23e86722a50` |  |
@@ -416,12 +417,12 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_WindowSweep_6_20_20260903/sweep_5_7.log` | `b12c6cf04d314e1a5e532322598f0527add80c3ce42305576158a3014ecdf05d` |  |
 | `P3_WindowSweep_6_20_20260903/sweep_7_11.log` | `f2e23bd5bb599d8755e290244e3c199629dce36e05bf6e4aec172193b60744ee` |  |
 
-### P4_ReviewMeasurements_20260904  (17 files)
+### P4_ReviewMeasurements_20260904  (18 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260904/README.md` | `56586619791b2bba59df0ddf4016a52bc74daf3bb703c241e8ec00f230abcd8e` | P4 review measurements — 2026-09-04 |
-| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `653f3fdc782f4efe989cb0d6ac78058688b7b93b5ace89a387a6a62f670b75ba` |  |
+| `P4_ReviewMeasurements_20260904/README.md` | `fe23859cf27ff205f8d62eba22bbc7ff2780ac615dd9552af6898d8e5761d2a3` | P4 review measurements — 2026-09-04 |
+| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `818ff460cccea6030a2c00179552ef7da5af20532f4d6ffbf9f8cfb64703fac6` |  |
 | `P4_ReviewMeasurements_20260904/appendix_vectors_apple_20260904.log` | `6842ff30259895bb4836956b36518b4a5124c389ef106e6c4e8ad2a9feb18f20` |  |
 | `P4_ReviewMeasurements_20260904/appendix_vectors_linux_glibc_20260904.log` | `c5b5a94512468305913eaa863d764a3518e835b0d5931049a24f6f9ea4f6bfd8` |  |
 | `P4_ReviewMeasurements_20260904/det_ratio_apple_20260904.log` | `8b00e2651a4fba5f9ee595e061195d00a5cf2a6ae5dc6d722667bb5493d1c15a` |  |
@@ -437,6 +438,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260904/run_q30_matrix.sh` | `d0cea058997ee21255b798bce59e5968e1dfc3a950bcf3009a869aad4c872f16` |  |
 | `P4_ReviewMeasurements_20260904/run_q30_matrix_linux.sh` | `530a7beb178154c8e94554dbc9a846c74474b13bf7a5627609f9b115d43517b5` |  |
 | `P4_ReviewMeasurements_20260904/state_collision_1e7_apple_20260904.log` | `161c1b9627c47f9eddb6904ff0c1cb1c2e2c0a0fbe064d6507f5f519009e5590` |  |
+| `P4_ReviewMeasurements_20260904/vector4_q30_linux_glibc_20260904.log` | `d39449f0df98ddc25b78b8f31f8558ebd69822fccaa123fde495b216c1f7d5eb` |  |
 
 ---
 *Generated 2026-08-22 by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860).*
