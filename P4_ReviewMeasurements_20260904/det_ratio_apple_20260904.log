@@ -1,0 +1,6 @@
+engine 8.1.3  (p,q)=(3,5) K=12  N=10000000 post-burn-in
+E_GS[ln|det J_GS|]                 = 6.7970   (Oseledets: should match lambda1+lambda2 of GS ~ 6.80)
+E_Jorbit[ln|det J_J|]              = 6.3517   (should match lambda1+lambda2 of Jacobi ~ 6.35)
+difference of orbit averages       = 0.4453
+determinant-ratio estimator (shared c1,c2 on GS orbit) = 0.4459   closed form ln(q^2/(q^2-p^2)) = 0.4463
+same-input-state, own-c2 variant                        = 0.5315

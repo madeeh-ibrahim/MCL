@@ -1,0 +1,3 @@
+engine 8.1.3  seed=12345678901234 (3,5) K=12  post-burn-in iterations=10000000
+[128-bit state (theta1,theta2) repeats] 0   [theta1-only 64-bit repeats] 0
+RESULT: zero state repetitions in 10^7 iterations (cycle-free at this scale)

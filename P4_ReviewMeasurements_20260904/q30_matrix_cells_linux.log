@@ -1,0 +1,12 @@
+x86_64-linux-gnu gcc O0 none FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O0 undefined FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O0 address FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O1 none FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O1 undefined FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O1 address FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O2 none FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O2 undefined FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O2 address FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O3 none FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O3 undefined FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35
+x86_64-linux-gnu gcc O3 address FINGERPRINT matrix-crc=0xD9FE9B13 cells=80 repro=10/10 stab1e7=0xaaf4cd08,0xaa20a82b lut=0xde1340cf rawbytes1MB entropy=7.999801 chi2=275.35

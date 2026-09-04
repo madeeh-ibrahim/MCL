@@ -5,6 +5,19 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.3 — 2026-09-04
+
+Paper 4 (IACR Communications in Cryptology) pre-publication records. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged.
+
+### Added
+
+- `P4_ReviewMeasurements_20260904/` (record MCL-P4-REVIEWMEAS-2026-0904-001) — five single-file harnesses with logs: Gauss-Seidel-vs-Jacobi Pearson |r| and Hamming distance on 10⁶ extracted bytes (replica extractor self-checked byte-for-byte against `MCL_T2::gen_byte`; |r| = 0.000456, Hamming 49.969 %); a 10⁷-iteration exact state-collision search (0 repeats); orbit-averaged log-determinants and the determinant-ratio estimator (6.797 / 6.352 / 0.4459 vs the closed form 0.4463); the Appendix test vectors regenerated on macOS Apple-libm **and** on x86_64 Linux glibc 2.36 / GCC 13.4 (Debian 12 container) with θ bit patterns and CRC-32s; and a 36-cell Q30 determinism matrix — {arm64, x86_64/Rosetta} × {-O0…-O3} × {none, UBSan, ASan} on macOS plus {-O0…-O3} × {none, UBSan, ASan} with GCC on Linux — all cells byte-identical (aggregate CRC `0xD9FE9B13`; raw state-word bytes: entropy 7.999801, χ² 275.35).
+- Finding recorded in the same folder: the Float64 (`MCL_T2`) stream is libm-**build**-dependent, not merely OS-dependent — glibc 2.36 gives CRC-32 `0xD65C897C` for the reference seed, the May-2026 glibc build gave `0xF5E977E0`, Apple-libm gives `0x1A734C6F`. The Q30 integer path is identical on all of them.
+
+### Changed
+
+- `CITATION.cff`: `version: 0.2.3`, `date-released: 2026-09-04`. `MANIFEST.md` regenerated with per-file SHA-256.
+
 ## v0.2.2 — 2026-09-03
 
 Paper 3 (Physical Review E) pre-publication records. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged.

@@ -1,0 +1,17 @@
+engine 8.1.3  platform: macOS Apple-Silicon / Apple-libm (std::sin)
+Vector seed=12345678901234 (3,5) K=12 B=10000 D=2
+  theta1 post-burn-in: 0x3ffe7ee92d5f9bc0 (= 1.905984093895071)
+  theta2 post-burn-in: 0x3ff6da55305ccd50 (= 1.428303898731276)
+  first 32 bytes: 210b68754f017220 c9ac39405ea5bd36 d66d503badc3b8cc 4e78cc94f8c5bcde
+  CRC-32 (10,000-byte stream): 0x1A734C6F
+Vector seed=31415926535897 (3,5) K=12 B=10000 D=2
+  theta1 post-burn-in: 0x4017ff929aa3c25f (= 5.999582687611649)
+  theta2 post-burn-in: 0x4017818cf0b0f7bf (= 5.876514206696753)
+  first 32 bytes: 42c68142cfcdc922 e959b088a5410e75 e9bf0f65dded7f3c c4cf73160119d123
+  CRC-32 (10,000-byte stream): 0xE2E24E6D
+Vector 3: seed=12345678901234, N=10000 iterate() after burn-in, then gen_bytes(32)
+  theta1_final: 0x3ff14913cbc0e9f8 (= 1.080341144478210)
+  theta2_final: 0x3fe3e95bacafa048 (= 0.622236096646710)
+  32-byte VDF output: a8935b659e2974d1 b766bbbecb3e0700 f48cd5616e1c57d3 64eabb0106fde832
+  vdf_compute() API:  a8935b659e2974d1 b766bbbecb3e0700 f48cd5616e1c57d3 64eabb0106fde832
+  API vs procedure: IDENTICAL

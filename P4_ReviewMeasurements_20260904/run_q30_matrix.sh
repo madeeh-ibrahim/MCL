@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Madeeh Ibrahim <madeeh.chaotic.lock@gmail.com>
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# MCL Reference Implementation. Free security research / evaluation for all
+# (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
+# a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
+# Review measurement: direct phase-locking diagnostics on the Fig. 1 grid (K in [0.30,1.00] step 0.02).
+# Builds p4_q30_matrix.cpp as {arm64,x86_64} x {-O0..-O3} x {none,undefined,address} and runs each (x86_64 via Rosetta 2).
+set -u; cd "$(dirname "$0")"; : > q30_matrix_cells.log
+for arch in arm64 x86_64; do for opt in O0 O1 O2 O3; do for san in none undefined address; do
+  f="q30_${arch}_${opt}_${san}"; sf=""; [ "$san" != none ] && sf="-fsanitize=$san"
+  if clang++ -std=c++17 -$opt -arch $arch $sf -DNDEBUG -o "$f" p4_q30_matrix.cpp 2>/dev/null; then
+    out=$(./"$f" 2>/dev/null) && echo "$arch $opt $san $out" >> q30_matrix_cells.log || echo "$arch $opt $san RUN-FAILED" >> q30_matrix_cells.log
+  else echo "$arch $opt $san BUILD-FAILED" >> q30_matrix_cells.log; fi
+  rm -f "$f"
+done; done; done
+echo "cells: $(wc -l < q30_matrix_cells.log)  distinct fingerprints: $(grep -o 'FINGERPRINT.*' q30_matrix_cells.log | sort -u | wc -l)  failures: $(grep -c FAILED q30_matrix_cells.log)"
+echo "clang: $(clang++ --version | head -1)"

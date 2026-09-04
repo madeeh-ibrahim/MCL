@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.2, 2026-09-03)
+# MCL — Public Code Archive · MANIFEST (v0.2.3, 2026-09-04)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 294 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 310 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (45 files)
 
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `9e5c858217575fd351d4e1b196b21e2de26a80125833aacae2f56b475ded70ab` |  |
-| `CITATION.cff` | `f48e549d2c4bd87d6fd911c0a4bbac2006ef56c40405274459659f21af38aa3c` |  |
+| `CHANGELOG.md` | `f51e17d15b64cb4811d1d02f3ec4e4fcc3ba4c9c0285f6c25a3fa23e86722a50` |  |
+| `CITATION.cff` | `3dd0f2724e167116ca950f5d02cfe7b7b23128b81fc4233d6d93301767d68cd0` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -373,11 +373,10 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_Fig3_Regeneration_20260903/make_paper3_fig3.py` | `3281ce36d30f47b1a8c6f6fd963f99ecd1397d39bdbcdf3a55d991deea827182` |  |
 | `P3_Fig3_Regeneration_20260903/paper3_fig3.png` | `110cc7b0de4bfcea428acfdca99267cd7e505427422c5f86c33d7fbe21b8092a` |  |
 
-### P3_NonlinearDependence_20260603  (15 files)
+### P3_NonlinearDependence_20260603  (14 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P3_NonlinearDependence_20260603/.DS_Store` | `cb462ff909e4a54f274ed4db9088836bfb5a08f38361b5219f9cdc64f0a7fc63` |  |
 | `P3_NonlinearDependence_20260603/Paper3_v3_MANIFEST.md` | `562de9fd892e9cf95d71a157cbcdd3539de0cae53f002e9fbc0072d9e8a986e1` | Paper 3 v3 — Nonlinear Dependence Test Suite: MANIFEST |
 | `P3_NonlinearDependence_20260603/README.md` | `184f9bc3bd263dff657ddc6d05a615126a9a098786f7fb71c08c5d281a02bc0c` | P3_NonlinearDependence_20260603 — Paper 3 nonlinear-dependence campaign (June 2026) |
 | `P3_NonlinearDependence_20260603/mcl_block_joint_test.cpp` | `473c6247e02d7dd7237c2c02ef68007c01df600ef87fd7578b42a9cce6d497f7` |  |
@@ -416,6 +415,28 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_WindowSweep_6_20_20260903/sweep_3_5.log` | `a8f29a48a673f6e90f709a4fde7a2b63548a78bf8505e55220d3374c8560e594` |  |
 | `P3_WindowSweep_6_20_20260903/sweep_5_7.log` | `b12c6cf04d314e1a5e532322598f0527add80c3ce42305576158a3014ecdf05d` |  |
 | `P3_WindowSweep_6_20_20260903/sweep_7_11.log` | `f2e23bd5bb599d8755e290244e3c199629dce36e05bf6e4aec172193b60744ee` |  |
+
+### P4_ReviewMeasurements_20260904  (17 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P4_ReviewMeasurements_20260904/README.md` | `56586619791b2bba59df0ddf4016a52bc74daf3bb703c241e8ec00f230abcd8e` | P4 review measurements — 2026-09-04 |
+| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `653f3fdc782f4efe989cb0d6ac78058688b7b93b5ace89a387a6a62f670b75ba` |  |
+| `P4_ReviewMeasurements_20260904/appendix_vectors_apple_20260904.log` | `6842ff30259895bb4836956b36518b4a5124c389ef106e6c4e8ad2a9feb18f20` |  |
+| `P4_ReviewMeasurements_20260904/appendix_vectors_linux_glibc_20260904.log` | `c5b5a94512468305913eaa863d764a3518e835b0d5931049a24f6f9ea4f6bfd8` |  |
+| `P4_ReviewMeasurements_20260904/det_ratio_apple_20260904.log` | `8b00e2651a4fba5f9ee595e061195d00a5cf2a6ae5dc6d722667bb5493d1c15a` |  |
+| `P4_ReviewMeasurements_20260904/gs_jacobi_pearson_apple_20260904.log` | `e4c63f7170891a98f7cc858a635ce732697d9504fbe158cf0bea64e7f02916cc` |  |
+| `P4_ReviewMeasurements_20260904/p4_appendix_vectors.cpp` | `e072a116d36a30341240ad9d9ad793692ba5f0ff132131e6751f9f9d1483f100` |  |
+| `P4_ReviewMeasurements_20260904/p4_det_ratio.cpp` | `3ba54583d37308d5176747a78bd3ba755f3ee8c8ca6230cdcd5b1f95c482b984` |  |
+| `P4_ReviewMeasurements_20260904/p4_gs_jacobi_pearson.cpp` | `85e40b0cbce20acd039923ec8a8cc2e705d09b4b101f343188b0d13a016b3944` |  |
+| `P4_ReviewMeasurements_20260904/p4_q30_matrix.cpp` | `65be7b88a9537ec345ebcd270a8844630cba63a2bbb27b727de086a5d0fafe5d` |  |
+| `P4_ReviewMeasurements_20260904/p4_state_collision_1e7.cpp` | `050ddf7a0e6793c43144402bec4a43ce140da564f00b6f23ddba6b27768394b0` |  |
+| `P4_ReviewMeasurements_20260904/q30_matrix_cells.log` | `1e084995a673a37608d54f019771f0c14ed95c25cfed860f9d6ef8d016f22b11` |  |
+| `P4_ReviewMeasurements_20260904/q30_matrix_cells_linux.log` | `7c495aa9bcfd26f2dc183895dc3f51d20bcb92bd1cd7033c9eb3be2c27356e4c` |  |
+| `P4_ReviewMeasurements_20260904/q30_matrix_summary_apple_20260904.log` | `430de4d58ce4a45038a80f44cecbc86aaf407bdec82be1bb2260cd1fe3f5f7c7` |  |
+| `P4_ReviewMeasurements_20260904/run_q30_matrix.sh` | `d0cea058997ee21255b798bce59e5968e1dfc3a950bcf3009a869aad4c872f16` |  |
+| `P4_ReviewMeasurements_20260904/run_q30_matrix_linux.sh` | `530a7beb178154c8e94554dbc9a846c74474b13bf7a5627609f9b115d43517b5` |  |
+| `P4_ReviewMeasurements_20260904/state_collision_1e7_apple_20260904.log` | `161c1b9627c47f9eddb6904ff0c1cb1c2e2c0a0fbe064d6507f5f519009e5590` |  |
 
 ---
 *Generated 2026-08-22 by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860).*

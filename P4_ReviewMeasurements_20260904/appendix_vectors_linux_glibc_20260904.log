@@ -1,0 +1,24 @@
+=== Linux/glibc run via Docker Desktop (linux/amd64 image, Apple-Silicon host) — Fri Sep  4 19:25:07 EEST 2026 ===
+gcc: gcc (GCC) 13.4.0
+glibc: ldd (Debian GLIBC 2.36-9+deb12u14) 2.36
+uname: x86_64 6.10.14-linuxkit
+engine 8.1.3  platform: Linux / glibc libm (std::sin) -- see gcc/ldd/uname header lines
+Vector seed=12345678901234 (3,5) K=12 B=10000 D=2
+  theta1 post-burn-in: 0x3fee61b3b032c83e (= 0.949426502358854)
+  theta2 post-burn-in: 0x400348b5e5d9a6b4 (= 2.410503192619979)
+  first 32 bytes: 109b177bab1b0561 51033f0573b6b387 53168e67ea143625 a272fa458d8794e9
+  CRC-32 (10,000-byte stream): 0xD65C897C
+Vector seed=31415926535897 (3,5) K=12 B=10000 D=2
+  theta1 post-burn-in: 0x401067ec6f59d278 (= 4.101487865311917)
+  theta2 post-burn-in: 0x40132b17237b4e30 (= 4.792080454255071)
+  first 32 bytes: 3dd3d63fae546bf8 45ee7d2c64f274f4 9b9a41186b40a177 0ad9cbc7e2dde70d
+  CRC-32 (10,000-byte stream): 0x29123085
+Vector 3: seed=12345678901234, N=10000 iterate() after burn-in, then gen_bytes(32)
+  theta1_final: 0x3ffbecffe32316f0 (= 1.745361220602202)
+  theta2_final: 0x4010c81f465a2c3e (= 4.195431803945267)
+  32-byte VDF output: 9a1e0933cda62070 0f8b26eb4d4dc0cd d6fa2d478de6d7ef 13478801d0d9c94f
+  vdf_compute() API:  9a1e0933cda62070 0f8b26eb4d4dc0cd d6fa2d478de6d7ef 13478801d0d9c94f
+  API vs procedure: IDENTICAL
+
+linux cells: 12  distinct: 1  failures: 0
+=== exit 0 ===
