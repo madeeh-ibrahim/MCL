@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 315 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 321 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
@@ -35,8 +35,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `.DS_Store` | `3385e09d561d6a34177aa5382f8dd4481fba61594d993cb66a81a3ddc00d6d45` |  |
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `cccba09b00129ef2f5dfbf6be812a63277c022f8b11903a950049b33623c9b8e` |  |
-| `CITATION.cff` | `907053b7da3726a97f77d591017b34740bb6eb06d3e9e00e50ade8d4cb27b338` |  |
+| `CHANGELOG.md` | `c938ee8d3c6681bf9a6acadb6da5c11841f3dbab058ec10287431b7dc357c71f` |  |
+| `CITATION.cff` | `1a10d10d1e433bda4bc8501b645d4831fb1ec887a9843e8bb5ef959e6a3aed8b` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -417,22 +417,25 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_WindowSweep_6_20_20260903/sweep_5_7.log` | `b12c6cf04d314e1a5e532322598f0527add80c3ce42305576158a3014ecdf05d` |  |
 | `P3_WindowSweep_6_20_20260903/sweep_7_11.log` | `f2e23bd5bb599d8755e290244e3c199629dce36e05bf6e4aec172193b60744ee` |  |
 
-### P4_ReviewMeasurements_20260904  (21 files)
+### P4_ReviewMeasurements_20260904  (27 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260904/README.md` | `040ee20de17540615135675e77dbe0cb8637e6aefc11999309d8c3a39a48fb92` | P4 review measurements — 2026-09-04 |
-| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `6649d24e6b05895bf0ea990ee62fc1d872e7d538083b9ce0f1cafe58a09a7fa1` |  |
+| `P4_ReviewMeasurements_20260904/README.md` | `52971016848040c4e9bfdb82b81174bbb77f8da802d210aeb20755dcffcbc6e1` | P4 review measurements — 2026-09-04 |
+| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `de56565726bba2617fbc856f9ed8aaa1805ebf91faf34a68c70c2722e32cc5d8` |  |
 | `P4_ReviewMeasurements_20260904/appendix_vectors_apple_20260904.log` | `6842ff30259895bb4836956b36518b4a5124c389ef106e6c4e8ad2a9feb18f20` |  |
 | `P4_ReviewMeasurements_20260904/appendix_vectors_linux_glibc_20260904.log` | `c5b5a94512468305913eaa863d764a3518e835b0d5931049a24f6f9ea4f6bfd8` |  |
 | `P4_ReviewMeasurements_20260904/det_ratio_apple_20260904.log` | `8b00e2651a4fba5f9ee595e061195d00a5cf2a6ae5dc6d722667bb5493d1c15a` |  |
 | `P4_ReviewMeasurements_20260904/gs_jacobi_pearson_apple_20260904.log` | `e4c63f7170891a98f7cc858a635ce732697d9504fbe158cf0bea64e7f02916cc` |  |
+| `P4_ReviewMeasurements_20260904/lut_digest_apple_20260904.log` | `0251d06c8c2bd85489c80cfbf49135a326156aec43e50f0503540ddbf8ea1620` |  |
 | `P4_ReviewMeasurements_20260904/p4_appendix_vectors.cpp` | `e072a116d36a30341240ad9d9ad793692ba5f0ff132131e6751f9f9d1483f100` |  |
 | `P4_ReviewMeasurements_20260904/p4_det_ratio.cpp` | `3ba54583d37308d5176747a78bd3ba755f3ee8c8ca6230cdcd5b1f95c482b984` |  |
 | `P4_ReviewMeasurements_20260904/p4_gs_jacobi_pearson.cpp` | `85e40b0cbce20acd039923ec8a8cc2e705d09b4b101f343188b0d13a016b3944` |  |
+| `P4_ReviewMeasurements_20260904/p4_lut_digest.cpp` | `8c817f40998bbc7de25227bd3ead440cf37aa7d563365c949dd4aff8b85d4d17` |  |
 | `P4_ReviewMeasurements_20260904/p4_q30_matrix.cpp` | `65be7b88a9537ec345ebcd270a8844630cba63a2bbb27b727de086a5d0fafe5d` |  |
 | `P4_ReviewMeasurements_20260904/p4_state_collision_1e7.cpp` | `050ddf7a0e6793c43144402bec4a43ce140da564f00b6f23ddba6b27768394b0` |  |
 | `P4_ReviewMeasurements_20260904/p4_vdf128_kat_avalanche.cpp` | `419f5eb07ef8dc8fff17ce8e24b3a70bf3082e24508bf02f84304eea02487ac7` |  |
+| `P4_ReviewMeasurements_20260904/q30_lut_int32le.bin` | `f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d` |  |
 | `P4_ReviewMeasurements_20260904/q30_matrix_cells.log` | `1e084995a673a37608d54f019771f0c14ed95c25cfed860f9d6ef8d016f22b11` |  |
 | `P4_ReviewMeasurements_20260904/q30_matrix_cells_linux.log` | `7c495aa9bcfd26f2dc183895dc3f51d20bcb92bd1cd7033c9eb3be2c27356e4c` |  |
 | `P4_ReviewMeasurements_20260904/q30_matrix_summary_apple_20260904.log` | `430de4d58ce4a45038a80f44cecbc86aaf407bdec82be1bb2260cd1fe3f5f7c7` |  |
@@ -441,6 +444,9 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260904/state_collision_1e7_apple_20260904.log` | `161c1b9627c47f9eddb6904ff0c1cb1c2e2c0a0fbe064d6507f5f519009e5590` |  |
 | `P4_ReviewMeasurements_20260904/vdf128_kat_avalanche_apple_20260904.log` | `e148858693921e1c54f471a4da5062ee86f84a743936b08cb5f8aaf4a5259caf` |  |
 | `P4_ReviewMeasurements_20260904/vdf128_kat_avalanche_linux_glibc_20260904.log` | `d8c35c188875760f7325b8982eed4a16415fa781f5a7ceb1157b2033b1084680` |  |
+| `P4_ReviewMeasurements_20260904/vdf128_t4_standalone.cpp` | `2398f65bd750e44165f80c1f3c1f2fa189cffb409d7cbeab19d8d28fc28d400a` |  |
+| `P4_ReviewMeasurements_20260904/vdf128_t4_standalone_apple_20260904.log` | `891957959b26a304c73c757c749b4f5f8b692da48f4cbc44fdbff71fe0a3a799` |  |
+| `P4_ReviewMeasurements_20260904/vdf128_t4_standalone_linux_glibc_20260904.log` | `1dd0e0df47b2e18a7be786575e0bc00b7f8698b5f14f0faf7e4e724ccdc960e9` |  |
 | `P4_ReviewMeasurements_20260904/vector4_q30_linux_glibc_20260904.log` | `d39449f0df98ddc25b78b8f31f8558ebd69822fccaa123fde495b216c1f7d5eb` |  |
 
 ---

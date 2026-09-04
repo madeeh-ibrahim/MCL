@@ -1,0 +1,6 @@
+Q30 sine table: 65536 x int32 little-endian = 262144 bytes
+  CRC-32  : 0xde1340cf
+  SHA-256 : f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d
+  in-memory CRC over lut[] bytes (engine convention): 0xde1340cf
+  lut[0]=0 lut[16384]=1073741824 lut[32768]=0 lut[49152]=-1073741824  (0, 2^30, 0, -2^30 expected)
+  written q30_lut_int32le.bin

@@ -5,6 +5,19 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.5 — 2026-09-04
+
+Paper 4 external-review round 2. Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
+
+### Added
+
+- `P4_ReviewMeasurements_20260904/vdf128_t4_standalone.cpp` — an **engine-free re-implementation of Paper 4's Algorithm 1 (VDF128-T4)** with its own SHA-256, KDF, weight derivation, table loader, four-oscillator Gauss-Seidel iterate and finalization (shares no code with the engine). Reproduces Appendix Vector 5 exactly on macOS and on x86_64 Linux/glibc 2.36 (logs included).
+- `P4_ReviewMeasurements_20260904/q30_lut_int32le.bin` — the **normative sine table as a byte sequence** (65,536 × int32 little-endian, 256 KB; SHA-256 `f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d`, CRC-32 0xde1340cf) with `p4_lut_digest.cpp`. Regenerating the table with `sin()` on Apple-libm and on glibc 2.36 yields the same digest.
+
+### Changed
+
+- `CITATION.cff`: `version: 0.2.5`. `MANIFEST.md` regenerated.
+
 ## v0.2.4 — 2026-09-04
 
 Paper 4 external-review records. Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
