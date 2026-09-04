@@ -5,6 +5,19 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.4 — 2026-09-04
+
+Paper 4 external-review records. Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
+
+### Added
+
+- `P4_ReviewMeasurements_20260904/p4_vdf128_kat_avalanche.cpp` + logs (macOS and Linux/glibc, byte-identical): a **complete VDF128-T4 known-answer vector** with every intermediate — SHA-256(x), K_pub, the twelve public weights, ω₁..ω₄, K_phase, LUT CRC-32, initial state, C₀…C₄, the 80-byte SHA-256 preimage and y (x = "MCL-VDF128-KAT-1", B = 10⁴, N = 10³; y = `3059e862…`) — plus per-iteration avalanche on the T4 map (one-bit state flip → 63.27 / 63.88 / 64.19 / 64.02 of 128 bits after 1–4 iterations). This is Paper 4's Vector 5 and its Algorithm 1 reference.
+- `P4_ReviewMeasurements_20260904/vector4_q30_linux_glibc_20260904.log`: the Appendix Vector-4 program re-run natively on Linux/glibc — bit-identical to macOS.
+
+### Changed
+
+- `CITATION.cff`: `version: 0.2.4`, `date-released: 2026-09-04`. `MANIFEST.md` regenerated.
+
 ## v0.2.3 — 2026-09-04
 
 Paper 4 (IACR Communications in Cryptology) pre-publication records. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged.
