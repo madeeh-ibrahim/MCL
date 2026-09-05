@@ -1,0 +1,131 @@
+
+==============================================================================
+  MCL TOPOLOGICAL CHANNEL ORTHOGONALITY v6.0.0
+  Two-stage verification: Pearson independence + Hamming uniformity
+  Run mode: FULL  (Extended verification with maximum seed/byte budget)
+  Estimated time: ~30-60 minutes
+==============================================================================
+
+  Configuration:
+    Run mode:                 FULL
+    Channels per seed:        20
+    Seeds:                    20
+    Bytes per channel:        10000000 (10^7)
+    Total pairs:              3800  (= 20 * 190)
+    Tests per pair:           2  (Pearson + Hamming)
+    Total individual tests:   7600
+
+    Evidence log:             evidence_full_20260905.tsv
+
+
+==============================================================================
+ STAGE 1 + 2: Independence and Uniformity across 20 seed(s)
+==============================================================================
+
+  Generating 20 channels x 20 seeds = 400 streams ...
+  Bonferroni threshold (alpha=0.001 / 3800): 2.6316e-07
+  Hamming epsilon (5*sigma at N=10000000): 2.7951e-04
+  Pearson |r| threshold (R2.23 adaptive, max(0.0100, 5/sqrt(N))): 0.01000
+
+  Seed batch 5/20 complete (950 pairs accumulated)
+  Seed batch 10/20 complete (1900 pairs accumulated)
+  Seed batch 15/20 complete (2850 pairs accumulated)
+  Seed batch 20/20 complete (3800 pairs accumulated)
+
+  Stage 1 (Pearson Independence):
+    Pairs tested:        3800
+    Max |r|:             0.001138
+    Mean |r|:            0.000249
+    Min p-value:         3.1800e-04
+    Bonferroni threshold: 2.6316e-07
+    Failures:            0 / 3800
+    Status:              PASS
+
+  Stage 2 (Hamming Uniformity):
+    Pairs tested:        3800
+    Hamming range:       [49.9804%, 50.0224%]
+    Mean Hamming:        49.9999%
+    Max deviation:       0.000224
+    Tolerance epsilon:   0.000280
+    Failures:            0 / 3800
+    Status:              PASS
+
+==============================================================================
+ EXTENDED VERIFICATION TESTS (single representative seed)
+==============================================================================
+
+  [PASS] Channel entropy > 7.99                   min=7.999980 over 20 channels
+  [PASS] Chi-square < 330.52                      max=276.6 (threshold 330.5)
+  [PASS] Encrypt/Decrypt                          20 channels x 100 bytes, 0 errors
+  [PASS] Inter-channel Hamming ~50%               H range [49.993%, 50.010%]
+  [PASS] Multi-receiver isolation                 20 receivers, 0 errors
+  [PASS] Multiplex entropy > 7.99                 mux entropy=7.999981
+  [PASS] Multiplex chi-square < 330.52            mux chi^2=265.72
+  [PASS] Channel invisible in multiplex           max|r| ch vs mux = 0.000724
+
+==============================================================================
+ CROSS-SEED ISOLATION (same (p,q), different seed)
+==============================================================================
+
+  [PASS] Cross-seed isolation                     max|r|=0.001336 over 570 pairs (3 topos x C(20,2))
+
+==============================================================================
+ NEGATIVE CONTROLS (non-coprime, same-ratio, swapped)
+==============================================================================
+
+  [PASS] 15a: Non-coprime independent             non-coprime max|r|=0.000606
+  [PASS] 15b: Same ratio independent              same-ratio max|r|=0.000606
+  [PASS] 15c: Swapped (3,5) vs (5,3) independent  |r|=0.000190
+
+==============================================================================
+ NEGATIVE CONTROL — same parameters must correlate
+==============================================================================
+
+  (3,5) seed=12345678901234: r=1.000000 diff=0 PASS — identical
+
+==============================================================================
+ GLOBAL BONFERRONI ANALYSIS (Pearson p-values)
+==============================================================================
+
+  Total p-values:    3800
+  Threshold:         1.0000e-03 / 3800 = 2.6316e-07
+  Rejections:        0 / 3800
+  Smallest 5 p-values:
+    #1  3.180016e-04  >= OK
+    #2  9.954433e-04  >= OK
+    #3  1.102042e-03  >= OK
+    #4  1.346766e-03  >= OK
+    #5  1.370269e-03  >= OK
+
+==============================================================================
+ CRC-32 REPRODUCIBILITY MARKER
+==============================================================================
+
+  Canonical channel: T2, (p,q)=(3,5), seed=12345678901234, 10,000 bytes
+  CRC-32: 0x1A734C6F
+
+==============================================================================
+ ORTHOGONALITY VERIFICATION SUMMARY
+==============================================================================
+
+  Pairwise independence tests:        3800
+  Individual statistical tests:       7600
+    Stage 1 (Pearson):                 3800  (0 failures)
+    Stage 2 (Hamming):                 3800  (0 failures)
+  Combined criteria failures:         0 / 7600
+  Extended tests (single-seed):       12 / 12 PASS
+  Negative control:                   PASS
+  Global Bonferroni rejections:       0 / 3800
+
+  +================================================================+
+  | VERDICT: PASS - all orthogonality criteria satisfied           |
+  +================================================================+
+
+  Evidence file: evidence_full_20260905.tsv (7600 entries)
+
+  Time:    1084.4 seconds
+  Mode:    FULL
+  Doc ID:  MCL-ORTH-2026-0526-001 v6.0.0
+  Author:  Madeeh Ibrahim, Cairo, Egypt
+==============================================================================
+

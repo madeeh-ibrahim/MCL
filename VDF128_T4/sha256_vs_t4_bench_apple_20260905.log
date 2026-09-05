@@ -1,0 +1,8 @@
+host: Apple M1 Pro
+intrinsics vs CommonCrypto after 1000 links: IDENTICAL
+  rep 0: T4 38.8 ns  SHA-256/intrinsics 49.9 ns  SHA-256/library 179.8 ns
+  rep 1: T4 38.8 ns  SHA-256/intrinsics 49.9 ns  SHA-256/library 179.8 ns
+  rep 2: T4 38.5 ns  SHA-256/intrinsics 49.9 ns  SHA-256/library 179.8 ns
+  rep 3: T4 38.5 ns  SHA-256/intrinsics 49.9 ns  SHA-256/library 179.8 ns
+  rep 4: T4 38.4 ns  SHA-256/intrinsics 49.9 ns  SHA-256/library 179.8 ns
+BEST-OF-5  VDF128-T4 v2 iterate: 38.4 ns (26.0 M/s)   SHA-256 chain, ARMv8 SHA-2 instructions: 49.9 ns (20.1 M/s)   SHA-256 chain, system library: 179.8 ns (5.6 M/s)   [t1 47538d75, a0 e0]

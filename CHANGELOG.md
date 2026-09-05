@@ -5,6 +5,61 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.7 — 2026-09-05
+
+<!-- 2026-09-05: the P4 round-5, P5 round-3 and P3 post-desk-reject blocks were merged under this one v0.2.7 entry by the P5 session before the push. -->
+
+Joint release — **Paper 4 referee-eye review round 5** (re-review after round 4), **Paper 5 referee round 3** (`Paper_5_HD_Keys_TxAuth`, ACM TOPS submission) and **Paper 3 post-desk-reject measurements**. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged; VDF128-T4 v2 unchanged. Everything below is additive.
+
+### Paper 4 (round 5)
+
+### Added
+
+- `VDF128_T4/p4_vdf128v2_weaklane.cpp` + `P4_ReviewMeasurements_20260905/vdf128v2_weaklane_apple_20260905.log` — **weak-lane instances** of the per-input map: 40 M inputs ground through the v2 derivation (a lane below 2²⁰ in 1.17% of inputs, below 2¹⁶ in 0.07%); the structural probes (avalanche profile r = 1…8 with per-word split, single-bit linear correlations r = 1, 2, cube/degree sums) on the maps of ground inputs whose smallest lane is 506,386 / 31,590 / 6, against the battery input. A lane of 6 delays the diffusion of one state word by about one iteration (61.1/128 after one, 63.4 after two, ≈64 from the third); no linear pair above 4.5σ; every cube sum non-zero.
+- `VDF128_T4/p4_vdf128v2_weakpair.cpp` + log — **weak-pair instances** (one pair with both lanes small; expected once per ≈2²⁵ inputs, hence adversary-selectable): constructed sets (both < 2¹⁶ — indistinguishable from control; (6, 31590); (6, 7) extreme) with the re-draw rules re-checked; `--grind` mode searches for a genuine input.
+- `VDF128_T4/p4_sha256_vs_t4_bench.cpp` + `sha256_vs_t4_bench_apple_20260905.log` — same-host interleaved best-of-5 bench of the VDF128-T4 iterate against a SHA-256 chain through the ARMv8 SHA-2 instructions (cross-checked against CommonCrypto: identical after 1000 links) and through the system library. Run at load 5.9 with two foreign jobs present, so the paper cites the same-run ratios only: one iteration = 0.77 hardware SHA-256 compressions; a library call = 4.7 iterations.
+- `VDF128_T4/vdf128v2_weakpair_grind_apple_20260905.log` — a genuine input whose pair (1,2) has both lanes below 2¹⁶ (`weak-lane-180785906`, found after 140,785,907 candidates) probed identically: indistinguishable from the control.
+
+### Changed (Paper 4)
+
+- `P4_ReviewMeasurements_20260905/README.md`, `SHA256SUMS` regenerated.
+
+### Paper 5 (round 3) — security note: `derive_child` (Paper 5 §III, "HD derivation") is not one-way as published
+
+In `derive_child` (v1, unchanged in `mcl_core.hpp`) the 32 raw bytes of the parent run are the same for every index and the index enters as a **public, invertible XOR mask** (`fmix64(i)`, `fmix64(i)·0x9E3779B97F4A7C15`). Consequences, both measured (`P5_ReviewMeasurements_20260905/`): **(a) sibling recovery** — from the p-values of three observed children the parent block `R_lo` is recovered by enumerating 2⁶⁴/(M−2) candidates (23.8 s single-thread at M = 10⁹) and every other sibling is then computable without the seed or the parent pair (`sibling_recovery.cpp`); **(b) parity lock** — `parity(p) XOR parity(q)` is constant per parent (`p5_parity_lock.cpp`). Do not use v1 where sibling secrecy matters. The Tech Guide had recorded the fix as "recommended, not yet implemented" since rev. 1.2.
+
+### Added (Paper 5)
+
+- `hd_v2/mcl_hd_v2.hpp` (v1.0.0, Doc ID MCL-HD-V2-2026-0905-001) — `derive_child_v2` / `derive_child_safe_v2`: the index is mixed one-way, `d = SHA-256("MCL-HD-v2" ‖ R[0:32] ‖ LE64(i))`, `c₁ = LE64(d[0:8])`, `c₂ = LE64(d[8:16])`; range map, p ≠ q bump, coprimality loop and the Step-4 resonance screen are the v1 code verbatim. Include after `mcl_core.hpp`.
+- `hd_v2/mcl_hd_verify_v2.cpp` + `hd_verify_v2_FULL_v8.1.3_20260905.log` — the Paper-5 §IV campaign (135 pairs, global Bonferroni, 9,702-candidate collision check, resonance screen at K = 1.0, three map families) re-run on v2: **0 rejections**. `hd_v2/mcl_hd_throughput_v2.cpp` + re-timing of v1 and v2.
+- `p5_hardened_txauth/` **harness v3.2** (`mcl_txauth_v3_battery.cpp`, `mcl_txauth_v3_battery_q30.cpp`; Doc IDs MCL-P5-V32BATTERY-2026-0905-001 / -Q30-2026-0905-002): portable (engine SHA-256, no CommonCrypto — builds on Linux); avalanche test flips a uniformly random bit of `canon(TX)` (384 positions; v3.1 exercised 16); weak-set re-draw census; `-DMCL_TX_COMBINER` builds the **PRF-XOR combiner** `Tag = HMAC-SHA-256(K_mac, ctx) XOR G(KDF(S_device, ctx))`, `K_mac = KDF(K, "MCL-TxMAC-v1", "")` (Paper 5 §V.E). Records `results_v32_{double_native, double_combiner, q30_native_arm64, q30_native_x86_64, q30_combiner_arm64}_20260905.txt` — all PASS; Q30 fingerprint identical across arm64 / x86_64. The constant-time-sine build (an oblivious 65,536-entry scan per sine) is timed separately by `P5_ReviewMeasurements_20260905/p5_ct_sine_cost.cpp` (identical tags, ≈ 4.0 s per tag vs 0.39 ms). v3.1/v3.1.1 sources kept as `_v31_backup_*.txt`.
+- `P5_ReviewMeasurements_20260905/` — the round-3 measurements with `README.md` (Arabic), `README_EN.md` and `SHA256SUMS`: `sibling_recovery.cpp/.log`, `p5_parity_lock.cpp`, `redraw_rate.cpp` (395/200,000 raw symmetric weight sets → 0 after the sidecar's deterministic re-draw), `p5_v2_coprime_parity.cpp/.log` (v2: 39.29 % raw non-coprime vs 39.21 % expected; no parity lock), `p5_burnin_curve_v2.cpp` + log (B = 0…10,000: every first-order statistic at its null value; MDE ≈ 0.45 bit), `p5_G_entropy.cpp` + log (**birthday estimate of the collision entropy of the key→tag map G(U)**, 2²⁵ keys, 42-bit truncation — the one engine-dependent term of Paper 5's Theorem 1), `p5_resonance_control.cpp` + log (positive control of the χ² screen on the (3,5) window at K ≈ 1.22), `p5_weight_probe.cpp` + log + diff (wrong-weight flatness measured on the weights themselves, both realizations), `header_patch.diff` (the real scratch-engine diff for the burn-in knob), `mcl_hd_throughput.cpp` + logs.
+- `P5_HDVerify_FULL_20260904/` — the **version-1** FULL campaign record on engine 8.1.3 (`hd_verify_FULL_v8.1.3_20260904.log`, throughput logs, `coprime_frac.cpp` 59.47 %): the provenance of the earlier draft's §IV numbers and the baseline the v1 break was measured against (staged for v0.2.3 but not pushed then).
+- `RETIRED_mcl_txn_verify.md` — `mcl_txn_verify.cpp` implements the superseded input-composition tag; kept only as the provenance of its 2026-06 record. Paper 5's protocol is the `p5_hardened_txauth` harness.
+
+### Changed (Paper 5)
+
+- Paper 5 (text, not in this repository): §V now carries **Theorem 1** — the engine is a public post-processing of a single-use KDF output, so tx-auth unforgeability reduces to KDF-PRF + CR(H) + q_V·2^(−H∞(G(U))) with **no assumption on the map**; the "assumption diversity" claim of earlier drafts is withdrawn for the engine-native tag and holds only for the combiner.
+
+### Paper 3 (measurements after the PRE desk rejection)
+Paper 3 v3 measurements after the Physical Review E desk rejection (04 Sep 2026): the paper is reframed as *parameter-induced decorrelation with a Lyapunov time scale and a boundary at the phase-locking windows* (target: Chaos, AIP). Engine `mcl_core.hpp` **8.1.3 unchanged** (MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`); keyed sidecar v1.0.6 unchanged. No header patch: every tool calls the engine's own iteration, Lyapunov and statistics routines and asserts bit-identity where it re-implements a step.
+
+### Added (Paper 3)
+
+- `P3_DeskRejectMeasurements_20260905/` — record MCL-P3-{DECORR,WINDOWCTRL,JACOBI,PAIRDIST}-2026-0905-001 with `SHA256SUMS`, `RECORD_P3_DESKREJECT_MEASUREMENTS_20260905.md` and the run log:
+  - `decorr_time/` — **decorrelation time of two same-seed trajectories under a parameter perturbation** (δω₂ = 10⁻¹²…10⁻¹, δK, adjacent integer weights; 16,384 seeds; (3,5) at K = 6/12/20 with Gauss–Seidel and Jacobi; (2,3), (7,11), (17,23) at K = 12): separation growth rate / λ₁ = 0.9968–1.0013 in 14 configurations; t_dec linear in ln(1/δ₁) with slope 1/λ₁ (Paper 3 v3 Eq. 9, Fig. 5).
+  - `window_control/` — **the decorrelation fails inside the phase-locking windows**: ΔK = 0.01 on the Fig. 1 grid ((2,3),(3,5), K = 0.30…1.00): 36/36 locked cells with a locked partner keep a deterministic relation (periodic: r ≈ 0.99, MI = log₂ period; quasi-periodic: ensemble correlation oscillates without decaying), 0/32 chaotic cells; `window_trace` r_ens(t) traces (Paper 3 v3 §III.C, Fig. 4); `cell_check` for the four edge cells.
+  - `jacobi_orth/` — **§V.B protocol with the Jacobi update**: 0/3,800 Pearson, 0/3,800 Hamming, 0/3,800 raw-phase rejections (max |r| = 0.001339); same-tool Gauss–Seidel control reproduces the published campaign exactly (0.001138 / 0.000249 / 3.18e-4 / 49.9999 %); λ_J for the 20 topologies; **fresh-seed replicate** (`SEED_OFFSET=1000003`, full precision): 0/3,800, max |r| = 0.001255, |z| half-normal by KS (p = 0.69) and Anderson–Darling (0.62).
+  - `pairs_dist/` — `mcl_orth_verify --full --evidence-file` re-run on 8.1.3 (VERDICT PASS, values identical to the June record) + `pairs_ks.py` (KS/AD/CvM/Shapiro–Wilk on the pair statistics; rounded-null calibration: a 6-dp evidence file inflates Anderson–Darling under the null — median A² 4.9 — so tail tests need full-precision output, which the v3 tools print).
+
+### Changed (Paper 3)
+
+- Nothing in the engine or in previously published records.
+
+### Changed (release)
+
+- `CITATION.cff`: `version: 0.2.7`, `date-released: 2026-09-05`. `MANIFEST.md` and `SHA256SUMS_MCL_v0.2.7.txt` regenerated.
+
 ## v0.2.6 — 2026-09-05
 
 Paper 4 referee-eye review round 4: **VDF128-T4 version 2 (per-input coupling weights)**. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged; the v1 header `VDF128_T4/mcl_vdf128_t4.hpp` is kept unmodified for the record.

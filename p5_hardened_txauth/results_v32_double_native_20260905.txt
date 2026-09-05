@@ -1,0 +1,35 @@
+================================================================
+  Paper-5 SS-VI battery on profile v3 (patent Claim-4 route) -- harness v3.2
+  MCL-P5-V32BATTERY-2026-0905-001 (harness v3.2)  engine mcl_core v8.1.3 UNMODIFIED
+  tag construction: engine-native, Eqs. (3a)-(3)
+  FAR trials 100000 | threads 2
+================================================================
+
+T1 uniqueness: 5000 distinct / 5000
+  T1 5000/5000 unique tags                                   PASS
+T2 TX avalanche (random bit of canon(TX), 384 positions): mean 127.998/256 (min 94, max 157), n=5000
+  T2 avalanche mean within 128 +/- 3                         PASS
+T3 byte chi2: 260.7 (df 255, crit.001 ~330.5)
+  T3 byte chi2 below the 0.001 critical value                PASS
+T4 device binding: 45 pairs, mean 128.93/256 (50.4%), range 114-140
+  T4 inter-device Hamming ~50%                               PASS
+T5 no gradient: 128 single-bit-neighbour secrets, mean 129.02/256 (50.4%), range 110-158, near-misses(HD<=32) 0
+  T5 flat landscape, zero near-misses                        PASS
+  T6a legitimate authorization accepted                      PASS
+  T6b replay of an accepted (TX, c) rejected                 PASS
+  T6c cross-verifier transfer rejected                       PASS
+  T6d cross-account transfer rejected                        PASS
+  T6e failed attempt does not consume the counter (valid retry accepted) PASS
+  T6f double-submit: exactly one acceptance                  PASS
+  T6i valid tag on a stale counter (c <= c_last) rejected    PASS
+  T6g rebinding without device secret rejected               PASS
+  T6h rebinding with device presence accepted                PASS
+T7 FAR: 0 accepts / 100000 trials | mean HD 127.998/256 | near-misses 0 | 142.8 s (700 tags/s)
+  T7 zero forgeries by random wrong devices                  PASS
+  T7b zero near-misses (flat landscape at scale)             PASS
+T8 generation: 2.820 ms/tag single-thread = 355 tags/s
+  T8 generation latency under 10 ms/tag                      PASS
+T8b generation + verifier recomputation (end-to-end): 5.634 ms/tx single-thread = 178 tx/s (300/300 accepted)
+  T8b end-to-end latency under 20 ms/tx, all accepted        PASS
+
+RESULT: 18 PASS / 0 FAIL

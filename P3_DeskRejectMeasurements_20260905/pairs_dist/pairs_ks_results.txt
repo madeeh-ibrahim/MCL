@@ -1,0 +1,18 @@
+[Fig.3 matrix fig3_matrix_seed12345678901234_20260903.csv (N=10000000)] n=190  N(0,1) null
+  KS D=0.0813 p=0.153
+  AD A^2=2.249 fully specified N(0,1) (5%=2.492, 1%=3.857); scipy-estimated-params A^2=0.368 (crit 5%=0.771)
+  CvM W^2=0.3399 p=0.105   Shapiro-Wilk W=0.9930 p=0.505
+  mean=+0.1394 (SE 0.0725)  var=1.0817  skew=-0.018  ex.kurt=-0.282
+  max|z|=2.750 (expected max|z| of 190 normals ~ 3.01)
+  t-test mean=0: t=+1.843 p=0.067; chi2 var=1: 205.5 on 189 df, p=0.390
+[FULL campaign evidence evidence_full_20260905.tsv (N=10000000)] n=3800  half-normal null
+  KS D=0.0204 p=0.084
+  AD A^2=3.158 (fully specified: 5%=2.492, 1%=3.857)
+  mean|z|=0.7884 (theory 0.7979, SE 0.0098)  var=0.3710 (theory 0.3634)
+  max|z|=3.599 (expected max of 3800 half-normals ~ 3.65)
+[rounded-null calibration] evidence file prints |r| to 6 dp: observed A^2=3.158; under an iid half-normal null with the same rounding, P(A^2>=obs)=0.726, median A^2=4.92, 95%=15.04 -> the tabulated 5%/1% points (2.49/3.86) do not apply to 6-dp data
+[fresh-seed full-precision replicate res_gs_freshseeds_pairs.csv (N=10000000)] n=3800  half-normal null
+  KS D=0.0115 p=0.691
+  AD A^2=0.620 (fully specified: 5%=2.492, 1%=3.857)
+  mean|z|=0.8082 (theory 0.7979, SE 0.0098)  var=0.3798 (theory 0.3634)
+  max|z|=3.968 (expected max of 3800 half-normals ~ 3.65)

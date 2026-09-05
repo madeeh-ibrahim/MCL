@@ -1,0 +1,9 @@
+# 14:03  up 26 days, 21:37, 1 user, load averages: 3.03 6.97 44.86
+tag 0: 0.883 ms
+tag 1: 0.387 ms
+tag 2: 0.386 ms
+build: default table lookup | tags 3 | mean 0.552 ms/tag | fingerprint e648da42bd0b454cd514818ae70f9ef4e50c39a2b59635756da35dfd3edc3289
+tag 0: 4021.453 ms
+tag 1: 4020.829 ms
+tag 2: 4055.382 ms
+build: CONSTANT-TIME sine (oblivious 65,536-entry scan per sine) | tags 3 | mean 4032.555 ms/tag | fingerprint e648da42bd0b454cd514818ae70f9ef4e50c39a2b59635756da35dfd3edc3289

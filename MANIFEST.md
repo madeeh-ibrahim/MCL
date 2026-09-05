@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.3, 2026-09-04)
+# MCL — Public Code Archive · MANIFEST (v0.2.7, 2026-09-05)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,17 +26,16 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 359 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 513 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `.DS_Store` | `3385e09d561d6a34177aa5382f8dd4481fba61594d993cb66a81a3ddc00d6d45` |  |
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `6ff55929009ae34764576241856d663da224afc849da0bb5dff540239c3d10d4` |  |
-| `CITATION.cff` | `b9a3b368c3bc35e5bde5f53257e34729c07c0fe8f900043b6f31e9a4bfc5eee5` |  |
+| `CHANGELOG.md` | `6dceb6eef740484033ee3fcb0aa2f9c9fc92c00096cfcaa168d680be8f83ddb8` |  |
+| `CITATION.cff` | `4b613949ad0a3ac72e7cbbc40e4b5a321cc68ee62143210512aaae2585acf37b` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -47,6 +46,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
 | `README.md` | `836ae4cc7137ed946d09caee028d42b9d4695e3d0cb07d42f0df369cf536ec00` |  |
+| `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `SECURITY.md` | `fb923ca3236106a55b6c62e9ba404a46b1054b9f6338884425af82af0048dd37` |  |
@@ -150,7 +150,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/mcl_keyed_q30_science3.cpp` | `9ca5703dc844fec31302e0f35b417afb502f3c3062646ab6b6881815e7d232d3` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_test.cpp` | `a123a0a667a8612f9b6e2092c72fc935807a0bc2fd82ee0deb781ccd8bc3d273` |  |
 
-### VDF128_T4  (25 files)
+### VDF128_T4  (32 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -167,7 +167,11 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `VDF128_T4/mcl_vdf128v2_bench.cpp` | `c109f8e008a4bff73459391b4a44262d344a49e738d24642ab33a26935121d9f` |  |
 | `VDF128_T4/mcl_vdf128v2_cyclecheck.cpp` | `7515bba87b0bf3218c9199308774adcff24e0474a6407dd57bcf0c193555de85` |  |
 | `VDF128_T4/mcl_vdf128v2_xplat.cpp` | `f465117c06ec2f8b27d0f455ca55f260eaf286dd4ac396aa36d55c8fa6a0b014` |  |
+| `VDF128_T4/p4_sha256_vs_t4_bench.cpp` | `d38320478d230291bebc3e5b1b2d289cb6f972c894b0745dcc8a6429af04e98a` |  |
 | `VDF128_T4/p4_vdf128v2_kat.cpp` | `28f38551f00005d27634d4547552fd8eb4d616018186dee9a68ac12709fdba58` |  |
+| `VDF128_T4/p4_vdf128v2_weaklane.cpp` | `3a71f26cea40ec43f3f09a9a9a16a16cd9b9be04d6324e60b6f24a6ef381e3d5` |  |
+| `VDF128_T4/p4_vdf128v2_weakpair.cpp` | `a3e9fdf9acbca7370c479a630e0e7fe402ea5f8923d2f2eba32798c23756c76a` |  |
+| `VDF128_T4/sha256_vs_t4_bench_apple_20260905.log` | `a0331d60e0d388e0bc26f7d5b7156f2e1de36aa6f4c6f9cff9b7093478be3c6a` |  |
 | `VDF128_T4/vdf128_battery_apple_20260817.log` | `35fd9d87066e1fa6c82fde0a9861f7e7e29a2835920915a3b4a1aa2e15f75c09` |  |
 | `VDF128_T4/vdf128_bench_apple_20260821.log` | `40a9e3f4b7622358309b858a798c2ff3a1857ed9d6c6552ba8dead36414adacd` |  |
 | `VDF128_T4/vdf128_cycleprobe_apple_20260817.log` | `6d3c1301b1a2c746b485c604aa7c1b7e6e2091d6fe893c18e3c003b5cc33be7e` |  |
@@ -177,6 +181,9 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `VDF128_T4/vdf128v2_cycleprobe_apple_20260905.log` | `5150cbd452b67ca05c03c6bcb5f40bc23615215751612a40307585f485b4e358` |  |
 | `VDF128_T4/vdf128v2_kat_apple_20260905.log` | `ad25753aa01278a6679b89b8ab887a6e7da2632ab6ce37f17e5a11af58d58be0` |  |
 | `VDF128_T4/vdf128v2_kat_linux_glibc_20260905.log` | `ad25753aa01278a6679b89b8ab887a6e7da2632ab6ce37f17e5a11af58d58be0` |  |
+| `VDF128_T4/vdf128v2_weaklane_apple_20260905.log` | `9573e8b90e34c709c5344f6a834291fc4acf8198890a47bb0a82858b9931a1e6` |  |
+| `VDF128_T4/vdf128v2_weakpair_apple_20260905.log` | `d237035e216be8acb54e0ce41f32301062b8b54c2d60d6311e223773fa3027e7` |  |
+| `VDF128_T4/vdf128v2_weakpair_grind_apple_20260905.log` | `1ef86035ef568b4704c2784221c739a93545ab222f5fc1563695e25e5c99fe4d` |  |
 | `VDF128_T4/vdf128v2_xplat_apple_20260905.log` | `3e934b09990f744f849e8d7533006dc1b5d6c88d5f7f02f235e54202133ee795` |  |
 | `VDF128_T4/vdf128v2_xplat_linux_glibc_20260905.log` | `9016a4fa2ed1b1594457fdf3ae17fed38f20cf996b141ee4eb4441d6ec8d3a18` |  |
 
@@ -242,21 +249,35 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `p2_hardened_auth/mcl_engine_sensitivity.cpp` | `5f89de5413a606bde798194fa20a7f67f2e956b5292e4b45e46b524f13385564` |  |
 | `p2_hardened_auth/results_20260821.txt` | `bf65fa9fc185d4f9e9e22d5f47374bb0e04908f6978944b208d5604b079fc905` |  |
 
-### p5_hardened_txauth  (11 files)
+### p5_hardened_txauth  (25 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
 | `p5_hardened_txauth/ARCHITECTURAL_FINDING_20260821.md` | `6157f5386b774fb27e981bed15b37169ed5233dfdecc663ac663ab3ceb389ffe` | الإصلاح المطلوب وأثره على البراءة — الورقة 5 (والورقة 2 بالقياس) — 2026-08-21 |
 | `p5_hardened_txauth/ARCHITECTURAL_FINDING_20260821_SUPERSEDED.md` | `491a17e6231b7737cdd8b60431f19de82ccd7a5dd67e7f2c56c429163abd3eeb` | نتيجة معمارية لازمة عن إصلاح D1 — الورقة 5 (والورقة 2 بالقياس) |
-| `p5_hardened_txauth/README.md` | `0a4eae6e7fe965189775b677b0daafbadd11274b15557a4505bbe454a4bbd364` | p5_hardened_txauth — مسار الورقة 5 المصلَّد (v2) + بطاريته الكاملة |
+| `p5_hardened_txauth/README.md` | `f42a00c3d4ff3188118ae4311a3053288f3c8023dbba6a2bd9dad8c7f65b2b27` | p5_hardened_txauth — مسار الورقة 5 المصلَّد (v2) + بطاريته الكاملة |
+| `p5_hardened_txauth/_v311_backup_mcl_txauth_v3_battery_q30.cpp.txt` | `e825f1daaa6f7053a751fe0242a13d805f88b1ef40e87d22185266fab0006a29` |  |
+| `p5_hardened_txauth/_v31_backup_mcl_txauth_v3_battery.cpp.txt` | `f9ac7d3e2e8e12a83ff1e1aa61cccdc1fb0dd00f56c1d8a1c564ea7b75a40e30` |  |
 | `p5_hardened_txauth/d1_collision_20260821.log` | `4c59d1fe0824525316554bce3cd6d7aa72aca0700bca51235ce545dfcf47d087` |  |
 | `p5_hardened_txauth/mcl_d1_collision.cpp` | `6eedb6294d75d9020401f1f026e5806af56267e5d267a05fb0467e0673ae3b88` |  |
 | `p5_hardened_txauth/mcl_txauth_hardened.cpp` | `1c8d66d063e18fb1b2673a55073de00da149301ffbf03e5be8354cb2d538af04` |  |
-| `p5_hardened_txauth/mcl_txauth_v3_battery.cpp` | `1e627d8c136c2fc7aee44e58154e1e7861987c9611bc3a56454e8bd260547ecb` |  |
+| `p5_hardened_txauth/mcl_txauth_v3_battery.cpp` | `c3909a1fbc0ec2da19c2b05f6bee04fb703f8816d8e6b765efdbd83e997e21cc` |  |
+| `p5_hardened_txauth/mcl_txauth_v3_battery_q30.cpp` | `35009daa07447cd28ac680cf0bb2e191678b762b9f9af098fc23a0407dc96fd2` |  |
 | `p5_hardened_txauth/mcl_txauth_v3_claim4.cpp` | `016843ee8949e0bac4bbcf21ca17f0e4cb1ef40147f08f4482ce99f8f72806ca` |  |
+| `p5_hardened_txauth/quiet_rerun_conditions_20260905.txt` | `a69fada04a9ae7f8780736449d226deadcd09cb89aa245a07af4fa7a53fccf4d` |  |
+| `p5_hardened_txauth/quiet_rerun_double_conditions_20260905.txt` | `07d01208233a6b903c05ff4822c067f639cdd2a8bd0c233fd71e2d63e432cd1a` |  |
 | `p5_hardened_txauth/results_20260821.txt` | `c127d31be9ac8758c02dbd7e729e662d7f8f65ff7b533f4782d8b934824f2ed8` |  |
+| `p5_hardened_txauth/results_v32_double_combiner_20260905.txt` | `e6107d815281ed89edc3d3e57be67b9ab05b79ca45e353e95948b44eca567b84` |  |
+| `p5_hardened_txauth/results_v32_double_native_20260905.txt` | `7d6d2b754f9aa5ca9416228ccdd02b22be928281343a8c09d265bcad1dfe0b26` |  |
+| `p5_hardened_txauth/results_v32_q30_combiner_arm64_20260905.txt` | `4c077575cbd8a9b312eac4b8faf42e2c0017d20eec74c5c3bd6c9f8130626563` |  |
+| `p5_hardened_txauth/results_v32_q30_native_arm64_20260905.txt` | `388d9044a2d19bd62ea5462aec759595477ee767c513fc53972297b6b9e7360e` |  |
+| `p5_hardened_txauth/results_v32_q30_native_x86_64_20260905.txt` | `a6f78d47b288987da20650b1354a856ad5fcad33226d1ce42fa5e7366375246d` |  |
 | `p5_hardened_txauth/results_v3_20260821.txt` | `0329d38aa78a2552f24bda89cfa8b1a9c2a4e7d9f25da1885177416518cb4cb7` |  |
 | `p5_hardened_txauth/results_v3_battery_20260821.txt` | `3facb57c4d38217a7e50c2052d8b413e32e42b767780131101c58f241c18c614` |  |
+| `p5_hardened_txauth/results_v3_battery_q30_v8.1.3_20260904.txt` | `fc19e07e64273c6bd431480710575b21d7f7c0170ea0f797908fda0586344ef1` |  |
+| `p5_hardened_txauth/results_v3_battery_q30_v8.1.3_20260905_arm64.txt` | `e063f867f69b6fe135d0bcdd9249763b867d85f01ffa28c857920016b22c5add` |  |
+| `p5_hardened_txauth/results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `0b7b9ebbe7a1890d1f7df10fe0116f18e6b815abecd693a4136e6c075075c9bb` |  |
+| `p5_hardened_txauth/results_v3_battery_v8.1.3_20260904.txt` | `abe5f6a26a232ded5e58209bec2ac027cbd9578545d9ee2ec20a8fb510a6b08c` |  |
 
 ### M1_M2_apple_verification  (38 files)
 
@@ -377,6 +398,97 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSES/LicenseRef-MCL-Security-Research-Grant.txt` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `LICENSES/PolyForm-Noncommercial-1.0.0.txt` | `ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8` |  |
 
+### P3_DeskRejectMeasurements_20260905  (86 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P3_DeskRejectMeasurements_20260905/RECORD_P3_DESKREJECT_MEASUREMENTS_20260905.md` | `546233f6c5f470fb322c32af475e8a8c1093dbf5b7df8ba0ce331e3774768880` | Paper 3 — measurements ordered after the PRE desk rejection — 2026-09-05 |
+| `P3_DeskRejectMeasurements_20260905/SHA256SUMS` | `9f90ee19b813434f7dcf86fabdf8164e4e94b450c35d241d33a5e3e59c25e76b` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/analyze_decorr.py` | `d5d109ff10eb97460ef856eb10128f01f4ea6ab018ed33c8fd22908a8ecee8e9` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_fit.png` | `3f8f8f434432074aebccfaa8d7b0bbb76509afad1ebd3144c85762cdc90f1a44` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_fit_table.csv` | `9570186c5e131b8dd04f8cbf58bbafb70cc0b3b4d2d709fc2a5f0fc7079b1661` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_steps_fig.png` | `4f84b8542cc8e7d60dd5b4fb12904a8ca5cd814a22a617f6c45e58523fcdf1e5` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_time.cpp` | `5df2c3f821fa962e027daab6c271df216830886ad4128bcecf8221fae81dcb42` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/plot_decorr_steps.py` | `5d6f8616aa1d6f534903c1f91f3eae7c1bfddd71dadc4a203132fdac4633730f` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_gs_steps.csv` | `37a3f6f2c0076ac79428a30222f5c24d5cf6f7a0b8fb51a2268b7d9e33a9da4c` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_gs_summary.csv` | `82075b850f1161bf438a88d006b8b7f76c29ff45f97d7cbe7b572e2e415d2abc` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_jacobi_steps.csv` | `b5666cd21b2269ee1174dae0ea0d1837c3e99e4f218d54269e026afe89bf9da1` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_jacobi_summary.csv` | `3b0df9459fd83d49f324c265c5722b9f61cb3b67173e47b63840f6c8945b3a2c` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K20_gs_steps.csv` | `9d2c1f722608a91c3c661477fd6360614e735f85272e0920f1e51dbb634734ef` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K20_gs_summary.csv` | `e023fe815a752a62f250fcb48c44b49f3a226a440b3f03c5e32ce1c42d0411e7` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K20_jacobi_steps.csv` | `171cf7649d4c58e12392eaf3c156408074360fd306ed230713f7e935516da6a8` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K20_jacobi_summary.csv` | `629e23de64fbb6f51598d202bcf63b6752425188b92a9f1959f9428631acfed4` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K6_gs_steps.csv` | `c85b5e81794ed82ccce15a8787f2a0726e2b725744165941f98c8f1822c49c1f` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K6_gs_summary.csv` | `ddab893663db9b0befca87422402a337989b26a2a126e556d1d039190b7cae02` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K6_jacobi_steps.csv` | `9f639a627e0b4a91a9e4c0ffbda6be73246e6327d80090808ebe211894a87f8d` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K6_jacobi_summary.csv` | `2cfb99759441a89720f1a9f8723e0a98c7a50d3a81dcf648b87b08c0bc680292` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_1723_K12_gs_steps.csv` | `94295b73811a348d577d743a6c7a98dc9801ff32d848f3fb2571d029c67e6dc7` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_1723_K12_gs_summary.csv` | `fdab443bdcc240cf6009184122597761c877501f7a0d569c02a1a09bf9d3d21d` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_23_K12_gs_steps.csv` | `e8b7f343101ad9291041179f6adbcb9e7bfb342cb141cadc6beba5f81d44d747` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_23_K12_gs_summary.csv` | `6e9ff0cbf0e9a7fc3d959c189becad788c800d9b09a1de073897420637a9fcd4` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_gs_steps.csv` | `958d3d8c34602555aea46bdb9410100394f0731eaf3090fe8850769594629e9f` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_gs_summary.csv` | `80764dca4ec1fc151d8a400f3d122c05f87a1888e641b693dc5d9326172399b8` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_jacobi_steps.csv` | `e1dc9082a600dd92a7f274d9216ec7e8ba4057473bf113c90ff683c8adbbcf38` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_jacobi_summary.csv` | `a06a887c531001102acdad8a375c59869a47196e38bbccbc3c4537dec46719fc` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K20_gs_steps.csv` | `cc3f2ae06c75d112b43ae4b838b160dea413a1b6ad45abfbef9c11bcd4c38145` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K20_gs_summary.csv` | `f88ef18b1bfd5a3632d446259cbf2b752cbc1492d0dff59eefb27e518ea1f1b5` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K20_jacobi_steps.csv` | `614f6a0a11e744a26e4b637b28b21a8cd1f7ff4722adbfe4c6b569cc566a6a7a` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K20_jacobi_summary.csv` | `7e1884b9b715c7fd98a830c7bdf768d6638dac9c7f3b5a896dafd3867d519325` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K6_gs_steps.csv` | `f30cb18f943622fc62c80a2e4d64db93db477f82e5d884c7c2c172988b028429` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K6_gs_summary.csv` | `63ceca204c18e96250f97a2d2eba1a380c8b3d2e505376108c9da952eb16297c` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K6_jacobi_steps.csv` | `9f0a4a8fb45d08290cb360d3ec028636e54b50c8e17df6a13699ef4a62fd2853` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K6_jacobi_summary.csv` | `9d42a884aa5e18e355cc6dc96bef59207460a88569f5011a0e575a5642d6439c` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_711_K12_gs_steps.csv` | `b0ad57472ee6e4551862acd2c70880faf2ec7b4faaa1a25dc3521ea1a98b15fe` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_711_K12_gs_summary.csv` | `17c8f8f1885ade78d10323bc2de3511062b204e2cb3ca82d9fb4727b271b5178` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K12_gs_steps.csv` | `2cba9a58f93e5b6de1808a70d6f454ba2a2e13beca51e41707e441942dc31ece` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K12_gs_summary.csv` | `2e1c3a324342d74908e62507a4a312b70524decc8c4d62c8389e528c09393ef3` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K12_jacobi_steps.csv` | `01ab798fcb36dd7cc7ef3fe2ab3e9f24e67116da2efd3a8c7f8202c1ac2bcf4e` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K12_jacobi_summary.csv` | `448b3d67f4cc33cc9ad96c21b3c7a25afb7f620eb8ba4634423fd10a7c062a7d` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K20_gs_steps.csv` | `ee09934fb02fabe93cd138c6eb7c62f9e1d6814475a59a808d365c96cb18daf5` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K20_gs_summary.csv` | `3257756948236b07d6bfd7d5e7c20f2ca8256544746b438f0bc02a82ed00adf3` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K20_jacobi_steps.csv` | `225be22d7e3fab4eadd4bf352c31333accbcac58f4acde011f01d0017229ca94` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K20_jacobi_summary.csv` | `3a70f98decf18255b7ed833a93451eeff658cf0e8de49260efb9f9a4bb518c59` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K6_gs_steps.csv` | `bdb7e1d5121bfac794d7c01aa6a634a5ad1d93b6339ba63cd9204ba1baaf07ee` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K6_gs_summary.csv` | `eccb02f34e587921f3d09c167530bc0c91c9acd7690c0b999c8c184a81d28146` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K6_jacobi_steps.csv` | `5914e8ac5495bde7fd423cc78039b6bab1090dedbeeae49e624420d30f977b67` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_pq_35_K6_jacobi_summary.csv` | `81e809d4b352c7bf10756a2599c89b20160401da4286204cfdf0ffc4d6e55d81` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_zero_35_K12_gs_steps.csv` | `a23c1adfca5c642bc5328607a413ed18d8d058c36b01ec4d4c4f37a74f29c871` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_zero_35_K12_gs_summary.csv` | `60b3d66085a19c3a4b410807882b50ecae41dcf95a762e65ef3eb11fe7a73d00` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/jacobi_orth.cpp` | `b47e6a7f0f0d5aafb00b7a4efacc3a4de4c58e2a208537324f04225a9e66dc2e` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_freshseeds_lyapunov.csv` | `ac07cc3f4453d006056476aaffee866a908cd048875213f6ae1948cabcfe44f9` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_freshseeds_pairs.csv` | `748f26f35f548cddd34927e71f6758e4d29aec5785ed8048529e567770de5b65` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_freshseeds_run.log` | `d1d712292dc383f1d4e1c78e1c889953f7e8754430bdbf1eae496d185de11065` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_freshseeds_summary.txt` | `f9e32443ea541454e47f3ddf33d77029c2b5693049771a228a1173aaa4e5c0f4` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_full_lyapunov.csv` | `ac07cc3f4453d006056476aaffee866a908cd048875213f6ae1948cabcfe44f9` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_full_pairs.csv` | `1034ddffe1c4df66c2870d769687bdd22f74729a5c4945c54be6450af0fe4b04` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_gs_full_summary.txt` | `9ab0636fd6b23f82d387b33ee6ae3305d3b1bad9d4bc4d919733080104294439` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_jacobi_full_lyapunov.csv` | `54dd548e169e3fd7e3543ff89ef37bbcd04713fac4e4218114d661cd5adea49b` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_jacobi_full_pairs.csv` | `a8f0550c36605c2063444826b0ab3c6190aaa4d18a45e6014ac8bf1ba1149ed2` |  |
+| `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_jacobi_full_summary.txt` | `0d8138aae09182ae01d2f603d4d5250c75ca668ad04fb667a813e5074c8773e7` |  |
+| `P3_DeskRejectMeasurements_20260905/pairs_dist/__pycache__/pairs_ks.cpython-313.pyc` | `074a20d0a1ee9acf7b2198de85e1b42a9907e6c47bb5e9b66a5aefc476523c01` |  |
+| `P3_DeskRejectMeasurements_20260905/pairs_dist/evidence_full_20260905.tsv` | `7746150d88a436ac0fc3ce4cf5968f4d8666fa80445e1a79b58c51181278a40f` |  |
+| `P3_DeskRejectMeasurements_20260905/pairs_dist/mcl_orth_verify_full_20260905.txt` | `9748c35958b6a52c706974da159fe68f2afec48e70ae260bf1d2a349c4cdec3f` |  |
+| `P3_DeskRejectMeasurements_20260905/pairs_dist/pairs_ks.py` | `afca5571950b4e3831056350b0d3e734b6dfeaaf128a733acf936272e48f7423` |  |
+| `P3_DeskRejectMeasurements_20260905/pairs_dist/pairs_ks_results.txt` | `0426f84a5bc502e6f2c321944f55263b82a84d4cdc4bd0f04b258db6a24562cb` |  |
+| `P3_DeskRejectMeasurements_20260905/pairs_dist/pairs_qq.png` | `d7c18dfcaeb5ae4441650e2123b89be8370e8d7eb9218076d179fb474e3d67d4` |  |
+| `P3_DeskRejectMeasurements_20260905/run_all.sh` | `23aa243426a9c3de652f2a890db8d3e2e70577f95a1725001bb1cbb8f6848289` |  |
+| `P3_DeskRejectMeasurements_20260905/run_all_20260905_101801.log` | `08febeb8ad3420e534191a9b55bd0f16e1d5dc3aad98fe92355d0e730369518e` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/analyze_trace.py` | `841054c60e8a4718edaed94140063d4ebeb0e31a263916fdfd24d16264cf76ff` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/analyze_window.py` | `e06da78d0a1bec376d445f1769f575c315b3c6a3e2cfa000c07f5bc2990929e4` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/cell_check.cpp` | `245149d040dda52c6c84600f86150aa2cc6219fe368f454c843a6b0a93f9d527` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/cell_check_results.txt` | `ff1f778813bbc581af615634df45a3f71ec8fe574ff690ddc70d6a09dad47a0f` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/res_trace_cells.csv` | `389e105ace3729f54571a4dfa4b82b8e31f6f49b422e3eff0d9a9dde2433d097` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/res_trace_grid.csv` | `cd2ce3607826364d9b58bbaad6734b24abbfea7e02c02b54d9381213a44f9fb2` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/res_window_grid.csv` | `eb179836eabf6d15faab99154115ce99aea87499cb7995a5b0b7059475fd98fe` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/trace_fig.png` | `0b164762118fc6c57ce32a94fbdc6050095862ad4ff261f6454250e5644acdf8` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/trace_summary.txt` | `8e9e953956779bf96fc9bd7ae11c9ec9d5e905ebd81d1de54d1a547cfa8e413b` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/window_composite_table.md` | `d84bb1245c972bdca1aef39bf42ef8deb9d71bfa003eaf3aad65c82f60094736` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/window_control.cpp` | `fbda42ed64e3860b36f1fa58dc19c46d9f6ef030bbdc82ba00597d681c2a9df3` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/window_map.png` | `ff2639f0eac153f24c5f86e51b49e4145f26f34d30fc9dc2c34ebbeaef5d871f` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/window_summary.txt` | `b13abc1d0aacaae60f8241db26eb8f3368e826994e874b62701a8f8a990dcc10` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/window_trace.cpp` | `4cd1e031f9d9872b6cc531060722ef5e9a742f437ba03ce12051049401d881dc` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/window_trace_run.log` | `fddb6c566627750507a3f3aabca34a090f1990def0544e11528d6a3835124ab5` |  |
+
 ### P3_Fig3_Regeneration_20260903  (5 files)
 
 | File | SHA-256 | Note |
@@ -387,10 +499,11 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_Fig3_Regeneration_20260903/make_paper3_fig3.py` | `3281ce36d30f47b1a8c6f6fd963f99ecd1397d39bdbcdf3a55d991deea827182` |  |
 | `P3_Fig3_Regeneration_20260903/paper3_fig3.png` | `110cc7b0de4bfcea428acfdca99267cd7e505427422c5f86c33d7fbe21b8092a` |  |
 
-### P3_NonlinearDependence_20260603  (14 files)
+### P3_NonlinearDependence_20260603  (15 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
+| `P3_NonlinearDependence_20260603/.DS_Store` | `cb462ff909e4a54f274ed4db9088836bfb5a08f38361b5219f9cdc64f0a7fc63` |  |
 | `P3_NonlinearDependence_20260603/Paper3_v3_MANIFEST.md` | `562de9fd892e9cf95d71a157cbcdd3539de0cae53f002e9fbc0072d9e8a986e1` | Paper 3 v3 — Nonlinear Dependence Test Suite: MANIFEST |
 | `P3_NonlinearDependence_20260603/README.md` | `184f9bc3bd263dff657ddc6d05a615126a9a098786f7fb71c08c5d281a02bc0c` | P3_NonlinearDependence_20260603 — Paper 3 nonlinear-dependence campaign (June 2026) |
 | `P3_NonlinearDependence_20260603/mcl_block_joint_test.cpp` | `473c6247e02d7dd7237c2c02ef68007c01df600ef87fd7578b42a9cce6d497f7` |  |
@@ -462,12 +575,12 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260904/vdf128_t4_standalone_linux_glibc_20260904.log` | `1dd0e0df47b2e18a7be786575e0bc00b7f8698b5f14f0faf7e4e724ccdc960e9` |  |
 | `P4_ReviewMeasurements_20260904/vector4_q30_linux_glibc_20260904.log` | `d39449f0df98ddc25b78b8f31f8558ebd69822fccaa123fde495b216c1f7d5eb` |  |
 
-### P4_ReviewMeasurements_20260905  (25 files)
+### P4_ReviewMeasurements_20260905  (32 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260905/README.md` | `1fc944d471da5dd5b9ec0497a6e3ad6e5b07b19b973ebb4f57cb19c5e3b6d032` | P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights) |
-| `P4_ReviewMeasurements_20260905/SHA256SUMS` | `83a82d54e242616d99374718344b0a9bf83eda3a5ae80cd76177634ebb96294c` |  |
+| `P4_ReviewMeasurements_20260905/README.md` | `a9f526f4ecee620f6ea9bf27006550170f30a6c2eb8684dc7b3d89ad024a5ee9` | P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights) |
+| `P4_ReviewMeasurements_20260905/SHA256SUMS` | `12fb4e87d48ef00bf7774dce580f6de16a28103bfeb0235a39e2ea8f37e926a0` |  |
 | `P4_ReviewMeasurements_20260905/mcl_core.hpp` | `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` |  |
 | `P4_ReviewMeasurements_20260905/mcl_keyed_q30.hpp` | `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128_t4.hpp` | `e08f702e2da92221588285a6a61ee2e48edfb63afbde8220fc3632fd2180ed0d` |  |
@@ -477,10 +590,14 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260905/mcl_vdf128v2_cyclecheck.cpp` | `7515bba87b0bf3218c9199308774adcff24e0474a6407dd57bcf0c193555de85` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128v2_xplat.cpp` | `f465117c06ec2f8b27d0f455ca55f260eaf286dd4ac396aa36d55c8fa6a0b014` |  |
 | `P4_ReviewMeasurements_20260905/p4_sha256_chain_bench.cpp` | `872662766e34f7a5e2f67b1a4fc9e4a382a250edf0a1fbca6bf6d906563e546c` |  |
+| `P4_ReviewMeasurements_20260905/p4_sha256_vs_t4_bench.cpp` | `d38320478d230291bebc3e5b1b2d289cb6f972c894b0745dcc8a6429af04e98a` |  |
 | `P4_ReviewMeasurements_20260905/p4_tmto_toy.py` | `df1377d4b62f5bae92bb531a93dc357e0bc6162960e17de4c97bb8dcd81c5e6f` |  |
 | `P4_ReviewMeasurements_20260905/p4_vdf128v2_kat.cpp` | `28f38551f00005d27634d4547552fd8eb4d616018186dee9a68ac12709fdba58` |  |
+| `P4_ReviewMeasurements_20260905/p4_vdf128v2_weaklane.cpp` | `3a71f26cea40ec43f3f09a9a9a16a16cd9b9be04d6324e60b6f24a6ef381e3d5` |  |
+| `P4_ReviewMeasurements_20260905/p4_vdf128v2_weakpair.cpp` | `a3e9fdf9acbca7370c479a630e0e7fe402ea5f8923d2f2eba32798c23756c76a` |  |
 | `P4_ReviewMeasurements_20260905/q30_lut_int32le.bin` | `f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d` |  |
 | `P4_ReviewMeasurements_20260905/sha256_chain_bench_apple_20260905.log` | `239a4a7fbb810b510b9ebf6d8ff07dd60b361aabef55d2468316fa959bf98a87` |  |
+| `P4_ReviewMeasurements_20260905/sha256_vs_t4_bench_apple_20260905.log` | `a0331d60e0d388e0bc26f7d5b7156f2e1de36aa6f4c6f9cff9b7093478be3c6a` |  |
 | `P4_ReviewMeasurements_20260905/tmto_toy_apple_20260905.log` | `2272e3c16cbe8201855c32a911cf45a70ae79fe61e9602eaa2b78068c3da9fe7` |  |
 | `P4_ReviewMeasurements_20260905/vdf128_t4v2_standalone.cpp` | `3b7f28a5ac73c97245c3f50e03aab74dc10385f369e8b9341e93dba376f0e7d2` |  |
 | `P4_ReviewMeasurements_20260905/vdf128_t4v2_standalone_apple_20260905.log` | `db6ace2a3197549100b1fd02f9c1b23228abb33ffa9a1b6f1a43e47c6720d4ce` |  |
@@ -489,8 +606,65 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260905/vdf128v2_cycleprobe_apple_20260905.log` | `5150cbd452b67ca05c03c6bcb5f40bc23615215751612a40307585f485b4e358` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_kat_apple_20260905.log` | `ad25753aa01278a6679b89b8ab887a6e7da2632ab6ce37f17e5a11af58d58be0` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_kat_linux_glibc_20260905.log` | `ad25753aa01278a6679b89b8ab887a6e7da2632ab6ce37f17e5a11af58d58be0` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v2_weaklane_apple_20260905.log` | `9573e8b90e34c709c5344f6a834291fc4acf8198890a47bb0a82858b9931a1e6` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v2_weakpair_apple_20260905.log` | `d237035e216be8acb54e0ce41f32301062b8b54c2d60d6311e223773fa3027e7` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v2_weakpair_grind_apple_20260905.log` | `1ef86035ef568b4704c2784221c739a93545ab222f5fc1563695e25e5c99fe4d` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_xplat_apple_20260905.log` | `3e934b09990f744f849e8d7533006dc1b5d6c88d5f7f02f235e54202133ee795` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_xplat_linux_glibc_20260905.log` | `9016a4fa2ed1b1594457fdf3ae17fed38f20cf996b141ee4eb4441d6ec8d3a18` |  |
+
+### P5_HDVerify_FULL_20260904  (6 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P5_HDVerify_FULL_20260904/README.md` | `6cc92fcb144f4d7baa09f308fa5947a9c0fb21c64af82e4a7fe1366c5dcde642` | P5 §IV.E — حملة FULL (9,702 مرشّحاً) على محرّك السجل v8.1.3 |
+| `P5_HDVerify_FULL_20260904/coprime_frac.cpp` | `13b5a35c58f29dfa9e745dc0794af30cbc5e33bc86b270374281f3dce9250d48` |  |
+| `P5_HDVerify_FULL_20260904/coprime_frac_2e5.log` | `492a54a6847e75e3d2f5f8707fb19bad8bf0dba0bcf7b3bccf99feb6d6fe8126` |  |
+| `P5_HDVerify_FULL_20260904/hd_throughput_v8.1.3_M1Pro_20260904_run1.log` | `129820ecec072eee763c17681b9b98d7bb7c6f26038bef1cce34e51883af37e9` |  |
+| `P5_HDVerify_FULL_20260904/hd_throughput_v8.1.3_M1Pro_20260904_run2.log` | `fdc0166e1c7c7fc77b555e09b7a7be961fa45bc259b9f364f086be5856841335` |  |
+| `P5_HDVerify_FULL_20260904/hd_verify_FULL_v8.1.3_20260904.log` | `dc7e440a5f757d8e1c202bc83c7af6e8f93e9222952d20b8fa91c5943f074ec0` |  |
+
+### P5_ReviewMeasurements_20260905  (28 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P5_ReviewMeasurements_20260905/G_entropy_20260905.log` | `c3bace30d5eb921d5e689fa06e807992afce63d87a1f87e4ef861d5c28687225` |  |
+| `P5_ReviewMeasurements_20260905/README.md` | `a3a6b595a8e3bc7c49a46c1338e767494330dd891355bf6bfe164fa48073dc6c` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
+| `P5_ReviewMeasurements_20260905/README_EN.md` | `6dae4e849ca2716ea92683526277eaa13951895ebb19423e823f22022193192e` | P5 review measurements — 2026-09-05 (English summary; Arabic detail in README.md) |
+| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `16521402a09f17ae76fe91d1bb8258534afe98138fb478daea79a54b04cd1008` |  |
+| `P5_ReviewMeasurements_20260905/burnin_curve_20260905.log` | `3755e13cceef723688d1716518a52d1bf35c9590047e019660c049fea5c5cf57` |  |
+| `P5_ReviewMeasurements_20260905/burnin_curve_v2_20260905.log` | `2898fa58a7fa45afff950cccdb2b282a853a71a63b0f15f9d25c9abcd39b709e` |  |
+| `P5_ReviewMeasurements_20260905/ct_sine_cost_20260905.log` | `08af81ad5332b04c1fe62a15a9c7269d925d51d9ab81219b3a85e178cabc585e` |  |
+| `P5_ReviewMeasurements_20260905/hd_throughput_v1_quiet_20260905.log` | `af727f9f2b358af4f73ae1753f9a00d3d6a82e5180a928d6aa5595f1fe7c16a6` |  |
+| `P5_ReviewMeasurements_20260905/hd_throughput_v2_quiet_20260905.log` | `57c6eca59c0200c7c50e26f7627f5619f13c72f268135f8fc3db4d5bb7029b69` |  |
+| `P5_ReviewMeasurements_20260905/header_patch.diff` | `1a06b57111ab4ec4a27d3c4d3a31a791157817ec2b5fa29fddb8af80d93575d3` |  |
+| `P5_ReviewMeasurements_20260905/mcl_hd_throughput.cpp` | `7d922b50ea6b6d041f8a8a5a978f4dce48757d0352b6b2fff9f7c22320caebd4` |  |
+| `P5_ReviewMeasurements_20260905/p5_G_entropy.cpp` | `d8232c4eecb747ae7ec07ee6f7d5c28096fb95413aec467f2de9a5f5879440d9` |  |
+| `P5_ReviewMeasurements_20260905/p5_burnin_curve.cpp` | `99cadc2c5956b2a4bfd2a0ba72c2eaa186f4861829d02b9b1cb740326f3719b0` |  |
+| `P5_ReviewMeasurements_20260905/p5_burnin_curve_v2.cpp` | `f2c39c4936f4cec3ed5b15c800c5de5f96e62fa3ffd0bf9a2ddef8a081563a2e` |  |
+| `P5_ReviewMeasurements_20260905/p5_ct_sine_cost.cpp` | `32b5a2bb058169eacb6598d75d260e5c002b62c5284a05f28f00ed33ad71518b` |  |
+| `P5_ReviewMeasurements_20260905/p5_parity_lock.cpp` | `80e447142df634d6742be9395cdb6b1f31205a4e215b9c6f97210bc841c72642` |  |
+| `P5_ReviewMeasurements_20260905/p5_resonance_control.cpp` | `aed41340b9385ff47b72e94f11e30df644b916d467ac1b58f8d33044b07e5691` |  |
+| `P5_ReviewMeasurements_20260905/p5_v2_coprime_parity.cpp` | `38eb19642c0d1171c3f600cc1039c85265ec6efad4f2d272b0369f53d7ea6949` |  |
+| `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` | `08a270fa30d6db9bbc8deeaceb8cac7aa28c21e4ae6daa73e55205f02945a75a` |  |
+| `P5_ReviewMeasurements_20260905/redraw_rate.cpp` | `d2973fc15160973aa998657485c6ee7951bd6cee80cc66a5c3ed257ce68cdab0` |  |
+| `P5_ReviewMeasurements_20260905/resonance_control_20260905.log` | `fa44244a920762747ea9f0f81cbb250ccf4315ed85105eab9d6dee4e9279473d` |  |
+| `P5_ReviewMeasurements_20260905/results_v3_battery_q30_v8.1.3_20260905_arm64.txt` | `e063f867f69b6fe135d0bcdd9249763b867d85f01ffa28c857920016b22c5add` |  |
+| `P5_ReviewMeasurements_20260905/results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `0b7b9ebbe7a1890d1f7df10fe0116f18e6b815abecd693a4136e6c075075c9bb` |  |
+| `P5_ReviewMeasurements_20260905/sibling_recovery.cpp` | `6e7a6f60c26ca907cefe7f00153eed9be416c4b1894ab62e9e75a923b2e241bb` |  |
+| `P5_ReviewMeasurements_20260905/sibling_recovery.log` | `dda8d28f2226beb2fdc60f59718aaf7e3cf6d6f3ad8fe99bf821384e6da1597c` |  |
+| `P5_ReviewMeasurements_20260905/v2_coprime_parity_20260905.log` | `021b8c1307227f57b71167e7e3e6e2f863ab89b0413c1307c324eee268a5e0d5` |  |
+| `P5_ReviewMeasurements_20260905/weight_probe_20260905.log` | `9d41d84e3f0cb88cba6330a3fd64ca31f66cc579abe2f63eb0afd5df9f38b782` |  |
+| `P5_ReviewMeasurements_20260905/weight_probe_sidecar_scratch_ctor.diff` | `617f1ef29095331a96ce1c598553762b4c1b324e45065eb4b745b7c6a7e5dfc4` |  |
+
+### hd_v2  (5 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `hd_v2/README.md` | `00ce5e1bff39ef63e9682faad18783132df0f41cbe210acc815da5d15284702c` | hd_v2 — Hierarchical channel-identity derivation, version 2 (additive sidecar) |
+| `hd_v2/hd_verify_v2_FULL_v8.1.3_20260905.log` | `c6657165de79147c7b88bbf275825bd83c0ac69089ec9e14f3811094782c8260` |  |
+| `hd_v2/mcl_hd_throughput_v2.cpp` | `62bb756009c16d20bdc8eb4f0b6091863efd75bbbfdfe47707e3b85ae34e1405` |  |
+| `hd_v2/mcl_hd_v2.hpp` | `66aa13d30efaeae0ee1d888194a5b3d0f6ffbe81361f5ac582494523f8e9f2a4` |  |
+| `hd_v2/mcl_hd_verify_v2.cpp` | `984b5ff1d35f2f8f8ea7bd349fb8f8384ae56ba12965dbfc57c247a791a321af` |  |
 
 ---
 *Generated 2026-08-22 by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860).*

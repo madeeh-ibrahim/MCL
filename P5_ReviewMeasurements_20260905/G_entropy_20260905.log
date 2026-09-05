@@ -1,0 +1,6 @@
+B=    0 | n=2^25 keys | 42-bit truncation | collisions 121 | expected (ideal) 128.0 | ratio 0.945 | largest multiplicity 2
+B=    2 | n=2^25 keys | 42-bit truncation | collisions 130 | expected (ideal) 128.0 | ratio 1.016 | largest multiplicity 2
+B=    8 | n=2^25 keys | 42-bit truncation | collisions 122 | expected (ideal) 128.0 | ratio 0.953 | largest multiplicity 2
+B=   64 | n=2^25 keys | 42-bit truncation | collisions 137 | expected (ideal) 128.0 | ratio 1.070 | largest multiplicity 2
+B=10000 | n=2^25 keys | 42-bit truncation | collisions 145 | expected (ideal) 128.0 | ratio 1.133 | largest multiplicity 2
+DONE

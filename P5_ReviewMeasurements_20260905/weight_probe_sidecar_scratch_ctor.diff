@@ -1,0 +1,22 @@
+--- /Users/madeehibrahim/Desktop/MCL Project Stage 2/02_Engine_Code/keyed_q30_PQ/mcl_keyed_q30.hpp	2026-08-22 17:15:42
++++ mcl_keyed_q30.hpp	2026-09-05 10:57:27
+@@ -424,6 +424,19 @@
+         t4_ = (uint32_t)((s * (uint64_t)mcl_q30_omega4()) & 0xFFFFFFFFULL);
+         for (int i = 0; i < BURNIN; i++) iterate();
+     }
++
++    // SCRATCH-ONLY (2026-09-05 weight-space probe): construct from explicit weights
++    MCL_T4_Q30(const MCL_Q30_Sextet& w_explicit, uint64_t seed, double K)
++        : w_(w_explicit),
++          kp_(mcl_q30_K_phase(K)) {
++        // public-seed init for all four oscillators (mod 2^32, bit-exact).
++        uint64_t s = hash_seed(seed);
++        t1_ = (uint32_t)((s * (uint64_t)mcl_q30_omega1()) & 0xFFFFFFFFULL);
++        t2_ = (uint32_t)((s * (uint64_t)mcl_q30_omega2()) & 0xFFFFFFFFULL);
++        t3_ = (uint32_t)((s * (uint64_t)mcl_q30_omega3()) & 0xFFFFFFFFULL);
++        t4_ = (uint32_t)((s * (uint64_t)mcl_q30_omega4()) & 0xFFFFFFFFULL);
++        for (int i = 0; i < BURNIN; i++) iterate();
++    }
+     void iterate() { mcl_q30t4_iterate_raw(t1_, t2_, t3_, t4_, w_, kp_); }
+ 
+     // Keystream byte. Passes ent + dieharder (42/1/0). NOTE: an earlier comment

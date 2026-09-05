@@ -1,0 +1,8 @@
+(2,3) K=0.740: lambda1=-0.0659 R_alpha=0.303 period=60 -> LOCKED
+(2,3) K=0.750: lambda1=+0.1768 R_alpha=0.295 period=0 -> chaotic
+(3,5) K=0.300: lambda1=-0.0148 R_alpha=0.789 period=0 -> LOCKED
+(3,5) K=0.310: lambda1=+0.0619 R_alpha=0.761 period=0 -> chaotic
+(3,5) K=0.540: lambda1=-0.0828 R_alpha=0.246 period=32 -> LOCKED
+(3,5) K=0.550: lambda1=+0.5045 R_alpha=0.194 period=0 -> chaotic
+(3,5) K=0.860: lambda1=-0.0000 R_alpha=0.769 period=0 -> LOCKED
+(3,5) K=0.870: lambda1=+1.0204 R_alpha=0.121 period=0 -> chaotic

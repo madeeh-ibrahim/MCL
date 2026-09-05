@@ -1,0 +1,10 @@
+B=    0 | T2 avalanche mean 128.249/256 min 99 max 158 | T3 chi2 268.4 | T4 binding mean 127.67 min 111 max 143 | T5 nbr mean 128.57 min 109 max 148 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.010 | 0.007 ms/tag
+B=    1 | T2 avalanche mean 127.960/256 min 98 max 158 | T3 chi2 244.6 | T4 binding mean 127.87 min 112 max 148 | T5 nbr mean 128.75 min 114 max 157 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.104 | 0.007 ms/tag
+B=    2 | T2 avalanche mean 128.254/256 min 99 max 157 | T3 chi2 255.4 | T4 binding mean 127.98 min 108 max 141 | T5 nbr mean 128.80 min 110 max 149 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.049 | 0.007 ms/tag
+B=    4 | T2 avalanche mean 128.248/256 min 98 max 158 | T3 chi2 259.3 | T4 binding mean 127.96 min 105 max 143 | T5 nbr mean 128.76 min 110 max 151 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.020 | 0.007 ms/tag
+B=    8 | T2 avalanche mean 128.303/256 min 98 max 157 | T3 chi2 264.6 | T4 binding mean 128.18 min 107 max 146 | T5 nbr mean 128.70 min 105 max 150 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.038 | 0.007 ms/tag
+B=   16 | T2 avalanche mean 128.239/256 min 101 max 159 | T3 chi2 244.0 | T4 binding mean 128.36 min 112 max 148 | T5 nbr mean 128.67 min 108 max 153 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.034 | 0.008 ms/tag
+B=   64 | T2 avalanche mean 127.881/256 min 98 max 155 | T3 chi2 244.4 | T4 binding mean 128.51 min 108 max 142 | T5 nbr mean 128.32 min 109 max 151 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.015 | 0.009 ms/tag
+B= 1000 | T2 avalanche mean 127.906/256 min 101 max 152 | T3 chi2 275.7 | T4 binding mean 126.38 min 104 max 153 | T5 nbr mean 126.88 min 103 max 144 near 0 | FAR 1e4: acc 0 near 0 meanHD 128.036 | 0.037 ms/tag
+B=10000 | T2 avalanche mean 127.986/256 min 100 max 157 | T3 chi2 273.7 | T4 binding mean 129.51 min 112 max 143 | T5 nbr mean 128.34 min 100 max 147 near 0 | FAR 1e4: acc 0 near 0 meanHD 127.882 | 0.482 ms/tag
+DONE

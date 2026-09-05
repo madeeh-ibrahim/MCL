@@ -1,0 +1,5 @@
+Paper 3 item 10 — GAUSS-SEIDEL update — NS=20 seeds x 20 topologies, N=10000000 bytes/channel, NRAW=1000000 raw steps, K=12, seed offset 1000003
+pairs=3800  Bonferroni alpha/pairs=2.632e-07  Hamming 5-sigma eps=2.795e-04
+BYTES  : max|r|=0.001255  mean|r|=0.000256  EVT scale=0.001284  min p=7.238e-05  rejections=0/3800
+HAMMING: mean=50.0001%  max dev=2.043e-04  fails=0/3800
+RAW cos(theta1): max|r|=0.003430  EVT scale=0.004060  min p=6.027e-04  rejections=0/3800

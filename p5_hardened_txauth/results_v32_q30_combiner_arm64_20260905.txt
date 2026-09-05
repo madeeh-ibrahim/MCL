@@ -1,0 +1,40 @@
+================================================================
+  Paper-5 SS-VI battery on profile v3 (patent Claim-4 route) -- harness v3.2, Q30 realization
+  MCL-P5-V32BATTERY-Q30-2026-0905-002 (harness v3.2)  engine mcl_core v8.1.3 + keyed sidecar mcl_keyed_q30 UNMODIFIED (MCL_T4_Q30, no FP)
+  tag construction: PRF-XOR COMBINER (HMAC-SHA-256 arm keyed by K, engine arm keyed by S_device)
+  build architecture: arm64
+  FAR trials 100000 | threads 2
+================================================================
+
+T0 determinism: 1000/1000 recomputations bit-identical
+  T0 1000/1000 recomputations bit-identical                  PASS
+T1 fingerprint: SHA-256 over the 5000 concatenated tags = 16c03cf7107350fc2c5003608a366f42ac3257447773b82b54c1e83193d745b0
+T1 uniqueness: 5000 distinct / 5000
+  T1 5000/5000 unique tags                                   PASS
+T2 TX avalanche (random bit of canon(TX), 384 positions): mean 128.077/256 (min 99, max 160), n=5000
+  T2 avalanche mean within 128 +/- 3                         PASS
+T3 byte chi2: 271.2 (df 255, crit.001 ~330.5)
+  T3 byte chi2 below the 0.001 critical value                PASS
+T4 device binding: 45 pairs, mean 129.18/256 (50.5%), range 112-146
+  T4 inter-device Hamming ~50%                               PASS
+T5 no gradient: 128 single-bit-neighbour secrets, mean 128.12/256 (50.0%), range 102-144, near-misses(HD<=32) 0
+  T5 flat landscape, zero near-misses                        PASS
+  T6a legitimate authorization accepted                      PASS
+  T6b replay of an accepted (TX, c) rejected                 PASS
+  T6c cross-verifier transfer rejected                       PASS
+  T6d cross-account transfer rejected                        PASS
+  T6e failed attempt does not consume the counter (valid retry accepted) PASS
+  T6f double-submit: exactly one acceptance                  PASS
+  T6i valid tag on a stale counter (c <= c_last) rejected    PASS
+  T6g rebinding without device secret rejected               PASS
+  T6h rebinding with device presence accepted                PASS
+T7 FAR: 0 accepts / 100000 trials | mean HD 128.056/256 | near-misses 0 | 16.3 s (6125 tags/s)
+  T7 zero forgeries by random wrong devices                  PASS
+  T7b zero near-misses (flat landscape at scale)             PASS
+T8 generation: 0.317 ms/tag single-thread = 3152 tags/s
+  T8 generation latency under 10 ms/tag                      PASS
+T8b generation + verifier recomputation (end-to-end): 0.639 ms/tx single-thread = 1565 tx/s (300/300 accepted)
+  T8b end-to-end latency under 20 ms/tx, all accepted        PASS
+weak-key re-draw census: 223 of 137057 weight derivations had a reachable symmetry in their RAW weight set (re-drawn deterministically by the sidecar)
+
+RESULT: 19 PASS / 0 FAIL

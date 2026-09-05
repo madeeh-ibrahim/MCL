@@ -1,0 +1,3 @@
+derive_child_v2 census: parent (3,5), M=1000000, indices=200000, engine 8.1.3, hd_v2 1.0.0
+raw non-coprime 78585 (39.29%; independent-uniform expectation 39.21%) | q differs from raw 78585 (39.29%) | p==q bumps 0
+parity classes (p,q): even,even 0 | even,odd 99958 | odd,even 49952 | odd,odd 50090  (v1 lock: two classes empty)

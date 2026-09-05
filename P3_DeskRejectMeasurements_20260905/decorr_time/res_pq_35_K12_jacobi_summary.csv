@@ -1,0 +1,3 @@
+mode,update,p,q,K,delta,ln_inv_delta,lambda1,lambda2,mean_ln_d1,t_sat,t_dec,r_floor,t_pred_1rad,t_pred_2pi,growth_slope,growth_pts,r_at_T
+pq,jacobi,3,5,12,1.000e+00,nan,3.5864,2.7643,0.7915,1,2,0.0234,0.779,0.292,nan,0,0.009751
+pq,jacobi,3,5,12,2.000e+00,nan,3.5864,2.7643,0.7690,1,24,0.0234,0.786,0.298,nan,0,-0.008992

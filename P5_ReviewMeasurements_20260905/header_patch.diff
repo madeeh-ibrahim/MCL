@@ -1,0 +1,14 @@
+--- mcl_core_ORIGINAL.hpp	2026-09-05 10:56:36
++++ mcl_core.hpp	2026-09-05 09:12:57
+@@ -634,7 +634,10 @@
+ 
+ // Engine defaults
+ constexpr double K_DEFAULT = 12.0;
+-constexpr int BURNIN = 10000;
++#ifndef MCL_BURNIN_OVERRIDE
++#define MCL_BURNIN_OVERRIDE 10000
++#endif
++constexpr int BURNIN = MCL_BURNIN_OVERRIDE;   // SCRATCH COPY ONLY (P5 burn-in curve experiment 2026-09-05); engine of record untouched
+ constexpr int GOLD_S1 = 20; // Goldilocks shift 1: bits [20-27]
+ constexpr int GOLD_S2 = 36; // Goldilocks shift 2: bits [36-43]
+ constexpr int DECIMATION = 2;
