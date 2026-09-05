@@ -21,6 +21,7 @@ Paper 3 v3 records completed after the referee-eye and external review rounds of
 - `RECORD_P3_DESKREJECT_MEASUREMENTS_20260905.md` — addendum: the burn-in control and the note that for a K change the measured first-step separation is ≈ 9.6 ΔK (sequential substitution), which corrected §IV.D of the paper.
 - `decorr_time/plot_decorr_steps.py`, `window_control/analyze_trace.py` and the two figure PNGs — regenerated at 320 dpi for the journal's ≥ 300 dpi requirement (data unchanged).
 - `SHA256SUMS` regenerated (90 files).
+- Housekeeping: the scratch-directory path printed in the header of `M1_M2_apple_verification/nist_sts_finalAnalysisReport_apple_20260721.txt` was replaced by a neutral placeholder (the 188 NIST STS results and the stream SHA-256 in the campaign README are unchanged); an obsolete `.gitignore` entry and an attribution note in `keyed_q30_PQ/STATUS.md` were removed.
 - `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` — the Stage-1 channel-scaling record (runs A–D, 20 → 10⁷ channels, two Apple Silicon machines, verbatim outputs) behind Paper 3 Table IV, previously outside the public bundle.
 - `P3_DeskRejectMeasurements_20260905/tableVI_lyap/` — re-measurement of Paper 3 Table VI (λ₁, λ₂ vs K for (2,3); 3 seeds × 10⁷ QR iterations; record MCL-P3-TABLEVI-2026-0906-001) — the old table had no archived record.
 

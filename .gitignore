@@ -1,6 +1,5 @@
 *.bak
 .DS_Store
-CLAUDE.md
 __pycache__/
 *.pyc
 *.o

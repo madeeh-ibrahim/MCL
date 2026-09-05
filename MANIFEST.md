@@ -32,9 +32,9 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
+| `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `889ee9dcfe3eaa0c2d7e4795d8bba3a308181816a1aea850dc99814cc156bd70` |  |
+| `CHANGELOG.md` | `a4433351ce02c658afce17dc1456116e73d5b9925326ca9bf9b40144a7cf0ade` |  |
 | `CITATION.cff` | `65b632e43fc33e0cb8b85f6aac84f49533856249178b3e8421b58f8b05856362` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
@@ -132,7 +132,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/MCL_KEYED_Q30_SCIENCE_20260611.txt` | `e7d1b57a3cdcd5c272048efc298a0335882df04dd27b2d6b2bc0739da1dcb36e` |  |
 | `keyed_q30_PQ/NOSYM_V106_RECORD_20260822.md` | `bc56e7eb28a32ccf61947d87a1417ae87eba7c57e80cfe34a85ea6df9ce1abdb` | sidecar v1.0.6 — رفض التناظر القابل للوصول من البذرة في `mcl_t4_q30_params_from_key` — 2026-08-22 |
 | `keyed_q30_PQ/README.md` | `7bc88cc5244b9882f8184dd1b2bb7f1531a7dca42307cbc9923df9cf232c9567` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
-| `keyed_q30_PQ/STATUS.md` | `4eb95618e0dd0163c1a9aa87a74fffa3af3a391dcac38958bf2c163e3184cc88` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
+| `keyed_q30_PQ/STATUS.md` | `a37afe9a1f1b57b105e7d4b112819207e765daf44b6d70ad22ee1862a9ca2e9e` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
 | `keyed_q30_PQ/dump_keyN.cpp` | `ef0a8649cd46f413b631188b12b8457457b51464d0aca832a587010675d11672` |  |
 | `keyed_q30_PQ/lyap_2osc_signcheck.py` | `c34b8e36fcbc2c773ad444e7f7b676a01789c32704873a0b66aa328d3922291d` |  |
 | `keyed_q30_PQ/lyap_independent_check.py` | `77199d6bf3d0a46250daede2a1019eb5af03d5b17508a5cb1ce0730aebc5d8fc` |  |
@@ -338,7 +338,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `M1_M2_apple_verification/mcl_tau_int.cpp` | `ed61e35a96b5b262aa66d8be1a94fb2e0efbe69964445e91d3c3b85b131225fd` |  |
 | `M1_M2_apple_verification/nist_sts_assess_run_20260721.log` | `343b4876d4509d6a66369ee94d2c2947965471a35ff79fd0ffbbe74a9947d36f` |  |
 | `M1_M2_apple_verification/nist_sts_experiments_apple_20260721.zip` | `44ecfc6ff97ad9a66b269ca4da2ebfc3fddf669afab86d68d89a8670bfd32ced` |  |
-| `M1_M2_apple_verification/nist_sts_finalAnalysisReport_apple_20260721.txt` | `9a03c1bf939b433bb0a1e4d7067b27e6a48f50ee67d82434e96dcc1a8143767f` |  |
+| `M1_M2_apple_verification/nist_sts_finalAnalysisReport_apple_20260721.txt` | `3a27f50d866d544b487423996089a2989a02cd980b70e062d9a12ffbd467cf8d` |  |
 | `M1_M2_apple_verification/paper2_L2_verify_apple_20260706.log` | `1133ba55c11544c04f64b4db1631a0da3833caca63a5264569f8305aaf4df09c` |  |
 | `M1_M2_apple_verification/perbit_msbflank_apple_20260719.log` | `56e025e3d3564ab50984397467ea151a3738c2ffb26fe82e46faf9ad3cf9be4f` |  |
 | `M1_M2_apple_verification/perbit_msbflank_stride2_apple_20260719.log` | `57ebb0ccd9ae2a2f5e3c16b52810796a6fc7ec126054c5027eaa7453fd939fb2` |  |

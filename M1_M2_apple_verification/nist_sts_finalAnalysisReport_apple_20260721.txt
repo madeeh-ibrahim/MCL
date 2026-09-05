@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 RESULTS FOR THE UNIFORMITY OF P-VALUES AND THE PROPORTION OF PASSING SEQUENCES
 ------------------------------------------------------------------------------
-   generator is </private/tmp/claude-501/-Users-madeehibrahim-Desktop-MCL-Project-Stage-2/2347823c-023e-4383-9004-53217789180c/scratchpad/nist/mcl_nist_stream.bin>
+   generator is <scratch/nist/mcl_nist_stream.bin>
 ------------------------------------------------------------------------------
  C1  C2  C3  C4  C5  C6  C7  C8  C9 C10  P-VALUE  PROPORTION  STATISTICAL TEST
 ------------------------------------------------------------------------------

@@ -87,7 +87,7 @@ separate change.
 
 ## 7) Parameter-recovery attack on the BARE single-pair engine (2026-06-15)
 
-A faithful adversarial re-run (`../Verfications codes June 2026/`, `gen_states.cpp` + `06_attack_real_lattice.py`) **broke** the bare 2-oscillator `mcl_q30_iterate_raw` engine in the **raw-consecutive-state-observation** model — fixing two defects in the earlier (Claude, 11 Jun) suite that had wrongly concluded "no break": (a) the Python re-impl used `OMEGA=0x9E3779B9=(φ−1)·2³²`, dropping the `/2π` (real `omega1=422466573`); (b) Attack-05 subsampled the low-16 slack by stride 257, preordaining its 0/8.
+A faithful adversarial re-run (`../Verfications codes June 2026/`, `gen_states.cpp` + `06_attack_real_lattice.py`) **broke** the bare 2-oscillator `mcl_q30_iterate_raw` engine in the **raw-consecutive-state-observation** model — fixing two defects in the earlier (11 Jun) suite that had wrongly concluded "no break": (a) the Python re-impl used `OMEGA=0x9E3779B9=(φ−1)·2³²`, dropping the `/2π` (real `omega1=422466573`); (b) Attack-05 subsampled the low-16 slack by stride 257, preordaining its 0/8.
 
 | Item | Status | What it shows |
 |---|---|---|
