@@ -1,0 +1,27 @@
+name: p4-linux-check
+on:
+  push:
+    branches: [p4-linux-check]
+jobs:
+  linux-gcc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: toolchain
+        run: |
+          g++ --version | head -1; ldd --version | head -1; uname -m
+      - name: build and run VDF128-T4 v3 on x86_64 Linux / glibc / GCC
+        working-directory: VDF128_T4
+        run: |
+          set -e
+          g++ -std=c++17 -O3 -DNDEBUG -I.. p4_vdf128v3_kat.cpp -o kat && ./kat > vdf128v3_kat_linux_glibc_gha.log
+          g++ -O2 -std=c++17 -o sa3 vdf128_t4v3_standalone.cpp && { ./sa3 ../P4_ReviewMeasurements_20260905/q30_lut_int32le.bin; ./sa3; } > vdf128_t4v3_standalone_linux_glibc_gha.log
+          g++ -std=c++17 -O3 -I.. mcl_vdf128v3_xplat.cpp -o xp && ./xp > vdf128v3_xplat_linux_glibc_gha.log
+          { echo "gcc $(g++ -dumpfullversion) glibc $(ldd --version | head -1 | awk '{print $NF}') $(uname -m) $(lsb_release -ds 2>/dev/null)"; } > linux_env_gha.txt
+          grep -c REPRODUCED vdf128_t4v3_standalone_linux_glibc_gha.log; grep -c 75d76880369509b4 vdf128v3_kat_linux_glibc_gha.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: p4-v3-linux-logs
+          path: |
+            VDF128_T4/*_gha.log
+            VDF128_T4/linux_env_gha.txt
