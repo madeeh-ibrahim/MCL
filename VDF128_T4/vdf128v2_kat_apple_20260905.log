@@ -1,0 +1,31 @@
+VDF128-T4 v2 KNOWN-ANSWER VECTOR (engine 8.1.3; per-input weights; B=10000, N=1000, K=12.0)
+  x (ASCII)             "MCL-VDF128-KAT-1"  (16 bytes)
+  h = SHA-256(x)        556a0c3287e4eb1c 31af7a1e1ee12383 36cd458661b42a31 0d0aeb75d662fcb6
+  weights = params_from_key(h, 0)  (p12 q12 p13 q13 p14 q14 p23 q23 p24 q24 p34 q34)
+    320307582 494892948 507734535 665032618 227841880 1046519887 418019661 189522290 137333608 915459441 371164530 470120306
+  omega (Q.32)          192e540d 35f94f3b 10e06777 1d43f384   K_phase 0x1e8ec8a4a
+  LUT CRC-32            0xde1340cf
+  init state t1..t4     b449a763 2dc150e6 6b91a53c 35df83c8
+  after burn-in (C_0)   94b5abd2 c3038209 d3edfb7f 5a2b1745
+  C_1 (t=250)           6e2f8f1d 33c7bc74 d11e3e62 e5ef95dd
+  C_2 (t=500)           2f902344 533ee2cf 8e0e2ba0 09db477e
+  C_3 (t=750)           caa9e9c6 84a1ae9c 405a397c e7159888
+  C_4 (t=1000)          bafabcaa 1e0d2231 bec6cfe4 b5d82436
+  SHA-256 preimage (80 B)aabcfaba31220d1e e4cfc6be3624d8b5 556a0c3287e4eb1c 31af7a1e1ee12383 36cd458661b42a31 0d0aeb75d662fcb6 e803000000000000 4d434c2d56444631 32382d54342d7632 2d6f757400000000
+  y = SHA-256(preimage) 1d0f60cc602b12ed bd1177cedb5bb198 64f3a890c50b6a2a ab028017f3160848
+  API mcl_vdf128v2_eval: IDENTICAL
+  y (same x, N=100000)  eb8ced6257a3f450 2bed95d36856ad08 1317e406e248d7b6 901bb73deca754cb
+
+AVALANCHE PROFILE (one-bit state flip at C_0; mean Hamming over all 128 positions x 8 inputs; 64 = full diffusion)
+  k=1: mean 63.24 / 128   (per-input range 62.71 .. 64.02)
+  k=2: mean 63.99 / 128   (per-input range 63.40 .. 64.90)
+  k=3: mean 63.80 / 128   (per-input range 62.68 .. 64.63)
+  k=4: mean 64.04 / 128   (per-input range 63.38 .. 64.52)
+  k=5: mean 64.05 / 128   (per-input range 63.70 .. 64.56)
+  k=6: mean 64.23 / 128   (per-input range 63.50 .. 65.00)
+  k=7: mean 64.11 / 128   (per-input range 63.56 .. 65.07)
+  k=8: mean 64.13 / 128   (per-input range 63.09 .. 65.14)
+
+INPUT-FLIP STATISTICS (64 random one-bit flips of 16-byte inputs; expectations 64/128 and 128/256)
+  init-state Hamming: mean 64.61 / 128 (sd 6.07)   output Hamming: mean 128.70 / 256 (sd 8.42)
+  KAT-1 vs KAT-0 (last char 1->0): init-state Hamming 60/128, output Hamming 122/256

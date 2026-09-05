@@ -25,3 +25,17 @@ Headline: old 64-bit-state path closes at λ=1,671,196,332 (4th confirmation); n
 | Cross-arch (arm64 / x86_64) × cross-opt (-O0..-O3) | **8/8 bit-identical** — `vdf128_xplat_apple_20260817.log` (partial: Rosetta, not native Linux) |
 
 Pending: ship to Zenodo archive with next version; FPGA re-validation of the VDF128 wrapper (the underlying T4 iterate is already silicon-proven); a NATIVE Linux/glibc/GCC x86_64 run (the arch axis is covered by the Rosetta matrix above; the OS+compiler-family axis is not). Big-endian hosts remain gated by the sidecar's `MCL_BIG_ENDIAN_ACK` guard and untested.
+
+## v2 — per-input weights (2026-09-05, Paper 4 referee-eye round R4-1, option b)
+
+`mcl_vdf128_t4_v2.hpp` (additive; Doc ID MCL-VDF128-T4-2026-0905-002) derives the twelve coupling weights from **h = SHA-256(x)** through `mcl_t4_q30_params_from_key(h, 0)` instead of a fixed public constant, so every input evaluates its own map F_x; the initial state is unchanged and the output tag is `MCL-VDF128-T4-v2-out`. Reason: against a fixed 128-bit map a Hellman / distinguished-point precomputation covering W₀ = 2⁸⁰ points gives a jump-ahead probability ≈ N·W₀/2¹²⁸ (≈ 2⁻⁸ at N = 2⁴⁰), three orders of magnitude above the v1 conjecture's generic term. The v1 header stays for the record; **Paper 4 now specifies v2** (Algorithm 1) and every VDF128-T4 number in the paper is re-measured on v2:
+
+| File | Role | Result |
+|---|---|---|
+| `mcl_vdf128v2_battery.cpp` → `vdf128v2_battery_apple_20260905.log` | 10 properties + 4 attacks + **3 structural probes** (single-bit linear correlation, cube/degree, avalanche profile) | **22/22 PASS** |
+| `mcl_vdf128v2_cyclecheck.cpp` → `vdf128v2_cycleprobe_apple_20260905.log` | budgeted Brent on three inputs (each its own F_x) | **no closure within 2³³ × 3** |
+| `mcl_vdf128v2_bench.cpp` → `vdf128v2_bench_apple_20260905.log` | Eval throughput + checkpoint Verify with real threads (Apple M1 Pro) | 34.2 M iter/s; k = 1/2/4/8/16 → 1.02/2.01/3.92/6.47/6.70× |
+| `mcl_vdf128v2_xplat.cpp` → `vdf128v2_xplat_apple_20260905.log`, `vdf128v2_xplat_linux_glibc_20260905.log` | fingerprint across arm64/x86_64 × −O0…−O3 + Linux GCC | **9/9 identical** |
+| `p4_vdf128v2_kat.cpp` → `vdf128v2_kat_apple_20260905.log`, `vdf128v2_kat_linux_glibc_20260905.log` | Vector 5 v2 with every intermediate + avalanche profile + input-flip statistics | y = `1d0f60cc602b12ed…`, byte-identical on both platforms |
+
+Engine-free re-implementation of v2 and the complete record: `../P4_ReviewMeasurements_20260905/`.

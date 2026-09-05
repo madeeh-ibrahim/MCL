@@ -1,0 +1,5 @@
+TEST2 input A (own map F_x): NO closure within 2^33 = 8,589,934,592 steps (254 s, 33.9 M iter/s)
+TEST2 input B (own map F_x): NO closure within 2^33 = 8,589,934,592 steps (252 s, 34.1 M iter/s)
+TEST2 input C (own map F_x): NO closure within 2^33 = 8,589,934,592 steps (252 s, 34.0 M iter/s)
+TEST5 KAT v2 final state (N=1e3): bafabcaa 1e0d2231 bec6cfe4 b5d82436
+TEST5 KAT v2 y = 1d0f60cc602b12edbd1177cedb5bb19864f3a890c50b6a2aab028017f3160848

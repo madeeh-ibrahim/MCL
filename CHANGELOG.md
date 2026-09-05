@@ -5,6 +5,16 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.6 — 2026-09-05
+
+Paper 4 referee-eye review round 4: **VDF128-T4 version 2 (per-input coupling weights)**. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged; the v1 header `VDF128_T4/mcl_vdf128_t4.hpp` is kept unmodified for the record.
+
+### Added
+
+- `VDF128_T4/mcl_vdf128_t4_v2.hpp` — additive v2 header (Doc ID MCL-VDF128-T4-2026-0905-002): the twelve weights are derived from `SHA-256(x)` through the sidecar's audited `mcl_t4_q30_params_from_key`, so each input evaluates its own map; output tag `MCL-VDF128-T4-v2-out`. Reason: a fixed public 128-bit map admits a generic Hellman/distinguished-point precomputation with jump-ahead probability ≈ N·W₀/2¹²⁸ (≈ 2⁻⁸ at N = 2⁴⁰, W₀ = 2⁸⁰), far above the term the v1 conjecture stated; the toy reproduction is `P4_ReviewMeasurements_20260905/p4_tmto_toy.py` (measured 2.27e-2 vs the v1 term 7.3e-6 on a 32-bit map).
+- `VDF128_T4/mcl_vdf128v2_battery.cpp`, `…v2_cyclecheck.cpp`, `…v2_bench.cpp`, `…v2_xplat.cpp`, `p4_vdf128v2_kat.cpp` + logs — every VDF128-T4 measurement re-run on v2: battery **22/22** (10 properties, 4 attacks, 3 new structural probes: single-bit linear correlations at r = 1/2/4 indistinguishable from an independent control, cube sums non-zero at dimension 20 after one iteration, avalanche profile 63.2 → 64.5/128 over r = 1…8); **no orbit closure within 2³³ steps × 3 inputs**; 34.2 M iter/s; checkpoint Verify 6.70× at k = 16 on 8 cores; **9-cell cross-platform fingerprint identical** (arm64, x86_64/Rosetta, Linux GCC).
+- `P4_ReviewMeasurements_20260905/` — record MCL-P4-REVIEWMEAS-2026-0905-002 with `SHA256SUMS`: the above sources and logs, `vdf128_t4v2_standalone.cpp` (engine-free re-implementation of Algorithm 1 v2; reproduces Vector 5 v2 — y = `1d0f60cc602b12ed…` — on macOS and on x86_64 Linux/glibc 2.36, from the table file and from a `sin()`-regenerated table), the normative sine table, the TMTO toy script, and a SHA-256 hash-chain rate on the same host (7.3 M hashes/s vs 34 M iter/s) for the paper's comparison table.
+
 ## v0.2.5 — 2026-09-04
 
 Paper 4 external-review round 2. Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
