@@ -1,0 +1,47 @@
+VDF128-T4 v3 weak-lane instance probe (MCL-VDF128-WEAKLANE-2026-0905-001; engine 8.1.3)
+Grinding inputs "weak-lane-<i>" for weight sets with a small lane (the derivation of Algorithm 1, incl. pair and parity re-draws)
+tried 40000000 inputs in 119 s: lane < 2^20 in 1.165% of inputs (466064), lane < 2^16 in 0.0730% (29181)
+first lane <= 15: weak-lane-v3-7249920 (lane 11); first lane < 2^16: weak-lane-v3-1787 (51287); first lane < 2^20: weak-lane-v3-198 (786755); first pair with both lanes < 2^16: (none) (0, 0)
+
+[control: battery input] x = "VDF128-T4-battery-input"
+  weights: 34498284 808529583 484862660 741849080 550800402 407365630 948080496 1054803268 665178592 285826809 735334702 620534445
+  smallest lane = 34498284 (2^25.0)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 62.8 65.1 63.4 64.1 63.8 63.3 63.6 63.6
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 15.4 15.3 15.9 16.1
+  S1 linear correlation r=1: max|corr| 0.00751 (in bit 38 -> out bit 120), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00807 (in bit 89 -> out bit 117), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 49.6/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 43.0/128
+
+[lane < 2^20 (~1% of inputs)] x = "weak-lane-v3-198"
+  weights: 298803659 786755 372539700 499697659 980174219 409083191 201692778 344520761 406528054 413757901 356785947 983626873
+  smallest lane = 786755 (2^19.6)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 63.5 64.1 64.2 64.3 63.8 64.0 63.5 63.2
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 15.7 15.9 16.1 15.7
+  S1 linear correlation r=1: max|corr| 0.00774 (in bit 6 -> out bit 35), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00819 (in bit 5 -> out bit 57), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 59.4/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 56.6/128
+
+[lane < 2^16] x = "weak-lane-v3-1787"
+  weights: 534778342 551548227 702465407 51287 206882434 293609334 1044203691 309241091 490129877 582019131 342679748 910698740
+  smallest lane = 51287 (2^15.6)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 63.4 64.3 63.7 65.1 63.6 63.7 64.1 64.3
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 15.7 15.9 15.8 15.9
+  S1 linear correlation r=1: max|corr| 0.00766 (in bit 106 -> out bit 20), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00759 (in bit 86 -> out bit 11), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 60.4/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 58.6/128
+
+[lane <= 15 (ground)] x = "weak-lane-v3-7249920"
+  weights: 1006801162 783659006 655761720 11 135566489 601509988 434762693 709578809 957851196 442883169 423160426 749806055
+  smallest lane = 11 (2^3.5)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 64.1 63.6 64.5 63.9 64.8 64.4 63.7 63.5
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 15.9 16.0 16.3 15.9
+  S1 linear correlation r=1: max|corr| 0.00717 (in bit 94 -> out bit 5), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00729 (in bit 69 -> out bit 20), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 57.2/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 56.4/128
+
+Interpretation: a coarse lane weakens ONE coupling term of ONE pair; the other two pairs of each oscillator carry ~2^30 weights,
+so diffusion should survive. Numbers above are the measurement of that expectation. Evidence, not a bound.

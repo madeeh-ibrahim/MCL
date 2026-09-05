@@ -1,0 +1,22 @@
+# host:  1:06  up 27 days,  8:39, 1 user, load averages: 4.49 3.95 2.89
+# no other heavy process (checked); MCL ops n=400, hash ops n=400000
+=== Paper-5 SS-VII system evaluation (MCL-P5-SYSEVAL-2026-0905-001) ===
+engine mcl_core v8.1.3 + keyed sidecar (MCL_T4_Q30), single thread, reps=400
+
+R1 enrollment  MCL derive_child_v2 (bare)        :   0.862179 ms  (n=400)
+R1 enrollment  MCL derive_child_safe_v2 (+screen):  20.619754 ms  (n=20)
+R1 enrollment  hash KDF1/SHA-256 -> 256-bit key  :   0.000459 ms  (0.459 us, n=400000)
+
+R2 auth        MCL tag, Eqs. (3a)-(3), Q30      :   0.294680 ms  (n=400)
+R2 auth        hash HMAC-SHA-256 tag            :   0.002022 ms  (2.022 us, n=400000)
+R2 auth        MCL combiner, Eq. (7)            :   0.294932 ms  (n=400)
+
+R3 prng 1 KiB  MCL engine (same engine, reused)  :   0.350726 ms  (n=400)
+R3 prng 1 KiB  hash SHA-256 counter DRBG        :   0.013872 ms  (13.872 us, n=40000)
+
+-- footprint --
+mutable per-channel state : MCL_T4_Q30 72 B   |  SHA-256 ctx ~104 B (32 B chaining + 64 B block + counter)
+read-only table           : MCL sine LUT 65,536 x int32 = 262144 B (262,144; quarter-wave form 65,536 B)  |  hash stack 0 B
+stored secrets (3 roles)  : MCL 1 x 256-bit  |  hash stack 1 x 256-bit (same key, distinct labels)
+distinct primitives       : MCL 1 (engine) + SHA-256 for the KDF  |  hash stack 1 (SHA-256) for all three roles
+(sink=196)

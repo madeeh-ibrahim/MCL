@@ -1,12 +1,12 @@
-# uptime at start: 12:20  up 26 days, 19:54, 1 user, load averages: 4.33 12.29 59.51
-# other busy processes: ./bat_q30_native_ct_arm64 
-## run 1
-derive_child (bare)         :   1078.9 us/derivation  =   926.9 derivations/sec
-derive_child_safe (+Step-4) :  27118.9 us/derivation  =    36.9 derivations/sec
-Step-4 validation overhead  :  26040.0 us (96.0% of safe path)
+# quiet-host re-measurement 2026-09-06 01:06:55;  1:06  up 27 days,  8:40, 1 user, load averages: 3.24 3.70 2.83
+# busy processes: 
+## v2 run 1
+derive_child (bare)         :    819.9 us/derivation  =  1219.7 derivations/sec
+derive_child_safe (+Step-4) :  20600.2 us/derivation  =    48.5 derivations/sec
+Step-4 validation overhead  :  19780.3 us (96.0% of safe path)
 (sink=254493690)
-## run 2
-derive_child (bare)         :   1080.5 us/derivation  =   925.5 derivations/sec
-derive_child_safe (+Step-4) :  28241.9 us/derivation  =    35.4 derivations/sec
-Step-4 validation overhead  :  27161.4 us (96.2% of safe path)
+## v2 run 2
+derive_child (bare)         :    832.9 us/derivation  =  1200.6 derivations/sec
+derive_child_safe (+Step-4) :  20609.2 us/derivation  =    48.5 derivations/sec
+Step-4 validation overhead  :  19776.2 us (96.0% of safe path)
 (sink=254493690)

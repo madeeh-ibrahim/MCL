@@ -5,6 +5,50 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.8 — 2026-09-06
+
+Joint release of three sessions' staged work — **Paper 3** records, **Paper 4** round 6 (VDF128-T4 v3), and **Paper 5** TOPS-readiness. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged. Additive only.
+
+<!-- 2026-09-06: the P3 block (staged as v0.2.8) and the P4 round-6 block (staged as v0.2.9) were merged with the P5 block under this single v0.2.8 entry before the push, as the P4 note invited; Paper 5 cites release v0.2.8 for its §VI.E and §VII.B records. -->
+
+### Paper 3 (records completed)
+
+Paper 3 v3 records completed after the referee-eye and external review rounds of the evening (engine `mcl_core.hpp` 8.1.3 unchanged; keyed sidecar v1.0.6 unchanged).
+
+### Added / Changed (`P3_DeskRejectMeasurements_20260905/`)
+
+- `decorr_time/decorr_time.cpp` — `DECORR_BURNIN=<steps>` option (a common on-attractor burn-in before the two trajectories split); `res_{omega,K}_35_K12_gs_burnin1e4_{summary,steps}.csv` — the control cited in Paper 3 v3 §V.K (iv): growth rates 5.74–5.79 and identical t_sat / t_dec at every δ with and without the burn-in.
+- `RECORD_P3_DESKREJECT_MEASUREMENTS_20260905.md` — addendum: the burn-in control and the note that for a K change the measured first-step separation is ≈ 9.6 ΔK (sequential substitution), which corrected §IV.D of the paper.
+- `decorr_time/plot_decorr_steps.py`, `window_control/analyze_trace.py` and the two figure PNGs — regenerated at 320 dpi for the journal's ≥ 300 dpi requirement (data unchanged).
+- `SHA256SUMS` regenerated (90 files).
+- `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` — the Stage-1 channel-scaling record (runs A–D, 20 → 10⁷ channels, two Apple Silicon machines, verbatim outputs) behind Paper 3 Table IV, previously outside the public bundle.
+- `P3_DeskRejectMeasurements_20260905/tableVI_lyap/` — re-measurement of Paper 3 Table VI (λ₁, λ₂ vs K for (2,3); 3 seeds × 10⁷ QR iterations; record MCL-P3-TABLEVI-2026-0906-001) — the old table had no archived record.
+
+### Paper 4 (round 6)
+
+Paper 4 round 6 ("a superior paper for the journal"). Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
+
+### Added
+
+- `VDF128_T4/mcl_vdf128_t4_v3.hpp` — **VDF128-T4 version 3** (Doc ID MCL-VDF128-T4-2026-0905-003): project-neutral domain strings (`VDF128-T4-v3-kdf`, `VDF128-T4-v3-out`, KAT input `VDF128-T4-KAT-01`) and a **full-rank parity-matrix re-draw rule** that excludes every translation symmetry of the map. Reason: the new single-bit differential probe found on the version-2 battery instance a probability-one differential — all six weights touching one state word were even, so the half-turn shift of that word commuted with every coupling argument; the exact criterion is a rank-deficient 12×4 parity matrix over GF(2), present on 6.96% of version-2 weight sets (5.63% single-word, 1.37% global) and on 0.0000% under the new rule. Map, initialization and table unchanged; version-2 files kept for the record. Vector 5 v3: y = `75d76880369509b4…`.
+- `VDF128_T4/p4_vdf128v3_distinguisher.cpp` — differential (single- and two-bit), linear (two-bit masks), cube-sum profile (6 instances × r = 1…6 × d = 12/16/20) and translation-symmetry statistics. Findings reported in the paper: one-iteration non-propagation of a word's top bits through even weights (832/16,384 pairs at r = 1, none at r ≥ 2); one-iteration cube-sum imbalance (43–58/128 at d = 20), balanced from r = 2.
+- `VDF128_T4/mcl_vdf128v3_{battery,cyclecheck,bench,xplat}.cpp`, `p4_vdf128v3_{kat,weaklane,weakpair}.cpp`, `p4_sha256_vs_t4v3_bench.cpp`, `vdf128_t4v3_standalone.cpp`, `run_v3_all.sh` + logs — every VDF128-T4 measurement re-run on v3: battery 21/22 (the cube-sum balance at one iteration is the recorded finding), no orbit closure within 2³³ × 3 inputs, weak-lane/weak-pair probes incl. a genuine both-lanes-<2¹⁶ input, 9-cell fingerprint (the Linux/GCC cell from GitHub Actions run 33981717768, branch `p4-linux-check`, because Docker Desktop was blocked), quiet-host timings T4 28.9 ns vs SHA-256 37.5 ns (SHA-2 instructions) / 135 ns (library), checkpoint Verify 6.59× at k = 8.
+- `P4_ReviewMeasurements_20260905/` — round-6 sources and logs added (62 files, `SHA256SUMS` regenerated; README section "Round 6").
+
+### Paper 5 (TOPS-readiness round)
+
+The two evaluation campaigns the revised Paper 5 depends on, plus a licence header.
+
+- `P5_ReviewMeasurements_20260905/p5_system_eval.cpp` + `system_eval_20260905.log` (Doc ID MCL-P5-SYSEVAL-2026-0905-001) — **the system evaluation behind Paper 5 §VII.B**: the three wallet roles (enrollment, authentication, generation) measured in one process against a hash-based stack (KDF1/SHA-256 + HMAC-SHA-256 + SHA-256 counter DRBG) on an idle host, MCL rows n = 400 and hash rows n = 400,000. Enrollment 0.862 ms vs 0.459 µs (≈ 1,880×; 20.62 ms with the Step-4 screen, ≈ 44,900×); tag 0.295 ms vs 2.02 µs (≈ 146×); 1 KiB 0.351 ms vs 13.87 µs (≈ 25×); mutable state 72 B vs ≈ 104 B; read-only table 262,144 B vs 0; stored secrets 1 vs 1; **primitives required 2 vs 1** — the MCL stack needs the engine *and* SHA-256 for its own KDF. **The result refutes the consolidation motivation, and Paper 5 retracts it rather than repeating it.**
+- `P5_ReviewMeasurements_20260905/p5_adversarial.cpp` + `adversarial_20260905.log` (Doc ID MCL-P5-ADVERSARIAL-2026-0905-001) — **the two attempted attacks behind Paper 5 §VI.E**, both negative. A1 per-field context binding: one random bit flipped in each ctx field alone, 2,000 trials per field, all six fields within 1.6 standard errors of the 128/256 null, repeated at B = 0. A2 first-order weight leak (the §X.12 concern): 20,000 keys × 360 weight bits × 256 tag bits = 92,160 point-biserial correlations at B = 10,000 and B = 0; max |r| 0.0309 (4.37σ) and 0.0298 (4.22σ) against a noise floor 0.00707 and an expected null maximum ≈ 4.92σ — no first-order weight leak at either burn-in. Uses the scratch burn-in-override engine copy; the engine of record is untouched.
+- Quiet-host re-measurement of the derivation throughput (`hd_throughput_v{1,2}_quiet_20260905.log`): v2 bare 0.820–0.833 ms, with the Step-4 screen 20.60–20.61 ms (96.0 % of the safe path); v1 0.819–0.822 / 20.56–20.58 ms. These supersede the loaded-host figures of the v0.2.7 records.
+- `hd_v2/mcl_hd_v2.hpp` — added the standard SPDX copyright/licence header and the four-PCT patent notice, matching `mcl_core.hpp` and the keyed sidecar. **No code change**: the derivation is byte-identical and the v2 campaign record stands.
+- `P5_ReviewMeasurements_20260905/README.md` and `SHA256SUMS` regenerated.
+
+### Changed (release)
+
+- `CITATION.cff`: `version: 0.2.8`, `date-released: 2026-09-06`. `MANIFEST.md` and `SHA256SUMS_MCL_v0.2.8.txt` regenerated.
+
 ## v0.2.7 — 2026-09-05
 
 <!-- 2026-09-05: the P4 round-5, P5 round-3 and P3 post-desk-reject blocks were merged under this one v0.2.7 entry by the P5 session before the push. -->
@@ -17,7 +61,7 @@ Joint release — **Paper 4 referee-eye review round 5** (re-review after round 
 
 - `VDF128_T4/p4_vdf128v2_weaklane.cpp` + `P4_ReviewMeasurements_20260905/vdf128v2_weaklane_apple_20260905.log` — **weak-lane instances** of the per-input map: 40 M inputs ground through the v2 derivation (a lane below 2²⁰ in 1.17% of inputs, below 2¹⁶ in 0.07%); the structural probes (avalanche profile r = 1…8 with per-word split, single-bit linear correlations r = 1, 2, cube/degree sums) on the maps of ground inputs whose smallest lane is 506,386 / 31,590 / 6, against the battery input. A lane of 6 delays the diffusion of one state word by about one iteration (61.1/128 after one, 63.4 after two, ≈64 from the third); no linear pair above 4.5σ; every cube sum non-zero.
 - `VDF128_T4/p4_vdf128v2_weakpair.cpp` + log — **weak-pair instances** (one pair with both lanes small; expected once per ≈2²⁵ inputs, hence adversary-selectable): constructed sets (both < 2¹⁶ — indistinguishable from control; (6, 31590); (6, 7) extreme) with the re-draw rules re-checked; `--grind` mode searches for a genuine input.
-- `VDF128_T4/p4_sha256_vs_t4_bench.cpp` + `sha256_vs_t4_bench_apple_20260905.log` — same-host interleaved best-of-5 bench of the VDF128-T4 iterate against a SHA-256 chain through the ARMv8 SHA-2 instructions (cross-checked against CommonCrypto: identical after 1000 links) and through the system library. Run at load 5.9 with two foreign jobs present, so the paper cites the same-run ratios only: one iteration = 0.77 hardware SHA-256 compressions; a library call = 4.7 iterations.
+- `VDF128_T4/p4_sha256_vs_t4_bench.cpp` + `sha256_vs_t4_bench_apple_20260905.log` — same-host interleaved best-of-5 bench of the VDF128-T4 iterate against a SHA-256 chain through the ARMv8 SHA-2 instructions (cross-checked against CommonCrypto: identical after 1000 links) and through the system library. Two runs: at load 5.9 with two foreign jobs present (ratios only) and on an idle host (`…_idle_…log`): **T4 29.2 ns / SHA-2-instruction compression 38.0 ns / library call 136.1 ns** — one iteration = 0.77 hardware SHA-256 compressions; a library call = 4.7 iterations; the idle absolutes are the ones the paper quotes.
 - `VDF128_T4/vdf128v2_weakpair_grind_apple_20260905.log` — a genuine input whose pair (1,2) has both lanes below 2¹⁶ (`weak-lane-180785906`, found after 140,785,907 candidates) probed identically: indistinguishable from the control.
 
 ### Changed (Paper 4)

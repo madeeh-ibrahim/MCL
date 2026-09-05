@@ -28,4 +28,4 @@ for ti, (p, q) in enumerate([(2, 3), (3, 5)]):
     for r, l in zip(g, lk): out.append(f"   ({p},{q}) K={float(r['K']):.2f} lock={int(l)} max|r_ens|={float(r['max_abs_r_ens']):.4f} rms={float(r['rms_r_ens']):.4f} mean_ln_d={float(r['mean_ln_d_end']):+.3f}")
 x = [r for r in grid if r["pair"] == "crossTopo_sameK"]; out.append(f"cross-topology (2,3)/(3,5), same K, over {len(x)} K values: max|r_ens| = {max(float(r['max_abs_r_ens']) for r in x):.4f}")
 ax[1].axhline(fl, color="gray", lw=0.6, ls=":"); ax[1].set_xlabel("K"); ax[1].set_ylabel("max |r_ens(t)| after 10⁴ steps"); ax[1].set_ylim(-0.02, 1.05); ax[1].set_title("(b) where a ΔK = 0.01 change fails to decorrelate"); ax[1].legend(fontsize=6.5, loc="center right")
-fig.tight_layout(); fig.savefig("trace_fig.png", dpi=170); open("trace_summary.txt", "w").write("\n".join(out) + "\n"); print("\n".join(o for o in out if not o.startswith("   ")))
+fig.tight_layout(); fig.savefig("trace_fig.png", dpi=320); open("trace_summary.txt", "w").write("\n".join(out) + "\n"); print("\n".join(o for o in out if not o.startswith("   ")))

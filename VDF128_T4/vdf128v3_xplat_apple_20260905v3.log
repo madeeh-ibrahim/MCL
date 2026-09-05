@@ -1,0 +1,16 @@
+cell arm64 -O0: a67ceae452df0d0d  # # arch=arm64 ptr=8
+cell arm64 -O1: a67ceae452df0d0d  # # arch=arm64 ptr=8
+cell arm64 -O2: a67ceae452df0d0d  # # arch=arm64 ptr=8
+cell arm64 -O3: a67ceae452df0d0d  # # arch=arm64 ptr=8
+cell x86_64 -O0: d308f061a3b5e1d2  # # arch=x86_64 ptr=8
+cell x86_64 -O1: d308f061a3b5e1d2  # # arch=x86_64 ptr=8
+cell x86_64 -O2: d308f061a3b5e1d2  # # arch=x86_64 ptr=8
+cell x86_64 -O3: d308f061a3b5e1d2  # # arch=x86_64 ptr=8
+# arch=arm64 ptr=8
+W  10aa213d 00f88096 375ebea4 2efd7db3 1ec3504b 2494ccbe 386d2e03 0208e73d 14f5c7c7 26163b64 0dd15a20 18fbcc6a
+I  320797ee 6ec947c4 9593ec52 dd58db57
+B  5122e13a f7159758 2989d88c 139635e8
+F  f528a48f 931bb227 c1b25bee 615be89d
+Y  ee2ff4adb22c0ce9d01ce2223b0f3c780145a33a74b2ea4c3cca6014dcce2a21
+L  fold=4f1029a3 state=c2495534 52f42d27 cba77ff9 c36452fa
+M  multi-input-acc=fd8a32b8

@@ -1,0 +1,38 @@
+# host: 20:10  up 27 days,  3:43, 1 user, load averages: 2.48 2.47 2.90
+## B = 10000 (normative)
+=== Paper-5 SS-VI.E adversarial evaluation (MCL-P5-ADVERSARIAL-2026-0905-001) ===
+engine v8.1.3, BURNIN=10000, MCL_T4_Q30
+
+A1 per-field context sensitivity (one random bit flipped in that field only, n=2000 each)
+   field                    mean HD/256    min   max   verdict
+   chain_id                  128.132      99   152   binds at full width (z=+0.74)
+   nonce(counter)            127.856      99   153   binds at full width (z=-0.81)
+   to                        128.279     102   157   binds at full width (z=+1.56)
+   value                     127.971      98   154   binds at full width (z=-0.16)
+   calldata(16 B)            127.853     101   154   binds at full width (z=-0.82)
+   account_id/verifier_id    127.946     100   156   binds at full width (z=-0.30)
+   A1 verdict: every ctx field binds the tag at the null-model mean
+
+A2 first-order weight-leak test: 20000 keys x (360 weight bits) x (256 tag bits) = 92,160 correlations
+   noise floor 1/sqrt(N) = 0.00707 ; max |r| = 0.03090 at (weight bit 262 [lane 8 bit 22], tag bit 228) = 4.37 sigma
+   Bonferroni threshold over 92,160 tests at alpha=0.001 is ~4.6 sigma -> NO first-order weight leak detected
+   A2 verdict (BURNIN=10000): negative result: the tag reveals no weight bit at first order
+
+## B = 0 (shortest transient — the SS-X.12 concern)
+=== Paper-5 SS-VI.E adversarial evaluation (MCL-P5-ADVERSARIAL-2026-0905-001) ===
+engine v8.1.3, BURNIN=0, MCL_T4_Q30
+
+A1 per-field context sensitivity (one random bit flipped in that field only, n=2000 each)
+   field                    mean HD/256    min   max   verdict
+   chain_id                  128.000     101   155   binds at full width (z=+0.00)
+   nonce(counter)            128.125     101   156   binds at full width (z=+0.70)
+   to                        127.966     102   156   binds at full width (z=-0.19)
+   value                     128.028     104   154   binds at full width (z=+0.15)
+   calldata(16 B)            128.149      97   153   binds at full width (z=+0.83)
+   account_id/verifier_id    127.679     102   154   binds at full width (z=-1.79)
+   A1 verdict: every ctx field binds the tag at the null-model mean
+
+A2 first-order weight-leak test: 20000 keys x (360 weight bits) x (256 tag bits) = 92,160 correlations
+   noise floor 1/sqrt(N) = 0.00707 ; max |r| = 0.02981 at (weight bit 21 [lane 0 bit 21], tag bit 110) = 4.22 sigma
+   Bonferroni threshold over 92,160 tests at alpha=0.001 is ~4.6 sigma -> NO first-order weight leak detected
+   A2 verdict (BURNIN=0): negative result: the tag reveals no weight bit at first order

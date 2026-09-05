@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.7, 2026-09-05)
+# MCL — Public Code Archive · MANIFEST (v0.2.8, 2026-09-06)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 513 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 585 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `ff986180e02708b88a774a1f0b60785b5c1b6d15db371d8b992b198fcf3fdb57` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `6dceb6eef740484033ee3fcb0aa2f9c9fc92c00096cfcaa168d680be8f83ddb8` |  |
-| `CITATION.cff` | `4b613949ad0a3ac72e7cbbc40e4b5a321cc68ee62143210512aaae2585acf37b` |  |
+| `CHANGELOG.md` | `889ee9dcfe3eaa0c2d7e4795d8bba3a308181816a1aea850dc99814cc156bd70` |  |
+| `CITATION.cff` | `65b632e43fc33e0cb8b85f6aac84f49533856249178b3e8421b58f8b05856362` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -79,10 +79,11 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `q30_macos_validation.cpp` | `d58b0c11796a4036e6b3a216b1a4d4784d7840385358b10c9a30c93fd32354f3` | Validate MCL Q30 (fixed-point engine) cross-platform bit-exactness |
 | `self_test.cpp` | `9971324ad99bde6dea410b2f969443b85db07b77600ca797dd6d2eb2c9ca53bd` | Run the MCL engine built-in self-test verifying all Known Answer |
 
-### results  (28 files)
+### results  (29 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
+| `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` | `463fa96454594d69b7fcd6de7b8b3200049c27eed0cc8204834b4579b9ed68d4` | Consolidated documentation of FOUR independent runs of mcl_scale |
 | `results/beff_deep_audit.txt` | `0fa5baf9f152d39af5b23f3bd3d2602d326ea141198a144ad272f9d436ecd11e` |  |
 | `results/kat_gen_macos.txt` | `959fa8bde760d0957c18e5617c251025b012d21665f1d9e56fd89f9cbfe01733` |  |
 | `results/kat_gen_macos_v8.1.3_20260822.txt` | `00732e5077696d503de2f01b31f3facf51c44bdf8f7230d98f3409a3a4a07f34` |  |
@@ -150,31 +151,49 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/mcl_keyed_q30_science3.cpp` | `9ca5703dc844fec31302e0f35b417afb502f3c3062646ab6b6881815e7d232d3` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_test.cpp` | `a123a0a667a8612f9b6e2092c72fc935807a0bc2fd82ee0deb781ccd8bc3d273` |  |
 
-### VDF128_T4  (32 files)
+### VDF128_T4  (61 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
 | `VDF128_T4/BENCH_RECORD_20260821.md` | `1d48424b0bfd9a3555a4c3a21a8c3ed32db29d3f201c98cbc6e093ea486cf3c6` | VDF128-T4 — قياس Eval/Verify على المعالج — 2026-08-21 |
 | `VDF128_T4/README.md` | `429f723c00cbc6d8b97ba17f7a54093ab3677ec9194150d1e74dbda56a65ae6f` | VDF128_T4 — 128-bit-state integer VDF path (Paper 4 path-A rebuild, 2026-08-17) |
 | `VDF128_T4/kat345.cpp` | `0e3b99af92ad721645775bd40cfc8d0639c39f33dce80a0235b42d203c8fff63` |  |
+| `VDF128_T4/linux_env_gha_20260905v3.txt` | `5b249afb3b6d63d3d3205f24a9ea6421211976e5de064d9b548441e3031a38bb` |  |
+| `VDF128_T4/linux_provenance_20260905v3.txt` | `2c893eb49813088c136fdbf087dc93d623e8a7c5610fabca06bfd0c3b7cceade` |  |
 | `VDF128_T4/mcl_vdf128_battery.cpp` | `e69aea857f34a1eb3e894ee2b1afeaf2b4ee66a7cdd2f5445554d57c514bd7d9` |  |
 | `VDF128_T4/mcl_vdf128_bench.cpp` | `2a43c33da96b8979d64ff7e727a602ab5d899fbe601d88741808cbe700a8390b` |  |
 | `VDF128_T4/mcl_vdf128_cyclecheck.cpp` | `fb5dc4a9e06d59e88c79808444817461c43d334355f755886819bd7d21456496` |  |
 | `VDF128_T4/mcl_vdf128_t4.hpp` | `e08f702e2da92221588285a6a61ee2e48edfb63afbde8220fc3632fd2180ed0d` |  |
 | `VDF128_T4/mcl_vdf128_t4_v2.hpp` | `41171250455fa33e311c1484f4d5d4fb67699e2f6275551224f1d06c1f63716f` |  |
+| `VDF128_T4/mcl_vdf128_t4_v3.hpp` | `b46f1a1329ccbc4dc4eac02b930be7b71f74847800ed7c01358163d80f615439` |  |
 | `VDF128_T4/mcl_vdf128_xplat.cpp` | `36a9c5878030ddf40dd2808ab58259d50b993f2f53a2e07b5411593259e51ebc` |  |
 | `VDF128_T4/mcl_vdf128v2_battery.cpp` | `08c532c3a510bf7a9c1912dbabc4306d405e7230356af1274b0c3c8dc3a8685b` |  |
 | `VDF128_T4/mcl_vdf128v2_bench.cpp` | `c109f8e008a4bff73459391b4a44262d344a49e738d24642ab33a26935121d9f` |  |
 | `VDF128_T4/mcl_vdf128v2_cyclecheck.cpp` | `7515bba87b0bf3218c9199308774adcff24e0474a6407dd57bcf0c193555de85` |  |
 | `VDF128_T4/mcl_vdf128v2_xplat.cpp` | `f465117c06ec2f8b27d0f455ca55f260eaf286dd4ac396aa36d55c8fa6a0b014` |  |
+| `VDF128_T4/mcl_vdf128v3_battery.cpp` | `2425b901f6e2db208edced7740fe454bd5775b183fc50443fd300a1c00e2b0ed` |  |
+| `VDF128_T4/mcl_vdf128v3_bench.cpp` | `0f580565e502915fee694b8a2586c22e9f74f6e1d94ed008314b3b23262cfdb3` |  |
+| `VDF128_T4/mcl_vdf128v3_cyclecheck.cpp` | `eefeed0bcf670a5db76f536ca7bff4e30bff2176949f5b443b512e55ad959159` |  |
+| `VDF128_T4/mcl_vdf128v3_xplat.cpp` | `57feeb1680d4af37b748077d710947459ade0c76639c57f2eed01189540ac95f` |  |
 | `VDF128_T4/p4_sha256_vs_t4_bench.cpp` | `d38320478d230291bebc3e5b1b2d289cb6f972c894b0745dcc8a6429af04e98a` |  |
+| `VDF128_T4/p4_sha256_vs_t4v3_bench.cpp` | `df4dd3b6e8de13685e19ac3ec438d217e3355e9a067611855f3c4de0f9de488d` |  |
 | `VDF128_T4/p4_vdf128v2_kat.cpp` | `28f38551f00005d27634d4547552fd8eb4d616018186dee9a68ac12709fdba58` |  |
 | `VDF128_T4/p4_vdf128v2_weaklane.cpp` | `3a71f26cea40ec43f3f09a9a9a16a16cd9b9be04d6324e60b6f24a6ef381e3d5` |  |
 | `VDF128_T4/p4_vdf128v2_weakpair.cpp` | `a3e9fdf9acbca7370c479a630e0e7fe402ea5f8923d2f2eba32798c23756c76a` |  |
+| `VDF128_T4/p4_vdf128v3_distinguisher.cpp` | `c0cb7bb956681a99df2cd5edc64e1db020f77377b4eb50f96e89206ca18c819a` |  |
+| `VDF128_T4/p4_vdf128v3_kat.cpp` | `c263f9c44d5cc656cd208d64d83fb466dd6d71ebf0e21bef3cea801e867941ae` |  |
+| `VDF128_T4/p4_vdf128v3_weaklane.cpp` | `7ad87bcc590444a09fe2a5b98c7b84297ebca866a74d895242119537dcad92e7` |  |
+| `VDF128_T4/p4_vdf128v3_weakpair.cpp` | `4f374c2b8e6a154a4932781e910f771af4053f6fcf8969d1b6ba535640f2f167` |  |
+| `VDF128_T4/run_v3_all.sh` | `fed8b5fe4477d931d59b70d016350f64406ad01bae1b67c9fbd5041a69156ca0` |  |
 | `VDF128_T4/sha256_vs_t4_bench_apple_20260905.log` | `a0331d60e0d388e0bc26f7d5b7156f2e1de36aa6f4c6f9cff9b7093478be3c6a` |  |
+| `VDF128_T4/sha256_vs_t4_bench_idle_apple_20260905.log` | `14f35a587d371a5729d79c344645da549778c519337fa859d31d3563bbb883e9` |  |
+| `VDF128_T4/sha256_vs_t4v3_bench_apple_20260905v3.log` | `23234fdec89fbadbad8b074f8a100f6a9082fd2e1263c14901aa1c977061ebd2` |  |
 | `VDF128_T4/vdf128_battery_apple_20260817.log` | `35fd9d87066e1fa6c82fde0a9861f7e7e29a2835920915a3b4a1aa2e15f75c09` |  |
 | `VDF128_T4/vdf128_bench_apple_20260821.log` | `40a9e3f4b7622358309b858a798c2ff3a1857ed9d6c6552ba8dead36414adacd` |  |
 | `VDF128_T4/vdf128_cycleprobe_apple_20260817.log` | `6d3c1301b1a2c746b485c604aa7c1b7e6e2091d6fe893c18e3c003b5cc33be7e` |  |
+| `VDF128_T4/vdf128_t4v3_standalone.cpp` | `34906621a6aeabf8284a341d993f73e144d5898a1c3cc22b3078b93726034ae5` |  |
+| `VDF128_T4/vdf128_t4v3_standalone_apple_20260905v3.log` | `8e049b6474e7afa4019f8de2ae33dd556bdc7dceb1ba8aa26644a87669516941` |  |
+| `VDF128_T4/vdf128_t4v3_standalone_linux_glibc_20260905v3.log` | `8e049b6474e7afa4019f8de2ae33dd556bdc7dceb1ba8aa26644a87669516941` |  |
 | `VDF128_T4/vdf128_xplat_apple_20260817.log` | `46f75037747dfabfcac9170de2fb7070e5e89ee68b6f6f388ffb5af2b147567d` |  |
 | `VDF128_T4/vdf128v2_battery_apple_20260905.log` | `c11dbe50318ddc6d34a9f10fd86aabb47e14799f5aab9e9eca3446a75a4500d0` |  |
 | `VDF128_T4/vdf128v2_bench_apple_20260905.log` | `ba35222678ef737eb7f2f2238ecfedc94970d662157600c8f7ae1765d8c47e9f` |  |
@@ -186,6 +205,17 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `VDF128_T4/vdf128v2_weakpair_grind_apple_20260905.log` | `1ef86035ef568b4704c2784221c739a93545ab222f5fc1563695e25e5c99fe4d` |  |
 | `VDF128_T4/vdf128v2_xplat_apple_20260905.log` | `3e934b09990f744f849e8d7533006dc1b5d6c88d5f7f02f235e54202133ee795` |  |
 | `VDF128_T4/vdf128v2_xplat_linux_glibc_20260905.log` | `9016a4fa2ed1b1594457fdf3ae17fed38f20cf996b141ee4eb4441d6ec8d3a18` |  |
+| `VDF128_T4/vdf128v3_battery_apple_20260905v3.log` | `e852542032c6a58137f312eded0f2f0f7423502031e5c7ffe221d62ca3745b15` |  |
+| `VDF128_T4/vdf128v3_bench_apple_20260905v3.log` | `23800077453eba4342768b78fe440c9b3e01164671296b8ead8a97f9aea64af1` |  |
+| `VDF128_T4/vdf128v3_cycleprobe_apple_20260905v3.log` | `c5cae69affd019ff0126c90d968955632f55878235e57f20866416c7f5b85dcf` |  |
+| `VDF128_T4/vdf128v3_distinguisher_apple_20260905v3.log` | `8308128c267c43e6376bc5d17594f13e4a2e2d9231291e7e955d18879954cf98` |  |
+| `VDF128_T4/vdf128v3_kat_apple_20260905v3.log` | `7c2905397cb81f03019708fe72ec5f0e04fb0304d7b378ce52d2502d81b65b0e` |  |
+| `VDF128_T4/vdf128v3_kat_linux_glibc_20260905v3.log` | `7c2905397cb81f03019708fe72ec5f0e04fb0304d7b378ce52d2502d81b65b0e` |  |
+| `VDF128_T4/vdf128v3_weaklane_apple_20260905v3.log` | `6c5caccf76603d18f1b9c6db3fafa02a1735834ae8d0a9137b41d0cd06cda828` |  |
+| `VDF128_T4/vdf128v3_weakpair_apple_20260905v3.log` | `e22fc09dff3244245cacec62924b00d390c5f4473a3a43f33c3027f5b4e3b5ee` |  |
+| `VDF128_T4/vdf128v3_weakpair_grind_apple_20260905v3.log` | `f66687c58741f1a2aa3390eda14fe44cf94d44658ad15d6efb73561fd61354a2` |  |
+| `VDF128_T4/vdf128v3_xplat_apple_20260905v3.log` | `01468d7882a04fe10c64dda48e4c0dc1c5b4bc4236c4dafbbf8e4e84195a01c4` |  |
+| `VDF128_T4/vdf128v3_xplat_linux_glibc_20260905v3.log` | `d308f061a3b5e1d21c069bdd5193416bba5ee8c88db771ce9223de2f369b57f8` |  |
 
 ### T4_CycleStructure  (24 files)
 
@@ -398,18 +428,20 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSES/LicenseRef-MCL-Security-Research-Grant.txt` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `LICENSES/PolyForm-Noncommercial-1.0.0.txt` | `ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8` |  |
 
-### P3_DeskRejectMeasurements_20260905  (86 files)
+### P3_DeskRejectMeasurements_20260905  (93 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P3_DeskRejectMeasurements_20260905/RECORD_P3_DESKREJECT_MEASUREMENTS_20260905.md` | `546233f6c5f470fb322c32af475e8a8c1093dbf5b7df8ba0ce331e3774768880` | Paper 3 — measurements ordered after the PRE desk rejection — 2026-09-05 |
-| `P3_DeskRejectMeasurements_20260905/SHA256SUMS` | `9f90ee19b813434f7dcf86fabdf8164e4e94b450c35d241d33a5e3e59c25e76b` |  |
+| `P3_DeskRejectMeasurements_20260905/RECORD_P3_DESKREJECT_MEASUREMENTS_20260905.md` | `3d3289756daa6b13e29055eb5d3d46ef984b3ac00d43a003863b12d9341a3496` | Paper 3 — measurements ordered after the PRE desk rejection — 2026-09-05 |
+| `P3_DeskRejectMeasurements_20260905/SHA256SUMS` | `f0f9a3892785c714bfbb4aca5f9220a222da46ca2dfd79a086e9066b911dda8c` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/analyze_decorr.py` | `d5d109ff10eb97460ef856eb10128f01f4ea6ab018ed33c8fd22908a8ecee8e9` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_fit.png` | `3f8f8f434432074aebccfaa8d7b0bbb76509afad1ebd3144c85762cdc90f1a44` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_fit_table.csv` | `9570186c5e131b8dd04f8cbf58bbafb70cc0b3b4d2d709fc2a5f0fc7079b1661` |  |
-| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_steps_fig.png` | `4f84b8542cc8e7d60dd5b4fb12904a8ca5cd814a22a617f6c45e58523fcdf1e5` |  |
-| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_time.cpp` | `5df2c3f821fa962e027daab6c271df216830886ad4128bcecf8221fae81dcb42` |  |
-| `P3_DeskRejectMeasurements_20260905/decorr_time/plot_decorr_steps.py` | `5d6f8616aa1d6f534903c1f91f3eae7c1bfddd71dadc4a203132fdac4633730f` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_steps_fig.png` | `28466919c88d76f3757bc3ffe304bd2c95743f1dd347c3a55e8fdf4d4c343c57` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/decorr_time.cpp` | `c3c2a87ea84acf11b67cc9b5eeaea92d6a89e304ec9210c1109fdb1e379c9089` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/plot_decorr_steps.py` | `d895b0ade005abc315d1d69f2e2be9d68cfa7d416aa49fa942b2d61605929ad2` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_gs_burnin1e4_steps.csv` | `59768456051cf891075dde222517c3d0d873c3c0c73e7762f6ad797863c81adf` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_gs_burnin1e4_summary.csv` | `feca581743a3a6639b4e17287367a27f3e8b491ede47a510716ef17a4df4e460` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_gs_steps.csv` | `37a3f6f2c0076ac79428a30222f5c24d5cf6f7a0b8fb51a2268b7d9e33a9da4c` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_gs_summary.csv` | `82075b850f1161bf438a88d006b8b7f76c29ff45f97d7cbe7b572e2e415d2abc` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_K_35_K12_jacobi_steps.csv` | `b5666cd21b2269ee1174dae0ea0d1837c3e99e4f218d54269e026afe89bf9da1` |  |
@@ -426,6 +458,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_1723_K12_gs_summary.csv` | `fdab443bdcc240cf6009184122597761c877501f7a0d569c02a1a09bf9d3d21d` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_23_K12_gs_steps.csv` | `e8b7f343101ad9291041179f6adbcb9e7bfb342cb141cadc6beba5f81d44d747` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_23_K12_gs_summary.csv` | `6e9ff0cbf0e9a7fc3d959c189becad788c800d9b09a1de073897420637a9fcd4` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_gs_burnin1e4_steps.csv` | `12ccd505592e5d8d6815ab995aafad9e4767dd055ae0755448b26176b87a2ba9` |  |
+| `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_gs_burnin1e4_summary.csv` | `aa77bb2412e5f0320aa72245ff1ee8612ba4282db5f35ba1c3cf5a751dd0a934` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_gs_steps.csv` | `958d3d8c34602555aea46bdb9410100394f0731eaf3090fe8850769594629e9f` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_gs_summary.csv` | `80764dca4ec1fc151d8a400f3d122c05f87a1888e641b693dc5d9326172399b8` |  |
 | `P3_DeskRejectMeasurements_20260905/decorr_time/res_omega_35_K12_jacobi_steps.csv` | `e1dc9082a600dd92a7f274d9216ec7e8ba4057473bf113c90ff683c8adbbcf38` |  |
@@ -473,14 +507,17 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_DeskRejectMeasurements_20260905/pairs_dist/pairs_qq.png` | `d7c18dfcaeb5ae4441650e2123b89be8370e8d7eb9218076d179fb474e3d67d4` |  |
 | `P3_DeskRejectMeasurements_20260905/run_all.sh` | `23aa243426a9c3de652f2a890db8d3e2e70577f95a1725001bb1cbb8f6848289` |  |
 | `P3_DeskRejectMeasurements_20260905/run_all_20260905_101801.log` | `08febeb8ad3420e534191a9b55bd0f16e1d5dc3aad98fe92355d0e730369518e` |  |
-| `P3_DeskRejectMeasurements_20260905/window_control/analyze_trace.py` | `841054c60e8a4718edaed94140063d4ebeb0e31a263916fdfd24d16264cf76ff` |  |
+| `P3_DeskRejectMeasurements_20260905/tableVI_lyap/tableVI_lyap.cpp` | `de567e34af1ae8d8e8f81f3f2860ae99750e1dc0eb41cd6d75514c56c72e3098` |  |
+| `P3_DeskRejectMeasurements_20260905/tableVI_lyap/tableVI_lyap_1e7_20260906.csv` | `06e2d568b0535b8f1e1b8c5808c6762a79868522e768f94083ebc09efb1e2a55` |  |
+| `P3_DeskRejectMeasurements_20260905/tableVI_lyap/tableVI_lyap_1e7_20260906.log` | `1bc6d782570b40e61ef8b862b06812e6ad2b64c0ed1bb78572a54ca57e77bdc6` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/analyze_trace.py` | `ca4eaa24c1cc6b113facba17a4bc6d3973fcb7827c0c813d2b18e20d1f0c47e9` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/analyze_window.py` | `e06da78d0a1bec376d445f1769f575c315b3c6a3e2cfa000c07f5bc2990929e4` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/cell_check.cpp` | `245149d040dda52c6c84600f86150aa2cc6219fe368f454c843a6b0a93f9d527` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/cell_check_results.txt` | `ff1f778813bbc581af615634df45a3f71ec8fe574ff690ddc70d6a09dad47a0f` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/res_trace_cells.csv` | `389e105ace3729f54571a4dfa4b82b8e31f6f49b422e3eff0d9a9dde2433d097` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/res_trace_grid.csv` | `cd2ce3607826364d9b58bbaad6734b24abbfea7e02c02b54d9381213a44f9fb2` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/res_window_grid.csv` | `eb179836eabf6d15faab99154115ce99aea87499cb7995a5b0b7059475fd98fe` |  |
-| `P3_DeskRejectMeasurements_20260905/window_control/trace_fig.png` | `0b164762118fc6c57ce32a94fbdc6050095862ad4ff261f6454250e5644acdf8` |  |
+| `P3_DeskRejectMeasurements_20260905/window_control/trace_fig.png` | `1ef7842816086503565165e334a0ffcdb4c8df58f3b946636a1fe1fafbf5231f` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/trace_summary.txt` | `8e9e953956779bf96fc9bd7ae11c9ec9d5e905ebd81d1de54d1a547cfa8e413b` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/window_composite_table.md` | `d84bb1245c972bdca1aef39bf42ef8deb9d71bfa003eaf3aad65c82f60094736` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/window_control.cpp` | `fbda42ed64e3860b36f1fa58dc19c46d9f6ef030bbdc82ba00597d681c2a9df3` |  |
@@ -575,32 +612,51 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260904/vdf128_t4_standalone_linux_glibc_20260904.log` | `1dd0e0df47b2e18a7be786575e0bc00b7f8698b5f14f0faf7e4e724ccdc960e9` |  |
 | `P4_ReviewMeasurements_20260904/vector4_q30_linux_glibc_20260904.log` | `d39449f0df98ddc25b78b8f31f8558ebd69822fccaa123fde495b216c1f7d5eb` |  |
 
-### P4_ReviewMeasurements_20260905  (32 files)
+### P4_ReviewMeasurements_20260905  (63 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260905/README.md` | `a9f526f4ecee620f6ea9bf27006550170f30a6c2eb8684dc7b3d89ad024a5ee9` | P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights) |
-| `P4_ReviewMeasurements_20260905/SHA256SUMS` | `12fb4e87d48ef00bf7774dce580f6de16a28103bfeb0235a39e2ea8f37e926a0` |  |
+| `P4_ReviewMeasurements_20260905/README.md` | `98f24f93d171296b0df30ab50b46481df7cc6715ff411d39f97b13e1fd31f556` | P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights) |
+| `P4_ReviewMeasurements_20260905/SHA256SUMS` | `29793f78b120ab923423623207efa4959b59560c4b109aa3ec049d14e1dd9710` |  |
+| `P4_ReviewMeasurements_20260905/linux_env_gha_20260905v3.txt` | `5b249afb3b6d63d3d3205f24a9ea6421211976e5de064d9b548441e3031a38bb` |  |
+| `P4_ReviewMeasurements_20260905/linux_provenance_20260905v3.txt` | `2c893eb49813088c136fdbf087dc93d623e8a7c5610fabca06bfd0c3b7cceade` |  |
 | `P4_ReviewMeasurements_20260905/mcl_core.hpp` | `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` |  |
 | `P4_ReviewMeasurements_20260905/mcl_keyed_q30.hpp` | `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128_t4.hpp` | `e08f702e2da92221588285a6a61ee2e48edfb63afbde8220fc3632fd2180ed0d` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128_t4_v2.hpp` | `41171250455fa33e311c1484f4d5d4fb67699e2f6275551224f1d06c1f63716f` |  |
+| `P4_ReviewMeasurements_20260905/mcl_vdf128_t4_v3.hpp` | `b46f1a1329ccbc4dc4eac02b930be7b71f74847800ed7c01358163d80f615439` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128v2_battery.cpp` | `08c532c3a510bf7a9c1912dbabc4306d405e7230356af1274b0c3c8dc3a8685b` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128v2_bench.cpp` | `c109f8e008a4bff73459391b4a44262d344a49e738d24642ab33a26935121d9f` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128v2_cyclecheck.cpp` | `7515bba87b0bf3218c9199308774adcff24e0474a6407dd57bcf0c193555de85` |  |
 | `P4_ReviewMeasurements_20260905/mcl_vdf128v2_xplat.cpp` | `f465117c06ec2f8b27d0f455ca55f260eaf286dd4ac396aa36d55c8fa6a0b014` |  |
+| `P4_ReviewMeasurements_20260905/mcl_vdf128v3_battery.cpp` | `2425b901f6e2db208edced7740fe454bd5775b183fc50443fd300a1c00e2b0ed` |  |
+| `P4_ReviewMeasurements_20260905/mcl_vdf128v3_bench.cpp` | `0f580565e502915fee694b8a2586c22e9f74f6e1d94ed008314b3b23262cfdb3` |  |
+| `P4_ReviewMeasurements_20260905/mcl_vdf128v3_cyclecheck.cpp` | `eefeed0bcf670a5db76f536ca7bff4e30bff2176949f5b443b512e55ad959159` |  |
+| `P4_ReviewMeasurements_20260905/mcl_vdf128v3_xplat.cpp` | `57feeb1680d4af37b748077d710947459ade0c76639c57f2eed01189540ac95f` |  |
 | `P4_ReviewMeasurements_20260905/p4_sha256_chain_bench.cpp` | `872662766e34f7a5e2f67b1a4fc9e4a382a250edf0a1fbca6bf6d906563e546c` |  |
 | `P4_ReviewMeasurements_20260905/p4_sha256_vs_t4_bench.cpp` | `d38320478d230291bebc3e5b1b2d289cb6f972c894b0745dcc8a6429af04e98a` |  |
+| `P4_ReviewMeasurements_20260905/p4_sha256_vs_t4v3_bench.cpp` | `df4dd3b6e8de13685e19ac3ec438d217e3355e9a067611855f3c4de0f9de488d` |  |
 | `P4_ReviewMeasurements_20260905/p4_tmto_toy.py` | `df1377d4b62f5bae92bb531a93dc357e0bc6162960e17de4c97bb8dcd81c5e6f` |  |
 | `P4_ReviewMeasurements_20260905/p4_vdf128v2_kat.cpp` | `28f38551f00005d27634d4547552fd8eb4d616018186dee9a68ac12709fdba58` |  |
 | `P4_ReviewMeasurements_20260905/p4_vdf128v2_weaklane.cpp` | `3a71f26cea40ec43f3f09a9a9a16a16cd9b9be04d6324e60b6f24a6ef381e3d5` |  |
 | `P4_ReviewMeasurements_20260905/p4_vdf128v2_weakpair.cpp` | `a3e9fdf9acbca7370c479a630e0e7fe402ea5f8923d2f2eba32798c23756c76a` |  |
+| `P4_ReviewMeasurements_20260905/p4_vdf128v3_distinguisher.cpp` | `c0cb7bb956681a99df2cd5edc64e1db020f77377b4eb50f96e89206ca18c819a` |  |
+| `P4_ReviewMeasurements_20260905/p4_vdf128v3_kat.cpp` | `c263f9c44d5cc656cd208d64d83fb466dd6d71ebf0e21bef3cea801e867941ae` |  |
+| `P4_ReviewMeasurements_20260905/p4_vdf128v3_weaklane.cpp` | `7ad87bcc590444a09fe2a5b98c7b84297ebca866a74d895242119537dcad92e7` |  |
+| `P4_ReviewMeasurements_20260905/p4_vdf128v3_weakpair.cpp` | `4f374c2b8e6a154a4932781e910f771af4053f6fcf8969d1b6ba535640f2f167` |  |
 | `P4_ReviewMeasurements_20260905/q30_lut_int32le.bin` | `f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d` |  |
+| `P4_ReviewMeasurements_20260905/run_v3_all.out` | `bacc1be72b258a9cea61eba86c60ff4618c1d2f187aa36177a2413e18d55c8ce` |  |
+| `P4_ReviewMeasurements_20260905/run_v3_all.sh` | `fed8b5fe4477d931d59b70d016350f64406ad01bae1b67c9fbd5041a69156ca0` |  |
 | `P4_ReviewMeasurements_20260905/sha256_chain_bench_apple_20260905.log` | `239a4a7fbb810b510b9ebf6d8ff07dd60b361aabef55d2468316fa959bf98a87` |  |
 | `P4_ReviewMeasurements_20260905/sha256_vs_t4_bench_apple_20260905.log` | `a0331d60e0d388e0bc26f7d5b7156f2e1de36aa6f4c6f9cff9b7093478be3c6a` |  |
+| `P4_ReviewMeasurements_20260905/sha256_vs_t4_bench_idle_apple_20260905.log` | `14f35a587d371a5729d79c344645da549778c519337fa859d31d3563bbb883e9` |  |
+| `P4_ReviewMeasurements_20260905/sha256_vs_t4v3_bench_apple_20260905v3.log` | `23234fdec89fbadbad8b074f8a100f6a9082fd2e1263c14901aa1c977061ebd2` |  |
 | `P4_ReviewMeasurements_20260905/tmto_toy_apple_20260905.log` | `2272e3c16cbe8201855c32a911cf45a70ae79fe61e9602eaa2b78068c3da9fe7` |  |
 | `P4_ReviewMeasurements_20260905/vdf128_t4v2_standalone.cpp` | `3b7f28a5ac73c97245c3f50e03aab74dc10385f369e8b9341e93dba376f0e7d2` |  |
 | `P4_ReviewMeasurements_20260905/vdf128_t4v2_standalone_apple_20260905.log` | `db6ace2a3197549100b1fd02f9c1b23228abb33ffa9a1b6f1a43e47c6720d4ce` |  |
+| `P4_ReviewMeasurements_20260905/vdf128_t4v3_standalone.cpp` | `34906621a6aeabf8284a341d993f73e144d5898a1c3cc22b3078b93726034ae5` |  |
+| `P4_ReviewMeasurements_20260905/vdf128_t4v3_standalone_apple_20260905v3.log` | `8e049b6474e7afa4019f8de2ae33dd556bdc7dceb1ba8aa26644a87669516941` |  |
+| `P4_ReviewMeasurements_20260905/vdf128_t4v3_standalone_linux_glibc_20260905v3.log` | `8e049b6474e7afa4019f8de2ae33dd556bdc7dceb1ba8aa26644a87669516941` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_battery_apple_20260905.log` | `c11dbe50318ddc6d34a9f10fd86aabb47e14799f5aab9e9eca3446a75a4500d0` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_bench_apple_20260905.log` | `ba35222678ef737eb7f2f2238ecfedc94970d662157600c8f7ae1765d8c47e9f` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_cycleprobe_apple_20260905.log` | `5150cbd452b67ca05c03c6bcb5f40bc23615215751612a40307585f485b4e358` |  |
@@ -611,6 +667,18 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260905/vdf128v2_weakpair_grind_apple_20260905.log` | `1ef86035ef568b4704c2784221c739a93545ab222f5fc1563695e25e5c99fe4d` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_xplat_apple_20260905.log` | `3e934b09990f744f849e8d7533006dc1b5d6c88d5f7f02f235e54202133ee795` |  |
 | `P4_ReviewMeasurements_20260905/vdf128v2_xplat_linux_glibc_20260905.log` | `9016a4fa2ed1b1594457fdf3ae17fed38f20cf996b141ee4eb4441d6ec8d3a18` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_battery_apple_20260905v3.log` | `e852542032c6a58137f312eded0f2f0f7423502031e5c7ffe221d62ca3745b15` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_bench_apple_20260905v3.log` | `23800077453eba4342768b78fe440c9b3e01164671296b8ead8a97f9aea64af1` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_cycleprobe_apple_20260905v3.log` | `c5cae69affd019ff0126c90d968955632f55878235e57f20866416c7f5b85dcf` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_distinguisher_apple_20260905v3.log` | `8308128c267c43e6376bc5d17594f13e4a2e2d9231291e7e955d18879954cf98` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_kat_apple_20260905v3.log` | `7c2905397cb81f03019708fe72ec5f0e04fb0304d7b378ce52d2502d81b65b0e` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_kat_linux_glibc_20260905v3.log` | `7c2905397cb81f03019708fe72ec5f0e04fb0304d7b378ce52d2502d81b65b0e` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_weaklane_apple_20260905v3.log` | `6c5caccf76603d18f1b9c6db3fafa02a1735834ae8d0a9137b41d0cd06cda828` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_weakpair_apple_20260905v3.log` | `e22fc09dff3244245cacec62924b00d390c5f4473a3a43f33c3027f5b4e3b5ee` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_weakpair_grind_apple_20260905v3.log` | `f66687c58741f1a2aa3390eda14fe44cf94d44658ad15d6efb73561fd61354a2` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_xplat_apple_20260905v3.log` | `01468d7882a04fe10c64dda48e4c0dc1c5b4bc4236c4dafbbf8e4e84195a01c4` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_xplat_cell_arm64_O3_20260905v3.txt` | `a67ceae452df0d0d1ef92ab409d33124363bdc20173061c654badfe9450d6843` |  |
+| `P4_ReviewMeasurements_20260905/vdf128v3_xplat_linux_glibc_20260905v3.log` | `d308f061a3b5e1d21c069bdd5193416bba5ee8c88db771ce9223de2f369b57f8` |  |
 
 ### P5_HDVerify_FULL_20260904  (6 files)
 
@@ -623,27 +691,30 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P5_HDVerify_FULL_20260904/hd_throughput_v8.1.3_M1Pro_20260904_run2.log` | `fdc0166e1c7c7fc77b555e09b7a7be961fa45bc259b9f364f086be5856841335` |  |
 | `P5_HDVerify_FULL_20260904/hd_verify_FULL_v8.1.3_20260904.log` | `dc7e440a5f757d8e1c202bc83c7af6e8f93e9222952d20b8fa91c5943f074ec0` |  |
 
-### P5_ReviewMeasurements_20260905  (28 files)
+### P5_ReviewMeasurements_20260905  (32 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
 | `P5_ReviewMeasurements_20260905/G_entropy_20260905.log` | `c3bace30d5eb921d5e689fa06e807992afce63d87a1f87e4ef861d5c28687225` |  |
-| `P5_ReviewMeasurements_20260905/README.md` | `a3a6b595a8e3bc7c49a46c1338e767494330dd891355bf6bfe164fa48073dc6c` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
+| `P5_ReviewMeasurements_20260905/README.md` | `ee5f4b82c1706617f44fab35389026c1349b662aad3aba40bcc57d539c13d144` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
 | `P5_ReviewMeasurements_20260905/README_EN.md` | `6dae4e849ca2716ea92683526277eaa13951895ebb19423e823f22022193192e` | P5 review measurements — 2026-09-05 (English summary; Arabic detail in README.md) |
-| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `16521402a09f17ae76fe91d1bb8258534afe98138fb478daea79a54b04cd1008` |  |
+| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `3f0908cc80caf56f28f4c5e4ebb96cf3d1fb439e912a376f4b1a65f33a1692ff` |  |
+| `P5_ReviewMeasurements_20260905/adversarial_20260905.log` | `91d8551f6bfae8ed65dd48c1296c6c8816cbd58e40f20802b58568106dacfe4e` |  |
 | `P5_ReviewMeasurements_20260905/burnin_curve_20260905.log` | `3755e13cceef723688d1716518a52d1bf35c9590047e019660c049fea5c5cf57` |  |
 | `P5_ReviewMeasurements_20260905/burnin_curve_v2_20260905.log` | `2898fa58a7fa45afff950cccdb2b282a853a71a63b0f15f9d25c9abcd39b709e` |  |
 | `P5_ReviewMeasurements_20260905/ct_sine_cost_20260905.log` | `08af81ad5332b04c1fe62a15a9c7269d925d51d9ab81219b3a85e178cabc585e` |  |
-| `P5_ReviewMeasurements_20260905/hd_throughput_v1_quiet_20260905.log` | `af727f9f2b358af4f73ae1753f9a00d3d6a82e5180a928d6aa5595f1fe7c16a6` |  |
-| `P5_ReviewMeasurements_20260905/hd_throughput_v2_quiet_20260905.log` | `57c6eca59c0200c7c50e26f7627f5619f13c72f268135f8fc3db4d5bb7029b69` |  |
+| `P5_ReviewMeasurements_20260905/hd_throughput_v1_quiet_20260905.log` | `243f8f170162352d16b23195effd591fec66f96f804003b1e9eaf0d39bcab6c3` |  |
+| `P5_ReviewMeasurements_20260905/hd_throughput_v2_quiet_20260905.log` | `1c07ef2e3fcb2507f977905319287afc2786799165f5e8a938f453793122f165` |  |
 | `P5_ReviewMeasurements_20260905/header_patch.diff` | `1a06b57111ab4ec4a27d3c4d3a31a791157817ec2b5fa29fddb8af80d93575d3` |  |
 | `P5_ReviewMeasurements_20260905/mcl_hd_throughput.cpp` | `7d922b50ea6b6d041f8a8a5a978f4dce48757d0352b6b2fff9f7c22320caebd4` |  |
 | `P5_ReviewMeasurements_20260905/p5_G_entropy.cpp` | `d8232c4eecb747ae7ec07ee6f7d5c28096fb95413aec467f2de9a5f5879440d9` |  |
+| `P5_ReviewMeasurements_20260905/p5_adversarial.cpp` | `9c28e9ed8b840a3fafa08dddd661a9413b52aad75bdb70b1fbc07c4d05ddc7ab` |  |
 | `P5_ReviewMeasurements_20260905/p5_burnin_curve.cpp` | `99cadc2c5956b2a4bfd2a0ba72c2eaa186f4861829d02b9b1cb740326f3719b0` |  |
 | `P5_ReviewMeasurements_20260905/p5_burnin_curve_v2.cpp` | `f2c39c4936f4cec3ed5b15c800c5de5f96e62fa3ffd0bf9a2ddef8a081563a2e` |  |
 | `P5_ReviewMeasurements_20260905/p5_ct_sine_cost.cpp` | `32b5a2bb058169eacb6598d75d260e5c002b62c5284a05f28f00ed33ad71518b` |  |
 | `P5_ReviewMeasurements_20260905/p5_parity_lock.cpp` | `80e447142df634d6742be9395cdb6b1f31205a4e215b9c6f97210bc841c72642` |  |
 | `P5_ReviewMeasurements_20260905/p5_resonance_control.cpp` | `aed41340b9385ff47b72e94f11e30df644b916d467ac1b58f8d33044b07e5691` |  |
+| `P5_ReviewMeasurements_20260905/p5_system_eval.cpp` | `2cb19ed21fb5744bf98442e55c99c2138b4cd25787e680f62547701cf37d9f3c` |  |
 | `P5_ReviewMeasurements_20260905/p5_v2_coprime_parity.cpp` | `38eb19642c0d1171c3f600cc1039c85265ec6efad4f2d272b0369f53d7ea6949` |  |
 | `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` | `08a270fa30d6db9bbc8deeaceb8cac7aa28c21e4ae6daa73e55205f02945a75a` |  |
 | `P5_ReviewMeasurements_20260905/redraw_rate.cpp` | `d2973fc15160973aa998657485c6ee7951bd6cee80cc66a5c3ed257ce68cdab0` |  |
@@ -652,6 +723,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P5_ReviewMeasurements_20260905/results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `0b7b9ebbe7a1890d1f7df10fe0116f18e6b815abecd693a4136e6c075075c9bb` |  |
 | `P5_ReviewMeasurements_20260905/sibling_recovery.cpp` | `6e7a6f60c26ca907cefe7f00153eed9be416c4b1894ab62e9e75a923b2e241bb` |  |
 | `P5_ReviewMeasurements_20260905/sibling_recovery.log` | `dda8d28f2226beb2fdc60f59718aaf7e3cf6d6f3ad8fe99bf821384e6da1597c` |  |
+| `P5_ReviewMeasurements_20260905/system_eval_20260905.log` | `199730e36baa526c82980c3da0cf7fe6488890cd910b6cb274dab029a3ffd01a` |  |
 | `P5_ReviewMeasurements_20260905/v2_coprime_parity_20260905.log` | `021b8c1307227f57b71167e7e3e6e2f863ab89b0413c1307c324eee268a5e0d5` |  |
 | `P5_ReviewMeasurements_20260905/weight_probe_20260905.log` | `9d41d84e3f0cb88cba6330a3fd64ca31f66cc579abe2f63eb0afd5df9f38b782` |  |
 | `P5_ReviewMeasurements_20260905/weight_probe_sidecar_scratch_ctor.diff` | `617f1ef29095331a96ce1c598553762b4c1b324e45065eb4b745b7c6a7e5dfc4` |  |
@@ -663,7 +735,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `hd_v2/README.md` | `00ce5e1bff39ef63e9682faad18783132df0f41cbe210acc815da5d15284702c` | hd_v2 — Hierarchical channel-identity derivation, version 2 (additive sidecar) |
 | `hd_v2/hd_verify_v2_FULL_v8.1.3_20260905.log` | `c6657165de79147c7b88bbf275825bd83c0ac69089ec9e14f3811094782c8260` |  |
 | `hd_v2/mcl_hd_throughput_v2.cpp` | `62bb756009c16d20bdc8eb4f0b6091863efd75bbbfdfe47707e3b85ae34e1405` |  |
-| `hd_v2/mcl_hd_v2.hpp` | `66aa13d30efaeae0ee1d888194a5b3d0f6ffbe81361f5ac582494523f8e9f2a4` |  |
+| `hd_v2/mcl_hd_v2.hpp` | `e000af267d131e734d4c84a49272acaa7c6a6c53519d9d580a1feb7cbce97b7c` |  |
 | `hd_v2/mcl_hd_verify_v2.cpp` | `984b5ff1d35f2f8f8ea7bd349fb8f8384ae56ba12965dbfc57c247a791a321af` |  |
 
 ---

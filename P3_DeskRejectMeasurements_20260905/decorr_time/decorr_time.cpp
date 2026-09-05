@@ -19,6 +19,7 @@
 #include "../../mcl_core.hpp"
 
 struct Params { int64_t p, q; double K, w1, w2; };
+static int g_burnin = 0;
 
 static inline void step(double& t1, double& t2, const Params& P, bool jacobi) {
     double a1 = (double)P.p * t2 - (double)P.q * t1;
@@ -58,6 +59,8 @@ int main(int argc, char** argv) {
     std::string mode = argv[1]; int64_t p = atoll(argv[2]), q = atoll(argv[3]); double K = atof(argv[4]);
     bool jac = (std::strcmp(argv[5], "jacobi") == 0); long n = atol(argv[6]); int T = atoi(argv[7]);
     std::string out = argv[8];
+    if (const char* e = getenv("DECORR_BURNIN")) g_burnin = atoi(e);
+    if (g_burnin) std::fprintf(stderr, "[burn-in] %d common steps under parameter set A before the split\n", g_burnin);
     std::vector<double> deltas; for (int i = 9; i < argc; i++) deltas.push_back(atof(argv[i]));
     if (mode == "zero") deltas = {0.0};
     if (mode == "pq") deltas = {1.0, 2.0}; // 1: q -> q+1 ; 2: p -> p+1
@@ -84,7 +87,9 @@ int main(int argc, char** argv) {
         std::vector<Acc> ac1(T + 1, Acc{0, 0, 0, 0, 0, 0}), ac2 = ac1, as1 = ac1;
         std::vector<double> sumlnd(T + 1, 0.0); std::vector<long> cnt(T + 1, 0), cgt1(T + 1, 0);
         for (long i = 0; i < n; i++) {
-            double a1, a2; init_phases(1000000ULL + (uint64_t)i * 7919ULL, a1, a2); double b1 = a1, b2 = a2;
+            double a1, a2; init_phases(1000000ULL + (uint64_t)i * 7919ULL, a1, a2);
+            for (int t = 0; t < g_burnin; t++) step(a1, a2, A, jac);   // optional common burn-in on the attractor (2026-09-05 referee check)
+            double b1 = a1, b2 = a2;
             for (int t = 1; t <= T; t++) {
                 step(a1, a2, A, jac); step(b1, b2, B, jac);
                 double d = tdist(a1, a2, b1, b2);

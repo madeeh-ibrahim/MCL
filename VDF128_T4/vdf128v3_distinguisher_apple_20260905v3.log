@@ -1,0 +1,61 @@
+VDF128-T4 v3 distinguisher search (MCL-VDF128-DISTING-2026-0905-001; engine 8.1.3), map instance of "VDF128-T4-battery-input"
+(A) r=1 single-bit differences, n=2^16 per difference: max |P(flip)-1/2| = 0.50000 (diff bit 62 -> out bit 0), 832 of 16,384 above 4.5 sigma (0.00879); largest multiplicity of one full output difference = 5 of 65536 (diff bit 31; 1 expected for a random map)
+(A) r=2 single-bit differences, n=2^16 per difference: max |P(flip)-1/2| = 0.00772 (diff bit 40 -> out bit 9), 0 of 16,384 above 4.5 sigma (0.00879); largest multiplicity of one full output difference = 1 of 65536 (diff bit 0; 1 expected for a random map)
+(A) r=3 single-bit differences, n=2^16 per difference: max |P(flip)-1/2| = 0.00832 (diff bit 112 -> out bit 94), 0 of 16,384 above 4.5 sigma (0.00879); largest multiplicity of one full output difference = 1 of 65536 (diff bit 0; 1 expected for a random map)
+(B) r=1 two-bit differences, 512 random pairs, n=2^15 each: max |P(flip)-1/2| = 0.50000, 614 of 65536 above 4.5 sigma (0.01243); largest full-difference multiplicity = 1
+(B) r=2 two-bit differences, 512 random pairs, n=2^15 each: max |P(flip)-1/2| = 0.01251, 1 of 65536 above 4.5 sigma (0.01243); largest full-difference multiplicity = 1
+(C) r=1 linear, 512 random two-bit input masks x 128 output bits, n=2^17: max |corr| = 0.01178, 0 of 65536 above 4.5 sigma (0.01243; ~0.4 expected by chance)
+(C) r=2 linear, 512 random two-bit input masks x 128 output bits, n=2^17: max |corr| = 0.01257, 1 of 65536 above 4.5 sigma (0.01243; ~0.4 expected by chance)
+(D) cube-sum profile: fraction of 64 random cubes with NON-ZERO sum / mean popcount of the sum (64 = balanced), d = 12,16,20
+  [VDF128-T4-battery-input] weights: 34498284 808529583 484862660 741849080 550800402 407365630 948080496 1054803268 665178592 285826809 735334702 620534445  (max 2-adic valuation 5, smallest lane ~2^25)
+    r=1:  d=12 64/64  52.5  d=16 64/64  49.2  d=20 64/64  44.2
+    r=2:  d=12 64/64  64.0  d=16 64/64  64.3  d=20 64/64  63.9
+    r=3:  d=12 64/64  65.3  d=16 64/64  64.8  d=20 64/64  64.5
+    r=4:  d=12 64/64  65.2  d=16 64/64  63.7  d=20 64/64  62.9
+    r=5:  d=12 64/64  63.5  d=16 64/64  64.0  d=20 64/64  64.3
+    r=6:  d=12 64/64  63.3  d=16 64/64  63.2  d=20 64/64  63.7
+  [VDF128-T4-KAT-01] weights: 279585085 16285846 928956068 788364723 516116555 613731518 946679299 34137917 351651783 638991204 231823904 419155050  (max 2-adic valuation 5, smallest lane ~2^23)
+    r=1:  d=12 64/64  59.5  d=16 64/64  59.3  d=20 64/64  57.7
+    r=2:  d=12 64/64  64.8  d=16 64/64  64.6  d=20 64/64  63.5
+    r=3:  d=12 64/64  64.3  d=16 64/64  64.9  d=20 64/64  63.5
+    r=4:  d=12 64/64  63.2  d=16 64/64  64.8  d=20 64/64  65.2
+    r=5:  d=12 64/64  64.0  d=16 64/64  64.9  d=20 64/64  64.6
+    r=6:  d=12 64/64  63.8  d=16 64/64  63.3  d=20 64/64  63.2
+  [profile-input-A] weights: 703086892 719123339 833779037 400748057 724973756 327251342 616246979 315711977 178894420 158403757 118156156 690752126  (max 2-adic valuation 2, smallest lane ~2^26)
+    r=1:  d=12 64/64  53.5  d=16 64/64  49.5  d=20 64/64  43.5
+    r=2:  d=12 64/64  63.4  d=16 64/64  64.4  d=20 64/64  64.2
+    r=3:  d=12 64/64  64.1  d=16 64/64  63.4  d=20 64/64  63.6
+    r=4:  d=12 64/64  63.7  d=16 64/64  64.4  d=20 64/64  63.9
+    r=5:  d=12 64/64  64.7  d=16 64/64  65.2  d=20 64/64  63.5
+    r=6:  d=12 64/64  64.5  d=16 64/64  63.7  d=20 64/64  63.6
+  [profile-input-B] weights: 915482044 977348768 1070838547 980550757 761854828 57065239 810122317 25902936 504829750 112098322 245749585 1036551681  (max 2-adic valuation 5, smallest lane ~2^24)
+    r=1:  d=12 64/64  56.4  d=16 64/64  52.1  d=20 64/64  49.8
+    r=2:  d=12 64/64  64.3  d=16 64/64  64.4  d=20 64/64  62.4
+    r=3:  d=12 64/64  63.8  d=16 64/64  63.5  d=20 64/64  63.4
+    r=4:  d=12 64/64  64.4  d=16 64/64  64.4  d=20 64/64  64.1
+    r=5:  d=12 64/64  64.6  d=16 64/64  62.7  d=20 64/64  63.6
+    r=6:  d=12 64/64  64.5  d=16 64/64  65.5  d=20 64/64  63.4
+  [profile-input-C] weights: 1028267308 924908696 354600041 957790371 352759132 593917660 390434622 230342527 724003930 30149013 254185467 649644938  (max 2-adic valuation 3, smallest lane ~2^24)
+    r=1:  d=12 64/64  57.1  d=16 64/64  54.3  d=20 64/64  50.3
+    r=2:  d=12 64/64  63.2  d=16 64/64  63.5  d=20 64/64  63.0
+    r=3:  d=12 64/64  63.6  d=16 64/64  63.7  d=20 64/64  65.5
+    r=4:  d=12 64/64  64.9  d=16 64/64  64.3  d=20 64/64  64.0
+    r=5:  d=12 64/64  63.8  d=16 64/64  65.4  d=20 64/64  63.7
+    r=6:  d=12 64/64  64.5  d=16 64/64  63.1  d=20 64/64  64.3
+  [profile-input-D] weights: 4618708 98106685 171320524 499658772 784491990 663436712 208893308 981287567 496482330 863162691 976606214 943696079  (max 2-adic valuation 3, smallest lane ~2^22)
+    r=1:  d=12 64/64  49.1  d=16 64/64  49.5  d=20 64/64  44.8
+    r=2:  d=12 64/64  64.5  d=16 64/64  63.7  d=20 64/64  64.1
+    r=3:  d=12 64/64  63.9  d=16 64/64  62.5  d=20 64/64  64.2
+    r=4:  d=12 64/64  65.0  d=16 64/64  65.4  d=20 64/64  64.6
+    r=5:  d=12 64/64  63.8  d=16 64/64  64.3  d=20 64/64  63.3
+    r=6:  d=12 64/64  63.3  d=16 64/64  64.7  d=20 64/64  63.8
+  [v2 instance (MCL-VDF128-battery-input, v2 derivation)] weights: 751584581 733552135 495605117 81456337 266574596 720130567 280703654 364536619 648815362 208957435 795317133 631904302  (max 2-adic valuation 2, smallest lane ~2^26)
+    r=1:  d=12 64/64  58.2  d=16 64/64  58.5  d=20 64/64  54.4
+    r=2:  d=12 64/64  62.0  d=16 64/64  64.1  d=20 64/64  64.0
+    r=3:  d=12 64/64  63.1  d=16 64/64  62.9  d=20 64/64  63.1
+    r=4:  d=12 64/64  64.2  d=16 64/64  63.8  d=20 64/64  64.2
+    r=5:  d=12 64/64  64.6  d=16 64/64  62.7  d=20 64/64  63.8
+    r=6:  d=12 64/64  62.8  d=16 64/64  63.7  d=20 64/64  64.9
+(E) translation symmetries over 262144 derived weight sets: previous rule -> parity matrix rank-deficient in 6.958% (single-word all-even 5.630%, global equal-parity 1.369%); full-rank rule of Algorithm 1 v3 -> 0.0000%
+(E) half-turn shifts commuting with the battery instance's map (new rule): 0 of 5 (expected 0)
+Interpretation: values at the sampling floor with ~0 exceedances mean no differential or linear structure detectable at this sensitivity after one iteration; evidence, not a bound.

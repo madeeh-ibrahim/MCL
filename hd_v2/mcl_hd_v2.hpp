@@ -1,3 +1,23 @@
+// SPDX-FileCopyrightText: 2026 Madeeh Ibrahim <madeeh.chaotic.lock@gmail.com>
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+//
+// MCL (Madeeh Chaotic Lock) — Hierarchical channel-identity derivation (v2)
+// Copyright (c) 2026 Madeeh Ibrahim. All rights reserved.
+//
+// LICENSE
+//   Licensed under the PolyForm Noncommercial License 1.0.0
+//   (https://polyformproject.org/licenses/noncommercial/1.0.0/). Security
+//   research, evaluation and break-attempts by ANY party — including commercial
+//   organizations — are permitted free of charge under the Security Research &
+//   Evaluation Grant (SECURITY-RESEARCH-GRANT.md). Commercial production use
+//   requires a separate license (COMMERCIAL.md). See LICENSE and PATENTS.md.
+//
+// PATENT NOTICE
+//   The derivation methods are the subject of pending applications:
+//     PCT/IB2026/052737 (22 Mar 2026), PCT/IB2026/053253 (1 Apr 2026),
+//     PCT/IB2026/053673 (14 Apr 2026), PCT/IB2026/058860 (21 Aug 2026).
+//   A noncommercial patent license, and a patent license for security research,
+//   are granted; no patent license is granted for commercial use. See PATENTS.md.
 // ============================================================================
 // mcl_hd_v2.hpp — Hierarchical channel-identity derivation, version 2
 // PURPOSE: one-way index mixing for derive_child (Paper 5 §III), additive over

@@ -15,12 +15,37 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 
 | file | md5 |
 |---|---|
-| `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
+| `G_entropy_20260905.log` | `fcdc73d621f01fc435d1eb35471dbe85` |
+| `README.md` | `8b6aee80357f40ed82cb535cb7f33f78` |
+| `README_EN.md` | `b0dbeb5ec31bc515985b7d23ffdd7ecc` |
+| `adversarial_20260905.log` | `4145c5ed87b6923a34830ad5e32f1df0` |
 | `burnin_curve_20260905.log` | `050dad52defcd739c6938018cccb2a44` |
-| `header_patch.diff` | `d7a775f27b0826faa4ffe597906809aa` |
+| `burnin_curve_v2_20260905.log` | `8eefc62721b9e237deb544a4cc471e95` |
+| `ct_sine_cost_20260905.log` | `2b6e3f203ac2e7ce23af05426519a13f` |
+| `hd_throughput_v1_quiet_20260905.log` | `5e76214cd2cc41dfc036ab9cd0941aa3` |
+| `hd_throughput_v2_quiet_20260905.log` | `57002e19b5b8219b31a737e235ee60be` |
+| `header_patch.diff` | `bfb2255376963a20713be61f1299a1c4` |
+| `mcl_hd_throughput.cpp` | `b6f03a61af6e4d6645d51846dd7aacbf` |
+| `p5_G_entropy.cpp` | `5acc317b5a423c70d754361034383167` |
+| `p5_adversarial.cpp` | `3e1e7f34eb40d2c50ada0695457a5616` |
+| `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
+| `p5_burnin_curve_v2.cpp` | `ccabbe1d049a54a7d42f46dd4df9e220` |
+| `p5_ct_sine_cost.cpp` | `59a64bab93e56f71418669cd1c800dbe` |
+| `p5_parity_lock.cpp` | `c65e07ffe370ebbc0e65c20da699b638` |
+| `p5_resonance_control.cpp` | `708270a63754b5a746898c32775a4d42` |
+| `p5_system_eval.cpp` | `f5974ee0c591a3308cd3bf1b34bd9ed9` |
+| `p5_v2_coprime_parity.cpp` | `28e5232de3e49a7ecf8f5ad35f426396` |
+| `p5_weight_probe.cpp` | `30e3643026aed65609f8b26bef017427` |
+| `redraw_rate.cpp` | `c8bc17a69ac89160f0c7b3376173ee1b` |
+| `resonance_control_20260905.log` | `345cb0d44e0b52a2d1284b463fa4c11c` |
 | `results_v3_battery_q30_v8.1.3_20260905_arm64.txt` | `826cc3b93f065fbd2a3310d34b55ec7b` |
 | `results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `528c97c3bfaab95b7089cf7fa6002a1e` |
-| `p5_hardened_txauth/mcl_txauth_v3_battery_q30.cpp` (v3.1.1) | `fbf6aa200b06a90ae1154cef5ef78413` |
+| `sibling_recovery.cpp` | `215ed07eaa21b7c06180f8dd4e200298` |
+| `sibling_recovery.log` | `1e76fa7aca34398e71dcce1a4c398da9` |
+| `system_eval_20260905.log` | `9a35ae9ee5322c8510e5aa77dd00cda9` |
+| `v2_coprime_parity_20260905.log` | `f9e601051a0897a6b57b530e50d6d22c` |
+| `weight_probe_20260905.log` | `8050e87ac004fcf915bf5cbcda41dea4` |
+| `weight_probe_sidecar_scratch_ctor.diff` | `162e6c220969c6c70e5da1d705127dbc` |
 
 ---
 ## 2026-09-05 (evening) — deep-examiner findings S1: parity lock + sibling recovery (engine of record, unmodified)
@@ -28,9 +53,37 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 - `sibling_recovery.cpp` / `sibling_recovery.log` — proof of concept for the referee finding: with M = 10⁹, from the p-values of children 0, 1, 2 alone, the parent's 64-bit block R_lo (= raw[0:8]) is recovered by enumerating k < 2⁶⁴/(M−2) (1.8 × 10¹⁰ candidates, **23.8 s single-thread**) — unique survivor, equal to the true block — and the p-value of the **unseen child 7 is predicted exactly**, without the seed, the parent pair or any engine evaluation.
 | file | md5 |
 |---|---|
+| `G_entropy_20260905.log` | `fcdc73d621f01fc435d1eb35471dbe85` |
+| `README.md` | `8b6aee80357f40ed82cb535cb7f33f78` |
+| `README_EN.md` | `b0dbeb5ec31bc515985b7d23ffdd7ecc` |
+| `adversarial_20260905.log` | `4145c5ed87b6923a34830ad5e32f1df0` |
+| `burnin_curve_20260905.log` | `050dad52defcd739c6938018cccb2a44` |
+| `burnin_curve_v2_20260905.log` | `8eefc62721b9e237deb544a4cc471e95` |
+| `ct_sine_cost_20260905.log` | `2b6e3f203ac2e7ce23af05426519a13f` |
+| `hd_throughput_v1_quiet_20260905.log` | `5e76214cd2cc41dfc036ab9cd0941aa3` |
+| `hd_throughput_v2_quiet_20260905.log` | `57002e19b5b8219b31a737e235ee60be` |
+| `header_patch.diff` | `bfb2255376963a20713be61f1299a1c4` |
+| `mcl_hd_throughput.cpp` | `b6f03a61af6e4d6645d51846dd7aacbf` |
+| `p5_G_entropy.cpp` | `5acc317b5a423c70d754361034383167` |
+| `p5_adversarial.cpp` | `3e1e7f34eb40d2c50ada0695457a5616` |
+| `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
+| `p5_burnin_curve_v2.cpp` | `ccabbe1d049a54a7d42f46dd4df9e220` |
+| `p5_ct_sine_cost.cpp` | `59a64bab93e56f71418669cd1c800dbe` |
 | `p5_parity_lock.cpp` | `c65e07ffe370ebbc0e65c20da699b638` |
+| `p5_resonance_control.cpp` | `708270a63754b5a746898c32775a4d42` |
+| `p5_system_eval.cpp` | `f5974ee0c591a3308cd3bf1b34bd9ed9` |
+| `p5_v2_coprime_parity.cpp` | `28e5232de3e49a7ecf8f5ad35f426396` |
+| `p5_weight_probe.cpp` | `30e3643026aed65609f8b26bef017427` |
+| `redraw_rate.cpp` | `c8bc17a69ac89160f0c7b3376173ee1b` |
+| `resonance_control_20260905.log` | `345cb0d44e0b52a2d1284b463fa4c11c` |
+| `results_v3_battery_q30_v8.1.3_20260905_arm64.txt` | `826cc3b93f065fbd2a3310d34b55ec7b` |
+| `results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `528c97c3bfaab95b7089cf7fa6002a1e` |
 | `sibling_recovery.cpp` | `215ed07eaa21b7c06180f8dd4e200298` |
 | `sibling_recovery.log` | `1e76fa7aca34398e71dcce1a4c398da9` |
+| `system_eval_20260905.log` | `9a35ae9ee5322c8510e5aa77dd00cda9` |
+| `v2_coprime_parity_20260905.log` | `f9e601051a0897a6b57b530e50d6d22c` |
+| `weight_probe_20260905.log` | `8050e87ac004fcf915bf5cbcda41dea4` |
+| `weight_probe_sidecar_scratch_ctor.diff` | `162e6c220969c6c70e5da1d705127dbc` |
 - `redraw_rate.cpp` (2026-09-05 night) — empirical weak-key re-draw rate of `mcl_t4_q30_params_from_key` over 200,000 random 256-bit keys: **395 raw weight sets with a reachable translation symmetry (0.198 %, ≈ 2⁻⁹) → 0 after the sidecar's deterministic re-draw.** Confirms Tech Guide §308 (re-draw, not rejection) against Paper 5 §X.9 ("rejected"); implies ≈ 270 silent re-draws inside the Q30 battery. md5 `c8bc17a69ac89160f0c7b3376173ee1b`.
 
 
@@ -43,26 +96,31 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 - `mcl_hd_throughput.cpp` (v1) و`../hd_v2/mcl_hd_throughput_v2.cpp` (v2) / `hd_throughput_v{1,2}_quiet_20260905.log` — إعادة توقيت الاشتقاق (تشغيلان لكل) والآلة شبه هادئة (عملية واحدة أخرى): v1 1.076–1.078 ms عارياً / 27.0 ms مع الخطوة 4؛ v2 1.079–1.081 / 27.1–28.2 ms — SHA-256 غير مرئية أمام تشغيل المحرّك.
 - `p5_resonance_control.cpp` / `resonance_control_20260905.log` — ضابط موجب لشاشة χ² (الخطوة 4) على نافذة (3,5) قرب K ≈ 1.22: مُعلَّمة عند 1.218/1.220/1.221 (χ² 1.4–1.5×10⁶)، **330.0 عند 1.219 (تحت العتبة 330.52 بفارق 0.5)** — الشاشة تكشف النافذة لكن عتبتها غير حادّة عند حافّتها.
 - `p5_weight_probe.cpp` / `weight_probe_20260905.log` / `weight_probe_sidecar_scratch_ctor.diff` — اضطراب الأوزان الاثني عشر مباشرة (±1 وقلب بت لكل وزن؛ 10,800 مسباراً/تحقيق): مزدوج 128.065/256 (97–156)، Q30 128.120/256 (95–158)، 0 near-miss.
+- `p5_system_eval.cpp` / `system_eval_20260905.log` — **التقييم النظامي (§VII.B)**، أُعيد قياسه 2026-09-06 على مضيف هادئ بدقّة أعلى (عمليات MCL n=400، عمليات التجزئة n=400,000 لأنها دون الميكروثانية): الأدوار الثلاثة للمحفظة على مكدّس MCL مقابل مكدّس تجزئة (KDF1/SHA-256 + HMAC-SHA-256 + DRBG بعدّاد SHA-256) في العملية نفسها. تسجيل 0.862 ms مقابل 0.459 µs (≈1,880×)، ومع شاشة الخطوة 4 20.62 ms (≈44,900×)؛ مصادقة 0.295 ms مقابل 2.02 µs (≈146×)؛ توليد 1 KiB 0.351 ms مقابل 13.87 µs (≈25×)؛ حالة متغيّرة 72 B مقابل ≈104 B (0.69×)؛ جدول 262,144 B مقابل 0؛ أسرار 1 مقابل 1؛ **بدائيات 2 مقابل 1** (MCL يحتاج المحرّك + SHA-256 لـKDF). النتيجة **تُفنّد حجّة الدمج** والورقة تسحبها صراحةً.
+- `p5_adversarial.cpp` / `adversarial_20260905.log` — **التقييم العدائي (§VI.E)**: (A1) حساسية ctx لكل حقل على حدة (قلب بت واحد في الحقل وحده، 2,000 محاولة/حقل): كل الحقول الستّة داخل 1.6 خطأ معياري من 128/256 ⇒ كل حقل يربط الوسم بعرضه الكامل؛ (A2) اختبار تسريب الأوزان من الدرجة الأولى: 20,000 مفتاح × 360 بت وزن × 256 بت وسم = 92,160 ارتباطاً، عند B = 10,000 وB = 0: أقصى |r| = 0.0309 (4.37σ) و0.0298 (4.22σ) مقابل قيمة قصوى متوقَّعة للنموذج الصفري ≈ 4.92σ ⇒ **لا تسريب من الدرجة الأولى عند أيّ من طولَي الـburn-in** (نتيجة سالبة؛ لا تستبعد الرتب الأعلى/الشبكية، §X.12).
 - سجلات الحزمة v3.2 الحاكمة في `../p5_hardened_txauth/results_v32_*_20260905.txt` (+ `quiet_rerun_conditions_20260905.txt`).
 
 | file | md5 |
 |---|---|
 | `G_entropy_20260905.log` | `fcdc73d621f01fc435d1eb35471dbe85` |
-| `README.md` | `78dd0c93c08123c1b7a362840db48806` |
+| `README.md` | `8b6aee80357f40ed82cb535cb7f33f78` |
 | `README_EN.md` | `b0dbeb5ec31bc515985b7d23ffdd7ecc` |
+| `adversarial_20260905.log` | `4145c5ed87b6923a34830ad5e32f1df0` |
 | `burnin_curve_20260905.log` | `050dad52defcd739c6938018cccb2a44` |
 | `burnin_curve_v2_20260905.log` | `8eefc62721b9e237deb544a4cc471e95` |
 | `ct_sine_cost_20260905.log` | `2b6e3f203ac2e7ce23af05426519a13f` |
-| `hd_throughput_v1_quiet_20260905.log` | `6641010cd74f12ee503ff0816d6f7b50` |
-| `hd_throughput_v2_quiet_20260905.log` | `02df8eaa3d23fdaa203801203206d39b` |
+| `hd_throughput_v1_quiet_20260905.log` | `5e76214cd2cc41dfc036ab9cd0941aa3` |
+| `hd_throughput_v2_quiet_20260905.log` | `57002e19b5b8219b31a737e235ee60be` |
 | `header_patch.diff` | `bfb2255376963a20713be61f1299a1c4` |
 | `mcl_hd_throughput.cpp` | `b6f03a61af6e4d6645d51846dd7aacbf` |
 | `p5_G_entropy.cpp` | `5acc317b5a423c70d754361034383167` |
+| `p5_adversarial.cpp` | `3e1e7f34eb40d2c50ada0695457a5616` |
 | `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
 | `p5_burnin_curve_v2.cpp` | `ccabbe1d049a54a7d42f46dd4df9e220` |
 | `p5_ct_sine_cost.cpp` | `59a64bab93e56f71418669cd1c800dbe` |
 | `p5_parity_lock.cpp` | `c65e07ffe370ebbc0e65c20da699b638` |
 | `p5_resonance_control.cpp` | `708270a63754b5a746898c32775a4d42` |
+| `p5_system_eval.cpp` | `f5974ee0c591a3308cd3bf1b34bd9ed9` |
 | `p5_v2_coprime_parity.cpp` | `28e5232de3e49a7ecf8f5ad35f426396` |
 | `p5_weight_probe.cpp` | `30e3643026aed65609f8b26bef017427` |
 | `redraw_rate.cpp` | `c8bc17a69ac89160f0c7b3376173ee1b` |
@@ -71,6 +129,7 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `528c97c3bfaab95b7089cf7fa6002a1e` |
 | `sibling_recovery.cpp` | `215ed07eaa21b7c06180f8dd4e200298` |
 | `sibling_recovery.log` | `1e76fa7aca34398e71dcce1a4c398da9` |
+| `system_eval_20260905.log` | `9a35ae9ee5322c8510e5aa77dd00cda9` |
 | `v2_coprime_parity_20260905.log` | `f9e601051a0897a6b57b530e50d6d22c` |
 | `weight_probe_20260905.log` | `8050e87ac004fcf915bf5cbcda41dea4` |
 | `weight_probe_sidecar_scratch_ctor.diff` | `162e6c220969c6c70e5da1d705127dbc` |
