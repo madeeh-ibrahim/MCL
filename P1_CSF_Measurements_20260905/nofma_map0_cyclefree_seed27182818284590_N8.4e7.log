@@ -1,0 +1,57 @@
+==============================================================
+ THIRD-MAP SAFE-ZONE SCAN (Paper 1 §3.3 byte-level protocol, unchanged)
+ Doc ID: MCL-THIRDMAP-SAFEZONE-2026-0905-001
+ Map: logistic r=4 (control) | seed 27182818284590 | N = 84000000 | burn-in 10000 | binary64, Apple libm | x0 from seed
+ Byte = (mantissa >> P) & 0xFF, P in [0,44]; chi2 df=255, crit(0.01)=310.46
+==============================================================
+
+Stream x:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |        287.01 | PASS
+   1 |        292.85 | PASS
+   2 |        260.86 | PASS
+   3 |        256.46 | PASS
+   4 |        227.66 | PASS
+   5 |        261.20 | PASS
+   6 |        259.43 | PASS
+   7 |        263.22 | PASS
+   8 |        267.24 | PASS
+   9 |        355.44 | FAIL
+  10 |        312.98 | FAIL
+  11 |        288.44 | PASS
+  12 |        310.18 | PASS
+  13 |        285.25 | PASS
+  14 |        272.60 | PASS
+  15 |        241.93 | PASS
+  16 |        241.40 | PASS
+  17 |        273.69 | PASS
+  18 |        288.80 | PASS
+  19 |        276.17 | PASS
+  20 |        307.22 | PASS
+  21 |        284.73 | PASS
+  22 |        285.37 | PASS
+  23 |        346.51 | FAIL
+  24 |        370.12 | FAIL
+  25 |        404.79 | FAIL
+  26 |        469.68 | FAIL
+  27 |        603.10 | FAIL
+  28 |        835.60 | FAIL
+  29 |       1272.48 | FAIL
+  30 |       1993.23 | FAIL
+  31 |       3620.49 | FAIL
+  32 |       6843.93 | FAIL
+  33 |      13171.66 | FAIL
+  34 |      25989.35 | FAIL
+  35 |      51611.64 | FAIL
+  36 |     102518.52 | FAIL
+  37 |     204842.74 | FAIL
+  38 |     406900.37 | FAIL
+  39 |     801961.51 | FAIL
+  40 |    1575693.36 | FAIL
+  41 |    3074889.50 | FAIL
+  42 |    5938221.09 | FAIL
+  43 |   11339023.61 | FAIL
+  44 |   21408226.89 | FAIL
+  => Safe Zone (byte-window start positions) for x: [11, 22] = 12 positions
+

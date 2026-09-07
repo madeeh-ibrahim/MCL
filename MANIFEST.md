@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 585 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 703 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
@@ -34,7 +34,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `a4433351ce02c658afce17dc1456116e73d5b9925326ca9bf9b40144a7cf0ade` |  |
+| `CHANGELOG.md` | `715eacd5310d0e9e8f4eb40fd20c77260973ba33ebc0775bdb185ce23b4f8548` |  |
 | `CITATION.cff` | `65b632e43fc33e0cb8b85f6aac84f49533856249178b3e8421b58f8b05856362` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
@@ -427,6 +427,134 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `LICENSES/LicenseRef-MCL-Security-Research-Grant.txt` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
 | `LICENSES/PolyForm-Noncommercial-1.0.0.txt` | `ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8` |  |
+
+### P1_CSF_Measurements_20260905  (110 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P1_CSF_Measurements_20260905/README.md` | `9eb2082e8e90e48ac7fecd4e04ea71b06be7f0a21f200162a8a65a183368be67` | Paper 1 — cross-system Safe-Zone, logistic cycle structure and XOR-healing controls (2026-09-05/06) |
+| `P1_CSF_Measurements_20260905/RECORD_P1_CSF_MEASUREMENTS_20260905.md` | `795ce23e8af5a8a1f672f1b61fd9f92a311e69f929f178fa2d901b5fd9d6aa19` | RECORD — P1 CS&F revision measurements · 2026-09-05 / audited and re-run canonically 2026-09-06 |
+| `P1_CSF_Measurements_20260905/SHA256SUMS` | `10eccc9641facfaab70c27f198ac9fb489321d624082d917fb94b64ed3a5edd5` |  |
+| `P1_CSF_Measurements_20260905/attractor_dump_seed12345678901234_M1Pro_20260905.log` | `bd7274ef87c8f0c9101af6a7bb584d0a1190ca7b58e1456ca771d85a537cf226` |  |
+| `P1_CSF_Measurements_20260905/attractor_points_12345678901234.csv` | `c67515ab5f7763be605543fb7a71a10213c724c8b7198bb02f9475f2bea42d15` |  |
+| `P1_CSF_Measurements_20260905/attractor_points_98765432109876.csv` | `d5240f825853f3526fdc86858a3d762f403125aff94ff082644ec30d647740f4` |  |
+| `P1_CSF_Measurements_20260905/audit_cycle_MCL_seed12345678901234.log` | `050b9bb7eb32563529d1fe612d7f3cf5b64caf31c6e4e1e874425f7b9dc417a3` |  |
+| `P1_CSF_Measurements_20260905/audit_cycle_std_seed12345678901234.log` | `222b5681018b0680a6b8242d81c4d7fec0b4bc5837c1afece64671b9afda3950` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.1.log` | `2162e29b59dfd47812bcc882bbd646a3c00376f9b0ebb09d55ce6f46bdd18fdd` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.123456789.log` | `d4da2280d19aa03c3f1b3279426509990520a28c278cba69ddcfea35af1a83e3` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.2.log` | `c3f5b5d199f1ee934636d83c0dc152c0796936f304a4dbb72eb5a4a6efced0ff` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.3.log` | `77a6ce3371a8cb0317cbe190e8582c7ad61453a69c8995b4d7a24a5abc81d0a3` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.314159265.log` | `110582e9a84cc7391b16a8873e7b0cac041c4ed8eeea49e25ff90c8e05da853d` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.4.log` | `9d3e9d686736575d39952ef1f59fcc04b634771d162e2b32d34bb04008e0e041` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.6.log` | `08132837629a826fd2375cdd955969b985ffcc187bf21a2fa80003c43f70add7` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.7.log` | `9f0e5a801674262df94454d6e59312dace22b112a6683d2e6f12f0a4d434878a` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.8.log` | `5eefeb3eb663dd3fc24f2603fabc7db40ee99d87407ce2908041110029916c3d` |  |
+| `P1_CSF_Measurements_20260905/audit_logistic_x0_0.9.log` | `593a7df6454473514315343533a48fc39f37d5f316d719344071cdf5a999c754` |  |
+| `P1_CSF_Measurements_20260905/audit_map4_MCL_seed12345678901234.log` | `f796b4dc30ddd58f46039ec768d84bf44aa171d1f774e0a0d08eab588b305759` |  |
+| `P1_CSF_Measurements_20260905/audit_nofma_map0_seed12345678901234.log` | `88858641bb96c3a72da393ea790f952ae107cbbe41291ac99cc27d916050a3a9` |  |
+| `P1_CSF_Measurements_20260905/audit_nofma_map1_seed12345678901234.log` | `d5fdf7f90aa6461c28ceb9b2a0ba5364bd00e303874a0a0cdb0233f33c4950cf` |  |
+| `P1_CSF_Measurements_20260905/audit_nofma_map2_seed12345678901234.log` | `a37a62de5c806bed28e0a07c60f213c8a99c0dd75d17e5414a10531b108a72e4` |  |
+| `P1_CSF_Measurements_20260905/audit_nofma_xor0_seed12345678901234.log` | `97e7d6c950a019d6ef5c833fcdf96375625427c24b77772350172edf2323b47d` |  |
+| `P1_CSF_Measurements_20260905/audit_nofma_xor1_seed12345678901234.log` | `21e457c2c91a8d35c2783da7dcdac7932e6af951d83c182cfd75db1b915cb3f5` |  |
+| `P1_CSF_Measurements_20260905/audit_nofma_xor4_seed12345678901234.log` | `d79a1aa70939414e1a54eb3808fd556f406287176ceb3076f8e71441014eaf87` |  |
+| `P1_CSF_Measurements_20260905/audit_python_brent.log` | `f7c5699b2a11d21f8a87380b12d5970781ff80992e19bb2d1002e0a5a62558f5` |  |
+| `P1_CSF_Measurements_20260905/brent_logistic_check.py` | `d55d0f6755cbb1356f7e36e4d6bf708ae68d5228a721c29d4d0654ace99875c1` |  |
+| `P1_CSF_Measurements_20260905/density128_12345678901234.csv` | `36c18ed663e74629f9bed99d3648df2096dd33bb47a6b57240acafd39cc8225c` |  |
+| `P1_CSF_Measurements_20260905/density32_12345678901234.csv` | `b1e55b8b0de1c5f70a73d09363cf0c3ac5ce29b21e1e301bcc582eb4433eace1` |  |
+| `P1_CSF_Measurements_20260905/density64_12345678901234.csv` | `438a6e0c8878740bbd5a70a2f983e810d54fc7978f3f627ae62f9bba8f20d034` |  |
+| `P1_CSF_Measurements_20260905/density64_98765432109876.csv` | `bf9fbf10503d43401f60d1851777cf711bd83fd75af966d19dc6c2c44b5930b1` |  |
+| `P1_CSF_Measurements_20260905/logistic_cycles_M1Pro_20260905.log` | `128dce25a790c26331ea68f1780c728b7aa810c1969e0d2cb03c880feb8e468c` |  |
+| `P1_CSF_Measurements_20260905/mcl_attractor_dump.cpp` | `5e7a97277091226d2f0450d190481346d3d070692669c29b1010fc674ce3bfd3` |  |
+| `P1_CSF_Measurements_20260905/mcl_core.hpp` | `32aa22f032d6495a5d8baa602a4662cf46477ad48cf3fc7e864049138db966d3` |  |
+| `P1_CSF_Measurements_20260905/mcl_cycle_search.cpp` | `073a2757ce0f995eee9acfd604c4d0975b7b4b68d2c261e3b88d81d847cf1f0e` |  |
+| `P1_CSF_Measurements_20260905/mcl_logistic_cycle.cpp` | `e29cad0cdba4044d313b3cf64e16ffba9b3d30fba7ac16abb5ae45af3ad8fe8f` |  |
+| `P1_CSF_Measurements_20260905/mcl_thirdmap_safezone.cpp` | `c802eae29364586e8b1dac9c8d4d9d664acf9285f904c55fd7e210941ddc5548` |  |
+| `P1_CSF_Measurements_20260905/mcl_xor_control.cpp` | `b0108f0f18c8affb98d89ce0daefff96e8f0b161aa318945b8d87b2590fe0bfd` |  |
+| `P1_CSF_Measurements_20260905/nofma_logistic_cycles.log` | `a5a773feb2035635109796f15a4d281b9d7a7e3dfa3ef637216496956316aab7` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_cyclefree_seed27182818284590_N8.4e7.log` | `b8185151a2c65883b06a638cbd69d1a0d7a96cbeabd2939d65bdfc90be34159a` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_cyclefree_seed70466644885213_N8.7e7.log` | `57993500a5d17050282aa4c225ac43dcf512c7c32cccb52413abd29100e6f483` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed12345678901234.log` | `88858641bb96c3a72da393ea790f952ae107cbbe41291ac99cc27d916050a3a9` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed17320508075688.log` | `40cb0ed4fb54f171259fd7dc81915e8fed6c63c0e03ce25eac93be98886c9319` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed27182818284590.log` | `420d99bea9422809db076fd777ec398ede621a6083521875ea7e4a3425e6afa6` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed31415926535897.log` | `980476c5a3db658f2926093be2995327ec0b7ea6fe39400b015a9be4264fc6ee` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed55129803364771.log` | `720228a680be5134256c8e24c5ffaba8d9cc9df65a61c22d813adb9b27d04502` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed70466644885213.log` | `8aac1bb1278cb82b724c128f8f71e13234db8a4bc5db9fc8dd587ef551ee5168` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed89623471905588.log` | `768e6fdef967c2ada3da2f031ea2ddd4cefb73091063f539eedf365e190f5b78` |  |
+| `P1_CSF_Measurements_20260905/nofma_map0_seed98765432109876.log` | `313aa07e64e295c3d4d978880a1f81710f1fcb02c3c6875fd98b097bf40ba809` |  |
+| `P1_CSF_Measurements_20260905/nofma_map1_seed12345678901234.log` | `d5fdf7f90aa6461c28ceb9b2a0ba5364bd00e303874a0a0cdb0233f33c4950cf` |  |
+| `P1_CSF_Measurements_20260905/nofma_map1_seed55129803364771.log` | `b6302ff387c286ece9f4b6b0e91b9ee5e2ef4ad0f51fa2d0c70f103ef814a23b` |  |
+| `P1_CSF_Measurements_20260905/nofma_map1_seed70466644885213.log` | `53824bf6ba2d56c81733d950e81f03c18cb83225a54628259aec03ea7355b9ac` |  |
+| `P1_CSF_Measurements_20260905/nofma_map1_seed89623471905588.log` | `ecddcff723a3778d2f26b63caf381fcb3fc11d5a35c03e743a6a3f8aa00c96b6` |  |
+| `P1_CSF_Measurements_20260905/nofma_map2_seed12345678901234.log` | `a37a62de5c806bed28e0a07c60f213c8a99c0dd75d17e5414a10531b108a72e4` |  |
+| `P1_CSF_Measurements_20260905/nofma_map2_seed55129803364771.log` | `1e98de9648c7e1cc86ee04099243be8e3b4a2bb880b7d053c00d6284403cfa2d` |  |
+| `P1_CSF_Measurements_20260905/nofma_map2_seed70466644885213.log` | `7b13809e836f1253a53bbcd0a570fcdf775eb54cf3b9bbf83bcc42f2478121af` |  |
+| `P1_CSF_Measurements_20260905/nofma_map2_seed89623471905588.log` | `b0ef79d1c1d7fe7528a391ac1e3e6d7a31b3895d37d492af16b4c7f445ea4e30` |  |
+| `P1_CSF_Measurements_20260905/nofma_map3_seed12345678901234.log` | `29bf457b565001ecf64906d28fe7e6ba70924755b11f4ffc19f5c5cdf04b21a3` |  |
+| `P1_CSF_Measurements_20260905/nofma_map3_seed55129803364771.log` | `91c9f75a16aa0799b1376838b2c44400da426b29e8f1f1529cfe548e12c65aae` |  |
+| `P1_CSF_Measurements_20260905/nofma_map3_seed70466644885213.log` | `916d2b01081f39eb6b6a7272ba69ac03c5b6eaeaa8a29bd8e9a785f75aa3310f` |  |
+| `P1_CSF_Measurements_20260905/nofma_map3_seed89623471905588.log` | `cd5b89984ca9e8d05ab88758ae5fcd4dfa8f57be40e9c18534c69e771536e7a6` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor0_seed12345678901234.log` | `97e7d6c950a019d6ef5c833fcdf96375625427c24b77772350172edf2323b47d` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor0_seed70466644885213.log` | `805995313ba903daeb7b6a50ffa9467a3a176f335fc4be32fa78cf026333d3b8` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor1_seed12345678901234.log` | `21e457c2c91a8d35c2783da7dcdac7932e6af951d83c182cfd75db1b915cb3f5` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor1_seed70466644885213.log` | `f76b541785bec408aee63305f2b542cfad3ccb89ace2d93290515ca261d89f25` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor2_seed12345678901234.log` | `002cd1e89a69fc3b27aca9253b3090f02f8c30551acd3ec9402a4fe14e24ccfd` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor2_seed70466644885213.log` | `d289852b326ec861452b78288f5be7b84c1db8fd89f8b0ba48612b1952432085` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor3_seed12345678901234.log` | `ec706dce3bc9020403140c146284ae976b859bfb236673bc3b306d3c17107299` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor3_seed70466644885213.log` | `7225ba06d0624207824978723440c951bfcbac489681ee5075a329f9dfa7e64f` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor4_seed12345678901234.log` | `d79a1aa70939414e1a54eb3808fd556f406287176ceb3076f8e71441014eaf87` |  |
+| `P1_CSF_Measurements_20260905/nofma_xor4_seed70466644885213.log` | `ffd07b95705cad8fc339a810681b9fc517f221c62bc68cb8a1cf255781012bd5` |  |
+| `P1_CSF_Measurements_20260905/psi1_hist_12345678901234.csv` | `a2f6ba410ee62ffd2100e0c4ecc62b23c0209460097596828bf3d5349df03509` |  |
+| `P1_CSF_Measurements_20260905/psi1_hist_98765432109876.csv` | `d361a6feba6e7461e94c20ae21986b915405f1b09025a169caacd86da67a4df1` |  |
+| `P1_CSF_Measurements_20260905/run_audit1.sh` | `5249a1dfc9992f9e7ed9d928562a14755ec1919e87f94f5fb5480019f0bb53d6` |  |
+| `P1_CSF_Measurements_20260905/run_nofma_campaign.sh` | `a77a544f9398966187244564a04ff2d52dc770b2583745cc2c9f5ba7fa3ed59f` |  |
+| `P1_CSF_Measurements_20260905/run_round2.sh` | `3c20221867c7d7a48e1fac3cad86dfd74cfcd79c57e3ac7575bac8b9f95b603f` |  |
+| `P1_CSF_Measurements_20260905/run_round3.sh` | `966e7f86d32b2e7aee1a5b2c11c6580cdf0d3738eae7806173dc83eff9e7c7ba` |  |
+| `P1_CSF_Measurements_20260905/run_thirdmap_all.sh` | `77db05600d5a05da4427a2c9700befcb3b47c8ac0959fd65299b02225b767ffd` |  |
+| `P1_CSF_Measurements_20260905/run_xor.sh` | `c2ae1d0dfee1d8b6ba482fd4a811d220760f11f193ddab679a28450806d223c2` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed12345678901234_M1Pro_20260905.log` | `3561bd3dd464bfc9b321abe3f44844715f08adbef4963524e12de22889fa8325` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed17320508075688_M1Pro_20260905.log` | `efd082a0f712b4ac0529c6a2f4d3f451aa333a284a400aa8dcd4dcef126b5a2b` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed27182818284590_M1Pro_20260905.log` | `c7af278114c0e1d92cf3d1e378739def1f8528c7b81de6cada56f0abbbb28b97` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed31415926535897_M1Pro_20260905.log` | `bb2e3fab9a9e2963d537425a86623a5368d49a1a311539582fcad3516da4af57` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed55129803364771_M1Pro_20260905.log` | `5acdac9b9b7f2eb131d0145f429d292de0e586bd952dd38cc23d7c85b96a722b` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed70466644885213_M1Pro_20260905.log` | `21b40039c409bfec7677c71bc1fccf89fad5e1b2aafd2f808bb84f058b5865bb` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed89623471905588_M1Pro_20260905.log` | `7a17c27b6b8faac1166fcf7f67b2985e84cfff212ec324e0170a425e54d55926` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map0_seed98765432109876_M1Pro_20260905.log` | `cbb07b873bcfc44ddea56e7524aec98361913657c56fc4b22c75b3f6cb181442` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map1_seed12345678901234_M1Pro_20260905.log` | `73e358985acb3d038d41ad2582e45601ed2306eece7c45d0b45682b81fd7d185` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map1_seed55129803364771_M1Pro_20260905.log` | `25a0779c4849750f870bf559303ab46c062a6184a9e145f14615d7e0d052b060` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map1_seed70466644885213_M1Pro_20260905.log` | `5e340389445930a9888898ebcee42917097346e477cf838b04f73aba536a1bbf` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map1_seed89623471905588_M1Pro_20260905.log` | `af856460c29918c60c5fe8240139e2b268fb3d944634e4bd642783a163e5a656` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map2_seed12345678901234_M1Pro_20260905.log` | `581bee47d70856f40e647a13bc3cc9ddec7fff2d997d369f9030692253dacb2e` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map2_seed55129803364771_M1Pro_20260905.log` | `112de528c11ed299489a10e466566b77b88421e3c2561bb5ea5c77e26416b13f` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map2_seed70466644885213_M1Pro_20260905.log` | `8bd70247017ec81365ad273088b6a74589b2ed91249897a1d0b68dcc600ac81e` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map2_seed89623471905588_M1Pro_20260905.log` | `b922033c74236fa360e2b34fdeef74f4550bca56f298ecfa7511967e76b8382e` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map3_seed12345678901234_M1Pro_20260905.log` | `2a37c54c1ba89c1d74fee5c659fa408845e39581197d148a430f9444406c4c53` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map3_seed55129803364771_M1Pro_20260905.log` | `3211eb3f39927de9955cf47d838da6097e1ba04cee977bd20fa981a89a9b1bc0` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map3_seed70466644885213_M1Pro_20260905.log` | `a9d49434390a6d1cbfc2baa8301e115cc42deb6fe08de7a2e3126fd022a6c311` |  |
+| `P1_CSF_Measurements_20260905/thirdmap_map3_seed89623471905588_M1Pro_20260905.log` | `25d82d35a7a0a8b485af2f34c0bbdb420540a3a62619597cffed117b30d19a9e` |  |
+| `P1_CSF_Measurements_20260905/x0_hex.cpp` | `8935685f648607d1efe4bb691ab2d0cf5071d89025a6a9b9cd579bd2a4c48df1` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case0_seed12345678901234_M1Pro_20260905.log` | `97e7d6c950a019d6ef5c833fcdf96375625427c24b77772350172edf2323b47d` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case0_seed70466644885213_M1Pro_20260905.log` | `805995313ba903daeb7b6a50ffa9467a3a176f335fc4be32fa78cf026333d3b8` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case1_seed12345678901234_M1Pro_20260905.log` | `21e457c2c91a8d35c2783da7dcdac7932e6af951d83c182cfd75db1b915cb3f5` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case1_seed70466644885213_M1Pro_20260905.log` | `f76b541785bec408aee63305f2b542cfad3ccb89ace2d93290515ca261d89f25` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case2_seed12345678901234_M1Pro_20260905.log` | `002cd1e89a69fc3b27aca9253b3090f02f8c30551acd3ec9402a4fe14e24ccfd` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case2_seed70466644885213_M1Pro_20260905.log` | `d289852b326ec861452b78288f5be7b84c1db8fd89f8b0ba48612b1952432085` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case3_seed12345678901234_M1Pro_20260905.log` | `ec706dce3bc9020403140c146284ae976b859bfb236673bc3b306d3c17107299` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case3_seed70466644885213_M1Pro_20260905.log` | `7225ba06d0624207824978723440c951bfcbac489681ee5075a329f9dfa7e64f` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case4_seed12345678901234_M1Pro_20260905.log` | `d79a1aa70939414e1a54eb3808fd556f406287176ceb3076f8e71441014eaf87` |  |
+| `P1_CSF_Measurements_20260905/xorctl_case4_seed70466644885213_M1Pro_20260905.log` | `ffd07b95705cad8fc339a810681b9fc517f221c62bc68cb8a1cf255781012bd5` |  |
+
+### P1_ReviewMeasurements_20260907  (8 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P1_ReviewMeasurements_20260907/README.md` | `5f5037000a9842052f91827cfc968dbda215390641edb1af9bcecdac79b62c39` | Paper 1 — review measurements, 2026-09-07 |
+| `P1_ReviewMeasurements_20260907/RECORD_P1_REVIEW_MEASUREMENTS_20260907.md` | `1a6eb3b2c542c05348b95a0f2d4075d9df48c221a2a90338ff1b778aab3a00f0` | Paper 1 — review measurements, 2026-09-07 |
+| `P1_ReviewMeasurements_20260907/SHA256SUMS` | `7177f6490dc9230331cd8713554f79fa68fe0a162bd92c4b7787239bf5b13811` |  |
+| `P1_ReviewMeasurements_20260907/goldilocks_outbit_apple_20260907.log` | `801543bb98798fa599da612749e67757c625c27ce315c2ffc465ffb02f960f24` |  |
+| `P1_ReviewMeasurements_20260907/mcl_core.hpp` | `32aa22f032d6495a5d8baa602a4662cf46477ad48cf3fc7e864049138db966d3` |  |
+| `P1_ReviewMeasurements_20260907/mcl_p1_goldilocks_outbit.cpp` | `5ab5f01b26b612d3d2fccd6c1579e1e58379243cb30ea8e8d33bb81c180cc3da` |  |
+| `P1_ReviewMeasurements_20260907/mcl_p1_table3_lambda.cpp` | `6450ab3c6397f1a312d0995d2314a008d9735f4aa67666a8f215cf7cc353dc3d` |  |
+| `P1_ReviewMeasurements_20260907/table3_lambda_apple_20260907.log` | `8f35ba7153871d5262d173395c2f79f07d7570d1afd0342a627a0e3a78c23171` |  |
 
 ### P3_DeskRejectMeasurements_20260905  (93 files)
 

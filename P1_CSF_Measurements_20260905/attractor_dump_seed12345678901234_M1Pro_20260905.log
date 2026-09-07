@@ -1,0 +1,9 @@
+==============================================================
+ MCL ATTRACTOR / INVARIANT-DENSITY / PSI_1 DUMP
+ Doc ID: MCL-ATTRACTOR-DUMP-2026-0905-001
+ Engine: mcl_core.hpp v6.0.0 (frozen copy) | (p,q,K)=(3,5,12) | burn-in 10000
+ Seed 12345678901234 | N = 10000000 | NPTS = 200000
+==============================================================
+(b) 64x64 occupancy: TV vs uniform = 0.057654  chi2(df=4095) = 209334.2  min/max cell (rel. to uniform) = 0.7590 / 1.5872
+(c) psi_1 256-bin:  TV vs uniform = 0.004803  chi2(df=255) = 1463.72
+files: attractor_points_12345678901234.csv density64_12345678901234.csv psi1_hist_12345678901234.csv

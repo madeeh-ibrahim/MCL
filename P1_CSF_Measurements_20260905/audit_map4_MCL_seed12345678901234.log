@@ -1,0 +1,107 @@
+==============================================================
+ THIRD-MAP SAFE-ZONE SCAN (Paper 1 §3.3 byte-level protocol, unchanged)
+ Doc ID: MCL-THIRDMAP-SAFEZONE-2026-0905-001
+ Map: MCL (3,5,12) theta1/theta2 via engine v6.0.0 (positive control) | seed 12345678901234 | N = 100000000 | burn-in 10000 | binary64, Apple libm | x0 from seed
+ Byte = (mantissa >> P) & 0xFF, P in [0,44]; chi2 df=255, crit(0.01)=310.46
+==============================================================
+
+Stream theta1:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |  209268665.46 | FAIL
+   1 |   70049810.31 | FAIL
+   2 |   17651162.18 | FAIL
+   3 |    3651605.50 | FAIL
+   4 |     850123.35 | FAIL
+   5 |     216144.17 | FAIL
+   6 |      55313.27 | FAIL
+   7 |      14379.77 | FAIL
+   8 |       3882.63 | FAIL
+   9 |       1223.12 | FAIL
+  10 |        573.09 | FAIL
+  11 |        283.27 | PASS
+  12 |        211.78 | PASS
+  13 |        218.23 | PASS
+  14 |        219.81 | PASS
+  15 |        237.56 | PASS
+  16 |        233.51 | PASS
+  17 |        235.78 | PASS
+  18 |        207.49 | PASS
+  19 |        222.41 | PASS
+  20 |        259.01 | PASS
+  21 |        293.10 | PASS
+  22 |        270.44 | PASS
+  23 |        257.73 | PASS
+  24 |        229.89 | PASS
+  25 |        266.17 | PASS
+  26 |        225.91 | PASS
+  27 |        234.41 | PASS
+  28 |        232.90 | PASS
+  29 |        232.02 | PASS
+  30 |        203.21 | PASS
+  31 |        212.15 | PASS
+  32 |        245.92 | PASS
+  33 |        248.38 | PASS
+  34 |        270.14 | PASS
+  35 |        277.79 | PASS
+  36 |        285.50 | PASS
+  37 |        416.95 | FAIL
+  38 |       2710.86 | FAIL
+  39 |       8345.69 | FAIL
+  40 |      18730.70 | FAIL
+  41 |     156669.59 | FAIL
+  42 |     512392.67 | FAIL
+  43 |    1227721.43 | FAIL
+  44 |    9920853.30 | FAIL
+  => Safe Zone (byte-window start positions) for theta1: [11, 36] = 26 positions
+
+Stream theta2:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |  185430742.26 | FAIL
+   1 |   65218604.10 | FAIL
+   2 |   16030756.74 | FAIL
+   3 |    3284857.72 | FAIL
+   4 |     808738.41 | FAIL
+   5 |     221097.23 | FAIL
+   6 |      58176.79 | FAIL
+   7 |      15123.17 | FAIL
+   8 |       3931.79 | FAIL
+   9 |       1258.14 | FAIL
+  10 |        509.27 | FAIL
+  11 |        336.41 | FAIL
+  12 |        274.49 | PASS
+  13 |        253.62 | PASS
+  14 |        224.60 | PASS
+  15 |        234.34 | PASS
+  16 |        224.11 | PASS
+  17 |        230.59 | PASS
+  18 |        235.44 | PASS
+  19 |        209.17 | PASS
+  20 |        190.68 | PASS
+  21 |        213.26 | PASS
+  22 |        241.60 | PASS
+  23 |        269.04 | PASS
+  24 |        283.20 | PASS
+  25 |        250.49 | PASS
+  26 |        237.60 | PASS
+  27 |        233.72 | PASS
+  28 |        250.00 | PASS
+  29 |        278.07 | PASS
+  30 |        250.71 | PASS
+  31 |        229.15 | PASS
+  32 |        243.11 | PASS
+  33 |        245.80 | PASS
+  34 |        259.12 | PASS
+  35 |        326.26 | FAIL
+  36 |        336.20 | FAIL
+  37 |        421.68 | FAIL
+  38 |       2706.84 | FAIL
+  39 |       7838.96 | FAIL
+  40 |      18252.35 | FAIL
+  41 |     154778.82 | FAIL
+  42 |     511851.07 | FAIL
+  43 |    1228122.34 | FAIL
+  44 |    9923292.64 | FAIL
+  => Safe Zone (byte-window start positions) for theta2: [12, 34] = 23 positions
+

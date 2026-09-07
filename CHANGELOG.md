@@ -5,6 +5,37 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.9 — 2026-09-07
+
+**Paper 1 reproduction artifacts** — the two directories the paper's Data and Code Availability
+statement promises, now actually present. Engine `mcl_core.hpp` **8.1.3 unchanged**
+(SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar
+v1.0.6 unchanged. Additive only — no existing file changed except `MANIFEST.md`.
+
+### Added
+
+- **`P1_CSF_Measurements_20260905/`** (109 files + `SHA256SUMS`) — the cross-system campaign behind
+  Paper 1 §6.2–§6.3, Fig. 1 and Supplementary S6: `mcl_attractor_dump`, `mcl_thirdmap_safezone`,
+  `mcl_logistic_cycle`, `mcl_xor_control`, `mcl_cycle_search` with their logs, the `-ffp-contract=off`
+  control campaign (`nofma_*`, `audit_*`), the density and coupling-phase CSVs, and the full record
+  `RECORD_P1_CSF_MEASUREMENTS_20260905.md`. Engine of record for this campaign is v6.0.0
+  (MD5 `241db79ecf8a42897eb9a8399cf37929`), included.
+- **`P1_ReviewMeasurements_20260907/`** (7 files + `SHA256SUMS`) — two measurements from the
+  2026-09-07 review round of Paper 1:
+  - `MCL-P1-TABLE3-LAMBDA-2026-0907-001`: all 14 configurations of Table 3 re-measured
+    (analytical-Jacobian sequential QR, 1e7 iterations, three seeds). λ₁ = 4.4165 at (3, 5, K = 6),
+    the row that sets the paper's 0.50% figure, reproduces to four decimals; the maximum errors
+    12.73% (empirical fit) and 0.50% (semi-analytical form) are unchanged.
+  - `MCL-P1-GOLDBIT-2026-0907-001`: 0/1 frequency of every emitted bit of the Goldilocks byte
+    (Eq. 5) over N = 1e8 output samples per seed at D = 2, six seeds. Output bit 5 — the
+    (mantissa 25, mantissa 41) pair — carries a frequency deviation of +1.739e-04 (χ² = 12.096)
+    in seed 12345678901234, the largest of the 48 statistics and above the Bonferroni threshold
+    for them (10.752), and does not recur in the other five seeds; the byte-level test passes in
+    all six. Reported in the paper as a measured residual of the dual-window variant rather than
+    as a fluctuation.
+
+Compiled binaries are not shipped in either directory; both carry a README with the build line.
+
 ## v0.2.8 — 2026-09-06
 
 Joint release of three sessions' staged work — **Paper 3** records, **Paper 4** round 6 (VDF128-T4 v3), and **Paper 5** TOPS-readiness. Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`); keyed sidecar v1.0.6 unchanged. Additive only.

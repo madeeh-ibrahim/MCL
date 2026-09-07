@@ -1,0 +1,107 @@
+==============================================================
+ THIRD-MAP SAFE-ZONE SCAN (Paper 1 §3.3 byte-level protocol, unchanged)
+ Doc ID: MCL-THIRDMAP-SAFEZONE-2026-0905-001
+ Map: Chirikov standard map K=12 | seed 12345678901234 | N = 100000000 | burn-in 10000 | binary64, Apple libm | x0 from seed
+ Byte = (mantissa >> P) & 0xFF, P in [0,44]; chi2 df=255, crit(0.01)=310.46
+==============================================================
+
+Stream theta:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |  195672110.59 | FAIL
+   1 |   63540111.22 | FAIL
+   2 |   14701420.24 | FAIL
+   3 |    2951998.96 | FAIL
+   4 |     710455.19 | FAIL
+   5 |     180809.92 | FAIL
+   6 |      45526.53 | FAIL
+   7 |      11719.75 | FAIL
+   8 |       3110.76 | FAIL
+   9 |       1063.53 | FAIL
+  10 |        437.37 | FAIL
+  11 |        307.19 | PASS
+  12 |        325.17 | FAIL
+  13 |        293.05 | PASS
+  14 |        264.75 | PASS
+  15 |        230.06 | PASS
+  16 |        237.17 | PASS
+  17 |        231.65 | PASS
+  18 |        248.03 | PASS
+  19 |        252.34 | PASS
+  20 |        265.84 | PASS
+  21 |        246.64 | PASS
+  22 |        219.73 | PASS
+  23 |        240.93 | PASS
+  24 |        260.95 | PASS
+  25 |        263.22 | PASS
+  26 |        243.89 | PASS
+  27 |        228.55 | PASS
+  28 |        238.96 | PASS
+  29 |        239.78 | PASS
+  30 |        295.05 | PASS
+  31 |        268.21 | PASS
+  32 |        271.55 | PASS
+  33 |        245.91 | PASS
+  34 |        258.66 | PASS
+  35 |        266.09 | PASS
+  36 |        257.52 | PASS
+  37 |        332.25 | FAIL
+  38 |       2592.63 | FAIL
+  39 |       8105.34 | FAIL
+  40 |      18481.06 | FAIL
+  41 |     158897.40 | FAIL
+  42 |     517107.33 | FAIL
+  43 |    1243391.10 | FAIL
+  44 |    9943643.29 | FAIL
+  => Safe Zone (byte-window start positions) for theta: [13, 36] = 24 positions
+
+Stream p:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |  201581413.03 | FAIL
+   1 |   67591537.01 | FAIL
+   2 |   17614495.47 | FAIL
+   3 |    3861210.19 | FAIL
+   4 |     894120.57 | FAIL
+   5 |     228156.36 | FAIL
+   6 |      56145.73 | FAIL
+   7 |      14250.80 | FAIL
+   8 |       3776.19 | FAIL
+   9 |       1198.72 | FAIL
+  10 |        471.15 | FAIL
+  11 |        292.02 | PASS
+  12 |        253.07 | PASS
+  13 |        216.86 | PASS
+  14 |        225.23 | PASS
+  15 |        252.80 | PASS
+  16 |        253.47 | PASS
+  17 |        241.27 | PASS
+  18 |        254.32 | PASS
+  19 |        286.16 | PASS
+  20 |        284.46 | PASS
+  21 |        260.37 | PASS
+  22 |        264.04 | PASS
+  23 |        235.78 | PASS
+  24 |        221.17 | PASS
+  25 |        238.10 | PASS
+  26 |        222.39 | PASS
+  27 |        252.27 | PASS
+  28 |        222.62 | PASS
+  29 |        260.66 | PASS
+  30 |        257.15 | PASS
+  31 |        251.67 | PASS
+  32 |        242.95 | PASS
+  33 |        271.11 | PASS
+  34 |        312.33 | FAIL
+  35 |        310.63 | FAIL
+  36 |        355.45 | FAIL
+  37 |        376.57 | FAIL
+  38 |       2727.35 | FAIL
+  39 |       7964.14 | FAIL
+  40 |      18562.27 | FAIL
+  41 |     155898.50 | FAIL
+  42 |     509795.20 | FAIL
+  43 |    1240442.03 | FAIL
+  44 |    9948225.16 | FAIL
+  => Safe Zone (byte-window start positions) for p: [11, 33] = 23 positions
+

@@ -1,0 +1,107 @@
+==============================================================
+ THIRD-MAP SAFE-ZONE SCAN (Paper 1 §3.3 byte-level protocol, unchanged)
+ Doc ID: MCL-THIRDMAP-SAFEZONE-2026-0905-001
+ Map: Henon a=1.4 b=0.3 | seed 12345678901234 | N = 100000000 | burn-in 10000 | binary64, Apple libm | x0 from seed
+ Byte = (mantissa >> P) & 0xFF, P in [0,44]; chi2 df=255, crit(0.01)=310.46
+==============================================================
+
+Stream x:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |    8637594.88 | FAIL
+   1 |     222266.93 | FAIL
+   2 |      57385.91 | FAIL
+   3 |      14147.92 | FAIL
+   4 |       3847.84 | FAIL
+   5 |       1154.96 | FAIL
+   6 |        413.18 | FAIL
+   7 |        294.14 | PASS
+   8 |        251.99 | PASS
+   9 |        254.05 | PASS
+  10 |        240.98 | PASS
+  11 |        267.89 | PASS
+  12 |        263.66 | PASS
+  13 |        258.84 | PASS
+  14 |        243.74 | PASS
+  15 |        280.03 | PASS
+  16 |        266.65 | PASS
+  17 |        235.34 | PASS
+  18 |        285.85 | PASS
+  19 |        266.10 | PASS
+  20 |        262.94 | PASS
+  21 |        277.34 | PASS
+  22 |        241.54 | PASS
+  23 |        243.67 | PASS
+  24 |        264.44 | PASS
+  25 |        253.90 | PASS
+  26 |        267.25 | PASS
+  27 |        233.10 | PASS
+  28 |        225.80 | PASS
+  29 |        305.80 | PASS
+  30 |        314.32 | FAIL
+  31 |        290.03 | PASS
+  32 |        372.71 | FAIL
+  33 |        698.17 | FAIL
+  34 |       1851.27 | FAIL
+  35 |       2937.65 | FAIL
+  36 |       8576.17 | FAIL
+  37 |      19814.22 | FAIL
+  38 |      65340.30 | FAIL
+  39 |     101163.50 | FAIL
+  40 |     499925.88 | FAIL
+  41 |     796802.87 | FAIL
+  42 |    1681109.88 | FAIL
+  43 |    5480469.94 | FAIL
+  44 |   20645780.09 | FAIL
+  => Safe Zone (byte-window start positions) for x: [7, 29] = 23 positions
+
+Stream y:
+   P |          chi2 | verdict
+-----|---------------|--------
+   0 |    1875017.44 | FAIL
+   1 |     219666.99 | FAIL
+   2 |      11201.36 | FAIL
+   3 |       2975.96 | FAIL
+   4 |        893.53 | FAIL
+   5 |        411.06 | FAIL
+   6 |        291.51 | PASS
+   7 |        271.12 | PASS
+   8 |        261.56 | PASS
+   9 |        288.35 | PASS
+  10 |        297.35 | PASS
+  11 |        275.40 | PASS
+  12 |        295.40 | PASS
+  13 |        314.71 | FAIL
+  14 |        272.18 | PASS
+  15 |        242.35 | PASS
+  16 |        259.45 | PASS
+  17 |        303.74 | PASS
+  18 |        275.80 | PASS
+  19 |        287.70 | PASS
+  20 |        256.31 | PASS
+  21 |        246.18 | PASS
+  22 |        261.57 | PASS
+  23 |        233.92 | PASS
+  24 |        208.72 | PASS
+  25 |        257.15 | PASS
+  26 |        231.49 | PASS
+  27 |        239.37 | PASS
+  28 |        219.56 | PASS
+  29 |        265.55 | PASS
+  30 |        299.94 | PASS
+  31 |        320.93 | FAIL
+  32 |        397.85 | FAIL
+  33 |        580.26 | FAIL
+  34 |       1190.65 | FAIL
+  35 |       2558.38 | FAIL
+  36 |       5600.97 | FAIL
+  37 |      23402.72 | FAIL
+  38 |      36943.83 | FAIL
+  39 |      66064.48 | FAIL
+  40 |     279400.87 | FAIL
+  41 |     544636.17 | FAIL
+  42 |    1477702.27 | FAIL
+  43 |    2991564.05 | FAIL
+  44 |   15246138.72 | FAIL
+  => Safe Zone (byte-window start positions) for y: [14, 30] = 17 positions
+
