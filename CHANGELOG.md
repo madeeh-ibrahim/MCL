@@ -5,6 +5,50 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.10 — 2026-09-16
+
+**Paper 1 review-round measurements (external reviews #2 and #5) and one record correction.**
+Engine `mcl_core.hpp` **8.1.3 unchanged** (SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80`);
+keyed sidecar v1.0.6 unchanged. Additive except the three files listed under *Changed*.
+
+### Added
+
+- **`P1_ReviewMeasurements_20260909/`** (4 files + `SHA256SUMS`) — `MCL-P1-GOLDBIT-SEG-2026-0909-001`:
+  ten pre-specified consecutive segments of N = 1e8 output samples of the seed-12345678901234 stream at
+  decimation D = 2. The +1.739e-04 frequency residual of emitted bit 5 (found in v0.2.9's
+  `MCL-P1-GOLDBIT-2026-0907-001`) reproduces exactly in segment 1 and is absent from segments 2–10
+  (|P(1) − ½| ≤ 9.5e-05), i.e. it is transient, not a stationary bias. Tool `mcl_p1_goldbit_segments.cpp`,
+  log, frozen engine-of-record copy v6.0.0 (MD5 `241db79ecf8a42897eb9a8399cf37929`).
+- **`P1_ReviewMeasurements_20260909b/`** (8 files + `SHA256SUMS`) — three records against the same
+  engine of record:
+  - `MCL-P1-SINGLEWIN-2026-0909-001` — single-window controls of the dual-window extractor (Eq. 5 of
+    Paper 1): windows [20, 27], [36, 43] and their XOR, six seeds, N = 1e8 at D = 2; all pass the
+    byte-level test (`mcl_p1_singlewindow_bytes.cpp`, `singlewindow_apple_20260909.log`).
+  - `MCL-P1-LSBPARADOX-2026-0909-001` — the measured replacement of Paper 1's Figure 5: per-bit
+    single-ULP avalanche of the Float64 path versus the deterministic carry chain of the Q30 path, plus
+    the per-position byte-level test of both paths (`mcl_p1_lsb_paradox_measure.cpp`,
+    `lsb_paradox_apple_20260909.log`).
+  - `MCL-P1-INITCONV-2026-0909-001` — the Table 6 single-extractor scan repeated under three
+    initial-state conventions; all three give the [6, 39] XOR boundary and the same window-start-0
+    statistic to three significant figures (`mcl_p1_init_convention_scan.cpp`,
+    `initconv_apple_20260909.log`).
+
+### Changed
+
+- `P1_ReviewMeasurements_20260907/RECORD_P1_REVIEW_MEASUREMENTS_20260907.md` — a prose sentence
+  misdescribed the Table 3 re-measurement log ("eleven of fourteen rows agree to ≤ 0.0006 … three
+  significant figures"); corrected in place with a dated note (four rows exceed 0.0006, the largest
+  −0.0012; the correct statement is agreement within 0.03 % relative throughout). The log, the tool and
+  the headline figures 0.50 % / 12.73 % are unaffected. `SHA256SUMS` updated for that one file.
+- `M1_M2_apple_verification/README.md` — documents the 2026-07-19 per-bit two-stride scan already in
+  that directory (`mcl_perbit_msb_flank.cpp` and its two logs, Table 7 of Paper 1), including how to
+  read the tool's own validation footer.
+- `CITATION.cff` — version 0.2.10 (the v0.2.9 tag shipped with the 0.2.8 metadata; corrected here).
+- `MANIFEST.md` regenerated (`SHA256SUMS_MCL_v0.2.10.txt` in the build directory).
+
+Compiled binaries are not shipped; each directory's README carries the build line
+(`c++ -O3 -std=c++17 -ffp-contract=off … -lm`).
+
 ## v0.2.9 — 2026-09-07
 
 **Paper 1 reproduction artifacts** — the two directories the paper's Data and Code Availability

@@ -72,3 +72,16 @@ Superseded: prior single-campaign Table-10 values (A 221.94, B 225.63, C 233.92)
 | Public log overlap: (3,5) K=0.30 χ²=110491.37 / K=0.50 298.87 | identical | ✅ |
 
 Old `paper3_fig1.png` (synthetic, contradicted Table I + public log, retracted "K=1.0 all chaotic" footer) preserved as evidence at `05_Scientific_Papers/Reviews/paper3_fig1_BACKUP_synthetic_20260817.png`; replaced by the real-data figure.
+
+## 2026-07-19 — Per-bit two-stride scan (Doc ID MCL-PERBIT-MSBFLANK-2026-0719-001) — **Table 7 of Paper 1**
+
+| File | Purpose |
+|---|---|
+| `mcl_perbit_msb_flank.cpp` | full 52-position per-bit χ²(df = 1) of the XOR-mixed mantissa, seed 12345678901234, N = 10⁸; optional argument = sampling stride (iterations per sample; default 1) |
+| `perbit_msbflank_apple_20260719.log` | stride 1 run |
+| `perbit_msbflank_stride2_apple_20260719.log` | stride 2 run (`./mcl_perbit_msb_flank 2`; production decimation) |
+
+Build: `c++ -O3 -std=c++17 -o mcl_perbit_msb_flank mcl_perbit_msb_flank.cpp -lm` (engine v6.0.0 frozen copy in this directory).
+
+**Reading the last lines of the logs.** Each log ends with `Validation: 17 published values checked, 17 mismatches. PROTOCOL REPRODUCTION FAILED — do NOT cite new values; investigate.` That is the tool's automatic verdict on **matching an earlier per-bit campaign whose generating binary is not preserved** — the only thing that failed is that comparison, and the earlier campaign's values are no longer reported anywhere (Paper 1, 2026-09-09). The values measured here are the pinned per-bit reference: they are reported as **Table 7** of Paper 1 (27 listed positions, both strides) and in its Supplementary S3, and both strides agree at every position at the family-wise threshold 10.90 (nominal-level fluctuation at bits 22, 26 and 47 is discussed there).
+

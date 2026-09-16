@@ -35,6 +35,13 @@ Eleven of the fourteen rows agree to ≤ 0.0006; the three largest deviations ar
 significant figures, the precision Supplementary S1 establishes as platform-independent.
 Both headline error figures are unchanged, computed either way.
 
+> **Correction (2026-09-09, external review #2, item ت-33).** The sentence above — "Eleven of the fourteen rows
+> agree to ≤ 0.0006 … agreement to three significant figures" — misdescribes the log in this directory:
+> **four** rows exceed 0.0006, the fourth being (89, 97, 12) at **−0.0012** (12.5616 → 12.5604), so **ten** rows
+> agree to ≤ 0.0006; and "three significant figures" fails for (13, 19, 12), which rounds to 8.71 against 8.72.
+> The correct statement is agreement to within 0.03% relative throughout (maximum 0.0023 at 8.7129).
+> The log, the tool and both headline figures (0.50%, 12.73%) are unaffected; only this prose was wrong.
+
 Files: `mcl_p1_table3_lambda.cpp` · `table3_lambda_apple_20260907.log`
 
 ---

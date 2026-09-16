@@ -34,6 +34,14 @@ adversarial analysis**.
 
 ---
 
+## What's new in v0.2.10 (16 September 2026)
+
+Paper 1 review-round measurements, engine unchanged (8.1.3): the consecutive-segment test of the emitted-bit
+residual (`P1_ReviewMeasurements_20260909/`), and the single-window controls, the measured Float64-vs-Q30
+LSB comparison behind Figure 5, and the initial-state-convention scan (`P1_ReviewMeasurements_20260909b/`).
+Earlier Paper 1 campaigns: `P1_CSF_Measurements_20260905/` and `P1_ReviewMeasurements_20260907/` (v0.2.9).
+Details: [`CHANGELOG.md`](CHANGELOG.md).
+
 ## What's new in v0.2.2 (3 September 2026)
 
 Paper 3 pre-publication records, engine unchanged (8.1.3): direct phase-locking and raw-phase dependence
@@ -101,6 +109,8 @@ artifact under active validation.
 | `p5_hardened_txauth/` | Paper 5 hardened transaction-authentication path (v2, v3 / Claim-4 route) + batteries + D1 collision evidence |
 | `M1_M2_apple_verification/` | Paper 1 §III.B.3 / Tables 9–10 / Appendix A provenance logs (Apple-libm), NIST STS campaign archive, Paper 3 Fig. 1 sweep |
 | `P3_CrossPrediction/` | Paper 3 cross-prediction (R²) experiment: determinism vs. apparent randomness |
+| `P1_CSF_Measurements_20260905/` | Paper 1 cross-system Safe-Zone campaign (standard map, Hénon, logistic; XOR controls; cycle searches), engine of record v6.0.0 |
+| `P1_ReviewMeasurements_20260907/` · `…_20260909/` · `…_20260909b/` | Paper 1 review-round measurements: Table 3 λ₁ re-measurement, emitted-bit frequencies and their segment test, single-window controls, Float64-vs-Q30 LSB comparison (Fig. 5), initial-state conventions |
 | `Verification_Suite/`, `Layer_Combiner/` | Legacy verification programs (burn-in / decimation / K sweeps, T3/T4, hopping) and the robust-combiner demo |
 | `MANIFEST.md`, `CHANGELOG.md` | Per-file SHA-256 table and engine pins; release history |
 

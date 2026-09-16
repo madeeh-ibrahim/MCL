@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.8, 2026-09-06)
+# MCL — Public Code Archive · MANIFEST (v0.2.10, 2026-09-16)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 703 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 717 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `715eacd5310d0e9e8f4eb40fd20c77260973ba33ebc0775bdb185ce23b4f8548` |  |
-| `CITATION.cff` | `65b632e43fc33e0cb8b85f6aac84f49533856249178b3e8421b58f8b05856362` |  |
+| `CHANGELOG.md` | `204b3da8f1dfaab15f86b571130b1d5d7c16c56e5f26a2f98f5c1b7332ab7ebc` |  |
+| `CITATION.cff` | `b9d7e3402ff74331e127384220159fcde15fe86eb6380b57557bb28f85d557ff` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -45,7 +45,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
-| `README.md` | `836ae4cc7137ed946d09caee028d42b9d4695e3d0cb07d42f0df369cf536ec00` |  |
+| `README.md` | `12c018fe3df5246f3b71a867ed5cae1bedad06824c0e602382181987a9a592c1` |  |
 | `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
@@ -315,7 +315,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `M1_M2_apple_verification/NIST_STS_CAMPAIGN_README_20260721.md` | `f98279254621d763e51b22632219e6bad81879b9b16524c602619d636016a4cd` | NIST SP 800-22 Full Campaign — Doc ID MCL-NIST-STS-2026-0721-001 |
 | `M1_M2_apple_verification/PAPER2_L2_VERIFY_RESULTS.md` | `ea19992131a69107115f9cc96f940ab4e6067f9c0e82270cbd3ff556016e390c` | Paper-2 L2 re-verification — definitive results (2026-07-06) |
-| `M1_M2_apple_verification/README.md` | `40e9c0c006ba44c2f77dee66620fc8aec94935d18d01b20cb6260a60273aa3af` | M1/M2 Apple-libm Verification — Paper 1 §III.B.3 |
+| `M1_M2_apple_verification/README.md` | `20431a8dbe0f818ce618ff1c08909e5ea12a84174e0c3c1c37374ae5f2dd7da4` | M1/M2 Apple-libm Verification — Paper 1 §III.B.3 |
 | `M1_M2_apple_verification/bifsweep_coarse_apple_20260719.csv` | `a96837f02b60f6fe9669cb65d8156ab4ca9ef0d56934532d6908226efa2d3fcb` |  |
 | `M1_M2_apple_verification/bifsweep_fine_apple_20260719.csv` | `ebd7d1a3fbc58dc7952eda3e1148df94fb011de69eeb9a69e2737be3d6e73376` |  |
 | `M1_M2_apple_verification/bytezone_scan_apple_20260704.log` | `39eebdc634d11186de5331e7759cce4f9e1b3f7b725b92b8a7aa3f79cf7094fb` |  |
@@ -548,13 +548,37 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | File | SHA-256 | Note |
 |---|---|---|
 | `P1_ReviewMeasurements_20260907/README.md` | `5f5037000a9842052f91827cfc968dbda215390641edb1af9bcecdac79b62c39` | Paper 1 — review measurements, 2026-09-07 |
-| `P1_ReviewMeasurements_20260907/RECORD_P1_REVIEW_MEASUREMENTS_20260907.md` | `1a6eb3b2c542c05348b95a0f2d4075d9df48c221a2a90338ff1b778aab3a00f0` | Paper 1 — review measurements, 2026-09-07 |
-| `P1_ReviewMeasurements_20260907/SHA256SUMS` | `7177f6490dc9230331cd8713554f79fa68fe0a162bd92c4b7787239bf5b13811` |  |
+| `P1_ReviewMeasurements_20260907/RECORD_P1_REVIEW_MEASUREMENTS_20260907.md` | `298a1938c0bdb6870e6e2b105834ffe2592cd32437f5779fd461d10a60de3b42` | Paper 1 — review measurements, 2026-09-07 |
+| `P1_ReviewMeasurements_20260907/SHA256SUMS` | `3f1fa6853b7ad5c8d47d825baa7ef4a365a5e7a2ed243d29e578e16cfeaa842f` |  |
 | `P1_ReviewMeasurements_20260907/goldilocks_outbit_apple_20260907.log` | `801543bb98798fa599da612749e67757c625c27ce315c2ffc465ffb02f960f24` |  |
 | `P1_ReviewMeasurements_20260907/mcl_core.hpp` | `32aa22f032d6495a5d8baa602a4662cf46477ad48cf3fc7e864049138db966d3` |  |
 | `P1_ReviewMeasurements_20260907/mcl_p1_goldilocks_outbit.cpp` | `5ab5f01b26b612d3d2fccd6c1579e1e58379243cb30ea8e8d33bb81c180cc3da` |  |
 | `P1_ReviewMeasurements_20260907/mcl_p1_table3_lambda.cpp` | `6450ab3c6397f1a312d0995d2314a008d9735f4aa67666a8f215cf7cc353dc3d` |  |
 | `P1_ReviewMeasurements_20260907/table3_lambda_apple_20260907.log` | `8f35ba7153871d5262d173395c2f79f07d7570d1afd0342a627a0e3a78c23171` |  |
+
+### P1_ReviewMeasurements_20260909  (5 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P1_ReviewMeasurements_20260909/README.md` | `2dc0c4723f14290c7c5b8a851e64a495af39870a527ef616719f8188727c1208` | P1_ReviewMeasurements_20260909 — Paper 1, external review #2 (item ت-37) |
+| `P1_ReviewMeasurements_20260909/SHA256SUMS` | `4f9adefc2c70447c0f5de05ba5184bbeab4a1ca2ce9b1e28a86536b850e2ec95` |  |
+| `P1_ReviewMeasurements_20260909/goldbit_segments_apple_20260909.log` | `be4da17ec24469f3f14d122996854c46a6b016df1262c39e9fd34fc5c50717ce` |  |
+| `P1_ReviewMeasurements_20260909/mcl_core.hpp` | `32aa22f032d6495a5d8baa602a4662cf46477ad48cf3fc7e864049138db966d3` |  |
+| `P1_ReviewMeasurements_20260909/mcl_p1_goldbit_segments.cpp` | `10b10e25cad5e7b05d6da5c5b83a767434428f4656a34522abc60c5b47516706` |  |
+
+### P1_ReviewMeasurements_20260909b  (9 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P1_ReviewMeasurements_20260909b/README.md` | `08db61b17bdc5db69cb7ec401c8e683c11c410586eeda5cf452d0bed6c8ef4aa` | P1_ReviewMeasurements_20260909b — Paper 1, external review #5 (item ت-49) |
+| `P1_ReviewMeasurements_20260909b/SHA256SUMS` | `227ae0c3080df448d23822ed753ed2e062281cbd9f6832ad21d6328c30e4100c` |  |
+| `P1_ReviewMeasurements_20260909b/initconv_apple_20260909.log` | `ad0d48ca0dd711a41cee8792de73ca416e5863343d805c3ed7a63b998291bd59` |  |
+| `P1_ReviewMeasurements_20260909b/lsb_paradox_apple_20260909.log` | `7a4b9689c9a77ba3b3e82022496c0770f6741205edddd0c900d71ce8455c7b2f` |  |
+| `P1_ReviewMeasurements_20260909b/mcl_core.hpp` | `32aa22f032d6495a5d8baa602a4662cf46477ad48cf3fc7e864049138db966d3` |  |
+| `P1_ReviewMeasurements_20260909b/mcl_p1_init_convention_scan.cpp` | `a45812e72fa82c3c86d677e5d3d6d01ed8fa3058d5a18a48f80bef106b58c5e4` |  |
+| `P1_ReviewMeasurements_20260909b/mcl_p1_lsb_paradox_measure.cpp` | `fe4c6cf9c6dcd40a3aab2e5065a8739a4e4b271f19d013dc919d4877ac7da98e` |  |
+| `P1_ReviewMeasurements_20260909b/mcl_p1_singlewindow_bytes.cpp` | `408f13fb5c9e9ceae076841a6b0044e8504740d95fe7e04f4f3b7c5a71568c36` |  |
+| `P1_ReviewMeasurements_20260909b/singlewindow_apple_20260909.log` | `28c67568d1879e941228658951c4c17280422ea221f42f478974f1669f533f63` |  |
 
 ### P3_DeskRejectMeasurements_20260905  (93 files)
 
