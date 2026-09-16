@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.10, 2026-09-16)
+# MCL — Public Code Archive · MANIFEST (v0.2.11, 2026-09-16)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 717 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 723 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `204b3da8f1dfaab15f86b571130b1d5d7c16c56e5f26a2f98f5c1b7332ab7ebc` |  |
-| `CITATION.cff` | `b9d7e3402ff74331e127384220159fcde15fe86eb6380b57557bb28f85d557ff` |  |
+| `CHANGELOG.md` | `af25b8b0a2388b82696965c656076c5c2b8f4fdb0788a7221880d80b6c50e060` |  |
+| `CITATION.cff` | `6091207db213d274b34b2c943bc5dbaa9e26edfb1978b52b47d920957e3ad799` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -45,7 +45,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
-| `README.md` | `12c018fe3df5246f3b71a867ed5cae1bedad06824c0e602382181987a9a592c1` |  |
+| `README.md` | `5a66191f9216291b7cc0d42a74f595a285a1bc2060c884b3f49a82b520583caa` |  |
 | `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
@@ -309,13 +309,19 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `p5_hardened_txauth/results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `0b7b9ebbe7a1890d1f7df10fe0116f18e6b815abecd693a4136e6c075075c9bb` |  |
 | `p5_hardened_txauth/results_v3_battery_v8.1.3_20260904.txt` | `abe5f6a26a232ded5e58209bec2ac027cbd9578545d9ee2ec20a8fb510a6b08c` |  |
 
-### M1_M2_apple_verification  (38 files)
+### M1_M2_apple_verification  (44 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `M1_M2_apple_verification/NIST_STS_CAMPAIGN_README_20260721.md` | `f98279254621d763e51b22632219e6bad81879b9b16524c602619d636016a4cd` | NIST SP 800-22 Full Campaign — Doc ID MCL-NIST-STS-2026-0721-001 |
+| `M1_M2_apple_verification/NIST_STS_CAMPAIGN_README_20260721.md` | `610ed641ec7022923913a8f3c75a069f1c86335d61d3733740574c091b189d1b` | NIST SP 800-22 Full Campaign — Doc ID MCL-NIST-STS-2026-0721-001 |
 | `M1_M2_apple_verification/PAPER2_L2_VERIFY_RESULTS.md` | `ea19992131a69107115f9cc96f940ab4e6067f9c0e82270cbd3ff556016e390c` | Paper-2 L2 re-verification — definitive results (2026-07-06) |
-| `M1_M2_apple_verification/README.md` | `20431a8dbe0f818ce618ff1c08909e5ea12a84174e0c3c1c37374ae5f2dd7da4` | M1/M2 Apple-libm Verification — Paper 1 §III.B.3 |
+| `M1_M2_apple_verification/README.md` | `52bc35cd7e7b69acbbb01cc4eb9904b285e469ac0c41510b5d643be0335df985` | M1/M2 Apple-libm Verification — Paper 1 §III.B.3 |
+| `M1_M2_apple_verification/SHA256SUMS` | `dd28a25fb402b4e10a5e7868db5598dcd9a590f1c195a3bce10d121aada79844` |  |
+| `M1_M2_apple_verification/_engine_equivalence_20260916/ENGINE_EQUIVALENCE_20260916.md` | `c632d479dc808a877c67246200ab42ae8284a67b846a188ed697a4cf721a46a3` | Engine-equivalence check for the M1_M2 tools — v6.0.0 (engine of record) vs v8.1.3 (repository root) — 2026-09 |
+| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_hd_throughput_v6.out` | `062b791e3b4fc659b71def54eac89e0a2ab976566a3a1e0458ac7b4555309e7c` |  |
+| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_hd_throughput_v8.out` | `55767ed7d6a56a3fe2d4ccf4e5ba5f90adf1f34e279c90cad9a129515ff744ee` |  |
+| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_paper2_L2_verify_v6.out` | `1133ba55c11544c04f64b4db1631a0da3833caca63a5264569f8305aaf4df09c` |  |
+| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_paper2_L2_verify_v8.out` | `ec5f88ef63c0cb46ce1f64b4abc5bb24ba303a5658f4ca47a8860f67243facee` |  |
 | `M1_M2_apple_verification/bifsweep_coarse_apple_20260719.csv` | `a96837f02b60f6fe9669cb65d8156ab4ca9ef0d56934532d6908226efa2d3fcb` |  |
 | `M1_M2_apple_verification/bifsweep_fine_apple_20260719.csv` | `ebd7d1a3fbc58dc7952eda3e1148df94fb011de69eeb9a69e2737be3d6e73376` |  |
 | `M1_M2_apple_verification/bytezone_scan_apple_20260704.log` | `39eebdc634d11186de5331e7759cce4f9e1b3f7b725b92b8a7aa3f79cf7094fb` |  |

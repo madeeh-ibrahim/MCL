@@ -2,7 +2,7 @@
 - Suite: official NIST sts-2.1.2 (csrc.nist.gov), built with system gcc, run 2026-07-21 on Apple M2 Max.
 - Data: 1000 sequences x 10^6 bits (125,000,000 bytes), single-channel production stream:
   MCL_T2::gen_byte() (Goldilocks dual-zone, D=2, burn-in 10,000), engine of record
-  mcl_core.hpp v6.0.0 (frozen copy in this folder, MD5 241db79ecf8a42897eb9a8399cf37929),
+  mcl_core.hpp v6.0.0 (archive version v0.1.0, MD5 241db79ecf8a42897eb9a8399cf37929; the repository-root engine reproduces it — build mcl_nist_stream.cpp with -I..),
   seed 12345678901234. Generator: mcl_nist_stream.cpp (this folder).
 - Stream SHA-256: b697a62b129786b4a3c3d44c3a839c0d527deaca88bb63cc9d1b4aabb3a1e79f  (deterministic - regenerate with the generator to verify)
 - assess invocation: ./assess 1000000 ; input file mode, all 15 tests, default parameters, 1000 bitstreams, binary.

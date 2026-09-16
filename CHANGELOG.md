@@ -5,6 +5,34 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.11 — 2026-09-16
+
+**`M1_M2_apple_verification/` made self-consistent and buildable as shipped.** Engine `mcl_core.hpp`
+**8.1.3 unchanged**; no measurement, log or result file changed.
+
+### Fixed
+
+- The directory's README (and the NIST campaign README) described a "frozen v6.0.0 engine copy in this
+  directory" that the public repository has never contained (the 2026-08-22 publication note at the top of
+  the same README already said it is not duplicated). All thirteen tools `#include "mcl_core.hpp"`, so they
+  did not build in place. The build lines now read `c++ -O3 -std=c++17 -I.. …` (repository-root engine),
+  and the false file-table row is replaced.
+
+### Added
+
+- `M1_M2_apple_verification/_engine_equivalence_20260916/` — every runnable tool of the directory built
+  twice, against the v6.0.0 engine of record (archive v0.1.0, MD5 `241db79ecf8a42897eb9a8399cf37929`) and
+  against the repository-root v8.1.3, from the Zenodo v0.2.10 archive: **12/12 numerically identical**;
+  the only differing lines are a version banner (`mcl_paper2_L2_verify`) and wall-clock timings
+  (`mcl_hd_throughput`), both shown in full. No frozen engine copy is shipped; the root engine is the
+  reference for rebuilding.
+- `M1_M2_apple_verification/SHA256SUMS` — SHA-256 of every file in the directory (recursive), as the
+  other Paper 1 measurement directories already carry.
+
+### Changed
+
+- `CITATION.cff` 0.2.11; `MANIFEST.md` regenerated (`SHA256SUMS_MCL_v0.2.11.txt` in the build directory).
+
 ## v0.2.10 — 2026-09-16
 
 **Paper 1 review-round measurements (external reviews #2 and #5) and one record correction.**

@@ -2,7 +2,7 @@
 
 # M1/M2 Apple-libm Verification — Paper 1 §III.B.3
 
-**Date:** 2026-07-03 · **Platform:** Apple M-series (Darwin 23.5.0, Apple clang 16.0.0) · **Engine:** `mcl_core.hpp` **v6.0.0 (archived)**, MD5 `241db79ecf8a42897eb9a8399cf37929` — the exact copy pinned by Paper 1 ref [1].
+**Date:** 2026-07-03 · **Platform:** Apple M-series (Darwin 23.5.0, Apple clang 16.0.0) · **Engine of record:** `mcl_core.hpp` v6.0.0, MD5 `241db79ecf8a42897eb9a8399cf37929` — archive version v0.1.0 (Zenodo 10.5281/zenodo.20496569), **not copied into this directory**. Build every tool here against the repository-root `mcl_core.hpp` (v8.1.3) with `-I..`; its output is numerically identical to v6.0.0 for every tool in this directory — v6.0.0-vs-v8.1.3 comparison in `_engine_equivalence_20260916/` (12/12 runnable tools numerically identical; only a version-banner line and wall-clock timings differ).
 
 > ⚠ **GATE:** `mcl_detj_verify.cpp` verifies Eq. (3e) / the q>p order relation — **Patent-4 adjacent material**. Do **not** publish, upload, or ship to Zenodo before Patent 4 is filed (see `05_Scientific_Papers/Reviews/Paper1_Fixes_NODY_Addendum_20260703.md`). `mcl_psi_equidist.cpp` (M1) is not gated by content, but ships together in the same archive version — hold both.
 
@@ -10,13 +10,14 @@
 
 | File | Doc ID | Purpose |
 |---|---|---|
-| `mcl_core.hpp` | — | archived v6.0.0 engine (MD5-verified copy) |
+| `_engine_equivalence_20260916/` | — | v6.0.0-vs-v8.1.3 comparison in `_engine_equivalence_20260916/` (12/12 runnable tools numerically identical; only a version-banner line and wall-clock timings differ) |
+| `SHA256SUMS` | — | SHA-256 of every file in this directory (added 2026-09-16, v0.2.11) |
 | `mcl_psi_equidist.cpp` | MCL-PSI-EQUIDIST-2026-0703-001 | M1: ψ-marginal TV/χ²/⟨ln\|cos ψ\|⟩ (3 seeds × 10⁷) |
 | `mcl_detj_verify.cpp` | MCL-DETJ-VERIFY-2026-0703-001 | M2: (3c)–(3f) — exactness, Oseledets, topology sweep, K-asymptotics |
 | `psi_equidist_apple_20260703.log` | — | run output, VERDICT: **PASS** |
 | `detj_verify_apple_20260703.log` | — | run output, VERDICT: **PASS** |
 
-Build: `c++ -O3 -std=c++17 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -o <name> <name>.cpp -lm`
+Build (from this directory, repository-root engine): `c++ -O3 -std=c++17 -I.. -Wall -Wextra -Wpedantic -Wshadow -Wconversion -o <name> <name>.cpp -lm`
 
 ## Headline results (Apple libm) vs Paper 1 claims
 
@@ -47,7 +48,7 @@ det J from the closed form and from the engine's analytical Jacobian are **algeb
 
 ## 2026-08-17 — Paper 1 pre-publication fixes (Table 10 multi-seed + Eq.(5) intra-pair premise)
 
-**Tool:** `mcl_table10_multiseed.cpp` · **Log:** `table10_multiseed_apple_20260817.log` · **Doc IDs:** MCL-TABLE10-MULTISEED-2026-0817-001 (Table 10), MCL-GOLD-INTRAPAIR-2026-0817-001 (intra-pair block). Engine: frozen v6.0.0 (MD5 `241db79ecf8a42897eb9a8399cf37929`), Apple libm / M2 Max, clang -O3, N = 10⁸ samples/seed, D = 2, seeds {12345678901234, 31415926535897, 27182818284590}.
+**Tool:** `mcl_table10_multiseed.cpp` · **Log:** `table10_multiseed_apple_20260817.log` · **Doc IDs:** MCL-TABLE10-MULTISEED-2026-0817-001 (Table 10), MCL-GOLD-INTRAPAIR-2026-0817-001 (intra-pair block). Engine: v6.0.0 engine of record (MD5 `241db79ecf8a42897eb9a8399cf37929`; rebuild with `-I..`, identical output), Apple libm / M2 Max, clang -O3, N = 10⁸ samples/seed, D = 2, seeds {12345678901234, 31415926535897, 27182818284590}.
 
 | Claim (paper, post-fix) | Measured | ✓ |
 |---|---|---|
@@ -61,7 +62,7 @@ Superseded: prior single-campaign Table-10 values (A 221.94, B 225.63, C 233.92)
 
 ## 2026-08-17 — Paper 3 Figure 1 regeneration (Arnold tongue sweep)
 
-**Tool:** `mcl_fig1_arnold_sweep.cpp` · **Data:** `fig1_arnold_sweep_apple_20260817.csv` (144 points) · **Plot script:** `make_paper3_fig1_20260817.py` · **Doc ID:** MCL-FIG1-ARNOLD-2026-0817-001. Engine: frozen v6.0.0, `-DMCL_UNSAFE_ALLOW_INVALID`, protocol = paper §III.A + `mcl_k_sweep_unified.cpp` (K 0.30→1.00 step 0.02, 500 KB/(K,seed), 3 seeds worst-case χ²).
+**Tool:** `mcl_fig1_arnold_sweep.cpp` · **Data:** `fig1_arnold_sweep_apple_20260817.csv` (144 points) · **Plot script:** `make_paper3_fig1_20260817.py` · **Doc ID:** MCL-FIG1-ARNOLD-2026-0817-001. Engine: v6.0.0 engine of record (rebuild with `-I..`, identical output), `-DMCL_UNSAFE_ALLOW_INVALID`, protocol = paper §III.A + `mcl_k_sweep_unified.cpp` (K 0.30→1.00 step 0.02, 500 KB/(K,seed), 3 seeds worst-case χ²).
 
 | Claim (Table I) | Measured | ✓ |
 |---|---|---|
@@ -81,7 +82,7 @@ Old `paper3_fig1.png` (synthetic, contradicted Table I + public log, retracted "
 | `perbit_msbflank_apple_20260719.log` | stride 1 run |
 | `perbit_msbflank_stride2_apple_20260719.log` | stride 2 run (`./mcl_perbit_msb_flank 2`; production decimation) |
 
-Build: `c++ -O3 -std=c++17 -o mcl_perbit_msb_flank mcl_perbit_msb_flank.cpp -lm` (engine v6.0.0 frozen copy in this directory).
+Build: `c++ -O3 -std=c++17 -I.. -o mcl_perbit_msb_flank mcl_perbit_msb_flank.cpp -lm` (repository-root engine; output identical to the v6.0.0 engine of record — see `_engine_equivalence_20260916/`).
 
 **Reading the last lines of the logs.** Each log ends with `Validation: 17 published values checked, 17 mismatches. PROTOCOL REPRODUCTION FAILED — do NOT cite new values; investigate.` That is the tool's automatic verdict on **matching an earlier per-bit campaign whose generating binary is not preserved** — the only thing that failed is that comparison, and the earlier campaign's values are no longer reported anywhere (Paper 1, 2026-09-09). The values measured here are the pinned per-bit reference: they are reported as **Table 7** of Paper 1 (27 listed positions, both strides) and in its Supplementary S3, and both strides agree at every position at the family-wise threshold 10.90 (nominal-level fluctuation at bits 22, 26 and 47 is discussed there).
 

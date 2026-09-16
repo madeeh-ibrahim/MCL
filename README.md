@@ -34,6 +34,12 @@ adversarial analysis**.
 
 ---
 
+## What's new in v0.2.11 (16 September 2026)
+
+`M1_M2_apple_verification/` now builds as shipped (`-I..`, repository-root engine), with a SHA256SUMS file and
+a v6.0.0-vs-v8.1.3 output comparison for all of its tools (12/12 identical). Engine unchanged (8.1.3).
+Details: [`CHANGELOG.md`](CHANGELOG.md).
+
 ## What's new in v0.2.10 (16 September 2026)
 
 Paper 1 review-round measurements, engine unchanged (8.1.3): the consecutive-segment test of the emitted-bit
