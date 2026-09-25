@@ -34,6 +34,12 @@ adversarial analysis**.
 
 ---
 
+## What's new in v0.2.12 (25 September 2026)
+
+Paper 5 verifier-state record (`P5_ReviewMeasurements_20260925/`): the §V.A reference verifier under replica,
+restart and backup-restore failures — replay protection is a property of durable, atomic, shared verifier
+state. Engine unchanged (8.1.3). Details: [`CHANGELOG.md`](CHANGELOG.md).
+
 ## What's new in v0.2.11 (16 September 2026)
 
 `M1_M2_apple_verification/` now builds as shipped (`-I..`, repository-root engine), with a SHA256SUMS file and

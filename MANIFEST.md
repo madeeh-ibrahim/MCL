@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.11, 2026-09-16)
+# MCL — Public Code Archive · MANIFEST (v0.2.12, 2026-09-25)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
@@ -26,7 +26,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 723 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 727 files (+ this MANIFEST), SHA-256 of every file
 
 ### (root)  (46 files)
 
@@ -34,8 +34,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `af25b8b0a2388b82696965c656076c5c2b8f4fdb0788a7221880d80b6c50e060` |  |
-| `CITATION.cff` | `6091207db213d274b34b2c943bc5dbaa9e26edfb1978b52b47d920957e3ad799` |  |
+| `CHANGELOG.md` | `a9a6b9ce0ec88a86626943372beb04969bcebd3e8557757209a275faf89b418b` |  |
+| `CITATION.cff` | `071d8a0123eadce34f1b184c2a5267b1d63908cbf1282b677baa549fcc3793d7` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -45,7 +45,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
-| `README.md` | `5a66191f9216291b7cc0d42a74f595a285a1bc2060c884b3f49a82b520583caa` |  |
+| `README.md` | `625697bd29e44b037bb130bf0956e7dcf07b4cae73439ac57f8941cc7063cb8d` |  |
 | `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
@@ -885,6 +885,15 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P5_ReviewMeasurements_20260905/v2_coprime_parity_20260905.log` | `021b8c1307227f57b71167e7e3e6e2f863ab89b0413c1307c324eee268a5e0d5` |  |
 | `P5_ReviewMeasurements_20260905/weight_probe_20260905.log` | `9d41d84e3f0cb88cba6330a3fd64ca31f66cc579abe2f63eb0afd5df9f38b782` |  |
 | `P5_ReviewMeasurements_20260905/weight_probe_sidecar_scratch_ctor.diff` | `617f1ef29095331a96ce1c598553762b4c1b324e45065eb4b745b7c6a7e5dfc4` |  |
+
+### P5_ReviewMeasurements_20260925  (4 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P5_ReviewMeasurements_20260925/README.md` | `709c1f8b77489e8ed61bf812e7d1f6492fb9932f67a3606ee119032301ee0ffe` | P5_ReviewMeasurements_20260925 — Paper 5 §V.A verifier under state loss |
+| `P5_ReviewMeasurements_20260925/SHA256SUMS` | `0b6229ea5842f10cc5b6090d6cf1f2babc67c8e2dc3cc4a5ef00c2de0d243cbb` |  |
+| `P5_ReviewMeasurements_20260925/mcl_txauth_verifier_state.cpp` | `47cf6a97a31b8144db06a6ba6e490f421ce8c71581bdefb4138de01263b73266` |  |
+| `P5_ReviewMeasurements_20260925/verifier_state_apple_20260925.log` | `7d985522aa1dc0b314fa750442d759548c59da466e5f131e2f09b18150629b6d` |  |
 
 ### hd_v2  (5 files)
 

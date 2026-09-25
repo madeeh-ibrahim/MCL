@@ -1,0 +1,42 @@
+MCL Paper-5 verifier state-loss record | Doc ID MCL-P5-VERIFIERSTATE-2026-0925-001
+engine mcl_core.hpp 8.1.3 | tag = MCL_T4_Q30 Claim-4 route (harness v3.2 code, verbatim)
+
+S0  control — one verifier, durable in-memory state
+  S0   accept (TX,1,Tag)                                              ACCEPT    expected
+  S0   replay the same (TX,1,Tag)                                     REJECT    expected: rejected, c_last=1
+  S0   fresh TX with a stale counter c=1                              REJECT    expected: rejected
+
+S1  two replicas WITHOUT a shared counter store (each keeps its own c_last)
+  S1   replica A receives (TX,2,Tag)                                  ACCEPT    
+  S1   replica B receives the SAME (TX,2,Tag)                         ACCEPT    DOUBLE ACCEPTANCE — replay window open
+      → same message accepted 2 times across replicas
+S1' two replicas WITH one shared, atomically updated counter store
+  S1'  replica A receives (TX,2,Tag)                                  ACCEPT    
+  S1'  replica B receives the SAME (TX,2,Tag)                         REJECT    rejected via the shared store — expected
+
+S2  crash after acceptance but BEFORE c_last is persisted (restart from the pre-acceptance snapshot)
+  S2   accept (TX,3,Tag) in memory                                    ACCEPT    
+  S2   after restart: replay (TX,3,Tag)                               ACCEPT    RE-ACCEPTED — persisted state predates the acceptance
+S2' persist-before-act ordering (c_last written durably BEFORE the acceptance takes effect)
+  S2'  accept (TX,3,Tag), then persist                                ACCEPT    
+  S2'  after restart: replay (TX,3,Tag)                               REJECT    rejected — expected
+
+S3  restore from an older backup (state rolled back to after c=4)
+  S3   accept (TX,4,Tag)                                              ACCEPT    
+  S3   accept (TX,5,Tag)                                              ACCEPT    
+  S3   accept (TX,6,Tag)                                              ACCEPT    
+  S3   after restore: replay (TX,5,Tag)                               ACCEPT    RE-ACCEPTED
+  S3   after restore: replay (TX,6,Tag)                               ACCEPT    RE-ACCEPTED — every transaction above the restored counter replays
+
+S4  lost acknowledgement (accepted and persisted; the client never saw the reply and retries)
+  S4   accept (TX,7,Tag)                                              ACCEPT    
+  S4   client retries the identical (TX,7,Tag)                        REJECT    rejected — at-most-once holds; the client must query status, not re-submit
+
+S5  device restored from an old snapshot (device counter rolled back below c_last)
+  S5   accept (TX,8,Tag)                                              ACCEPT    
+  S5   accept (TX,9,Tag)                                              ACCEPT    
+  S5   restored device emits a fresh TX with c=5                      REJECT    rejected — legitimate device locked out until its counter is re-synchronised above c_last
+
+21 observations | weak-key re-draws 0 / 29 derivations
+Reading: c_last rejects replay only while the verifier's state is durable, updated atomically before the acceptance
+takes effect, and shared by every replica; S1/S2/S3 each re-admit previously accepted transactions; S1'/S2' close them.

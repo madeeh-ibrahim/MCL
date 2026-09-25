@@ -5,6 +5,22 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.12 — 2026-09-25
+
+**Paper 5 §V.A verifier-state record.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
+Additive only (plus `CITATION.cff`, `MANIFEST.md`, this file).
+
+### Added
+
+- **`P5_ReviewMeasurements_20260925/`** (3 files + `SHA256SUMS`) — `MCL-P5-VERIFIERSTATE-2026-0925-001`:
+  the reference verifier of Paper 5 §V.A (device model, ctx, tag_v3, constant-time compare and
+  `struct Verifier` copied verbatim from harness v3.2 in `p5_hardened_txauth/`) exercised under state
+  loss — unsynchronised replicas, a crash before the accepted counter is persisted, a restore from an
+  older backup, a lost acknowledgement, a device restored from an old snapshot — 21 deterministic
+  observations (`verifier_state_apple_20260925.log`): replay protection holds only while `c_last` is
+  durable, updated atomically before the acceptance takes effect, and shared by every replica.
+  Builds against the repository-root engine (`-I..`); no frozen engine copy.
+
 ## v0.2.11 — 2026-09-16
 
 **`M1_M2_apple_verification/` made self-consistent and buildable as shipped.** Engine `mcl_core.hpp`
