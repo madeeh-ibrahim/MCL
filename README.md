@@ -34,7 +34,7 @@ adversarial analysis**.
 
 ---
 
-## What's new in v0.2.12 (25 September 2026)
+## What's new in v0.2.13 (25 September 2026; re-issue of v0.2.12, see CHANGELOG)
 
 Paper 5 verifier-state record (`P5_ReviewMeasurements_20260925/`): the §V.A reference verifier under replica,
 restart and backup-restore failures — replay protection is a property of durable, atomic, shared verifier

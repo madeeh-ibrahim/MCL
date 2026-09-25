@@ -5,7 +5,11 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
-## v0.2.12 — 2026-09-25
+## v0.2.13 — 2026-09-25
+
+*Re-issue of v0.2.12 with identical repository content: Zenodo's GitHub webhook answered the v0.2.12
+release with a server error (HTTP 500) and refused every retry as a duplicate (409), so no archive
+version was minted for that tag; the `v0.2.12` git tag remains for reference.*
 
 **Paper 5 §V.A verifier-state record.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
 Additive only (plus `CITATION.cff`, `MANIFEST.md`, this file).
