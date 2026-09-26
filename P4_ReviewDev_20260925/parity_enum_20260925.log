@@ -1,0 +1,6 @@
+patterns 4096: full rank 3808, rank-deficient 288 (7.0312%)
+  single-word zero column : 235 (5.7373%)
+  global all-ones kernel  : 64 (1.5625%)
+  both                    : 23 (0.5615%)
+  neither (other kernels) : 12 (0.2930%)
+  kernel-vector weights over deficient patterns (weight: count): {1: 256, 2: 48, 3: 32, 4: 64}

@@ -1,0 +1,2 @@
+INC constant: no; shifts c1 in [1,65535] with constant INC[i+c1]-INC[i]: 0 (largest index needed to see non-constancy: 11)
+table antisymmetry LUT[i+32768] == -LUT[i] for all i: yes

@@ -1,0 +1,35 @@
+VDF128-T4 v4 KNOWN-ANSWER VECTOR (engine 8.1.3; clocked map, per-input weights; B=10000, N=1000, K=12.0)
+  x (ASCII)             "VDF128-T4-KAT-01"  (16 bytes)
+  h = SHA-256(x)        1bc4bccd5fd7f4fb 356fd6d7daec8046 f553bbff9b903d95 678345428d37d89b
+  weights = params_from_key(h, 0)  (p12 q12 p13 q13 p14 q14 p23 q23 p24 q24 p34 q34)
+    279585085 16285846 928956068 788364723 516116555 613731518 946679299 34137917 351651783 638991204 231823904 419155050
+  omega (Q.32)          192e540d 35f94f3b 10e06777 1d43f384   K_phase 0x1e8ec8a4a
+  LUT CRC-32            0xde1340cf
+  clock tau(i)          t1+=lo t2+=lo*A+hi t3+=lo*B+hi*A t4+=lo*C+hi*B  A=9e3779b1 B=85ebca77 C=c2b2ae3d (lo=i mod 2^32, hi=i>>32; i from 0 at the first burn-in iteration)
+  init state t1..t4     320797ee 6ec947c4 9593ec52 dd58db57
+  after burn-in (C_0)   1a16b5d4 746d35ec b3037f48 f33baf88
+  C_1 (t=250)           8e8d19af c01eee81 3b44aaa1 f7458adc
+  C_2 (t=500)           24b96dd3 e5404575 90db5093 30ab21b9
+  C_3 (t=750)           094f31a8 fe6ef377 db47e51d d09bb0df
+  C_4 (t=1000)          f335a4ec 9ec6ba3e 960e885a ba6f363d
+  SHA-256 preimage (80 B)eca435f33ebac69e 5a880e963d366fba 1bc4bccd5fd7f4fb 356fd6d7daec8046 f553bbff9b903d95 678345428d37d89b e803000000000000 5644463132382d54 342d76342d6f7574 0000000000000000
+  y = SHA-256(preimage) b6ca50df938969a7 16b8bf05f207e5fb f25866f43fb892a5 b79e439a4ed0b5ae
+  API mcl_vdf128v4_eval: IDENTICAL
+  y (same x, N=100000)  e54b0c55daf193c9 fec73a6a428c5e62 b2a6b014b11fe06f 9c0cd669e570e8e4
+
+AVALANCHE PROFILE (one-bit state flip at C_0; mean Hamming over all 128 positions x 8 inputs; 64 = full diffusion)
+  k=1: mean 63.35 / 128   (per-input range 62.38 .. 64.05)
+  k=2: mean 63.92 / 128   (per-input range 63.48 .. 64.40)
+  k=3: mean 63.67 / 128   (per-input range 62.59 .. 64.72)
+  k=4: mean 64.06 / 128   (per-input range 63.37 .. 64.62)
+  k=5: mean 63.84 / 128   (per-input range 63.02 .. 64.66)
+  k=6: mean 64.06 / 128   (per-input range 62.88 .. 65.09)
+  k=7: mean 63.97 / 128   (per-input range 63.64 .. 64.48)
+  k=8: mean 63.64 / 128   (per-input range 63.43 .. 63.98)
+
+CLOCK SEPARATION (same state, clocks i and j; Hamming after 1 and 2 iterations; 64 = independent)
+  mean Hamming: 64.29 / 128 after 1 iteration, 63.20 / 128 after 2 (256 random states; clocks j-i in [1,1000])
+
+INPUT-FLIP STATISTICS (64 random one-bit flips of 16-byte inputs; expectations 64/128 and 128/256)
+  init-state Hamming: mean 64.61 / 128 (sd 6.07)   output Hamming: mean 126.92 / 256 (sd 7.78)
+  KAT-1 vs KAT-0 (last char 1->0): init-state Hamming 59/128, output Hamming 120/256

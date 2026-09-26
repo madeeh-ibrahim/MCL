@@ -1,0 +1,4 @@
+UNCLOCKED s=28 N=2^12 eps=0.25 P=256 d=12 trials=20000 | success 1711 (0.085550, 95% CI 0.081753-0.089506) verified 1711/1711 | P*T/2^s=2.930e-03 P*N^2/2^s=1.600e+01
+CLOCKED   s=28 N=2^12 eps=0.25 P=256 d=12 trials=20000 | success 3 (0.000150, 95% CI 0.000051-0.000441) verified 3/3 | P*T/2^s=2.930e-03 P*N^2/2^s=1.600e+01
+UNCLOCKED s=24 N=2^12 eps=0.25 P=256 d=12 trials=20000 | success 3501 (0.175050, 95% CI 0.169846-0.180379) verified 3501/3501 | P*T/2^s=4.688e-02 P*N^2/2^s=2.560e+02
+CLOCKED   s=24 N=2^12 eps=0.25 P=256 d=12 trials=20000 | success 39 (0.001950, 95% CI 0.001427-0.002664) verified 39/39 | P*T/2^s=4.688e-02 P*N^2/2^s=2.560e+02

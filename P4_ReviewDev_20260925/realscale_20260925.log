@@ -1,0 +1,28 @@
+eps=0.050 lam=    1: I=0.0495  I/(1+lam(1-eps))=0.02538
+eps=0.050 lam=    8: I=0.1548  I/(1+lam(1-eps))=0.01800
+eps=0.100 lam=    1: I=0.0352  I/(1+lam(1-eps))=0.01853
+eps=0.100 lam=    8: I=0.1175  I/(1+lam(1-eps))=0.01432
+eps=0.167 lam=    1: I=0.0213  I/(1+lam(1-eps))=0.01163
+eps=0.167 lam=    8: I=0.0780  I/(1+lam(1-eps))=0.01017
+eps=0.200 lam=    1: I=0.0158  I/(1+lam(1-eps))=0.00877
+eps=0.200 lam=    8: I=0.0608  I/(1+lam(1-eps))=0.00822
+eps=0.250 lam=    1: I=0.0094  I/(1+lam(1-eps))=0.00534
+eps=0.250 lam=    8: I=0.0393  I/(1+lam(1-eps))=0.00562
+eps=0.300 lam=    1: I=0.0049  I/(1+lam(1-eps))=0.00285
+eps=0.300 lam=    8: I=0.0225  I/(1+lam(1-eps))=0.00342
+best memory-normalised factor g=0.02837 at eps=0.050, lam=2
+
+ N        | SCIA-128 bound N(M+N)/2^127 | attack E_det (P = M/(1+lam(1-eps)))  -> success ~ 1-exp(-E) | eps=1/4 variant
+     1e+04 | 2^ -53.71                 | E=2^ -46.56  success~9.66e-15 | eps=1/4: E=2^ -48.65
+     1e+07 | 2^ -43.75                 | E=2^ -26.63  success~9.61e-09 | eps=1/4: E=2^ -28.72
+     1e+08 | 2^ -40.42                 | E=2^ -19.99  success~9.61e-07 | eps=1/4: E=2^ -22.07
+     1e+09 | 2^ -37.10                 | E=2^ -13.34  success~9.61e-05 | eps=1/4: E=2^ -15.43
+     1e+10 | 2^ -33.78                 | E=2^  -6.70  success~0.00957 | eps=1/4: E=2^  -8.79
+     1e+12 | 2^ -27.14                 | E=2^   6.59  success~1 | eps=1/4: E=2^   4.50
+   1.1e+12 | 2^ -27.00                 | E=2^   6.86  success~1 | eps=1/4: E=2^   4.78
+
+clocked ideal-model ceiling q/2^(s-1), q = P*(1-eps)N <= 2^60 N:
+ N=    1e+07: ceiling 2^ -43.75  vs SCIA bound 2^ -43.75
+ N=    1e+09: ceiling 2^ -37.10  vs SCIA bound 2^ -37.10
+ N=    1e+12: ceiling 2^ -27.14  vs SCIA bound 2^ -27.14
+ N=  1.1e+12: ceiling 2^ -27.00  vs SCIA bound 2^ -27.00

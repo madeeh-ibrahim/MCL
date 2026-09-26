@@ -1,0 +1,11 @@
+VDF128-T4 v4 (clocked map) weak-PAIR instance probe (MCL-VDF128-WEAKPAIR-2026-0925-004; engine 8.1.3)
+
+[genuine input (given), derivation unchanged from v3] x = "weak-lane-v3-174170077"
+  weights: 666241155 263142949 823513751 1018145543 464165008 154785774 689880696 922011351 62109 39441 255079520 482005221
+  smallest lane = 39441 (2^15.3)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 63.1 63.5 63.7 64.6 63.7 63.7 63.0 64.3
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 15.1 15.8 16.2 16.0
+  S1 linear correlation r=1: max|corr| 0.00774 (in bit 77 -> out bit 63), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00896 (in bit 126 -> out bit 86), 1 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 56.8/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 55.6/128

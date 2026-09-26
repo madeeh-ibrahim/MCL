@@ -1,0 +1,4 @@
+# host
+Darwin Madeehs-MacBook-Pro.local 23.5.0 Darwin Kernel Version 23.5.0: Wed May  1 20:12:58 PDT 2024; root:xnu-10063.121.3~5/RELEASE_ARM64_T6000 arm64
+Apple clang version 16.0.0 (clang-1600.0.26.6)
+19:30  up 3 days,  5:02, 1 user, load averages: 2.54 3.44 3.58

@@ -1,0 +1,4 @@
+0/2000: exact one-sided 95% upper bound 1-0.05^(1/2000) = 1.496745e-03; rule of three 3/2000 = 1.500000e-03
+SCIA-128 bound N(M+N)/2^127: N=1e7 -> 6.7763e-14 = 2^-43.75; N=1e12 -> 6.7763e-09 = 2^-27.14
+zero-failure trials for 95% at p=bound(1e7): ln(20)/p = 4.4209e+13
+s=37 M>>N toy aggregate: 49/3200 = 0.01531 (Wilson 95% 0.01160-0.02019); SCIA-analog N(M+N)/2^(s-1) = 1.8409e-03; ratio 8.3 (lower CI 6.3); Prop 3(a) guarantee 2.487e-05 -> ratio 616

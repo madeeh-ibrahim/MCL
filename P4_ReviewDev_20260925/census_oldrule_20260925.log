@@ -1,0 +1,8 @@
+old-rule census over 262144 inputs (identical inputs to the record):
+  rank-deficient          6.958%  (18241)
+  single-word all-even    5.630%  (14759)
+  global equal-parity     1.369%  (3589)
+  single AND global       0.374%  (981)   <- the paper states 0.04%
+  deficient, neither case 0.333%  (874)
+  check: single + global - both + neither = 6.958%
+  (sanity: single subset of deficient 14759/14759, global subset 3589/3589)

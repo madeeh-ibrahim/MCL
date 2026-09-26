@@ -1,0 +1,40 @@
+VDF128-T4 v4 (clocked map) weak-PAIR instance probe (MCL-VDF128-WEAKPAIR-2026-0925-004; engine 8.1.3)
+
+== CONSTRUCTED: pair (1,3) = (42714, 31590), both < 2^16 (reachable at ~2^25 candidates) ==
+  re-draw rules on this set: p!=q ok; seed-reachable symmetry absent (set admissible)
+
+[CONSTRUCTED: pair (1,3) = (42714, 31590), both < 2^16 (reachable at ~2^25 candidates)] x = "weak-lane-v3-1229 [pair overwritten]"
+  weights: 217088141 254798093 42714 31590 112300579 178421073 954403284 57462180 355338252 491926079 66447713 552165991
+  smallest lane = 31590 (2^14.9)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 62.8 64.2 63.9 63.7 64.5 63.4 63.4 64.0
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 15.6 15.0 15.9 16.2
+  S1 linear correlation r=1: max|corr| 0.00823 (in bit 17 -> out bit 114), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00788 (in bit 118 -> out bit 116), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 59.0/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 56.6/128
+
+== CONSTRUCTED: pair (1,3) = (6, 31590) (beyond grinding reach, ~2^-37; stress case) ==
+  re-draw rules on this set: p!=q ok; seed-reachable symmetry absent (set admissible)
+
+[CONSTRUCTED: pair (1,3) = (6, 31590) (beyond grinding reach, ~2^-37; stress case)] x = "weak-lane-v3-1229 [pair overwritten]"
+  weights: 217088141 254798093 6 31590 112300579 178421073 954403284 57462180 355338252 491926079 66447713 552165991
+  smallest lane = 6 (2^2.6)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 61.6 64.2 64.4 64.1 64.6 64.3 64.1 63.8
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 14.0 16.0 15.9 15.7
+  S1 linear correlation r=1: max|corr| 0.00841 (in bit 124 -> out bit 22), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00796 (in bit 110 -> out bit 82), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 49.7/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 47.1/128
+
+== CONSTRUCTED: pair (1,3) = (6, 7) (unreachable, ~2^-50; extreme stress case) ==
+  re-draw rules on this set: p!=q ok; seed-reachable symmetry absent (set admissible)
+
+[CONSTRUCTED: pair (1,3) = (6, 7) (unreachable, ~2^-50; extreme stress case)] x = "weak-lane-v3-1229 [pair overwritten]"
+  weights: 217088141 254798093 6 7 112300579 178421073 954403284 57462180 355338252 491926079 66447713 552165991
+  smallest lane = 6 (2^2.6)
+  S3 avalanche profile r=1..8 (mean Hamming over 128 flip positions): 61.7 64.0 64.2 63.4 63.9 63.8 64.6 63.2
+  S3b r=1 mean flipped bits per state word t1..t4 (16 = half): 13.8 15.8 16.1 16.0
+  S1 linear correlation r=1: max|corr| 0.00787 (in bit 62 -> out bit 73), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S1 linear correlation r=2: max|corr| 0.00805 (in bit 108 -> out bit 44), 0 of 16,384 pairs above 4.5 sigma (0.00879)
+  S2 cube/degree r=1 d=16: 32/32 cubes non-zero, mean popcount 47.5/128
+  S2 cube/degree r=1 d=20: 32/32 cubes non-zero, mean popcount 46.3/128

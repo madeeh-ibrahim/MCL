@@ -5,6 +5,30 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.14 — 2026-09-26
+
+**Paper 4 version 4 — VDF128-T4 becomes a *clocked* map.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.
+Additive only (plus `CITATION.cff`, `MANIFEST.md`, this file).
+
+### Added
+
+- **`P4_ReviewMeasurements_20260925/`** (34 files + `SHA256SUMS`) — `MCL-P4-REVIEWMEAS-2026-0925-004`:
+  `mcl_vdf128_t4_v4.hpp` (the 64-bit iteration number enters every iteration through an injective
+  encoding τ(i) = (lo, lo·A+hi, lo·B+hi·A, lo·C+hi·B) mod 2³² before the four Gauss-Seidel word updates;
+  weight derivation, initialisation and table byte-identical to v3; output tag `VDF128-T4-v4-out`) with
+  the version-4 harnesses and logs: known-answer vector (Vector 5 v4), engine-free re-implementation
+  (reproduces the vector from the table file and from a sin()-regenerated table), property/falsification
+  battery (21/22), differential/linear/cube-sum distinguisher, weak-lane and weak-pair probes on the v4 map,
+  eight macOS cross-platform cells, and the benchmark (29.2 M iterations/s, 34.3 ns; checkpoint verification
+  1.00/1.97/3.83/5.98/6.39× for k = 1/2/4/8/16). `_run2_incremental_clock/` documents a faster-clock variant
+  that was measured (36.3 ns) and not adopted. Builds against the repository-root engine (`-I..`).
+- **`P4_ReviewDev_20260925/`** (18 files + `SHA256SUMS_20260925.txt`) — `MCL-P4-DEV-2026-0925-001`: the toy
+  random-mapping measurements behind the corrected memory-bounded floor of Proposition 3(a) (a walk that
+  touches the honest path follows it and is recognised at the next stored point; success 366–1,286× the
+  earlier count, ≈ N² scaling), the unclocked-vs-clocked comparison (8.56% → 0.015% at s = 28), the
+  real-scale evaluation, the parity-pattern census (0.374% overlap), the argument-state rewrite and the
+  shift search.
+
 ## v0.2.13 — 2026-09-25
 
 *Re-issue of v0.2.12 with identical repository content: Zenodo's GitHub webhook answered the v0.2.12

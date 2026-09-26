@@ -1,0 +1,5 @@
+x=VDF128-T4-KAT-01 N=1000 | reference y=75d76880369509b4… (= paper) | argument-state y=75d76880369509b4… (= reference)
+x=VDF128-T4-KAT-01 N=100000 | reference y=ee2ff4adb22c0ce9… (= paper) | argument-state y=ee2ff4adb22c0ce9… (= reference)
+200 further inputs, N = 20,000: 200/200 outputs bit-identical
+timing (this CPU, N = 2e7): reference 27.51 ns/iter, argument-state 71.95 ns/iter; outputs identical
+exit 0

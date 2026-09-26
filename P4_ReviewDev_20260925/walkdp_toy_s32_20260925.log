@@ -1,0 +1,10 @@
+s=32 N=2^11 eps=0.250 P=256 d=11 trials=40000 | success 96 (0.00240, 95% CI 0.00197-0.00293), verified 96/96, mean lead 644
+   memory: 187.5 stored records + 256 walk states = 443.5 words | Prop 3(a) with that M: E=1.311e-05, P(success)>=6.557e-06 | merge-aware E_det=2.325e-03 -> 1-exp(-E)=2.323e-03 | ratio measured/Prop3a = 366.0
+s=32 N=2^12 eps=0.250 P=256 d=12 trials=20000 | success 187 (0.00935, 95% CI 0.00811-0.01078), verified 187/187, mean lead 1276
+   memory: 175.8 stored records + 256 walk states = 431.8 words | Prop 3(a) with that M: E=2.546e-05, P(success)>=1.273e-05 | merge-aware E_det=9.268e-03 -> 1-exp(-E)=9.225e-03 | ratio measured/Prop3a = 734.5
+s=32 N=2^13 eps=0.250 P=256 d=13 trials=10000 | success 295 (0.02950, 95% CI 0.02636-0.03300), verified 295/295, mean lead 2615
+   memory: 142.0 stored records + 256 walk states = 398.0 words | Prop 3(a) with that M: E=4.589e-05, P(success)>=2.295e-05 | merge-aware E_det=3.701e-02 -> 1-exp(-E)=3.633e-02 | ratio measured/Prop3a = 1285.7
+s=32 N=2^12 eps=0.250 P=64 d=8 trials=20000 | success 228 (0.01140, 95% CI 0.01002-0.01297), verified 228/228, mean lead 1337
+   memory: 750.6 stored records + 64 walk states = 814.6 words | Prop 3(a) with that M: E=4.804e-05, P(success)>=2.402e-05 | merge-aware E_det=1.225e-02 -> 1-exp(-E)=1.217e-02 | ratio measured/Prop3a = 474.7
+s=32 N=2^12 eps=0.250 P=256 d=0 trials=20000 | success 1151 (0.05755, 95% CI 0.05441-0.06086), verified 1151/1151, mean lead 1373
+   memory: 720001.0 stored records + 256 walk states = 720257.0 words | Prop 3(a) with that M: E=4.247e-02, P(success)>=2.124e-02 | merge-aware E_det=6.262e-02 -> 1-exp(-E)=6.070e-02 | ratio measured/Prop3a = 2.7
