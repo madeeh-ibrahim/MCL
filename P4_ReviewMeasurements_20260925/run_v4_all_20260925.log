@@ -1,0 +1,8 @@
+START Fri Sep 25 21:50:24 EEST 2026 load { 2.83 2.70 2.54 }
+standalone patched: b6ca50df938969a7 ('f335a4ec', '9ec6ba3e', '960e885a', 'ba6f363d')
+standalone done: 2/2
+xplat done 9s
+distinguisher+weak probes done 402s
+battery done 431s:   SUMMARY: 21 passed, 1 failed
+quiet host (busy=0): bench
+ALL DONE 474s Fri Sep 25 21:58:18 EEST 2026

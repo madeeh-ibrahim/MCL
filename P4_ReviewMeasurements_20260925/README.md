@@ -17,7 +17,7 @@ Review #16 (2026-09-25, `05_Scientific_Papers/Paper_4_IACR_CiC/Reviews/P4_ReadOn
 | `mcl_vdf128v4_xplat.cpp` | `vdf128v4_xplat_apple_20260925v4.log` | 8 cells (arm64 / x86_64-Rosetta × −O0…−O3): one set of values per architecture, differing only in the printed arch label; **Linux/GCC cell not run in this round** (GitHub Actions / Docker unavailable from this session) — queued | §VI.C |
 | `mcl_vdf128v4_bench.cpp` | `vdf128v4_bench_apple_20260925v4.log` (run 1, direct clock — **canonical**) | Eval 29.2 M iter/s (34.3 ns/iter; v3: 34.6 M / 28.9 ns ⇒ the clock costs 5.4 ns = 19% in software); Verify k = 1/2/4/8/16 → 1.00/1.97/3.83/5.98/6.39×, all bit-exact; end-to-end 10⁴ → 0.7 ms, 10⁷ → 0.34 s, 10⁸ → 3.5 s | §III.D Table 2, §V, §VIII |
 | `_run2_incremental_clock/` | `vdf128v4_bench_incrementalclock_…log`, `…battery_incrementalclock_…log`, header + bench source of that try | **Side experiment, not adopted:** maintaining τ incrementally (τ(i+1) = τ(i) + (1,A,B,C)) measured 36.3 ns/iter vs 34.2 direct on the same states (IDENTICAL); battery re-run 21/22 identical except P1 0.4% | §VIII (one sentence) |
-| `run_v4_all.sh` | `run_v4_all.out` | the driver of this round (474 s wall) | — |
+| `run_v4_all.sh` | `run_v4_all_20260925.log` | the driver of this round (474 s wall) | — |
 
 **Not run for v4 (by design):** the 2³³-step cycle probe (`mcl_vdf128v3_cyclecheck.cpp`) — a clocked map is not an endomorphism of the state and has no orbit to close; the v3 probe is history (§VI.C). The 200 M-candidate weak-pair grind — the derivation is unchanged, so the v3 result (genuine input after 134,170,078 candidates) stands and its input is probed here directly.
 

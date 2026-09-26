@@ -29,6 +29,10 @@ Additive only (plus `CITATION.cff`, `MANIFEST.md`, this file).
   real-scale evaluation, the parity-pattern census (0.374% overlap), the argument-state rewrite and the
   shift search.
 
+*Post-release addendum (main, 2026-09-26): the driver's console log `run_v4_all.out` was excluded from the
+v0.2.14 tag by the repository's `*.out` ignore pattern although `SHA256SUMS` listed it; it is published as
+`run_v4_all_20260925.log` with `SHA256SUMS` and the folder README updated accordingly. No other file changed.*
+
 ## v0.2.13 — 2026-09-25
 
 *Re-issue of v0.2.12 with identical repository content: Zenodo's GitHub webhook answered the v0.2.12

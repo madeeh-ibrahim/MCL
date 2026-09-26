@@ -34,7 +34,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `ef89af1257a558ebd36f7d9c545848776ff0c561466e0f6144f886f8e920e00f` |  |
+| `CHANGELOG.md` | `e4987f5a15a3fbe3f471bba9b32a17fa9e374f67ff3a769e185ef2c7e1e1c02e` |  |
 | `CITATION.cff` | `753366a39de23bf367aba3baa353099e75440baefc1d324881b9d803cb49baf0` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
@@ -867,8 +867,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260925/README.md` | `6b9cfa9503ed139cb01773817331cb3d9e049605699d228aedf9871349a98fa6` | P4 review measurements — 2026-09-25 (ت-134(أ): VDF128-T4 **version 4**, clocked map) |
-| `P4_ReviewMeasurements_20260925/SHA256SUMS` | `2ae831daca625cc78a6f168c081de1958dd9e5e2ccc9349672d6648c13653d87` |  |
+| `P4_ReviewMeasurements_20260925/README.md` | `6134493a6e3434b2d6dc890a957c129f4d07a4d698900e667bc5660d2f0e4f87` | P4 review measurements — 2026-09-25 (ت-134(أ): VDF128-T4 **version 4**, clocked map) |
+| `P4_ReviewMeasurements_20260925/SHA256SUMS` | `610f317ac4bf239e6ef093fc96d4140cc83b4603a9d1fac6dca4762c4cbcd545` |  |
 | `P4_ReviewMeasurements_20260925/_run1_direct_clock/vdf128v4_battery_apple_20260925v4.log` | `e6d824ad68e5cf259cc7b39e0616e0ade27d3f5c71c684858dda7593a1121dc6` |  |
 | `P4_ReviewMeasurements_20260925/_run1_direct_clock/vdf128v4_bench_apple_20260925v4.log` | `bbb80939cd7115081f41861179451091e41e203ae5254796020f13f4ed804e61` |  |
 | `P4_ReviewMeasurements_20260925/_run1_direct_clock/vdf128v4_kat_apple_20260925.log` | `933c8c00fea6926f4f003dc20057414d49e396673b40ea8716b40c8e3d1b45ea` |  |
@@ -890,8 +890,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260925/p4_vdf128v4_weaklane.cpp` | `b3f84f7a38b557466c2c9410c5f65853d1a98b92420f0702fe05bc1005cda481` |  |
 | `P4_ReviewMeasurements_20260925/p4_vdf128v4_weakpair.cpp` | `cbf8b36a8c6133faf8357ebde1ce52687143603fa35c10352fd82c8e250d8198` |  |
 | `P4_ReviewMeasurements_20260925/q30_lut_int32le.bin` | `f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d` |  |
-| `P4_ReviewMeasurements_20260925/run_v4_all.out` | `edf5b68edec7e5352c2ce812f23708559281533e562d5e1c1917a85048ce5ac9` |  |
 | `P4_ReviewMeasurements_20260925/run_v4_all.sh` | `8324345d4955b8f6eceffa39974658c467507022351dc2fee7e2053a5018f9e1` |  |
+| `P4_ReviewMeasurements_20260925/run_v4_all_20260925.log` | `edf5b68edec7e5352c2ce812f23708559281533e562d5e1c1917a85048ce5ac9` |  |
 | `P4_ReviewMeasurements_20260925/vdf128_t4v4_standalone.cpp` | `167d3639bbd9ee7a76c17e2bec37e0fea4b4b016e5d4ec122dcd4d9e67d96812` |  |
 | `P4_ReviewMeasurements_20260925/vdf128_t4v4_standalone.template.cpp` | `37118377338f663af1591fa2ac4b3c0c02269e4724a771e2725e216c4263d618` |  |
 | `P4_ReviewMeasurements_20260925/vdf128_t4v4_standalone_apple_20260925v4.log` | `2baa6ed38868ba2188d7c2a2041750186567b1e6df431f2621b73b3b87909543` |  |
