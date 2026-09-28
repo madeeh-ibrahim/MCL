@@ -1,0 +1,5 @@
+Apple M1 Pro
+Apple clang version 16.0.0 (clang-1600.0.26.6)
+Sun Sep 27 07:58:42 UTC 2026
+visit order: (tv*0x9E3779B1) mod 2^(n*w) — full permutation (v2)
+walkdp small-memory runs (Part 2): same host, Sun Sep 27 2026; light run 57 s, four heavy runs 73 s each, concurrent

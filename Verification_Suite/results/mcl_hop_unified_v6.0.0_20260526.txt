@@ -1,6 +1,6 @@
 
 ==============================================================================
-  MCL DYNAMIC PARAMETER HOPPING - UNIFIED SUITE v6.1.0
+  MCL DYNAMIC PARAMETER HOPPING - UNIFIED SUITE v6.0.0
   22 Tests - Free Experiment (results ARE the empirical record)
 ==============================================================================
 
@@ -77,25 +77,20 @@
   [PASS] A12: Hop+multiplex combined                ent=7.9996, max|r|=0.001855
 
 ==============================================================================
- PART B: SEGMENT SEPARATION AND ACCOUNTING
+ PART B: POST-QUANTUM HOPPING SECURITY
 ==============================================================================
-
-  No quantum algorithm is run, simulated or bounded by this program.
-  The rows B4, B5 and B10 are arithmetic on the parameters, not measurements.
 
   [PASS] B1: Fresh MCL != hopping MCL (5 segs)      worst |r|=0.065065 (thresh=0.1265), H=51.75%
   [PASS] B2: Cross-segment |r| < EVT                max|r|=0.105378 (EVT=0.1265, 595 pairs)
-  [PASS] B3: Topology not identified (correlation)  20.5% (random=16.7%)
-  Sequences over 6 topologies: 1292 bits of count (log2(6) x 500)
-  Sequences over pairs up to nmax=1000: 9607 bits of count (19.2 x 500)
-  These figures count sequences. A schedule derived from a key has at
-  most the entropy of that key.
-  [PASS] B4: Count of schedules above 128 bits      cycle count=1292 bits, pair count=9607 bits
+  [PASS] B3: Topology unidentifiable                20.5% (random=16.7%)
+  Fixed 6-topo cycle: 1292 bits (log2(6) x 500)
+  Random nmax=1000: 9607 bits (19.2 x 500) - max capacity
+  [PASS] B4: Schedule entropy > 128                 cycle=1292 bits, capacity=9607 bits
   Without hop: 10128 iters | With hop: 1035000 iters (102.2x)
-  [PASS] B5: Iterations per trial increased         102.2x iterations per trial (constant factor)
-  [PASS] B6: Inter-segment separation (4-sigma)     worst |r|=0.0651 < 4/sqrt(1000)=0.1265
+  [PASS] B5: Grover cost increased                  102.2x oracle cost (+3.34 PQ bits)
+  [PASS] B6: Forward secrecy (4-sigma threshold)    worst |r|=0.0651 < 4/sqrt(1000)=0.1265
   mean|r| at boundary: 0.049830, away: 0.047024, diff: 0.002807
-  [PASS] B7: Boundary not detected (split-half)     diff=0.002807
+  [PASS] B7: Boundary undetectable                  diff=0.002807
 
 ==============================================================================
  B8: MULTIPLEX INVISIBILITY N-SWEEP
@@ -108,19 +103,13 @@
   [PASS] B9: Same-ratio pairs independent           max|r|=0.002355 (6 pairs, ratio 2/3)
 
 ==============================================================================
- B10: SECRET-SIZE ACCOUNTING (GENERIC KEY SEARCH)
+ B10: POST-QUANTUM SECURITY SUMMARY
 ==============================================================================
 
-  Pair (p, q) alone, p, q <= 1000, halved:          9.6 bits
-  Pair + an independent 128-bit key, halved:       73.6 bits
-  Pair + that key + 64 further bits, halved:       105.6 bits
-  Iterations per trial with hop: 102.2x | count of schedules: 1292 bits
-  The seed is public and is not counted. The two rows with a key
-  presuppose a key that this program does not contain: its schedule is
-  a fixed public cycle. With an independent hop key carried outside the
-  engine input and searched jointly with the pair, such a row is a
-  design target, not a measured bound and not a proven one.
-  [PASS] B10: Pair alone below the AES-128 level    9.6 bits < 64 (AES-128, halved)
+  PQ (conservative): 73.6 bits
+  PQ (enhanced):     105.6 bits
+  Oracle with hop: 102.2x | Sched entropy: 1292 bits
+  [PASS] B10: PQ security above AES-128             73.6 bits > 64 (AES-128 PQ)
 
 ==============================================================================
  UNIFIED HOPPING VERIFICATION SUMMARY
@@ -139,18 +128,17 @@
     Mux max|r| (hop):      0.001855
     Mux entropy (hop):     7.999641
     Cross-seg max|r|:      0.105378
-    Topo identification:   20.5% (random=16.7%)
-    Inter-segment H:       51.75%
+    Topo ID attack:        20.5% (random=16.7%)
+    Forward secrecy H:     51.75%
     Boundary detect diff:  0.002807
     Same-ratio max|r|:     0.002355
-    Pair alone, halved:    9.6 bits
+    PQ (conservative):     73.6 bits
 
  +================================================================+
- | VERDICT: PASS - all 22 hopping checks verified                  |
- | No statement about quantum security is made by this program.    |
+ | VERDICT: PASS - all 22 hopping tests verified                   |
  +================================================================+
 
-  Time: 18.8 seconds
+  Time: 19.0 seconds
 
-  MCL-HOP-UNIFIED-2026-0526-001 v6.1.0 | Madeeh Ibrahim, Cairo
+  MCL-HOP-UNIFIED-2026-0526-001 v6.0.0 | Madeeh Ibrahim, Cairo
 ==============================================================================

@@ -1,4 +1,6 @@
 > **Publication note (2026-08-22, MCL v0.2.0):** this folder is published as shipped in the working tree. The "planned 4th PCT filing" referred to below was **filed on 21 August 2026 as PCT/IB2026/058860**. Sidecar header `mcl_keyed_q30.hpp` is **v1.0.6** (SHA-256 `71a0dbaf8472…`; engine of record `mcl_core.hpp` v8.1.3, SHA-256 `416ad145e79c…`). README/STATUS bodies are historical measurement records and were deliberately not rewritten; see `NOSYM_V106_RECORD_20260822.md` for the v1.0.6 change. Compiled binaries are not shipped. `mcl_keyed_q30_lyap_sweep.cpp` / `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR (`-I/opt/homebrew/include -lmpfr -lgmp` on macOS); `mcl_keyed_q30_dump_weights.cpp` is built with `-DHDR='"mcl_keyed_q30.hpp"'`.
+>
+> **Update (2026-09-28, MCL v0.2.15):** the sidecar header is **v1.0.7** (SHA-256 `05c01cf8a156…`): the symmetry check of v1.0.6 applied to the epoch lists of the cascade, and an opt-in seed rule. Default behaviour and the known-answer values of record are unchanged; see `CASCADE_GUARD_V107_RECORD_20260928.md`. The category labels of this file are accounting of key size under generic key search, in the sense of `../QUANTUM_SCOPE_NOTE.md` §2.1 and §3.5.
 
 # MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension
 
@@ -259,3 +261,4 @@ Both risks were investigated to a definitive answer (not closed by hand-waving):
    numbers before any latency claim in the filing.
 
 - **2026-08-22 v1.0.6:** `mcl_t4_q30_has_reachable_symmetry()` + deterministic re-draw in `mcl_t4_q30_params_from_key` — see NOSYM_V106_RECORD_20260822.md
+- **2026-09-28 v1.0.7:** `mcl_cascade_q30_has_reachable_symmetry()` + deterministic re-draw in `mcl_cascade_q30_params_from_key` (about 2^−14 of keys at m = 7); opt-in seed rule `MCL_Q30_SeedInit::Hashed` (default `Legacy`, unchanged); `mcl_keyed_q30_self_test()` with six known-answer values. Known-answer values of record unchanged (`0x58C99E3E`, `0xF7C81BC4`) — see CASCADE_GUARD_V107_RECORD_20260928.md

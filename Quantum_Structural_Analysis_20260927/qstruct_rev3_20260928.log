@@ -1,0 +1,260 @@
+MCL-QSTRUCT-2026-0927-001 rev 3   structural inventory (classical probe)
+engine mcl_core 8.1.3 (UNMODIFIED) + sidecar v1.0.7 + VDF128-T4 v1/v3 headers
+mode: RECORD configuration (default parameters, all parts)
+parameters: keys=20000 v3-inputs=2000 cascade-keys=200000 engine-states=64 refl=100000
+            verify=32 random-s=64 birthday-log2=18 whiten-log2=22 threads=8 seed=0xc0ffee
+parts: 1=1 2=1 3=1 (controls always run)   BURNIN=10000 DECIMATION=2 K=12
+omega (Q32): 192e540d 35f94f3b 10e06777 1d43f384   parity: odd odd odd even
+This probe bounds the ATTACK SURFACE of four attack families. It is not a security proof.
+
+==============================================================================
+  PART 0 -- controls (the detectors must fire, and must stay silent)
+==============================================================================
+  [CONTROL] PC-1 all-odd weights: symmetry DETECTED        PASS  rank 3, exact group order 2, engine-verified 1/1, non-member fails: yes
+  [CONTROL] PC-2 seed-reachable weak set: REACHABILITY DETECTED PASS  engine predicate true, reachable elements 1, seed pair (s, s+2^31) related in 64/64
+  [CONTROL] PC-3a planted XOR period: DETECTED by birthday search PASS  N=2^18: 8 collisions (expected 8.0), period recovered: yes, verified 32/32
+  [CONTROL] PC-3b injective function: birthday search SILENT PASS  N=2^18: 0 collisions (expected 1.9e-09)
+  [CONTROL] PC-6a planted period bits: DETECTED by the scanner PASS  planted bits {17,40}: found {17,40}, partial {}
+  [CONTROL] PC-6b injective function: scanner SILENT       PASS  found {}, partial {}, best random 0/32
+  [CONTROL] PC-5 cascade replica == engine API             PASS  SHA-256(replica raw state) == mcl_cascade_q30 output in 3/3
+
+==============================================================================
+  PART 1 -- F1: translation symmetries of the state map
+==============================================================================
+  rank r of the parity matrix <=> 2^(4-r) symmetries at the 2^31 level; the EXACT group
+  (all 2-adic levels) is computed by lifting and every element is run on the engine.
+
+  [C1 two-oscillator (3,5) raw Q30 -- RETIRED path]
+     [COMPUTED] parity rank 1/2; p^2-q^2 = -16, 2-adic valuation 4
+     [COMPUTED] exact translation group: order 16 [matches pre-registered]
+                (pre-registered: 16, record T4_CycleStructure tool -004, 2026-08-22)
+     [MEASURED] engine: 15/15 non-trivial elements commute (1 and 16 iterations, 64 states each);
+                an offset one level finer commutes on 0/64 states
+     [COMPUTED] reachable from a public seed: 15 of 15
+     note: this is the related-input break of the RETIRED raw path, not a live construction.
+
+  [C2 keyed T4-Q30, weight derivation of sidecar v1.0.6 (unchanged in v1.0.7) -- the four keys of
+   record -004 (key[i] = i + k*0x11)]
+     key0 [COMPUTED] rank 4/4, exact group order 1 [matches pre-registered]
+          [MEASURED] engine: group is trivial; an offset at the 2^31 level fails to commute: yes
+     key1 [COMPUTED] rank 3/4, exact group order 2 [matches pre-registered]
+          [MEASURED] engine: 1/1 non-trivial elements commute, non-member fails: yes; seed-reachable: 0
+             element 00000000 00000000 00000000 80000000
+     key2 [COMPUTED] rank 4/4, exact group order 1 [matches pre-registered]
+          [MEASURED] engine: group is trivial; an offset at the 2^31 level fails to commute: yes
+     key3 [COMPUTED] rank 3/4, exact group order 4 [matches pre-registered]
+          [MEASURED] engine: 3/3 non-trivial elements commute, non-member fails: yes; seed-reachable: 0
+             element 40000000 c0000000 c0000000 c0000000
+             element 80000000 80000000 80000000 80000000
+             element c0000000 40000000 40000000 40000000
+
+  [C2 population: 20000 keys, key_n = SHA-256("MCL-QSTRUCT-KEY" || LE64(n))]
+     [COMPUTED] parity rank 4/3/2/1/0 : 18568 / 1284 / 137 / 11 / 0
+     [COMPUTED] weight sets WITH a translation symmetry (rank < 4): 1432 = 7.16% [matches pre-registered]
+                (pre-registered 5%..9%; an earlier sample of 20,000 other keys gave 7.00%)
+     [COMPUTED] exact group order 1/2/4/8/16/32/64/>=128 : 18568 / 1241 / 168 / 21 / 2 / 0 / 0 / 0
+     [MEASURED] engine verification of the first 64 symmetric sets: 64/64 groups confirmed
+     [COMPUTED] weight sets with a symmetry a PUBLIC SEED can reach (exact, every group element): 0 [matches pre-registered]
+     [MEASURED] seed offsets 2^31, 2^30, 2^29, 2^28 on the engine, first 256 keys: 0 of 1024 commute
+     [CONSTRUCTION] sidecar guard predicate true on 0 keys (the derivation loops until it is false)
+     reading: a symmetric weight set is NOT a weak key here -- no pair of public seeds is related
+              by the symmetry. It is a structural fact of the state map (the functional graph
+              is a cover of that order) and is reported as such.
+
+  [C3 VDF128-T4 public weights]
+     [COMPUTED] rank 4/4, exact group order 1 [matches pre-registered]
+     [MEASURED] engine: 15 of the 15 offsets at the 2^31 level FAIL to commute
+     [COMPUTED] coincidentally equal coupling pairs: 0 of 15
+
+  [C4 VDF128-T4 v3/v4 per-input weights: 2000 inputs x = LE64(n)]
+     [CONSTRUCTION] rank 4 on 2000/2000 (the derivation re-draws until the rank is 4)
+     [COMPUTED] exact group trivial on 2000/2000 [matches pre-registered] -- by an algorithm the derivation does not use
+     [MEASURED] engine, first 16 inputs: all 15 offsets at the 2^31 level fail on 16/16
+     v4 adds an iteration clock and leaves the weights unchanged; its rows are these rows.
+
+  [C5 keyed cascade, m = 7 epochs: 200000 keys, key_n = SHA-256("MCL-QSTRUCT-CASCADE" || LE64(n))]
+     [INSPECTION] an epoch with p and q both odd has p - q even, so the offset (2^31, 2^31)
+                  leaves both arguments unchanged; omega_1 and omega_2 are odd, so the seed
+                  offset 2^31 produces exactly that state offset.
+     [COMPUTED] epochs with p,q both odd: rate 0.2498 per epoch
+     BEFORE the check (derivation of sidecar v1.0.6 and earlier):
+     [COMPUTED] keys whose WHOLE cascade has a translation symmetry: 12; seed-reachable: 12 = 0.0060% [matches pre-registered]
+                (pre-registered: between 1 key and 0.05%; an earlier sample gave 7 of 200,000)
+     AFTER the check (sidecar v1.0.7, what the engine runs):
+     [COMPUTED] keys whose WHOLE cascade has a translation symmetry: 0; seed-reachable: 0 [matches pre-registered]
+                (pre-registered: 0 and 0)
+     [COMPUTED] epoch lists changed by the check: 12 inside the class, 0 outside it [matches pre-registered]
+                (pre-registered: every key of the class, no other key)
+     [MEASURED] engine, BEFORE the check, first key found in the sweep, seed offset D = 0x80000000:
+                raw final states of seeds s and s+D differ by (D*omega_1, D*omega_2) in 64/64 pairs
+     [MEASURED] SHA-256 of those raw states (the output of v1.0.6): s and s+D differ in 120/256 bits
+     [MEASURED] engine, AFTER the check, same key: the relation holds in 0/64 pairs [matches pre-registered]
+     [MEASURED] the API output (v1.0.7): outputs for s and s+D differ in 131/256 bits
+     reading: before the check the relation lived in the raw state, which the API never emitted,
+              and the hashed output did not show it. The check removes it at the source.
+
+  [1b reflection t -> -t]
+     [INSPECTION] F(-x) = -F(x) needs, for the first oscillator, 2*omega_1 + sum of three terms
+                  inc(a)+inc(-a) == 0 (mod 2^32). Exhaustive over the table: |inc(a)+inc(-a)| <= 786436,
+                  so the sum is at most 2359308, while |2*omega_1| = 844933146.
+                  => pure negation is IMPOSSIBLE for every state and every weight set.
+     [MEASURED] table cells on which the sine is exactly odd (generic low bits): 0 of 65536
+     [MEASURED] after 1 iteration, top byte of F(-x)+F(x)-2*omega, distinct values per coordinate:
+                2, 256, 256, 256 of 256   (max deviation 2^21.2, 2^31.0, 2^31.0, 2^31.0)
+                [matches pre-registered] (pre-registered: first coordinate <= 4 values, the other three 256)
+     [MEASURED] after 2 iterations, top byte of F(-x)+F(x)-4*omega, distinct values per coordinate:
+                256, 256, 256, 256 of 256   (max deviation 2^31.0, 2^31.0, 2^31.0, 2^31.0)
+                [matches pre-registered] (pre-registered: 256 on all four -- nothing survives a second step)
+     reading: one step leaves an APPROXIMATE reflection on the first-updated oscillator only;
+              the Gauss-Seidel order destroys it for the other three inside the same step.
+
+  [1c oscillator permutation]
+     [INSPECTION] a permutation commutes with the map only if it fixes every omega; the four
+                  omegas are pairwise distinct, and the update order is fixed => no permutation symmetry.
+
+==============================================================================
+  PART 2 -- F2: period and collision structure of the input channels
+==============================================================================
+  64-bit input word, 64-bit output. Chance agreement of two outputs: 2^-64.
+  birthday sub-domain: 32 low bits, N = 2^18 inputs; a period inside it would give
+  N^2/2^33 = 8 colliding pairs on average => detection probability 99.9665%.
+
+  [CH-A keyed T4-Q30, input = PUBLIC SEED]
+     [MEASURED] XOR 2^b, inputs below 2^52 : exact periods at bits {32..51}, partial {}  [matches pre-registered]
+                (pre-registered: {32..51} exact, no partial)
+     [MEASURED] XOR 2^b, inputs above 2^52 : exact periods at bits {}, partial {}  [matches pre-registered]
+     [MEASURED] ADD 2^b (mod 2^64)         : below 2^52 exact {32..51} partial {}; above 2^52 exact {} partial {}
+                (an exact additive period forces dependence on the low bits only, so it must
+                 reappear among the XOR rows; this row is a cross-check of the row above)
+     [MEASURED] 64 random 64-bit XOR offsets, 32 inputs each: best agreement 0/32 and 0/32
+     [MEASURED] closure: 16 of 16 random XOR-combinations of those bits are exact periods
+     => exact XOR-period subgroup of dimension 20 on inputs below 2^52.
+     [MEASURED] same scan under a second key: exact periods at bits {32..51} -> IDENTICAL: the period does not depend on the key
+     [INSPECTION] t_k = hash_seed(seed)*omega_k mod 2^32 and hash_seed is the identity up to 2^52
+                  (sidecar, mcl_q30_seed_state4 and mcl_q30_seed_state2, Legacy rule; mcl_core.hpp,
+                  hash_seed and mcl_q30_init_state): the seed enters the state modulo 2^32, so the
+                  engine has 2^32 initial states. This is the DEFAULT rule. The opt-in Hashed rule
+                  of sidecar v1.0.7 is not scanned here.
+     reading: a PUBLIC, key-independent period. Simon's algorithm would recover a period the
+              attacker already knows; it yields nothing about the key. The consequence is
+              classical: two seeds equal modulo 2^32 give the same keystream.
+     [MEASURED] birthday search, sub-domain 0x00000000:xxxxxxxx : 0 colliding pairs [matches pre-registered]
+                => an EXACT period (XOR or additive) inside that sub-domain would have produced a
+                   collision with probability 99.9665%; none was found.
+     [time] 14.6 s
+
+  [CH-B keyed T4-Q30, input = CHALLENGE (enters the key derivation); seed fixed]
+     (the challenge never meets hash_seed; the 2^52 split is kept only so that all four channels
+      are scanned by identical code)
+     [MEASURED] XOR 2^b, inputs below 2^52 : exact periods at bits {}, partial {}  [matches pre-registered]
+                (pre-registered: {} exact, no partial)
+     [MEASURED] XOR 2^b, inputs above 2^52 : exact periods at bits {}, partial {}  [matches pre-registered]
+     [MEASURED] ADD 2^b (mod 2^64)         : below 2^52 exact {} partial {}; above 2^52 exact {} partial {}
+                (an exact additive period forces dependence on the low bits only, so it must
+                 reappear among the XOR rows; this row is a cross-check of the row above)
+     [MEASURED] 64 random 64-bit XOR offsets, 32 inputs each: best agreement 0/32 and 0/32
+     [MEASURED] birthday search, sub-domain 0x00000000:xxxxxxxx : 0 colliding pairs [matches pre-registered]
+                => an EXACT period (XOR or additive) inside that sub-domain would have produced a
+                   collision with probability 99.9665%; none was found.
+     [time] 14.1 s
+
+  [CH-C keyed cascade, input = PUBLIC SEED (output = hashed commitment)]
+     [MEASURED] XOR 2^b, inputs below 2^52 : exact periods at bits {32..51}, partial {}  [matches pre-registered]
+                (pre-registered: {32..51} exact, no partial)
+     [MEASURED] XOR 2^b, inputs above 2^52 : exact periods at bits {}, partial {}  [matches pre-registered]
+     [MEASURED] ADD 2^b (mod 2^64)         : below 2^52 exact {32..51} partial {}; above 2^52 exact {} partial {}
+                (an exact additive period forces dependence on the low bits only, so it must
+                 reappear among the XOR rows; this row is a cross-check of the row above)
+     [MEASURED] 64 random 64-bit XOR offsets, 32 inputs each: best agreement 0/32 and 0/32
+     [MEASURED] closure: 16 of 16 random XOR-combinations of those bits are exact periods
+     => exact XOR-period subgroup of dimension 20 on inputs below 2^52.
+     [MEASURED] same scan under a second key: exact periods at bits {32..51} -> IDENTICAL: the period does not depend on the key
+     [INSPECTION] t_k = hash_seed(seed)*omega_k mod 2^32 and hash_seed is the identity up to 2^52
+                  (sidecar, mcl_q30_seed_state4 and mcl_q30_seed_state2, Legacy rule; mcl_core.hpp,
+                  hash_seed and mcl_q30_init_state): the seed enters the state modulo 2^32, so the
+                  engine has 2^32 initial states. This is the DEFAULT rule. The opt-in Hashed rule
+                  of sidecar v1.0.7 is not scanned here.
+     reading: a PUBLIC, key-independent period. Simon's algorithm would recover a period the
+              attacker already knows; it yields nothing about the key. The consequence is
+              classical: two seeds equal modulo 2^32 give the same keystream.
+     [MEASURED] birthday search, sub-domain 0x00000000:xxxxxxxx : 0 colliding pairs [matches pre-registered]
+                => an EXACT period (XOR or additive) inside that sub-domain would have produced a
+                   collision with probability 99.9665%; none was found.
+     [time] 9.2 s
+
+  [CH-D legacy tag, input = 64-bit engine-input word u (seed = u XOR W)]
+     (the word that meets hash_seed is u XOR W, almost always above 2^52 whatever u is)
+     [MEASURED] XOR 2^b, inputs below 2^52 : exact periods at bits {}, partial {}  [matches pre-registered]
+                (pre-registered: {} exact, no partial)
+     [MEASURED] XOR 2^b, inputs above 2^52 : exact periods at bits {}, partial {}  [matches pre-registered]
+     [MEASURED] ADD 2^b (mod 2^64)         : below 2^52 exact {} partial {}; above 2^52 exact {} partial {}
+                (an exact additive period forces dependence on the low bits only, so it must
+                 reappear among the XOR rows; this row is a cross-check of the row above)
+     [MEASURED] 64 random 64-bit XOR offsets, 32 inputs each: best agreement 0/32 and 0/32
+     [MEASURED] birthday search, sub-domain 0xd0544321:xxxxxxxx : 0 colliding pairs [matches pre-registered]
+                => an EXACT period (XOR or additive) inside that sub-domain would have produced a
+                   collision with probability 99.9665%; none was found.
+     [time] 39.1 s
+
+  what Part 2 does NOT show: a period outside the tested candidates and outside the 32-bit
+  sub-domain; any period of a function the attacker BUILDS from the oracle (Part 3).
+
+==============================================================================
+  PART 3 -- F3: the legacy transaction tag as an FX construction
+==============================================================================
+  Tag = MCL_T2( hash_tx(tx) XOR nonce(ctr) XOR W(S_device), p, q )      (variant)
+  A variant of the superseded input-composition form: the published mcl_txn_verify.cpp has no
+  word W; its device secret is the pair (p, q).
+  SCOPE: the LEGACY tag only. Paper 5 Eq. (3) carries the secret in the twelve weights and has
+         no seed-XOR whitening; nothing in this part applies to it.
+
+  S1 [INSPECTION] FX shape  Enc(u) = E_k(u XOR k1), k = (p,q), k1 = W: the whitening is additive and
+                  depends on the key only.
+  [CONTROL] PC-4 FX period: present for the right key only PASS  f = Tag XOR E_k' has period W on 32/32 inputs for k' = k, on 0/32 for k' != k
+     (forced by the FX shape -- a demonstration on the real engine, not a discovery.)
+  S2 [INSPECTION] Leander-May Theorem 2 assumes g(k,.) is a random FUNCTION, not a permutation.
+                  MCL_T2 being a generator does not block the attack. "E is a keyed permutation"
+                  is NOT a precondition of the theorem.
+  S3 [INSPECTION] nonce(ctr) = fmix64(ctr) is a composition of bijections, so for any fixed tx
+                  ctr -> hash_tx(tx) XOR nonce(ctr) is a bijection onto the 64-bit words.
+     [MEASURED] target word reached through the counter on 32/32 random targets;
+                fmix64 inverse: constants multiply to 1, round trip 100000/100000
+     => every engine-input word is addressable, PROVIDED the attacker chooses the counter.
+  S4 [NOT MEASURABLE HERE] the access model. Theorem 2 needs superposition queries to the tag
+                  oracle (Q2). The counter is held by the device and only moves forward, so a
+                  deployed token answers neither chosen counters nor superpositions. THIS is the
+                  open assumption -- a property of the protocol, not of the map.
+  complexities [DERIVED from the cited theorems; m = log2(coprime pairs in [2,1e9]^2) = 59.08, n = 64]
+     Grover on (p,q,W), no structure used        : 2^61.5
+     Q2, Leander-May Theorem 2                   : 2^29.5 x O(m+n) queries  -- W adds nothing
+     Q1 (classical queries), offline Simon T^2.D = 2^(n+m):
+         D = 2^16 -> T = 2^53.5 ;  D = 2^32 -> T = 2^45.5 ;  balanced T = D = 2^41.0
+     Q1 needs the queried words to fill an affine subspace, i.e. chosen inputs.
+  whitening word W = sdevice_fold(S_device)
+     [INSPECTION] W is one 64-bit word: S_device contributes at most 64 bits whatever its length.
+     [MEASURED] 2^22 random S_device -> 0 equal W: effective image size at least 2^41.4 words
+                (95% confidence; 2^40.8 at 99%). A LOWER bound on the image, nothing more.
+
+  VERDICT for the legacy tag: FX-shaped. In the chosen-input superposition model the whitening
+  word adds no quantum security over Grover on (p,q). What stands between that statement and a
+  deployed token is the access model (S4), not any property of the map. Paper 5's 46-56 bit
+  figure for a seed-borne secret is an UPPER bound and must not be read as a floor.
+
+==============================================================================
+  F4 -- generic collision search  [GENERIC: holds for any function of that size]
+==============================================================================
+  n     what has that width                  classical 2^(n/2)  BHT 2^(n/3)    CNS 2^(2n/5)
+  64    cascade state; legacy input word     2^32.0             2^21.3         2^25.6
+  128   T4-Q30 / VDF128-T4 state             2^64.0             2^42.7         2^51.2
+  256   tag; SHA-256 commitment              2^128.0            2^85.3         2^102.4
+  BHT needs 2^(n/3) quantum-accessible memory; CNS needs O(n) qubits and 2^(n/5) classical memory.
+  Nothing was measured here. "No collisions" cannot be claimed for any finite-state function.
+
+==============================================================================
+  SUMMARY
+==============================================================================
+  controls passed                 : 8 / 8
+  internal consistency checks     : 88048 run, 0 failed
+  pre-registered expectations     : 27 compared, 0 differ
+  [time] total 79.5 s
+  This is a map of four attack surfaces. It is not a security proof (Paper 4 OP2 stays open).

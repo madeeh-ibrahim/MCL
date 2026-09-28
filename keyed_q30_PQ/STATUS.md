@@ -3,6 +3,17 @@
 **Date:** 2026-06-11 (updated 2026-06-12; category labels + engine ref refreshed 2026-07-07) · **Engine of record:** `mcl_core.hpp` v7.0.1 (KAT-identical to the v6.1.0 build these results were measured on) · **Author:** Madeeh Ibrahim
 **Legend:** ✅ done & proven/verified · ⚠️ done but conditional / below-Category-5 / accounting-only · ❌ open or confirmed-weakness
 
+> **Scope line — 2026-09-28.** Three statements below are **withdrawn as stated**: the row
+> "VDF sequentiality quantum-robust ✅" of §1, the words "VDF quantum-robust" of the bottom
+> line, and the words "VDF-robust" of the disclosure rule. Nothing measured or proven in this
+> folder supports a statement about the delay property under quantum attack; whether a
+> quantum algorithm shortens the sequential depth of the iteration is **open**. "Shor
+> inapplicable" is kept in its narrow sense only — no public key, no modulus, no discrete
+> logarithm — and does not say that the map has no structure: it has an exact translation
+> symmetry of its state (`../T4_CycleStructure/`). The Category-5 rows are what they say they
+> are, accounting of key size under generic key search. The rows are left in place as the
+> record of what was written in June 2026. Governing text: `../QUANTUM_SCOPE_NOTE.md`.
+
 > This file records what is **measured/proven** vs **assumed/unproven**, so that no
 > filing or publication claims more than the evidence supports. Every ✅ below was
 > reproduced on this machine (Apple Silicon, clang -O3; ASan+UBSan clean where code).
@@ -204,3 +215,4 @@ artifact left this sidecar bit-identical: suite 9/9, and the frozen CRCs (LUT `0
 T4 commit `0x58C99E3E`, cascade `0xF7C81BC4`) re-verified unchanged the same day.
 
 - **2026-08-22 v1.0.6:** symmetry rejection in from_key (fail-closed); KATs unchanged; 0.19% of keys re-drawn — see NOSYM_V106_RECORD_20260822.md
+- **2026-09-28 v1.0.7:** the same check applied to the epoch lists of the cascade (about 2^−14 of keys at m = 7 re-drawn, fail-closed); opt-in hashed seed rule, default unchanged; KATs unchanged; four-oscillator path byte-identical — see CASCADE_GUARD_V107_RECORD_20260928.md

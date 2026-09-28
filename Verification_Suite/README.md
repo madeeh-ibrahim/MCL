@@ -12,7 +12,7 @@ The older working verification programs (engine `mcl_core.hpp` v6.0.0→v6.1.0, 
 | `mcl_lyap_ratio.cpp` | GS/Jacobi Lyapunov ratio (> 1.5) | |
 | `mcl_auth_verify.cpp` | hardware authentication (FAR/FRR) | |
 | `mcl_topology_generalization.cpp` | cross-system / channel generality (the 135-test campaign) | |
-| `mcl_hop_unified.cpp` | parameter hopping / forward secrecy | |
+| `mcl_hop_unified.cpp` | parameter hopping / inter-segment key separation (version 6.1.0: labels of Part B; every measured number unchanged — see `QUANTUM_SCOPE_NOTE.md` in the repository root) | |
 | `mcl_t3_t4_unified.cpp` | T3 / T4 variant tests | |
 | `mcl_safe_zone_per_osc.cpp` | per-oscillator safe-zone extraction analysis | |
 | `mcl_numerical_verify.cpp` | numerical / closed-form law verification | |

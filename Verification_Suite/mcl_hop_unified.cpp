@@ -5,8 +5,8 @@
  * ============================================================================
  *
  * Document ID:   MCL-HOP-UNIFIED-2026-0526-001
- * Version:       6.0.0
- * Date:          May 26, 2026, 10:00 UTC
+ * Version:       6.1.0
+ * Date:          September 28, 2026   (6.0.0: May 26, 2026, 10:00 UTC)
  * Author:        Madeeh Ibrahim, Independent Researcher, Cairo, Egypt
  * Contact:       madeeh.chaotic.lock@gmail.com
  * ORCID:         https://orcid.org/0009-0002-8562-8325
@@ -19,14 +19,33 @@
  * MCL Reference Implementation. Free security research / evaluation for all
  * (incl. companies) under SECURITY-RESEARCH-GRANT.md; commercial use requires
  * a license (COMMERCIAL.md). See LICENSE and PATENTS.md in the repo root.
- * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673.
+ * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
  * PURPOSE: Free experiment - run hopping tests, report exact numbers.
  *          No preconceived targets. Results are the empirical record
  *          of dynamic parameter hopping behavior.
  *
- * 22 TESTS (Part A: Quality, Part B: Post-Quantum):
+ * WHAT CHANGED IN 6.1.0 (2026-09-28) -- see QUANTUM_SCOPE_NOTE.md
+ *   Labels of Part B, and nothing else. Every measured number is unchanged,
+ *   digit for digit. Withdrawn as stated in 6.0.0:
+ *     - "B10: PQ security above AES-128" and the figures "PQ (conservative)",
+ *       "PQ (enhanced)": they add 128 key bits that this program does not
+ *       contain -- its schedule is a fixed public cycle and its seed is
+ *       public. B10 is now the accounting of the secret that IS present, a
+ *       pair (p, q), with the keyed rows stated as what they presuppose;
+ *     - "B5: Grover cost increased ... (+x PQ bits)": the ratio of iterations
+ *       per trial stands, its conversion into key bits does not;
+ *     - "B4: Schedule entropy": the figures count sequences; a schedule
+ *       derived from a key has at most the entropy of that key;
+ *     - "B6: Forward secrecy": Paper 2 sec. VII.C states this property as
+ *       inter-segment key separation, not forward secrecy; the label follows.
+ *   B3 and B7 are named after what was measured (correlation tests).
+ *   No part of this program runs, simulates or bounds a quantum algorithm.
+ *   The 6.0.0 output is kept as results/mcl_hop_unified_v6.0.0_20260526.txt.
+ *
+ * 22 CHECKS (Part A: quality of the hopping stream; Part B: separation of
+ * segments, and three rows of arithmetic on the parameters):
  *   A1:  Post-hop entropy
  *   A2:  Post-hop chi-square
  *   A3:  Micro-warmup sufficiency curve (W=0..200)
@@ -39,26 +58,27 @@
  *   A10: Deterministic reproducibility (sender = receiver)
  *   A11: Cross-seed hopping independence
  *   A12: Hopping + multiplexing combined
- *   B1:  Per-segment brute force (unknown state barrier)
- *   B2:  Cross-segment correlation leakage
- *   B3:  Topology identification attack
- *   B4:  Hop schedule entropy (exact calculation)
- *   B5:  Grover oracle cost with hopping
- *   B6:  Forward secrecy verification
- *   B7:  Hop boundary detection attack (split-half correlation)
+ *   B1:  Per-segment comparison with a fresh generator (unknown phase state)
+ *   B2:  Cross-segment correlation
+ *   B3:  Topology identification by correlation
+ *   B4:  Count of possible schedules (arithmetic)
+ *   B5:  Iterations per trial with hopping (arithmetic)
+ *   B6:  Inter-segment separation
+ *   B7:  Hop boundary detection by split-half correlation
  *   B8:  Multiplex channel invisibility at N-sweep
  *   B9:  Same-ratio pair independence
- *   B10: PQ security summary
+ *   B10: Secret-size accounting under generic key search (arithmetic)
  *
  * BUILD & RUN (one line, from this file's directory):
- *   g++ -O3 -std=c++17 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -DMCL_UNSAFE_ALLOW_INVALID -o mcl_hop mcl_hop_unified.cpp -lm && ./mcl_hop
+ *   g++ -O3 -std=c++17 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -DMCL_UNSAFE_ALLOW_INVALID -I.. -o mcl_hop mcl_hop_unified.cpp -lm && ./mcl_hop
  *
  * EXPECTED RESULTS:
  *   22/22 PASS, VERDICT: PASS
  *
  * REFERENCES:
  *   - Paper 2 §VI    Multi-Receiver Communication (multiplex baseline)
- *   - Paper 2 §VII   Forward secrecy via parameter hopping
+ *   - Paper 2 §VII   Dynamic parameter hopping and inter-segment key separation
+ *   - QUANTUM_SCOPE_NOTE.md (repository root)
  *   - mcl_core.hpp   v5.0.0 MCL_T2 engine + hop() method
  *
  * ============================================================================
@@ -87,7 +107,7 @@
 // ============================================================================
 // Document version constants (mirror header).
 // ============================================================================
-static constexpr const char* const DOC_VERSION = "6.0.0";
+static constexpr const char* const DOC_VERSION = "6.1.0";
 static constexpr const char* const DOC_ID      = "MCL-HOP-UNIFIED-2026-0526-001";
 
 // ============================================================================
@@ -115,8 +135,10 @@ static constexpr int     B2_STRIDE_TARGET     = 25;     // B2 stride to ~25 base
 // Number of multiplex receivers in test A12.
 static constexpr int     NRX_MULTIPLEX        = 6;
 
-// PQ security thresholds (B10).
-static constexpr double  AES128_PQ_BITS       = 64.0;
+// Accounting constants (B4, B10). PQ_KAPPA_BASE and PQ_KAPPA_ENHANCED are the
+// lengths of an independent key that the keyed rows of B10 PRESUPPOSE; this
+// program contains no such key.
+static constexpr double  AES128_PQ_BITS       = 64.0;   // AES-128 key search, halved
 static constexpr int     PQ_NMAX              = 1000;
 static constexpr int     PQ_KAPPA_BASE        = 128;
 static constexpr int     PQ_KAPPA_ENHANCED    = 64;     // additional bits
@@ -540,9 +562,11 @@ int main(int argc, char* argv[]) {
     if (!a12) gp = false;
 
     // ========================================================================
-    // PART B: POST-QUANTUM HOPPING SECURITY (10 tests)
+    // PART B: SEGMENT SEPARATION AND ACCOUNTING (10 checks)
     // ========================================================================
-    sep("PART B: POST-QUANTUM HOPPING SECURITY");
+    sep("PART B: SEGMENT SEPARATION AND ACCOUNTING");
+    std::printf("  No quantum algorithm is run, simulated or bounded by this program.\n");
+    std::printf("  The rows B4, B5 and B10 are arithmetic on the parameters, not measurements.\n\n");
 
     // B1+B6: Per-segment brute force + Forward secrecy (5 segments)
     double  worst_brute_r = 0;
@@ -628,31 +652,35 @@ int main(int argc, char* argv[]) {
     const double random_rate = 100.0 / NSCHED;
     std::snprintf(g_buf, sizeof(g_buf), "%.1f%% (random=%.1f%%)",
         id_rate, random_rate);
-    chk("B3: Topology unidentifiable",
+    chk("B3: Topology not identified (correlation)",
         id_rate < random_rate * 2, g_buf);
     if (id_rate >= random_rate * 2) gp = false;
 
-    // B4: Hop schedule entropy
+    // B4: Count of possible schedules (arithmetic). The schedule run by this
+    // program is one fixed public cycle; the figures count sequences.
     const double topo_capacity = std::log2(
         6.0 / (MCL_PI * MCL_PI)
         * static_cast<double>(PQ_NMAX) * static_cast<double>(PQ_NMAX));
     const double fixed_cycle_bits = std::log2(static_cast<double>(NSCHED))
         * static_cast<double>(n_hops);
     const double max_entropy = topo_capacity * static_cast<double>(n_hops);
-    std::printf("  Fixed %d-topo cycle: %.0f bits (log2(%d) x %lld)\n",
+    std::printf("  Sequences over %d topologies: %.0f bits of count (log2(%d) x %lld)\n",
         NSCHED, fixed_cycle_bits, NSCHED,
         static_cast<long long>(n_hops));
-    std::printf("  Random nmax=%d: %.0f bits (%.1f x %lld) - max capacity\n",
+    std::printf("  Sequences over pairs up to nmax=%d: %.0f bits of count (%.1f x %lld)\n",
         PQ_NMAX, max_entropy, topo_capacity,
         static_cast<long long>(n_hops));
+    std::printf("  These figures count sequences. A schedule derived from a key has at\n");
+    std::printf("  most the entropy of that key.\n");
     std::snprintf(g_buf, sizeof(g_buf),
-        "cycle=%.0f bits, capacity=%.0f bits",
+        "cycle count=%.0f bits, pair count=%.0f bits",
         fixed_cycle_bits, max_entropy);
-    chk("B4: Schedule entropy > 128",
+    chk("B4: Count of schedules above 128 bits",
         fixed_cycle_bits > 128, g_buf);
     if (fixed_cycle_bits <= 128) gp = false;
 
-    // B5: Grover oracle cost
+    // B5: Iterations per trial with hopping (arithmetic). A costlier trial is a
+    // constant factor in the work of any key search, not additional key bits.
     const double iters_no_hop  = BURNIN + 64.0 * 2.0;
     const double iters_with_hop = BURNIN
         + static_cast<double>(n_hops)
@@ -661,20 +689,23 @@ int main(int argc, char* argv[]) {
     std::printf("  Without hop: %.0f iters | With hop: %.0f iters (%.1fx)\n",
         iters_no_hop, iters_with_hop, oracle_ratio);
     std::snprintf(g_buf, sizeof(g_buf),
-        "%.1fx oracle cost (+%.2f PQ bits)",
-        oracle_ratio, std::log2(oracle_ratio) / 2);
-    chk("B5: Grover cost increased", oracle_ratio > 1.0, g_buf);
+        "%.1fx iterations per trial (constant factor)",
+        oracle_ratio);
+    chk("B5: Iterations per trial increased", oracle_ratio > 1.0, g_buf);
     if (oracle_ratio <= 1.0) gp = false;
 
-    // B6: Forward secrecy (reuses B1 data - same 5 segments)
+    // B6: Inter-segment separation (reuses B1 data - same 5 segments).
+    // Paper 2 sec. VII.C: a computational inter-segment key separation, not
+    // forward secrecy.
     const bool b6_pass = worst_brute_r < brute_thresh;
     std::snprintf(g_buf, sizeof(g_buf),
         "worst |r|=%.4f < 4/sqrt(%lld)=%.4f",
         worst_brute_r, static_cast<long long>(BPH), brute_thresh);
-    chk("B6: Forward secrecy (4-sigma threshold)", b6_pass, g_buf);
+    chk("B6: Inter-segment separation (4-sigma)", b6_pass, g_buf);
     if (!b6_pass) gp = false;
 
-    // B7: Boundary detection attack (split-half)
+    // B7: Boundary detection by split-half correlation. A decorrelation result
+    // under this measure, not a change-point-detection security game.
     std::vector<double> at_bnd, away_bnd;
     const int half = static_cast<int>(BPH / 4);
     for (int64_t h = 1;
@@ -704,7 +735,7 @@ int main(int argc, char* argv[]) {
     std::printf("  mean|r| at boundary: %.6f, away: %.6f, diff: %.6f\n",
         m_at, m_away, det_diff);
     std::snprintf(g_buf, sizeof(g_buf), "diff=%.6f", det_diff);
-    chk("B7: Boundary undetectable",
+    chk("B7: Boundary not detected (split-half)",
         det_diff < corr_threshold, g_buf);
     if (det_diff >= corr_threshold) gp = false;
 
@@ -783,25 +814,37 @@ int main(int argc, char* argv[]) {
         sr_max < corr_threshold, g_buf);
     if (sr_max >= corr_threshold) gp = false;
 
-    // B10: PQ security summary
-    sep("B10: POST-QUANTUM SECURITY SUMMARY");
-    auto ks = [](int sb, int nm, int pb) -> double {
+    // B10: Secret-size accounting under generic key search (arithmetic).
+    // kb = bits of an independent key, nm = range of the pair, xb = further
+    // independent bits; generic key search halves the total.
+    sep("B10: SECRET-SIZE ACCOUNTING (GENERIC KEY SEARCH)");
+    auto ks = [](int kb, int nm, int xb) -> double {
         const double tb = std::log2(
             6.0 / (MCL_PI * MCL_PI)
             * static_cast<double>(nm) * static_cast<double>(nm));
-        return (sb + tb + pb) / 2.0;
+        return (kb + tb + xb) / 2.0;
     };
-    const double pq_con = ks(PQ_KAPPA_BASE, PQ_NMAX, 0);
-    const double pq_enh = ks(PQ_KAPPA_BASE, PQ_NMAX, PQ_KAPPA_ENHANCED);
-    std::printf("  PQ (conservative): %.1f bits\n", pq_con);
-    std::printf("  PQ (enhanced):     %.1f bits\n", pq_enh);
-    std::printf("  Oracle with hop: %.1fx | Sched entropy: %.0f bits\n",
+    const double pq_pair = ks(0, PQ_NMAX, 0);
+    const double pq_con  = ks(PQ_KAPPA_BASE, PQ_NMAX, 0);
+    const double pq_enh  = ks(PQ_KAPPA_BASE, PQ_NMAX, PQ_KAPPA_ENHANCED);
+    std::printf("  Pair (p, q) alone, p, q <= %d, halved:          %.1f bits\n",
+        PQ_NMAX, pq_pair);
+    std::printf("  Pair + an independent %d-bit key, halved:       %.1f bits\n",
+        PQ_KAPPA_BASE, pq_con);
+    std::printf("  Pair + that key + %d further bits, halved:       %.1f bits\n",
+        PQ_KAPPA_ENHANCED, pq_enh);
+    std::printf("  Iterations per trial with hop: %.1fx | count of schedules: %.0f bits\n",
         oracle_ratio, fixed_cycle_bits);
-    std::snprintf(g_buf, sizeof(g_buf), "%.1f bits > %.0f (AES-128 PQ)",
-        pq_con, AES128_PQ_BITS);
-    chk("B10: PQ security above AES-128",
-        pq_con >= AES128_PQ_BITS, g_buf);
-    if (pq_con < AES128_PQ_BITS) gp = false;
+    std::printf("  The seed is public and is not counted. The two rows with a key\n");
+    std::printf("  presuppose a key that this program does not contain: its schedule is\n");
+    std::printf("  a fixed public cycle. With an independent hop key carried outside the\n");
+    std::printf("  engine input and searched jointly with the pair, such a row is a\n");
+    std::printf("  design target, not a measured bound and not a proven one.\n");
+    std::snprintf(g_buf, sizeof(g_buf), "%.1f bits < %.0f (AES-128, halved)",
+        pq_pair, AES128_PQ_BITS);
+    chk("B10: Pair alone below the AES-128 level",
+        pq_pair < AES128_PQ_BITS, g_buf);
+    if (!(pq_pair < AES128_PQ_BITS)) gp = false;
 
     // ========================================================================
     // VERDICT
@@ -824,17 +867,19 @@ int main(int argc, char* argv[]) {
     std::printf("    Mux max|r| (hop):      %.6f\n", mux_max);
     std::printf("    Mux entropy (hop):     %.6f\n", mux_ent);
     std::printf("    Cross-seg max|r|:      %.6f\n", max_cross);
-    std::printf("    Topo ID attack:        %.1f%% (random=%.1f%%)\n",
+    std::printf("    Topo identification:   %.1f%% (random=%.1f%%)\n",
         id_rate, random_rate);
-    std::printf("    Forward secrecy H:     %.2f%%\n", worst_brute_h);
+    std::printf("    Inter-segment H:       %.2f%%\n", worst_brute_h);
     std::printf("    Boundary detect diff:  %.6f\n", det_diff);
     std::printf("    Same-ratio max|r|:     %.6f\n", sr_max);
-    std::printf("    PQ (conservative):     %.1f bits\n", pq_con);
+    std::printf("    Pair alone, halved:    %.1f bits\n", pq_pair);
 
     std::printf("\n +================================================================+\n");
     std::printf(" | VERDICT: %-54s |\n",
-        gp ? "PASS - all 22 hopping tests verified"
+        gp ? "PASS - all 22 hopping checks verified"
            : "ISSUES DETECTED");
+    std::printf(" | %-63s |\n",
+        "No statement about quantum security is made by this program.");
     std::printf(" +================================================================+\n");
 
     std::printf("\n  Time: %.1f seconds\n", elapsed);

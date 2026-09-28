@@ -5,7 +5,40 @@
  * ============================================================================
  *
  * Document ID:   MCL-KEYED-Q30-2026-0712-001
- * Version:       1.0.6  (2026-08-22: SYMMETRY REJECTION in
+ * Version:       1.0.7  (2026-09-28: CASCADE SYMMETRY CHECK and an OPT-IN
+ *                 SEED RULE. (a) mcl_cascade_q30_params_from_key() applies to
+ *                 the cascade the check that v1.0.6 applied to the
+ *                 four-oscillator path. The map of an epoch commutes with the
+ *                 state translation (2^31, 2^31) exactly when p = q (mod 2);
+ *                 omega_1 and omega_2 are odd, so the seed offset D = 2^31
+ *                 produces that translation. If EVERY epoch has p = q (mod 2)
+ *                 the seeds s and s + 2^31 give raw states that differ by
+ *                 (2^31, 2^31) through the whole run -- about 2^-14 of keys
+ *                 at m = 7, hidden at the output by the SHA-256 finalization.
+ *                 Such epoch lists are re-drawn DETERMINISTICALLY: q of the
+ *                 first epoch advances inside [2,2^30) until it differs from
+ *                 p, is coprime to p, and the list is clear. Output changes
+ *                 ONLY for the keys of that class. (b) MCL_Q30_SeedInit
+ *                 selects how the public seed sets the initial state: Legacy
+ *                 (the default, the rule of every earlier version) or Hashed
+ *                 (SHA-256 of a label and the seed). Under Legacy only
+ *                 seed mod 2^32 enters the state. The default is unchanged,
+ *                 so EVERY known-answer value of record is UNCHANGED (T4-Q30
+ *                 commit CRC-32 0x58C99E3E, cascade 0xF7C81BC4); the Hashed
+ *                 rule has its own values (0x399183A1 and 0x229E97B8).
+ *                 (c) mcl_keyed_q30_self_test() holds the known-answer
+ *                 values of this file, among them the vector of the v1.0.6
+ *                 re-draw path (CRC-32 0x808C5B2E) and one for the cascade
+ *                 re-draw of (a).
+ *                 mcl_core.hpp NOT touched (sha 416ad145e79c...). Prior v1.0.6
+ *                 bytes archived at
+ *                 ../_backups/mcl_keyed_q30_v1.0.6_pre_cascadeguard_20260928.hpp.
+ *                 New: mcl_cascade_q30_has_reachable_symmetry(),
+ *                 mcl_cascade_q30_derive_unchecked(), MCL_Q30_SeedInit,
+ *                 mcl_q30_seed_state2(), mcl_q30_seed_state4(),
+ *                 mcl_keyed_q30_self_test().
+ *                 Record: CASCADE_GUARD_V107_RECORD_20260928.md.)
+ *                 (v1.0.6, 2026-08-22: SYMMETRY REJECTION in
  *                 mcl_t4_q30_params_from_key(). The Q30 map commutes with any
  *                 state translation b that leaves every coupling argument
  *                 p*t_j - q*t_i invariant; seed offsets D reach b_i = D*omega_i
@@ -52,7 +85,7 @@
  *                 c171af4c...; the as-reviewed v8.1.0 bytes 647510e9... are
  *                 archived at ../_backup_pre_metadata_fix_20260718/) -- no
  *                 code changed; every KAT, CRC and keystream unchanged.)
- * Date:          August 22, 2026  (v1.0.5: Aug 21; v1.0.3: July 12, 2026)
+ * Date:          September 28, 2026  (v1.0.6: Aug 22; v1.0.5: Aug 21; v1.0.3: July 12, 2026)
  * Author:        Madeeh Ibrahim, Independent Researcher, Cairo, Egypt
  * Contact:       madeeh.chaotic.lock@gmail.com
  * ORCID:         https://orcid.org/0009-0002-8562-8325
@@ -399,6 +432,83 @@ inline MCL_Q30_Sextet mcl_t4_q30_params_from_key(const uint8_t key[32],
     return result;
 }
 
+// ============================================================================
+// v1.0.7 -- SEED RULE: how the public seed sets the initial state.
+// ----------------------------------------------------------------------------
+// Legacy (the default, and the only rule before v1.0.7):
+//     t_i = hash_seed(seed) * omega_i  mod 2^32.
+// hash_seed is the identity for seeds up to 2^52, so only seed mod 2^32
+// enters: there are 2^32 initial states, seeds that differ by a multiple of
+// 2^32 coincide, and the state is a linear image of the seed. An authentication
+// profile that keeps the seed fixed and carries the challenge through the key
+// derivation does not depend on this; a caller that varies the seed does.
+// Hashed (opt-in):
+//     t_i = the 32-bit little-endian words of SHA-256(label || le64(seed)).
+// The whole 64-bit seed enters and no seed difference translates the state.
+// The seed is public, so the digest is not a secret. Every output under the
+// Hashed rule differs from the output under Legacy; the known-answer values of
+// record are those of Legacy. seed == 0 is fatal under both rules.
+// ============================================================================
+enum class MCL_Q30_SeedInit : int {
+    Legacy = 0,
+    Hashed = 1
+};
+
+// SHA-256(label || le64(seed)).
+inline void mcl_q30_seed_digest(uint64_t seed, const char* label,
+                                uint8_t digest[32]) {
+    (void)hash_seed(seed);               // same contract: seed 0 is fatal
+    uint8_t msg[64];
+    const size_t lab = std::strlen(label);
+    if (lab + 8 > sizeof(msg)) {
+        std::fprintf(stderr, "FATAL: mcl_q30_seed_digest label too long "
+            "(%zu)\n", lab);
+        std::abort();
+    }
+    std::memcpy(msg, label, lab);
+    for (int i = 0; i < 8; i++) msg[lab + (size_t)i] = (uint8_t)(seed >> (i * 8));
+    mcl_sha256(msg, lab + 8, digest);
+}
+
+inline uint32_t mcl_q30_le32(const uint8_t* b) {
+    return (uint32_t)b[0] | ((uint32_t)b[1] << 8)
+         | ((uint32_t)b[2] << 16) | ((uint32_t)b[3] << 24);
+}
+
+// Initial state of the two-oscillator path (the cascade).
+inline void mcl_q30_seed_state2(uint64_t seed, MCL_Q30_SeedInit mode,
+                                uint32_t& t1, uint32_t& t2) {
+    if (mode == MCL_Q30_SeedInit::Legacy) {
+        mcl_q30_init_state(seed, t1, t2);
+        return;
+    }
+    uint8_t d[32];
+    mcl_q30_seed_digest(seed, "MCL-Q30-SeedInit-T2-v1", d);
+    t1 = mcl_q30_le32(d);
+    t2 = mcl_q30_le32(d + 4);
+}
+
+// Initial state of the four-oscillator path.
+inline void mcl_q30_seed_state4(uint64_t seed, MCL_Q30_SeedInit mode,
+                                uint32_t& t1, uint32_t& t2,
+                                uint32_t& t3, uint32_t& t4) {
+    if (mode == MCL_Q30_SeedInit::Legacy) {
+        // public-seed init for all four oscillators (mod 2^32, bit-exact).
+        uint64_t s = hash_seed(seed);
+        t1 = (uint32_t)((s * (uint64_t)mcl_q30_omega1()) & 0xFFFFFFFFULL);
+        t2 = (uint32_t)((s * (uint64_t)mcl_q30_omega2()) & 0xFFFFFFFFULL);
+        t3 = (uint32_t)((s * (uint64_t)mcl_q30_omega3()) & 0xFFFFFFFFULL);
+        t4 = (uint32_t)((s * (uint64_t)mcl_q30_omega4()) & 0xFFFFFFFFULL);
+        return;
+    }
+    uint8_t d[32];
+    mcl_q30_seed_digest(seed, "MCL-Q30-SeedInit-T4-v1", d);
+    t1 = mcl_q30_le32(d);
+    t2 = mcl_q30_le32(d + 4);
+    t3 = mcl_q30_le32(d + 8);
+    t4 = mcl_q30_le32(d + 12);
+}
+
 // A keyed Q30 four-oscillator engine: integer-only, FPU-free, cross-platform
 // bit-exact. K fixed at K_DEFAULT (capped <= 12 by mcl_q30_K_phase). The secret
 // is `key`; `seed` is a PUBLIC salt for initial state (washed out by burn-in).
@@ -413,15 +523,13 @@ class MCL_T4_Q30 {
     static constexpr int Z2 = 24;
 public:
     MCL_T4_Q30(const uint8_t key[32], uint64_t challenge = 0,
-               uint64_t seed = DEFAULT_SEED, double K = K_DEFAULT)
+               uint64_t seed = DEFAULT_SEED, double K = K_DEFAULT,
+               MCL_Q30_SeedInit seed_init = MCL_Q30_SeedInit::Legacy)
         : w_(mcl_t4_q30_params_from_key(key, challenge)),
           kp_(mcl_q30_K_phase(K)) {
-        // public-seed init for all four oscillators (mod 2^32, bit-exact).
-        uint64_t s = hash_seed(seed);
-        t1_ = (uint32_t)((s * (uint64_t)mcl_q30_omega1()) & 0xFFFFFFFFULL);
-        t2_ = (uint32_t)((s * (uint64_t)mcl_q30_omega2()) & 0xFFFFFFFFULL);
-        t3_ = (uint32_t)((s * (uint64_t)mcl_q30_omega3()) & 0xFFFFFFFFULL);
-        t4_ = (uint32_t)((s * (uint64_t)mcl_q30_omega4()) & 0xFFFFFFFFULL);
+        // v1.0.7: the seed rule is selectable; Legacy is the rule of every
+        // earlier version, statement for statement.
+        mcl_q30_seed_state4(seed, seed_init, t1_, t2_, t3_, t4_);
         for (int i = 0; i < BURNIN; i++) iterate();
     }
     void iterate() { mcl_q30t4_iterate_raw(t1_, t2_, t3_, t4_, w_, kp_); }
@@ -511,12 +619,36 @@ constexpr int MCL_CASCADE_FIRST_EPOCH_ITERS = BURNIN;   // 10000
 constexpr int MCL_CASCADE_LATER_EPOCH_ITERS = 256;
 constexpr int MCL_CASCADE_DEFAULT_EPOCHS    = 7;        // m>=7 for Grover+claw margin
 
-// Derive m ordered coprime (p,q) pairs in [2, 2^30) from a 256-bit key.
+// v1.0.7 -- seed-reachable translation symmetry of an epoch list. A seed
+// offset D moves the initial state by (D*omega_1, D*omega_2). That translation
+// commutes with the map of an epoch iff both coupling arguments are unchanged:
+//     D*(p*omega_2 - q*omega_1) == 0  and  D*(p*omega_1 - q*omega_2) == 0
+// (mod 2^32). A non-zero D mod 2^32 exists for the whole run iff every such
+// term, over every epoch, is even; D = 2^31 then works. Exact, and the same
+// criterion as mcl_t4_q30_has_reachable_symmetry().
+inline bool mcl_cascade_q30_has_reachable_symmetry(
+        const std::vector<std::pair<int64_t,int64_t> >& ep) {
+    const uint32_t o1 = mcl_q30_omega1();
+    const uint32_t o2 = mcl_q30_omega2();
+    uint32_t acc = 0;
+    for (size_t e = 0; e < ep.size(); e++) {
+        const uint32_t p = (uint32_t)ep[e].first;    // weights are < 2^30
+        const uint32_t q = (uint32_t)ep[e].second;
+        acc |= (uint32_t)(p * o2 - q * o1);          // argument of oscillator 1
+        acc |= (uint32_t)(p * o1 - q * o2);          // argument of oscillator 2
+    }
+    return (acc & 1u) == 0u;
+}
+
+// The derivation of v1.0.6 and earlier, BEFORE the symmetry check of v1.0.7.
+// Exposed for MEASUREMENT -- counting the class that the check removes, and
+// comparing versions. The engine never runs the cascade on its result; use
+// mcl_cascade_q30_params_from_key().
 inline std::vector<std::pair<int64_t,int64_t> >
-mcl_cascade_q30_params_from_key(const uint8_t key[32], int m,
-                                uint64_t challenge = 0) {
+mcl_cascade_q30_derive_unchecked(const uint8_t key[32], int m,
+                                 uint64_t challenge = 0) {
     if (m <= 0) {
-        std::fprintf(stderr, "FATAL: mcl_cascade_q30_params_from_key m=%d "
+        std::fprintf(stderr, "FATAL: mcl_cascade_q30_derive_unchecked m=%d "
             "(must be >= 1)\n", m);
         std::abort();
     }
@@ -546,13 +678,54 @@ mcl_cascade_q30_params_from_key(const uint8_t key[32], int m,
     return epochs;
 }
 
+// Derive m ordered coprime (p,q) pairs in [2, 2^30) from a 256-bit key.
+// v1.0.7: fail-closed re-draw of seed-reachable translation symmetries. If the
+// derived list admits one, q of the FIRST epoch advances by one inside
+// [2, 2^30) until three conditions hold together: q differs from p, q is
+// coprime to p, and the list no longer admits the symmetry. Both parties run
+// the same rule, so they derive the same weights. The first epoch is chosen so
+// that the two trajectories separate from the first iteration. The bound of
+// 4096 advances cannot be reached: p is odd for every key of the class, and
+// among any 2*p consecutive values of q there is an even one coprime to p.
+// (N-2 applies here as it does to the derivation: the number of gcd steps
+// depends on the secret pair. Once per key, at set-up.)
+inline std::vector<std::pair<int64_t,int64_t> >
+mcl_cascade_q30_params_from_key(const uint8_t key[32], int m,
+                                uint64_t challenge = 0) {
+    if (m <= 0) {
+        std::fprintf(stderr, "FATAL: mcl_cascade_q30_params_from_key m=%d "
+            "(must be >= 1)\n", m);
+        std::abort();
+    }
+    std::vector<std::pair<int64_t,int64_t> > epochs =
+        mcl_cascade_q30_derive_unchecked(key, m, challenge);
+    if (mcl_cascade_q30_has_reachable_symmetry(epochs)) {
+        const int64_t W_RANGE = (int64_t)((1LL << 30) - 2);
+        const int64_t p = epochs[0].first;
+        int64_t q = epochs[0].second;
+        int n = 0;
+        do {
+            q = 2 + ((q - 2 + 1) % W_RANGE);
+            epochs[0].second = q;
+            if (++n > 4096) {
+                std::fprintf(stderr, "FATAL: mcl_cascade_q30_params_from_key "
+                    "found no admissible q within 4096 advances\n");
+                std::abort();
+            }
+        } while (q == p || gcd_compute(p, q) != 1
+                 || mcl_cascade_q30_has_reachable_symmetry(epochs));
+    }
+    return epochs;
+}
+
 // Run the cascade and emit a 32-byte commitment. The secret is `key`;
 // intermediate state is NEVER externalized between epochs (the precondition
 // for joint-space security). `seed` is a public salt.
 inline void mcl_cascade_q30(const uint8_t key[32], uint8_t out[32],
                             int m = MCL_CASCADE_DEFAULT_EPOCHS,
                             uint64_t challenge = 0, uint64_t seed = DEFAULT_SEED,
-                            double K = K_DEFAULT) {
+                            double K = K_DEFAULT,
+                            MCL_Q30_SeedInit seed_init = MCL_Q30_SeedInit::Legacy) {
     if (m <= 0) {
         std::fprintf(stderr, "FATAL: mcl_cascade_q30 m=%d (must be >= 1)\n", m);
         std::abort();
@@ -560,7 +733,7 @@ inline void mcl_cascade_q30(const uint8_t key[32], uint8_t out[32],
     std::vector<std::pair<int64_t,int64_t> > ep =
         mcl_cascade_q30_params_from_key(key, m, challenge);
     uint32_t t1, t2;
-    mcl_q30_init_state(seed, t1, t2);
+    mcl_q30_seed_state2(seed, seed_init, t1, t2);   // Legacy == mcl_q30_init_state
     const int64_t kp = mcl_q30_K_phase(K);
     for (int e = 0; e < m; e++) {
         const int64_t p = ep[(size_t)e].first;
@@ -609,6 +782,77 @@ inline double mcl_t4_q30_capacity_bits() { return 12.0 * 30.0; }
 // Representation bits of an m-epoch cascade: m * (ordered coprime pair bits).
 inline double mcl_cascade_q30_capacity_bits(int m) {
     return (double)m * mcl_q30_pair_bits();
+}
+
+// ============================================================================
+// v1.0.7 -- KNOWN-ANSWER VALUES of this file. Integer arithmetic only, so the
+// values are the same on every platform. Returns true iff all six match.
+//   1. T4-Q30 commit32, key[i] = 7*i + 1, Legacy seed rule        0x58C99E3E
+//   2. cascade, m = 7, same key, Legacy seed rule                  0xF7C81BC4
+//   3. T4-Q30 re-draw path of v1.0.6: a key whose derived weights admit the
+//      seed-reachable symmetry and are re-drawn (q34 advances by one);
+//      CRC-32 of the first 4,096 keystream bytes                   0x808C5B2E
+//   4. cascade re-draw path of v1.0.7: a key whose seven epochs all have
+//      p = q (mod 2); q of the first epoch advances 2711267 -> 2711270;
+//      CRC-32 of the 32-byte output                                0x944BD55E
+//   5. T4-Q30 commit32, key of 1, Hashed seed rule                 0x399183A1
+//   6. cascade, m = 7, key of 1, Hashed seed rule                  0x229E97B8
+// ============================================================================
+inline bool mcl_keyed_q30_self_test(bool verbose = false) {
+    bool ok = true;
+    auto report = [&](const char* name, uint32_t got, uint32_t want) {
+        const bool pass = (got == want);
+        if (!pass) ok = false;
+        if (verbose)
+            std::printf("  [%s] %-44s 0x%08X (expected 0x%08X)\n",
+                        pass ? "PASS" : "FAIL", name, got, want);
+    };
+    auto from_hex = [](const char* h, uint8_t out[32]) {
+        auto nib = [](char c) -> int {
+            return (c >= '0' && c <= '9') ? c - '0' : 10 + (c - 'a');
+        };
+        for (int i = 0; i < 32; i++)
+            out[i] = (uint8_t)((nib(h[2 * i]) << 4) | nib(h[2 * i + 1]));
+    };
+    uint8_t key[32];
+    for (int i = 0; i < 32; i++) key[i] = (uint8_t)(i * 7 + 1);
+    uint8_t o[32];
+    { MCL_T4_Q30 e(key); e.commit32(o); }
+    report("T4-Q30 commit32, Legacy seed rule", compute_crc32(o, 32), 0x58C99E3EU);
+    mcl_cascade_q30(key, o);
+    report("cascade m=7, Legacy seed rule", compute_crc32(o, 32), 0xF7C81BC4U);
+    {
+        uint8_t k[32];
+        from_hex("39925d4210d4efe37c022a1f7851d6ea0b1c4d655971945c62030293269cf536", k);
+        MCL_T4_Q30 e(k, 0, 12345678901234ULL, K_DEFAULT);
+        std::vector<uint8_t> ks(4096);
+        e.gen_bytes(ks.data(), (int64_t)ks.size());
+        report("T4-Q30 re-draw path, 4096 keystream bytes",
+               compute_crc32(ks.data(), ks.size()), 0x808C5B2EU);
+        secure_zero(k, sizeof(k));
+    }
+    {
+        uint8_t k[32];
+        from_hex("2e343d1a887e33a6024522d1181d324811b48bc0e9047def3311cbc30cc04571", k);
+        const std::vector<std::pair<int64_t,int64_t> > raw =
+            mcl_cascade_q30_derive_unchecked(k, 7, 0);
+        const std::vector<std::pair<int64_t,int64_t> > fin =
+            mcl_cascade_q30_params_from_key(k, 7, 0);
+        const bool path = mcl_cascade_q30_has_reachable_symmetry(raw)
+                       && !mcl_cascade_q30_has_reachable_symmetry(fin)
+                       && raw[0].second == 2711267 && fin[0].second == 2711270;
+        mcl_cascade_q30(k, o);
+        report("cascade re-draw path",
+               path ? compute_crc32(o, 32) : 0U, 0x944BD55EU);
+        secure_zero(k, sizeof(k));
+    }
+    { MCL_T4_Q30 e(key, 0, DEFAULT_SEED, K_DEFAULT, MCL_Q30_SeedInit::Hashed);
+      e.commit32(o); }
+    report("T4-Q30 commit32, Hashed seed rule", compute_crc32(o, 32), 0x399183A1U);
+    mcl_cascade_q30(key, o, MCL_CASCADE_DEFAULT_EPOCHS, 0, DEFAULT_SEED, K_DEFAULT,
+                    MCL_Q30_SeedInit::Hashed);
+    report("cascade m=7, Hashed seed rule", compute_crc32(o, 32), 0x229E97B8U);
+    return ok;
 }
 
 #endif // MCL_KEYED_Q30_HPP

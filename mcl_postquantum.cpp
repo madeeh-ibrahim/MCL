@@ -1,12 +1,13 @@
 /*
  * ============================================================================
- * MCL Post-Quantum Security Verification
+ * MCL Classical Diagnostics of the Two-Oscillator Engine
+ * (file name kept: mcl_postquantum.cpp -- NOT a quantum-security test)
  * MCL (Madeeh Chaotic Lock) — Cryptographic Reference Implementation
  * ============================================================================
  *
  * Document ID:   MCL-PQ-2026-0526-001
- * Version:       6.0.0
- * Date:          May 26, 2026, 10:00 UTC
+ * Version:       6.1.0
+ * Date:          September 28, 2026   (6.0.0: May 26, 2026, 10:00 UTC)
  * Author:        Madeeh Ibrahim, Independent Researcher, Cairo, Egypt
  * Contact:       madeeh.chaotic.lock@gmail.com
  * ORCID:         https://orcid.org/0009-0002-8562-8325
@@ -22,31 +23,52 @@
  * Patent Pending: PCT/IB2026/052737, PCT/IB2026/053253, PCT/IB2026/053673, PCT/IB2026/058860.
  * ============================================================================
  *
- * PURPOSE: Verify MCL's resistance to quantum computing attacks.
- * Focuses on 7 experiments UNIQUE to post-quantum security.
- * Statistical tests (entropy, chi², B-M, etc.) are in
- * mcl_reference.cpp and mcl_attack_suite.cpp.
+ * PURPOSE: Classical diagnostics of the two-oscillator engine; NOT a quantum-security test.
+ * Five measurements on the output and the trajectory of MCL_T2 (3,5), and
+ * one accounting table. No part of this program runs, simulates or bounds a
+ * quantum algorithm. Statistical tests (entropy, chi², B-M, etc.) are in
+ * mcl_reference.cpp.
  *
- * EXPERIMENTS:
+ * WHAT CHANGED IN 6.1.0 (2026-09-28) -- see QUANTUM_SCOPE_NOTE.md
+ *   Version 6.0.0 printed conclusions about quantum attacks that its
+ *   measurements do not support. They are withdrawn:
+ *     - the verdict "MCL resists all known quantum attacks";
+ *     - the "quantum algorithm completeness" table (Simon, BHT, quantum
+ *       walks, ... each marked "NO");
+ *     - "positive Lyapunov exponent => aperiodic => Shor inapplicable": a
+ *       spectral test on 65,536 bytes and a period scan over 2*10^5 bytes
+ *       cannot show the absence of periods, and every finite-precision
+ *       realization is eventually periodic (the retired 64-bit-state integer
+ *       path closes its orbit with cycle length 1,671,196,332 --
+ *       T4_CycleStructure/, VDF128_T4/);
+ *     - the "PQ security 73.6 / 105.6 bits" figures, which counted a 128-bit
+ *       seed (and, in the "enhanced" rows, 64 further phase bits) as secret.
+ *       The seed is the public challenge; the secret is (p, q);
+ *     - the "T-gates per Grover oracle" figure (8.27e+07), obtained from a
+ *       formula that models no circuit;
+ *     - "no quantum parallelism within the oracle", inferred from the update
+ *       order of the classical map;
+ *     - the comparison table and the remarks about third-party schemes.
+ *   Every MEASURED number of Parts 1-4B is unchanged, digit for digit. The
+ *   6.0.0 output is kept as results/mcl_postquantum_v6.0.0_20260526.txt.
+ *
+ * PARTS:
  * Part 1: Negative Control (RANDU + glibc-LSB must FAIL)
- * Part 2: Spectral Purity (Goertzel DFT — no exploitable periodicity)
- * Part 3: Period Scan (direct search for byte-level periodicity)
- * Part 4: Sequential Dependency (Gauss-Seidel vs parallel divergence)
- * Part 4B: Chaos Barrier (ε amplifies via Lyapunov exponent)
- * Part 5: Shor's Algorithm Inapplicability (systematic analysis)
- * Part 6: Grover's Algorithm, Oracle Cost & Key Space
- * Part 7: Quantum Algorithm Completeness Table (8 algorithms)
- * Part 8: Scientific Caveats (C1-C3: honest limitations)
+ * Part 2: Spectral test (Goertzel DFT over 2000 frequencies)
+ * Part 3: Period scan (byte-level periods 2..20000)
+ * Part 4: Update order (Gauss-Seidel vs parallel update divergence)
+ * Part 4B: Sensitivity (growth of an initial perturbation)
+ * Part 5: Secret-size accounting under generic key search
+ * Part 6: What these diagnostics do not show
  *
  * BUILD & RUN (one line, from this file's directory):
  *   g++ -O3 -std=c++17 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -o mcl_pq mcl_postquantum.cpp -lm && ./mcl_pq
  *
  * EXPECTED RESULTS:
  * Negative control: weak generators FAIL (validates methodology)
- * MCL: no periodicity, no spectral peaks, Shor inapplicable
- * PQ security (conservative): ~74 bits (above AES-128 PQ = 64 bits)
- * VERDICT: PASS
- * REFERENCES:       N/A
+ * Parts 2-4B: pass
+ * DIAGNOSTICS: 5 / 5
+ * REFERENCES:       QUANTUM_SCOPE_NOTE.md
  *
  * ============================================================================
  *
@@ -67,7 +89,7 @@
 #include <random>
 
 // Document metadata (mirror of file header — keep in sync)
-static const char* DOC_VERSION = "6.0.0";
+static const char* DOC_VERSION = "6.1.0";
 static const char* DOC_ID      = "MCL-PQ-2026-0526-001";
 
 // Empirically measured Lyapunov exponent λ₁ for the (3,5) topology at K=12
@@ -221,7 +243,8 @@ PeriodResult period_scan(const uint8_t* data, int64_t n, int max_period) {
 // SEQUENTIAL DEPENDENCY TEST
 // MCL uses Gauss-Seidel: f₂ depends on f₁ (sequential).
 // A parallel update (wrong) produces divergent output.
-// This dependency increases Grover oracle cost.
+// A classical statement about the dynamics; it carries no claim about the
+// cost of any quantum oracle (6.1.0).
 // ============================================================================
 struct SeqDepResult { double divergence; bool verified; };
 
@@ -254,31 +277,18 @@ SeqDepResult seq_dependency_test(uint64_t seed, int iters) {
 }
 
 // ============================================================================
-// KEY SPACE CALCULATION
-// Classical: seed_bits + log₂(topologies) + phase_bits
-// Post-quantum: classical / 2 (Grover halves key space)
+// SECRET-SIZE ACCOUNTING (6.1.0)
+// The secret of the two-oscillator configuration is the coprime pair (p, q).
+// The seed is the PUBLIC challenge and contributes nothing. The number of
+// ordered coprime pairs with p, q <= nmax is about (6/pi^2) * nmax^2.
+// Generic key search halves the exponent; that is the only quantum statement
+// made here, and it is a generic one.
 // ============================================================================
-struct KeySpaceResult { double classical; double pq; double topo_bits; };
+struct PairSpace { double classical_bits; double generic_search_bits; };
 
-KeySpaceResult keyspace(int seed_bits, int nmax, int phase_bits) {
- // Number of coprime pairs (p,q) with p,q ≤ nmax: ≈ 6/π² × nmax²
- double topo_bits = std::log2(6.0 / (MCL_PI * MCL_PI) * (double)nmax * nmax);
- double cl = seed_bits + topo_bits + phase_bits;
- return {cl, cl / 2.0, topo_bits};
-}
-
-// ============================================================================
-// QUANTUM CIRCUIT COST (T-gates per Grover oracle)
-// ============================================================================
-struct CircuitResult { int64_t gates_per_oracle; };
-
-CircuitResult quantum_circuit_cost(int precision_bits, int output_bytes) {
- int sin_gates = precision_bits * (int)std::log2((double)precision_bits) * 4;
- int iter_gates = 2 * sin_gates + 4 * precision_bits * 2 + 2 * precision_bits * precision_bits;
- // Each output byte requires DECIMATION iterations (defined in mcl_core.hpp).
- int total_iters = BURNIN + output_bytes * DECIMATION;
- int64_t gates = (int64_t)iter_gates * total_iters;
- return {gates};
+PairSpace pair_space(double nmax) {
+ double cl = std::log2(6.0 / (MCL_PI * MCL_PI) * nmax * nmax);
+ return {cl, cl / 2.0};
 }
 
 // ============================================================================
@@ -288,8 +298,8 @@ int main() {
  auto t_start = std::chrono::steady_clock::now();
 
  std::printf("\n******************************************************************************\n");
- std::printf(" MCL POST-QUANTUM SECURITY VERIFICATION v%s\n", DOC_VERSION);
- std::printf(" 9 Experiments — Complete Post-Quantum Evidence Chain\n");
+ std::printf(" MCL CLASSICAL DIAGNOSTICS v%s  (file mcl_postquantum)\n", DOC_VERSION);
+ std::printf(" NOT a quantum-security test -- see QUANTUM_SCOPE_NOTE.md\n");
  std::printf("******************************************************************************\n\n");
  std::printf(" Engine: MCL_T2, (3,5), K=%.1f, seed=%llu\n\n",
  K_DEFAULT, (unsigned long long)DEFAULT_SEED);
@@ -353,7 +363,7 @@ int main() {
  // ========================================================================
  // PART 2: SPECTRAL PURITY (Goertzel DFT on MCL output)
  // ========================================================================
- sep("PART 2: SPECTRAL PURITY (Goertzel DFT)");
+ sep("PART 2: SPECTRAL TEST (Goertzel DFT)");
 
  MCL_T2 gen_spec(DEFAULT_SEED, 3, 5);
  std::vector<uint8_t> spec_data((size_t)std::min(N, (int64_t)NEG_CTRL_N_BYTES));
@@ -367,7 +377,7 @@ int main() {
  std::printf(" Noise floor: %.6e\n", spec.noise_avg);
  std::printf(" SNR: %.2f (threshold < %.1f)\n", spec.snr, SPECTRAL_SNR_THRESHOLD);
  pq_check("Spectral (Goertzel)", spec.pass,
- spec.pass ? "no exploitable periodicity" : "spectral peak detected");
+ spec.pass ? "no peak above threshold" : "spectral peak detected");
  if (!spec.pass) global_pass = false;
 
  // ========================================================================
@@ -387,20 +397,20 @@ int main() {
  per.best_match * 100, PERIOD_SCAN_THRESHOLD * 100);
  std::printf(" Expected (random): %.2f%% (1/256)\n", 100.0/256.0);
  pq_check("Period Scan", !per.found,
- !per.found ? "no periodicity found" : "periodicity detected");
+ !per.found ? "no period in tested range" : "periodicity detected");
  if (per.found) global_pass = false;
 
  // ========================================================================
  // PART 4: SEQUENTIAL DEPENDENCY (Gauss-Seidel vs Parallel)
  // ========================================================================
- sep("PART 4: SEQUENTIAL DEPENDENCY (Gauss-Seidel vs Parallel)");
+ sep("PART 4: UPDATE ORDER (Gauss-Seidel vs Parallel)");
 
  auto dep = seq_dependency_test(DEFAULT_SEED, 10000);
  std::printf(" Iterations: 10000\n");
  std::printf(" Mean divergence (seq vs par): %.4f (threshold > 0.1)\n", dep.divergence);
- std::printf(" Meaning: Gauss-Seidel dependency creates fundamentally different\n");
- std::printf(" dynamics. A quantum oracle must simulate sequential updates,\n");
- std::printf(" increasing depth beyond simple key enumeration.\n");
+ std::printf(" Meaning: the two update orders give different trajectories.\n");
+ std::printf(" A statement about the classical dynamics; it says nothing about\n");
+ std::printf(" the cost of a quantum oracle.\n");
  pq_check("Sequential Dependency", dep.verified,
  dep.verified ? "Gauss-Seidel divergence confirmed" : "no divergence — check");
  if (!dep.verified) global_pass = false;
@@ -408,7 +418,7 @@ int main() {
  // ========================================================================
  // PART 4B: CHAOS BARRIER (Exponential Divergence from ε Perturbation)
  // ========================================================================
- sep("PART 4B: CHAOS BARRIER (Exponential Amplification)");
+ sep("PART 4B: SENSITIVITY (Growth of a Perturbation)");
 
  // Theoretical chaos amplification over the burn-in window. Computed once
  // and reused in both the introductory description and the closing note.
@@ -465,205 +475,93 @@ int main() {
  std::printf(" The 10^%.0f figure is a linear extrapolation of the Lyapunov\n",
  log10_amp);
  std::printf(" exponent for an unbounded system. Empirically, small ε saturates\n");
- std::printf(" within ~50 iterations (see table above). The security implication\n");
- std::printf(" is that ANY perturbation, no matter how small, reaches full\n");
- std::printf(" decorrelation — the RATE is exponential, the AMOUNT is bounded by π.\n");
- pq_check("Chaos Barrier", chaos_pass,
+ std::printf(" within ~50 iterations (see table above). Any perturbation, no matter\n");
+ std::printf(" how small, reaches full decorrelation — the RATE is exponential,\n");
+ std::printf(" the AMOUNT is bounded by π. This is sensitivity of the iteration;\n");
+ std::printf(" a finite-precision realization is still eventually periodic.\n");
+ pq_check("Sensitivity", chaos_pass,
  chaos_pass ? "exponential divergence confirmed" : "insufficient divergence");
  if (!chaos_pass) global_pass = false;
 
  // ========================================================================
- // PART 5: SHOR'S ALGORITHM INAPPLICABILITY
+ // PART 5: SECRET-SIZE ACCOUNTING UNDER GENERIC KEY SEARCH
  // ========================================================================
- sep("PART 5: SHOR'S ALGORITHM INAPPLICABILITY");
+ sep("PART 5: SECRET-SIZE ACCOUNTING (Generic Key Search)");
 
- std::printf(" Shor requires: hidden periodicity in the function.\n");
- std::printf(" MCL has: positive Lyapunov exponents → chaotic (aperiodic).\n\n");
+ std::printf(" The secret of this configuration is the coprime pair (p, q).\n");
+ std::printf(" The seed is the PUBLIC challenge and is not counted.\n");
+ std::printf(" Generic key search (Grover) halves the exponent of any secret.\n");
+ std::printf(" NIST Categories 1 / 3 / 5 are anchored to key search on AES-128 /\n");
+ std::printf(" 192 / 256, i.e. 64 / 96 / 128 bits after halving (query count).\n\n");
 
- std::printf(" Evidence from this suite:\n");
- std::printf(" Spectral SNR = %.2f < %.1f → no spectral peaks\n",
- spec.snr, SPECTRAL_SNR_THRESHOLD);
- std::printf(" Period scan best = %.4f%% < %.2f%% → no byte-level periods\n",
- per.best_match * 100, PERIOD_SCAN_THRESHOLD * 100);
- std::printf(" Lyapunov λ₁ = %.2f > 0 → chaos confirmed (see mcl_lyapunov)\n\n",
- LAMBDA_1_EMPIRICAL);
-
- std::printf(" CONCLUSION: Shor's algorithm is INAPPLICABLE to MCL.\n");
- std::printf(" The quantum Fourier transform finds no period to exploit.\n");
- bool shor_inapplicable = spec.pass && !per.found;
- pq_check("Shor Inapplicable", shor_inapplicable,
- shor_inapplicable
- ? "no periodicity → QFT yields no information"
- : "periodicity detected — Shor inapplicability NOT supported by data");
-
- // ========================================================================
- // PART 6: GROVER'S ALGORITHM & KEY SPACE
- // ========================================================================
- sep("PART 6: GROVER'S ALGORITHM & KEY SPACE");
-
- std::printf(" Grover provides ONLY a quadratic speedup (√N search).\n");
- std::printf(" This is the same as for AES — and is the BEST known quantum attack.\n\n");
-
- // T-gate cost per oracle
- auto cc = quantum_circuit_cost(53, 64);
- std::printf(" T-gates per Grover oracle: %.2e\n\n", (double)cc.gates_per_oracle);
-
- // Oracle cost analysis
- int total_iters = BURNIN + 64 * DECIMATION; // burn-in + output generation
- std::printf(" Oracle structure (SEQUENTIAL — cannot be parallelized):\n");
- std::printf(" Burn-in iterations: %d\n", BURNIN);
- std::printf(" Output generation: %d (64 bytes × D=%d)\n",
- 64 * DECIMATION, DECIMATION);
- std::printf(" Total per oracle: %d iterations\n", total_iters);
- std::printf(" Each iteration: 2 × sin() + 2 × mod2π (sequential dependency)\n");
- std::printf(" Circuit DEPTH: O(%d) — Gauss-Seidel forces serial execution\n", total_iters);
- std::printf(" Implication: no quantum parallelism within the oracle\n\n");
-
- // Case 1: Conservative (phases from seed)
- std::printf(" Case 1: CONSERVATIVE (phases derived from seed)\n");
- std::printf(" %-16s %-12s %-12s %s\n", "Config", "Classical", "Post-QC", "PQ Comparison");
- std::printf(" %s\n", std::string(64, '-').c_str());
-
- // Each row's first integer is the seed-entropy budget in BITS, not a seed
- // value. A 128-bit seed gives 128 bits of classical entropy; the post-
- // quantum budget is half of that under Grover's quadratic speedup.
- struct Cfg { const char* name; int seed_bits; int nmax; int phase_bits; };
- Cfg cfgs_con[] = {
- {"Standard", 128, 1000, 0},
- {"High Security",256, 10000, 0},
- {"Maximum", 256, 100000,0}
- };
- for (auto& c : cfgs_con) {
- auto k = keyspace(c.seed_bits, c.nmax, c.phase_bits);
- const char* eq = k.pq < 64 ? "Below AES-128 PQ" :
- k.pq < 96 ? "Above AES-128 PQ (64)" :
- k.pq < 128? "Above AES-192 PQ (96)" : "Above AES-256 PQ (128)";
- std::printf(" %-16s %-12.1f %-12.1f %s\n", c.name, k.classical, k.pq, eq);
- }
-
- auto ks = keyspace(128, 1000, 0);
- std::printf("\n Standard PQ security: %.1f bits (conservative)\n", ks.pq);
-
- // Case 2: Enhanced (independent phase inputs)
- std::printf("\n Case 2: ENHANCED (independent phase randomness)\n");
- std::printf(" %-16s %-12s %-12s %s\n", "Config", "Classical", "Post-QC", "PQ Comparison");
- std::printf(" %s\n", std::string(64, '-').c_str());
-
- Cfg cfgs_enh[] = {
- {"Standard", 128, 1000, 64},
- {"High Security",256, 10000, 64},
- {"Maximum", 256, 100000,128}
- };
- for (auto& c : cfgs_enh) {
- auto k = keyspace(c.seed_bits, c.nmax, c.phase_bits);
- const char* eq = k.pq < 96 ? "Above AES-128 PQ" :
- k.pq < 128? "Above AES-192 PQ (96)" :
- k.pq < 180? "Above AES-256 PQ (128)" : "Exceeds Kyber-768 (~180)";
- std::printf(" %-16s %-12.1f %-12.1f %s\n", c.name, k.classical, k.pq, eq);
- }
-
- auto ks_enh = keyspace(128, 1000, 64);
- std::printf("\n Standard PQ security: %.1f bits (enhanced)\n", ks_enh.pq);
-
- // Comparison table
- std::printf("\n COMPARISON WITH ESTABLISHED SYSTEMS:\n");
- std::printf(" %-22s %-14s %-14s %s\n", "System", "Classical", "Post-Quantum", "Basis");
+ std::printf(" %-22s %-16s %-16s %s\n", "Range of p, q", "Classical bits", "After halving", "Against 64");
  std::printf(" %s\n", std::string(70, '-').c_str());
- std::printf(" %-22s %-14s %-14s %s\n", "RSA-2048", "112 bits", "0 bits", "Shor breaks");
- std::printf(" %-22s %-14s %-14s %s\n", "ECC-256", "128 bits", "0 bits", "Shor breaks");
- std::printf(" %-22s %-14s %-14s %s\n", "AES-128", "128 bits", "64 bits", "Grover halves");
- std::printf(" %-22s %-14s %-14s %s\n", "AES-256", "256 bits", "128 bits", "Grover halves");
- std::printf(" %-22s %-14s %-14s %s\n", "NIST Kyber-768", "~180 bits","~180 bits","M-LWE assumption");
- std::printf(" %-22s %-14s %-14s %s\n", "NIST Dilithium", "~128 bits","~128 bits","M-LWE assumption");
- std::printf(" %-22s %-14s %-14s %s\n", "NIST SPHINCS+", "~128 bits","~128 bits","Hash (ROM)");
- std::printf(" %s\n", std::string(70, '-').c_str());
- std::printf(" %-22s %-14.0f %-14.0f %s\n", "MCL Std (conserv.)",
- ks.classical, ks.pq, "Chaos (seed+topo)");
- std::printf(" %-22s %-14.0f %-14.0f %s\n", "MCL Std (enhanced)",
- ks_enh.classical, ks_enh.pq, "Chaos (seed+topo+phase)");
-
- pq_check("Grover PQ Security", ks.pq >= 64,
- ks.pq >= 64 ? "above AES-128 PQ threshold" : "below AES-128 PQ threshold");
- if (ks.pq < 64) global_pass = false;
-
- // ========================================================================
- // PART 7: QUANTUM ALGORITHM COMPLETENESS
- // ========================================================================
- sep("PART 7: QUANTUM ALGORITHM COMPLETENESS");
-
- std::printf(" Systematic analysis of ALL known quantum algorithms:\n\n");
- std::printf(" %-20s %-22s %-16s %s\n", "Algorithm", "Requires", "MCL Has", "Applicable?");
- std::printf(" %s\n", std::string(72, '-').c_str());
- std::printf(" %-20s %-22s %-16s %s\n", "Shor (QFT)", "Periodicity", "Chaos (λ>0)", "NO");
- std::printf(" %-20s %-22s %-16s %s\n", "Simon", "XOR period f(x⊕s)","No XOR structure", "NO");
- std::printf(" %-20s %-22s %-16s %s\n", "BHT Collision", "Collisions in f", "No collisions", "NO");
- std::printf(" %-20s %-22s %-16s %s\n", "Grover", "Unstructured search","Applies", "QUADRATIC");
- std::printf(" %-20s %-22s %-16s %s\n", "Quantum Walks", "Structured space", "No speedup", "NO");
- std::printf(" %-20s %-22s %-16s %s\n", "QAOA/VQE", "Optimization", "Not optimization","NO");
- std::printf(" %-20s %-22s %-16s %s\n", "QML", "Learnable patterns","No patterns", "NO");
- std::printf(" %-20s %-22s %-16s %s\n", "Quantum Simulation","Quantum system", "Classical", "NO");
-
- std::printf("\n CONCLUSION: Only Grover applies, providing quadratic speedup.\n");
- std::printf(" This is the SAME situation as AES/SHA — symmetric primitives\n");
- std::printf(" resist all quantum algorithms except Grover.\n");
- std::printf(" MCL additionally benefits from sequential update dependency\n");
- std::printf(" that increases Grover oracle cost beyond simple key enumeration.\n");
+ struct Rng { const char* name; double nmax; };
+ Rng ranges[] = {
+ {"[2, 10^6]",  1e6},
+ {"[2, 10^9]",  1e9},
+ {"[2, 10^12]", 1e12},
+ {"[2, 10^15]", 1e15},
+ {"[2, 2^53] (engine cap)", 9007199254740992.0}
+ };
+ for (auto& r : ranges) {
+ auto k = pair_space(r.nmax);
+ std::printf(" %-22s %-16.1f %-16.1f %s\n", r.name, k.classical_bits,
+ k.generic_search_bits, k.generic_search_bits < 64 ? "below" : "at or above");
+ }
+ std::printf("\n A pair (p, q) alone is below the 64-bit level at every range, up to and\n");
+ std::printf(" including the engine's cap: weights above 2^53 are not exactly\n");
+ std::printf(" representable in double precision (MCL_PQ_MAX).\n");
+ std::printf(" The 256-bit keyed configuration (keyed_q30_PQ/) carries the key in\n");
+ std::printf(" twelve weights; for it generic key search costs about 2^128 oracle\n");
+ std::printf(" calls.\n");
+ std::printf(" That is a generic figure. It holds only in the absence of a structural\n");
+ std::printf(" attack, which this program does not examine.\n");
 
  // ========================================================================
- // PART 8: SCIENTIFIC CAVEATS
+ // PART 6: WHAT THESE DIAGNOSTICS DO NOT SHOW
  // ========================================================================
- sep("PART 8: SCIENTIFIC CAVEATS (Intellectual Honesty)");
+ sep("PART 6: WHAT THESE DIAGNOSTICS DO NOT SHOW");
 
- std::printf(" C1. MCL-INVERSION is not proven outside BQP.\n");
- std::printf(" CONTEXT: No NIST PQC algorithm has proven its underlying\n");
- std::printf(" assumption either. M-LWE (Kyber), SIS (Dilithium) are PRESUMED\n");
- std::printf(" hard. Proving any of these would resolve major open problems\n");
- std::printf(" in computational complexity theory.\n\n");
-
- std::printf(" C2. No formal reduction to an established hard problem.\n");
- std::printf(" CONTEXT: Kyber has a reduction to M-LWE, but M-LWE itself\n");
- std::printf(" is unproven. Kyber's Round-1 reduction was invalidated and\n");
- std::printf(" the algorithm was modified for Round-2.\n");
- std::printf(" SPHINCS+ relies on hash security in the Random Oracle Model.\n");
- std::printf(" MCL's concrete security uses best-known-attack methodology,\n");
- std::printf(" identical to Kyber's Core-SVP estimates.\n\n");
-
- std::printf(" C3. Independent public cryptanalysis is the next milestone.\n");
- std::printf(" CONTEXT: The same process validated AES (1997-2001) and NIST PQC\n");
- std::printf(" candidates (2017-2024). Independent analysis is invited.\n\n");
-
- std::printf(" These caveats apply equally to ALL post-quantum schemes.\n");
- std::printf(" MCL's position: empirically strong (full attack suite passes,\n");
- std::printf(" all statistical batteries clean), awaiting the formal\n");
- std::printf(" cryptanalytic attention that all new schemes must undergo.\n");
+ std::printf(" 1. No quantum algorithm is run, simulated or bounded by this program.\n");
+ std::printf(" 2. A spectral test on %d bytes and a period scan up to %d say nothing\n",
+ NEG_CTRL_N_BYTES, PERIOD_SCAN_MAX_PERIOD);
+ std::printf("    about longer periods. Every finite-precision realization is\n");
+ std::printf("    eventually periodic; cycle lengths are measured in T4_CycleStructure/.\n");
+ std::printf(" 3. The construction has no public key, no modulus to factor and no\n");
+ std::printf("    discrete logarithm to take. That is read off the construction, not\n");
+ std::printf("    measured here, and it says nothing about other period-finding\n");
+ std::printf("    attacks (point 4).\n");
+ std::printf(" 4. The integer map has an exact translation symmetry of its state\n");
+ std::printf("    (T4_CycleStructure/). Absence of structure is therefore not claimed.\n");
+ std::printf(" 5. Whether a quantum algorithm shortens the sequential depth of the\n");
+ std::printf("    iteration is open.\n");
+ std::printf(" 6. No proof, no reduction to a standard assumption, and no independent\n");
+ std::printf("    cryptanalysis exist for the map.\n");
 
  // ========================================================================
- // VERDICT
+ // SUMMARY
  // ========================================================================
  double elapsed = std::chrono::duration<double>(
  std::chrono::steady_clock::now() - t_start).count();
 
- sep("POST-QUANTUM VERIFICATION SUMMARY");
+ sep("SUMMARY OF THE DIAGNOSTICS");
 
- std::printf(" Tests passed: %d / %d\n\n", g_passed, g_total);
- std::printf(" Key findings:\n");
+ std::printf(" Diagnostics passed: %d / %d\n\n", g_passed, g_total);
  std::printf(" Negative control: weak generators detected (%d %s)\n",
  lcg_fails, lcg_fails == 1 ? "failure" : "failures");
- std::printf(" Spectral SNR: %.2f < %.1f (no periodicity)\n", spec.snr, SPECTRAL_SNR_THRESHOLD);
- std::printf(" Period scan: %.4f%% < %.2f%% (aperiodic)\n",
+ std::printf(" Spectral SNR: %.2f < %.1f\n", spec.snr, SPECTRAL_SNR_THRESHOLD);
+ std::printf(" Period scan: %.4f%% < %.2f%%\n",
  per.best_match * 100, PERIOD_SCAN_THRESHOLD * 100);
- std::printf(" Seq. dependency: %.4f (Gauss-Seidel divergence)\n", dep.divergence);
- std::printf(" Chaos barrier: 10^%.0f amplification from burn-in\n", log10_amp);
- std::printf(" Oracle cost: %d sequential iterations (non-parallelizable)\n", total_iters);
- std::printf(" PQ security: %.1f bits conservative / %.1f bits enhanced\n",
- ks.pq, ks_enh.pq);
- std::printf(" Quantum attacks: only Grover applies (quadratic speedup)\n");
- std::printf(" Caveats: C1-C3 documented (same as NIST PQC)\n");
+ std::printf(" Update order: %.4f (Gauss-Seidel vs parallel, mean divergence)\n", dep.divergence);
+ std::printf(" Sensitivity: saturation reached for every tested perturbation: %s\n",
+ chaos_pass ? "yes" : "no");
 
  std::printf("\n +================================================================+\n");
- std::printf(" | VERDICT: %s |\n",
- global_pass ? "PASS — MCL resists all known quantum attacks "
- : "ISSUES DETECTED ");
+ std::printf(" | DIAGNOSTICS: %s |\n",
+ global_pass ? "ALL PASSED                                       "
+ : "ISSUES DETECTED                                  ");
+ std::printf(" | No statement about quantum security is made by this program.  |\n");
  std::printf(" +================================================================+\n");
 
  std::printf("\n Time: %.1f seconds\n", elapsed);

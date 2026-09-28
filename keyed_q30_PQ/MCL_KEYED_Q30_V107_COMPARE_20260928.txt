@@ -1,0 +1,8 @@
+  [PASS] E0: engine named by the dumps: ['8.1.3'] and ['8.1.3']
+  [PASS] E1: 65536 weight sets compared, 0 differ
+  [PASS] E2: 1024 engine runs compared (keystream, commit32, commit32_oneway), 0 differ
+  [PASS] E3: 200000 epoch lists compared, 6 differ; class keys under v1.0.6: 6
+  [PASS] E4: class keys under v1.0.7: 0
+  [PASS] E5: 5006 cascade outputs compared, 6 differ; class keys among them: 6 of 6
+  class keys (v1.0.6): [57740, 94719, 97155, 162129, 167674, 174628]
+ALL EXPECTATIONS MET

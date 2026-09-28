@@ -1,0 +1,16 @@
+parity patterns: 4096
+seed-reachable before the guard: 8 = 2^-9.0
+rank 4/3/2/1/0 without the guard: 3808 / 250 / 31 / 6 / 1   symmetric 288/4096 = 7.031%
+rank 4/3/2/1/0 with the guard   : 3812 / 253 / 28 / 3 / 0   symmetric 284/4096 = 6.934%
+
+measured in qstruct_rev3_20260928.log: 18568 / 1284 / 137 / 11 / 0 (n = 20000)
+  rank 4: measured  18568  expected   18613.3  z = -0.33
+  rank 3: measured   1284  expected    1235.4  z = +1.38
+  rank 2: measured    137  expected     136.7  z = +0.02
+  rank 1: measured     11  expected      14.6  z = -0.95
+  rank 0: measured      0  expected       0.0  (excluded by the guard)
+chi-square, 3 degrees of freedom: 2.94   (95% critical value 7.81)
+symmetric fraction: measured 7.160%, theory 6.934%, binomial standard error 0.180%, z = +1.26
+
+cascade, before the check of sidecar v1.0.7: per-epoch both-odd rate 0.2498, 7 epochs, 200000 keys
+  -> expected 12.1 keys of the class; counted 12 (Poisson sd 3.5)

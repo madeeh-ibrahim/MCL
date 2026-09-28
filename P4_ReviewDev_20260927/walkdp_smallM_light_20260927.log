@@ -1,0 +1,2 @@
+s=30 N=2^10 eps=0.250 P=64 d=13 trials=600000 | success 54 (0.00009, 95% CI 0.00007-0.00012), verified 54/54, mean lead 320
+   memory: 6.0 stored records + 64 walk states = 70.0 words | Prop 3(a) with that M: E=4.114e-06, P(success)>=2.057e-06 | merge-aware E_det=8.130e-05 -> 1-exp(-E)=8.130e-05 | ratio measured/Prop3a = 43.8

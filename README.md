@@ -34,6 +34,17 @@ adversarial analysis**.
 
 ---
 
+## What's new in v0.2.15 (28 September 2026)
+
+Scope of the quantum statements: [`QUANTUM_SCOPE_NOTE.md`](QUANTUM_SCOPE_NOTE.md) lists the sentences of this
+repository that said more about quantum attacks than their measurements support, and withdraws them;
+`mcl_postquantum.cpp` and `Verification_Suite/mcl_hop_unified.cpp` are version 6.1.0 with every measured number
+unchanged. The keyed sidecar is **v1.0.7**: the symmetry check of v1.0.6 now covers the cascade, and an opt-in
+seed rule is added; default behaviour and known-answer values unchanged. New:
+`Quantum_Structural_Analysis_20260927/` (a structural inventory over four families of quantum attack and a
+resource model of Grover key search — neither shows quantum security) and `P4_ReviewDev_20260927/`.
+Engine unchanged (8.1.3). Details: [`CHANGELOG.md`](CHANGELOG.md).
+
 ## What's new in v0.2.13 (25 September 2026; re-issue of v0.2.12, see CHANGELOG)
 
 Paper 5 verifier-state record (`P5_ReviewMeasurements_20260925/`): the §V.A reference verifier under replica,
@@ -111,9 +122,9 @@ artifact under active validation.
 | Path | Contents |
 |---|---|
 | `mcl_core.hpp` | Header-only reference engine, **v8.1.3** (SHA-256 `416ad145e79c095b…`) |
-| `*.cpp` (repository root) | The 23 reproduction / KAT / self-analysis programs of the June release (unchanged except for the patent line in each banner) |
-| `results/` | Their recorded outputs (June 2026, engine 6.0.0) + fresh 8.1.3 re-runs of `self_test`, `kat_gen_macos`, `q30_macos_validation` |
-| `keyed_q30_PQ/` | FPU-free keyed integer engine `mcl_keyed_q30.hpp` v1.0.6 + its test/measurement programs and records |
+| `*.cpp` (repository root) | The 23 reproduction / KAT / self-analysis programs of the June release (unchanged except for the patent line in each banner; `mcl_postquantum.cpp` is version 6.1.0 — see `QUANTUM_SCOPE_NOTE.md`) |
+| `results/` | Their recorded outputs (June 2026, engine 6.0.0) + fresh 8.1.3 re-runs of `self_test`, `kat_gen_macos`, `q30_macos_validation`; `mcl_postquantum.txt` is the output of version 6.1.0 and `mcl_postquantum_v6.0.0_20260526.txt` the June output |
+| `keyed_q30_PQ/` | FPU-free keyed integer engine `mcl_keyed_q30.hpp` v1.0.7 (SHA-256 `05c01cf8a156…`) + its test/measurement programs and records |
 | `VDF128_T4/` | 128-bit-state integer sequential function (`mcl_vdf128_t4.hpp`), battery, cross-platform fingerprint, bench |
 | `T4_CycleStructure/` | Reduced-width cycle study, translation-symmetry group, weak-key parity check, float-path symmetry check (+ logs) |
 | `ReturnMap_Attack/` | Chaos-specific attack attempts (return-map reconstruction, conditional entropy, EFA) against the keyed stream and raw state |
@@ -124,6 +135,8 @@ artifact under active validation.
 | `P1_CSF_Measurements_20260905/` | Paper 1 cross-system Safe-Zone campaign (standard map, Hénon, logistic; XOR controls; cycle searches), engine of record v6.0.0 |
 | `P1_ReviewMeasurements_20260907/` · `…_20260909/` · `…_20260909b/` | Paper 1 review-round measurements: Table 3 λ₁ re-measurement, emitted-bit frequencies and their segment test, single-window controls, Float64-vs-Q30 LSB comparison (Fig. 5), initial-state conventions |
 | `Verification_Suite/`, `Layer_Combiner/` | Legacy verification programs (burn-in / decimation / K sweeps, T3/T4, hopping) and the robust-combiner demo |
+| `QUANTUM_SCOPE_NOTE.md` | Scope of the quantum statements in this repository: what is withdrawn, what stands |
+| `Quantum_Structural_Analysis_20260927/` | Structural inventory over four families of quantum attack (a classical probe) and a resource model of Grover key search; record logs and independent references |
 | `MANIFEST.md`, `CHANGELOG.md` | Per-file SHA-256 table and engine pins; release history |
 
 ## Build & Run

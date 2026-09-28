@@ -1,0 +1,29 @@
+Host record -- Quantum_Structural_Analysis_20260927, record runs of 2026-09-28
+
+machine   : Apple M1 Pro, 8 cores, arm64
+system    : macOS 14.5 (23F79), Darwin 23.5.0
+compiler  : Apple clang version 16.0.0 (clang-1600.0.26.6)
+python    : Python 3.13.2
+
+program 1 : ./mcl_qstruct_inventory --threads 8
+            started 2026-09-28 04:55:26 EEST, ended 04:56:46 EEST, exit code 0
+            79.45 s wall, 507.09 s processor, peak memory 58.2 MiB
+            replication, one thread          : 458.48 s, same log except threads= and the [time] lines
+            replication, x86-64 (Rosetta 2)  : 141.32 s on four threads, same log except threads= and the [time] lines
+program 2 : ./mcl_grover_resource_estimate   (deterministic arithmetic), exit code 0
+
+SHA-256 of the sources and headers, identical before and after the runs:
+50c745ac48fcb46da98ff5d5bcd2f878fad05309a890744da2944317e2d4ab26  mcl_qstruct_inventory.cpp
+e6d72996ee1bb57a5462717a802945faadea54032956a508d311ce32a9a17325  mcl_grover_resource_estimate.cpp
+416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80  ../mcl_core.hpp
+05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29  ../keyed_q30_PQ/mcl_keyed_q30.hpp
+e08f702e2da92221588285a6a61ee2e48edfb63afbde8220fc3632fd2180ed0d  ../VDF128_T4/mcl_vdf128_t4.hpp
+b46f1a1329ccbc4dc4eac02b930be7b71f74847800ed7c01358163d80f615439  ../VDF128_T4/mcl_vdf128_t4_v3.hpp
+
+build lines:
+  clang++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic -pthread -I.. mcl_qstruct_inventory.cpp -o mcl_qstruct_inventory
+  clang++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic -I.. mcl_grover_resource_estimate.cpp -o mcl_grover_resource_estimate
+no compiler diagnostic, also with -Wshadow -Wconversion -Wsign-conversion
+
+sanitizers (program 1): --selftest under AddressSanitizer + UndefinedBehaviorSanitizer and under
+ThreadSanitizer, and Part 1 at record size under the first two: exit code 0, no report.

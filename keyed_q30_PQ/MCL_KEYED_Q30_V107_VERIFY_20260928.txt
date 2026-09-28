@@ -1,0 +1,103 @@
+================================================================
+  MCL KEYED Q30 -- sidecar v1.0.7 verification
+  engine 8.1.3
+  keys sampled in [3]: 200000
+================================================================
+
+[0] Known-answer values of the sidecar
+  [PASS] T4-Q30 commit32, Legacy seed rule            0x58C99E3E (expected 0x58C99E3E)
+  [PASS] cascade m=7, Legacy seed rule                0xF7C81BC4 (expected 0xF7C81BC4)
+  [PASS] T4-Q30 re-draw path, 4096 keystream bytes    0x808C5B2E (expected 0x808C5B2E)
+  [PASS] cascade re-draw path                         0x944BD55E (expected 0x944BD55E)
+  [PASS] T4-Q30 commit32, Hashed seed rule            0x399183A1 (expected 0x399183A1)
+  [PASS] cascade m=7, Hashed seed rule                0x229E97B8 (expected 0x229E97B8)
+    [PASS] mcl_keyed_q30_self_test(): six of six
+
+[1] Default seed rule: engines vs a replica of the v1.0.6 rule
+    four-oscillator: 384 comparisons (64 keys x 6 seeds; keystream 64 B, commit32, commit32_oneway), 0 differ from the replica, 0 from the explicit Legacy call
+    [PASS] MCL_T4_Q30 (default) == replica of the v1.0.6 rule, byte for byte
+    [PASS] default == MCL_Q30_SeedInit::Legacy
+    cascade: 384 comparisons, 0 differ from the replica, 0 from the explicit Legacy call
+    [PASS] mcl_cascade_q30 (default) == replica on the derived epoch list
+    [PASS] default == MCL_Q30_SeedInit::Legacy (cascade)
+
+[2] Known-answer values of record
+    four-oscillator commit CRC-32: 0x58C99E3E
+    cascade (m=7)       CRC-32: 0xF7C81BC4
+    [PASS] four-oscillator commit = 0x58C99E3E
+    [PASS] cascade = 0xF7C81BC4
+    advances of q for the KAT key: 0
+    [PASS] the KAT key is outside the class (0 advances)
+
+[3] Cascade key class over 200000 keys (m = 7)
+    epochs with p and q both odd: 351067 of 1400000 (0.2508)
+    keys in the class before the check: 18 (0.0090%); expected from the per-epoch rate: 12.5
+    keys in the class after the check:  0
+    keys outside the class whose weights changed: 0
+    keys in the class where the change is not q of epoch 0 alone: 0
+    advances of q inside the class: smallest 1, largest 3; keys outside the class with an advance: 0
+    final weights: not coprime 0, out of range 0, p == q 0
+    [PASS] no key admits the symmetry after the check
+    [PASS] weights unchanged for every key outside the class
+    [PASS] inside the class only q of epoch 0 changes
+    [PASS] final weights stay coprime, distinct and inside [2, 2^30)
+    [PASS] advances: 0 outside the class, between 1 and 64 inside it
+    [PASS] class size agrees with the per-epoch rate (4 sigma)
+    [PASS] the class is not empty in this sample
+
+[3b] The criterion against the map (64 random states per epoch)
+    epoch lists tested: 2017 (18 in the class, 1999 outside)
+    criterion and map agree on D = 2^31: 2017; disagree: 0
+    lists outside the class for which some D = 2^k commutes: 0
+    final lists for which some D = 2^k commutes: 0
+    [PASS] the criterion agrees with the map on every list
+    [PASS] outside the class no offset 2^k commutes
+    [PASS] after the check no offset 2^k commutes
+
+[4] Raw-state relation for the keys of the class (18 keys)
+    seeds s = 12345678901234 and s + 2^31
+    unchecked weights, Legacy seed rule: raw states differ by (2^31, 2^31) at all four steps for 18 of 18 keys
+      SHA-256 of those raw states for the two seeds: mean distance 129.7 of 256 bits
+    final weights, Legacy seed rule    : 0 of 18; mean distance of the raw states 128.7 of 256 bits
+    unchecked weights, Hashed seed rule: 0 of 18; mean distance of the raw states 128.6 of 256 bits
+    [PASS] before: every key of the class shows the translation
+    [PASS] after the check: none does
+    [PASS] Hashed seed rule alone: none does
+    [PASS] after the check: raw states unrelated (96..160 of 256)
+    [PASS] Hashed rule: raw states unrelated (96..160 of 256)
+
+[5] Seed interface
+    seed pairs (a, a + k*2^32), all <= 2^52: 16
+    Legacy rule: identical output for 16 (four-oscillator) and 16 (cascade) of 16 pairs
+    Hashed rule: identical output for 0 and 0 of 16 pairs
+    [PASS] Legacy rule: only seed mod 2^32 enters (every pair coincides)
+    [PASS] Hashed rule: no pair coincides
+    initial state additive in the seed, t(a) + t(b) = t(a + b): Legacy rule 1000 of 1000, Hashed rule 0 of 1000
+    [PASS] Legacy rule: the initial state is linear in the seed
+    [PASS] Hashed rule: it is not
+    Hashed rule, seeds 1..2^20: 1048576 distinct 128-bit states, 1048576 distinct 64-bit states
+    [PASS] Hashed rule: 2^20 seeds give 2^20 distinct initial states
+    Hashed rule, one seed bit flipped (1000 seeds x 64 bits): 0.4997 of the state bits change
+    [PASS] Hashed rule: avalanche within 0.49..0.51
+
+[6] seed == 0
+    aborts: Legacy rule yes, Hashed rule yes, Hashed cascade yes; control (seed 1) no
+    [PASS] seed 0 is fatal under both rules
+    [PASS] control: seed 1 is accepted
+
+[7] Hashed seed rule: statistics and known-answer values
+    keystream 1 MiB: chi^2 = 254.05 (threshold 330.52), entropy = 7.999825 bits/byte
+    [PASS] chi^2 below the df = 255 threshold
+    [PASS] Shannon entropy above 7.99 bits/byte
+    values under the Hashed rule:
+      four-oscillator commit CRC-32 = 0x399183A1
+      cascade (m=7)       CRC-32 = 0x229E97B8
+    distance to the Legacy four-oscillator commit: 140 of 256 bits
+    [PASS] Hashed rule, four-oscillator commit = 0x399183A1
+    [PASS] Hashed rule, cascade = 0x229E97B8
+    [PASS] Hashed rule output differs from the Legacy output
+
+================================================================
+  checks: 36, failed: 0
+  ALL EXPECTATIONS MET
+================================================================

@@ -5,6 +5,77 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.15 — 2026-09-28
+
+**Scope of the quantum statements · keyed sidecar v1.0.7 · structural inventory and Grover resource model.**
+Engine `mcl_core.hpp` **8.1.3 unchanged**. No measured number of an earlier record changes.
+
+### Changed
+
+- **`keyed_q30_PQ/mcl_keyed_q30.hpp` → v1.0.7** (SHA-256 `05c01cf8a156…`; v1.0.6 was `71a0dbaf8472…`).
+  (a) The symmetry check that v1.0.6 applied to the four-oscillator path now covers the epoch lists of the
+  cascade: when every epoch of a key has p ≡ q (mod 2) — about 2^−14 of keys at m = 7 — the seeds s and
+  s + 2^31 gave raw states that differ by the constant translation (2^31, 2^31). The relation never reached
+  the output, which is SHA-256 of the raw states. Such lists are re-drawn deterministically (q of the first
+  epoch advances until the list is clear). (b) An opt-in seed rule, `MCL_Q30_SeedInit::Hashed`; the default
+  rule is unchanged, and under it only the seed modulo 2^32 enters the state. (c) `mcl_keyed_q30_self_test()`
+  with six known-answer values. **Default behaviour is that of v1.0.6 for every key outside that class**:
+  the known-answer values of record are unchanged (`0x58C99E3E`, `0xF7C81BC4`) and the four-oscillator path
+  is byte-identical (65,536 weight sets and 1,024 engine runs compared, 0 differ). Record:
+  `keyed_q30_PQ/CASCADE_GUARD_V107_RECORD_20260928.md`.
+  *Earlier measurements:* `P4_ReviewMeasurements_20260905/` and `P4_ReviewMeasurements_20260925/` carry their
+  own copy of v1.0.6 and are unaffected; the scratch-constructor patch of `P5_ReviewMeasurements_20260905/`
+  applies to v1.0.7 and reproduces its log byte for byte. The header of v1.0.6 is the file of tag `v0.2.14`.
+- **`mcl_postquantum.cpp` → version 6.1.0** (file name kept so that existing references resolve). The program
+  is what its measurements are: classical diagnostics of the two-oscillator engine — negative control, spectral
+  test, period scan, update-order divergence, sensitivity — and an accounting of the size of the secret under
+  generic key search. Version 6.0.0 printed conclusions about quantum attacks that its measurements do not
+  support; they are withdrawn: the verdict "resists all known quantum attacks", the "quantum algorithm
+  completeness" table, "aperiodic ⇒ Shor inapplicable", the "PQ security 73.6 / 105.6 bits" figures (they
+  counted the seed as secret), the "T-gates per Grover oracle" figure, and the comparison with third-party
+  schemes. Every measured number of Parts 1–4B is identical, digit for digit, to the June output (in
+  particular the mean divergence 2.0888 of Part 4). **`results/mcl_postquantum.txt`** is the output of
+  version 6.1.0.
+- **`Verification_Suite/mcl_hop_unified.cpp` → version 6.1.0** — the labels of Part B and nothing else:
+  "forward secrecy" is named inter-segment separation, "topology hidden" is named after the correlation test
+  that was run, and the accounting of B10 prints the pair alone (9.6 bits after halving) beside the figures
+  that assume an independent key, which the program does not contain. 22 of 22 checks as before; every
+  measured number unchanged. **`Verification_Suite/results/mcl_hop_unified.txt`** is the output of version
+  6.1.0; one row of `Verification_Suite/README.md` follows.
+- **`keyed_q30_PQ/STATUS.md`**, **`keyed_q30_PQ/README.md`** — a scope line, respectively an update note, at
+  the top and one history line at the end; the bodies are left as the records of June 2026.
+- **`MANIFEST.md`** — regenerated; it now lists the files of the repository only. Earlier manifests also
+  listed seven local files that `.gitignore` excludes (five `*.out` console logs, one `.pyc`, one `.DS_Store`).
+  `CITATION.cff` is 0.2.15.
+
+### Added
+
+- **`QUANTUM_SCOPE_NOTE.md`** (`MCL-QSCOPE-2026-0928-001`) — lists every sentence of this repository that
+  states more about quantum attacks than the measurements behind it support, says what is withdrawn and what
+  stands, and gives the governing position. It also covers three lines of the comment block "Post-quantum
+  posture" in `mcl_core.hpp`; the header is left byte-identical.
+- **`Quantum_Structural_Analysis_20260927/`** (10 files) — `MCL-QSTRUCT-2026-0927-001` rev 3 and
+  `MCL-GROVER-RES-2026-0927-001` rev 3. (1) A classical probe that maps the attack surface of four families
+  of quantum attack on the live integer maps: exact translation groups by 2-adic lifting with every element
+  run on the engine, period and collision structure of four input channels, the FX shape of a legacy tag
+  variant, generic collision bounds. Record run: 8 of 8 controls, 88,048 consistency checks, 27 expectations
+  written before the run, 0 differ. (2) A resource model of Grover key search on the keyed four-oscillator
+  path beside the published AES-256 figures; 64 values matched by an independent reference. **Neither shows
+  quantum security**; both state their limits.
+- **`keyed_q30_PQ/mcl_keyed_q30_v107_verify.cpp`** (36 expectations, 0 failed; byte-identical output on
+  arm64 -O0 / -O3, x86-64 and under sanitizers), **`mcl_keyed_q30_v107_dump.cpp`** with
+  **`mcl_keyed_q30_v107_compare.py`** (differential comparison of v1.0.6 and v1.0.7), their two logs, and
+  the record named above.
+- **`results/keyed_q30_test_v1.0.7_20260928.txt`** — the harness on v1.0.7: 9 passed, 0 failed; identical to
+  the v1.0.6 output except timing lines.
+- **`results/mcl_postquantum_v6.0.0_20260526.txt`**, **`Verification_Suite/results/mcl_hop_unified_v6.0.0_20260526.txt`**
+  — the outputs of the versions 6.0.0 as published in June 2026, unmodified.
+- **`P4_ReviewDev_20260927/`** (9 files + `SHA256SUMS_16.txt`) — `MCL-P4-DEV-2026-0927-001`: exhaustive
+  enumeration of the translation symmetries of reduced-width replicas of the unclocked map (n = 4, w = 6;
+  n = 3, w = 8; n = 2, w = 8): in every configuration the commuting translations are exactly the
+  argument-preserving ones, and no translation is a period; and the small-memory walk-collision count under
+  light and heavy merging.
+
 ## v0.2.14 — 2026-09-26
 
 **Paper 4 version 4 — VDF128-T4 becomes a *clocked* map.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar v1.0.6 unchanged.

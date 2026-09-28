@@ -1,7 +1,7 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.13, 2026-09-25)
+# MCL — Public Code Archive · MANIFEST (v0.2.15, 2026-09-28)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
-**Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.6** — SHA-256 `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512`  
+**Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.7** (2026-09-28) — SHA-256 `05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29`  
 **VDF128-T4 header:** `VDF128_T4/mcl_vdf128_t4.hpp` — SHA-256 `e08f702e2da92221588285a6a61ee2e48edfb63afbde8220fc3632fd2180ed0d`  
 **Author:** Madeeh Ibrahim · ORCID 0009-0002-8562-8325 · madeeh.chaotic.lock@gmail.com  
 **License:** PolyForm-Noncommercial-1.0.0 + Security Research & Evaluation Grant · Patent Pending PCT/IB2026/052737, 053253, 053673, **058860**
@@ -11,7 +11,7 @@ Open reference engine + every verification / reproduction program and evidence r
 ## Cross-platform reproducibility anchors (re-verified on 8.1.3, 2026-08-22)
 - Float64 CRC-32 (T2 default (3,5) 10KB): Linux `0xF5E977E0` · macOS `0x1A734C6F` (libm-dependent, non-normative) — `results/kat_gen_macos_v8.1.3_20260822.txt`.
 - Q30 fixed-point (bit-exact NORMATIVE): init `0xC8AFD74A`/`0x0DB2BAC6`, 10k-iter `0x6F88C52E`/`0xE06C516C`, LUT CRC `0xDE1340CF` — `results/q30_macos_validation_v8.1.3_20260822.txt`.
-- Keyed T4-Q30 (sidecar v1.0.6): commit CRC `0x58C99E3E`, cascade(m=7) `0xF7C81BC4` — suite 9/9 PASS — `results/keyed_q30_test_v1.0.6_20260822.txt`.
+- Keyed T4-Q30 (sidecar v1.0.7, 2026-09-28): commit CRC `0x58C99E3E`, cascade(m=7) `0xF7C81BC4` — suite 9/9 PASS — `results/keyed_q30_test_v1.0.7_20260928.txt` (the v1.0.6 run of 2026-08-22 is kept beside it; the two differ in timing lines only). Six known-answer values in `mcl_keyed_q30_self_test()`; record `keyed_q30_PQ/CASCADE_GUARD_V107_RECORD_20260928.md`.
 - Engine self-test: 7/7 KATs PASS — `results/self_test_v8.1.3_20260822.txt`.
 
 ## Build
@@ -20,22 +20,24 @@ g++ -O3 -std=c++17 -march=native -Wall -Wextra -Wpedantic -Wshadow -Wconversion 
     -DMCL_UNSAFE_ALLOW_INVALID -o <name> <name>.cpp -lm   # root programs (+ -lpthread where noted)
 clang++ -std=c++17 -O3 -I. -I keyed_q30_PQ -I VDF128_T4 <folder>/<name>.cpp -o <name>   # sub-folder programs
 ```
-Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` and `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR/GMP (`-I/opt/homebrew/include -L/opt/homebrew/lib -lmpfr -lgmp` on macOS); `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` needs `-DHDR='"mcl_keyed_q30.hpp"'`; all programs in `p2_hardened_auth/`, `p5_hardened_txauth/` and `P3_CrossPrediction/mcl_gen_series.cpp` use Apple CommonCrypto (macOS only — the engine itself is portable). Python helpers need numpy (and scikit-learn for `xpred.py`). The `results/*.txt` of the 23 root programs are the June-2026 records (engine 6.0.0, KAT-identical to 8.1.3); only the 8.1.3 / v1.0.6 re-runs named above were regenerated.
+Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` and `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR/GMP (`-I/opt/homebrew/include -L/opt/homebrew/lib -lmpfr -lgmp` on macOS); `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` needs `-DHDR='"mcl_keyed_q30.hpp"'`; all programs in `p2_hardened_auth/`, `p5_hardened_txauth/` and `P3_CrossPrediction/mcl_gen_series.cpp` use Apple CommonCrypto (macOS only — the engine itself is portable). Python helpers need numpy (and scikit-learn for `xpred.py`). The `results/*.txt` of the 23 root programs are the June-2026 records (engine 6.0.0, KAT-identical to 8.1.3); only the 8.1.3 / v1.0.6 / v1.0.7 re-runs named above were regenerated; `mcl_postquantum` and `Verification_Suite/mcl_hop_unified` are version 6.1.0 with their June outputs kept beside the new ones (`QUANTUM_SCOPE_NOTE.md`). Every program that includes the keyed sidecar (42 files) was syntax-checked against v1.0.7 on 2026-09-28; `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` needs the scratch-constructor patch shipped in its folder, which applies to v1.0.6 and to v1.0.7.
 
 ## NOT in this archive
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 783 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 807 files (+ this MANIFEST), SHA-256 of every file
 
-### (root)  (46 files)
+Files that the repository's `.gitignore` excludes are not part of the repository and are not listed.
+
+### (root)  (47 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `e4987f5a15a3fbe3f471bba9b32a17fa9e374f67ff3a769e185ef2c7e1e1c02e` |  |
-| `CITATION.cff` | `753366a39de23bf367aba3baa353099e75440baefc1d324881b9d803cb49baf0` |  |
+| `CHANGELOG.md` | `4be7c1b1127511c9f5e184cb73e8a43d99da68b2b069dee8e6cdb76f0c2ccfc7` |  |
+| `CITATION.cff` | `4ca0f2f5768b85de990ef1c582e9614be871ca1c3222a7bd8e785467ab4ae13b` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -45,7 +47,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
-| `README.md` | `cd78a1611a1723e6a2b9f67731822e154b6606b43748e749fe98478a3895f7ee` |  |
+| `QUANTUM_SCOPE_NOTE.md` | `981d4f9518b13d2c47960d5b73d20b31f1fd51d9cc03bca14f5125039231ffdb` |  |
+| `README.md` | `392dd5bacf7302c294a898ba7e23af74f54b44e85649e8e02f45fb21987b44b5` |  |
 | `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
@@ -68,7 +71,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `mcl_omega_independence.cpp` | `463133cef854b5728e614419ecf63a80c9bd41f5ce8563eab7dc7002da04b911` | Verify that different angular frequencies (ω₁,ω₂), with FIXED |
 | `mcl_orth_verify.cpp` | `b777600f785167aa2dc0dc3b68bb2724990af090efabb5e807297edabd2c3e40` | Verify that MCL channels indexed by different (p,q) pairs are |
 | `mcl_paper4_verify.cpp` | `4770a8af84c3083f29c2e4ebd69d3fdc68aac7e5311eda5c52504ae8902d8c87` | Reproduce all numerical claims in Paper 4 (VDF Sequential Function) |
-| `mcl_postquantum.cpp` | `9d0cabcd21b9d9556d5bca5de352d50328151abf4855b220d2f6b5590244ee62` | Verify MCL's resistance to quantum computing attacks. |
+| `mcl_postquantum.cpp` | `ac238023479de0fed5e68cc09dece4184bcb62f39384a88a07a9b17965ba7a66` | Classical diagnostics of the two-oscillator engine; NOT a quantum-security test. |
 | `mcl_practrand.cpp` | `0371f203f1993ece26347395a192ee8f71a2992c0a44111ac9ccfa621ecefb57` | Stream cryptographic-quality bytes from the MCL_T2 engine to |
 | `mcl_reference.cpp` | `140ee9a39a3224e8faf9c0323fc0ba66f5eaadaf23fce6c33e6bcf28dea9167d` | Canonical reference implementation of the MCL coupled chaotic |
 | `mcl_safe_zone_verify.cpp` | `13e2893008f1591bf9bf88943a99de6ea0e80b5b3d43c930ee2a1377f5569214` | Empirically characterizes the Safe Zone bit-extraction regions of |
@@ -79,7 +82,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `q30_macos_validation.cpp` | `d58b0c11796a4036e6b3a216b1a4d4784d7840385358b10c9a30c93fd32354f3` | Validate MCL Q30 (fixed-point engine) cross-platform bit-exactness |
 | `self_test.cpp` | `9971324ad99bde6dea410b2f969443b85db07b77600ca797dd6d2eb2c9ca53bd` | Run the MCL engine built-in self-test verifying all Known Answer |
 
-### results  (29 files)
+### results  (31 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -88,6 +91,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `results/kat_gen_macos.txt` | `959fa8bde760d0957c18e5617c251025b012d21665f1d9e56fd89f9cbfe01733` |  |
 | `results/kat_gen_macos_v8.1.3_20260822.txt` | `00732e5077696d503de2f01b31f3facf51c44bdf8f7230d98f3409a3a4a07f34` |  |
 | `results/keyed_q30_test_v1.0.6_20260822.txt` | `bdd7b17d4b5c3ed7431da2cd37336ac4a4110f0dd48bc9bb6f07b020e944c17f` |  |
+| `results/keyed_q30_test_v1.0.7_20260928.txt` | `ade24653817ce5fed9f9882a7c5d04f286bce8af408f10bacb9a150571d2f75d` |  |
 | `results/mcl_beff_compounding.txt` | `2e4d0c2e8cbe02895e15de7404670062f39b989ca1441acc2ac5875d6c5a086c` |  |
 | `results/mcl_benchmark.txt` | `2b4b54303dd163df0df7b4abc98ae033007c53ab078baa8c51a1503f55b5d2b4` |  |
 | `results/mcl_dynamical_signatures.txt` | `4ae1450f5a1c8308d63685a1ac54eb4b2de6973911f28087beb5f4697978747d` |  |
@@ -100,7 +104,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `results/mcl_omega_independence.txt` | `02f854ab16ad9603dd4acb54492433fd8bf1f70eee226af41215fa2e38a24fb7` |  |
 | `results/mcl_orth_verify.txt` | `b6a49a6037175db04a8844c2ef5bb9cf3db86f0bb23e03c20c15ffaff3659e0e` |  |
 | `results/mcl_paper4_verify.txt` | `a27bbfb46c0f025ac8bb4c61eedb95437cafab30f10064ce27439bc947cbcaad` |  |
-| `results/mcl_postquantum.txt` | `365f1bd4693015bd736f678b8063006dd7a53cee2d404d9602f4fdacbe795f4a` |  |
+| `results/mcl_postquantum.txt` | `29fd400279e13b1c822a290d4e4620b83f8220b7a01c82d23fc42f9cc74ea865` |  |
+| `results/mcl_postquantum_v6.0.0_20260526.txt` | `365f1bd4693015bd736f678b8063006dd7a53cee2d404d9602f4fdacbe795f4a` |  |
 | `results/mcl_practrand.txt` | `ccc393fa030c3d8879c5d1a7c5532a8d0df42fabc7d4ee7375479c79651fd300` |  |
 | `results/mcl_reference.txt` | `4845bdf6a8d7af38632d07d77e5292f993458bf2fc98a32a2c69779210356a9b` |  |
 | `results/mcl_safe_zone_verify.txt` | `3affbed2a99f31106a393b98a8f563fcbc88f262f8ecd9e76bff393153366648` |  |
@@ -113,10 +118,11 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `results/self_test.txt` | `f77482b4c178ed4ec759e09e1d68ef183f24387117b98dbf043bc0c2f95630c6` |  |
 | `results/self_test_v8.1.3_20260822.txt` | `ec20df38c1630e6a60109c99908137cc3d8d0d23108796ccbf5b8bac57eaf92a` |  |
 
-### keyed_q30_PQ  (33 files)
+### keyed_q30_PQ  (39 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
+| `keyed_q30_PQ/CASCADE_GUARD_V107_RECORD_20260928.md` | `b0dde6ce84b0816da962ca4cdcf6766a3c79013d1dd31a7dc9dd24e3b626f86f` | Sidecar v1.0.7 — cascade symmetry check and opt-in seed rule — record |
 | `keyed_q30_PQ/M0_CODEGEN_CLAIM13_20260612.txt` | `94091cd667e5dce60ede9e292741d19c112cc4a68b53c190feb01100cd3e67ac` |  |
 | `keyed_q30_PQ/MCL_CAPACITY_REALIZATION_20260812.txt` | `1e40229ab6b8c2e65d8a4e13e38ab1cdead5f5e707dbf6e965507ad4c22206c9` |  |
 | `keyed_q30_PQ/MCL_CAPACITY_REALIZATION_20260812_v1.1.0.txt` | `672535dc365e7046bf88065efa44a56146ce949b5579c8d3fa4ddc68ca636726` |  |
@@ -130,16 +136,18 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/MCL_KEYED_Q30_SCIENCE2_20260611.txt` | `1606151b0d449f346857b7f0f3d5b9b625788b8dbd7ecec55c474f7d73d439e2` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_SCIENCE3_20260611.txt` | `861b4247ca3f2983beacc7c1593c03ca6b1cd9414218758a16cc5ea3d577dec6` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_SCIENCE_20260611.txt` | `e7d1b57a3cdcd5c272048efc298a0335882df04dd27b2d6b2bc0739da1dcb36e` |  |
+| `keyed_q30_PQ/MCL_KEYED_Q30_V107_COMPARE_20260928.txt` | `1f2111c5154a29fdde6d7ccfeb6e0751eeb8224b272fb2c127aec409aba106ff` |  |
+| `keyed_q30_PQ/MCL_KEYED_Q30_V107_VERIFY_20260928.txt` | `709a441a6803b340100bcca42b175c206ab580faf1b56e8b0d19aef62e7570c3` |  |
 | `keyed_q30_PQ/NOSYM_V106_RECORD_20260822.md` | `bc56e7eb28a32ccf61947d87a1417ae87eba7c57e80cfe34a85ea6df9ce1abdb` | sidecar v1.0.6 — رفض التناظر القابل للوصول من البذرة في `mcl_t4_q30_params_from_key` — 2026-08-22 |
-| `keyed_q30_PQ/README.md` | `7bc88cc5244b9882f8184dd1b2bb7f1531a7dca42307cbc9923df9cf232c9567` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
-| `keyed_q30_PQ/STATUS.md` | `a37afe9a1f1b57b105e7d4b112819207e765daf44b6d70ad22ee1862a9ca2e9e` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
+| `keyed_q30_PQ/README.md` | `dfa2af9bf100b200c98e60eea8b381e1bd41ce4373a62029f25c1ad351bb9283` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
+| `keyed_q30_PQ/STATUS.md` | `c5164b936ecf8290882ef7b91b4288535173528e694d43fc7f009344883c1b49` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
 | `keyed_q30_PQ/dump_keyN.cpp` | `ef0a8649cd46f413b631188b12b8457457b51464d0aca832a587010675d11672` |  |
 | `keyed_q30_PQ/lyap_2osc_signcheck.py` | `c34b8e36fcbc2c773ad444e7f7b676a01789c32704873a0b66aa328d3922291d` |  |
 | `keyed_q30_PQ/lyap_independent_check.py` | `77199d6bf3d0a46250daede2a1019eb5af03d5b17508a5cb1ce0730aebc5d8fc` |  |
 | `keyed_q30_PQ/m0_codegen_probe.c` | `80c52b0977ec2fd6d35e7888685568c6fb7e237468f36bc117cd6b4cc9516606` |  |
 | `keyed_q30_PQ/m0_probe.s` | `68dd9d08e9ec22bed614d9971d3b0d72163d26f8cb7dd711e0c9eca2ab04df50` |  |
 | `keyed_q30_PQ/mcl_capacity_realization.cpp` | `a8fd2f87517f7ef13d19a51fa10ae4af236ec55343d4b83c4e535771b0041fc1` |  |
-| `keyed_q30_PQ/mcl_keyed_q30.hpp` | `71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512` |  |
+| `keyed_q30_PQ/mcl_keyed_q30.hpp` | `05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_ct_test.cpp` | `6a56233a56c3ce1574cdc23f0d04e688bda2b73ab7441df75b97847137999db3` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` | `f09a2460cdf8e8e26d2f200363e16125949da1cd777db1337521148b0fd07f79` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` | `f354a9c90fea2484f848361e78bf8b1cfcb46bd3b8134e26391a050d0661cf72` |  |
@@ -150,6 +158,9 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `keyed_q30_PQ/mcl_keyed_q30_science2.cpp` | `87e4b9ef6e2580b1642b5deba531d02f7c66310314b0ef2aad254493a43342dd` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_science3.cpp` | `9ca5703dc844fec31302e0f35b417afb502f3c3062646ab6b6881815e7d232d3` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_test.cpp` | `a123a0a667a8612f9b6e2092c72fc935807a0bc2fd82ee0deb781ccd8bc3d273` |  |
+| `keyed_q30_PQ/mcl_keyed_q30_v107_compare.py` | `95dd482b4d9d1415752a7e724903637fbec88f4ae78fc726c1af2862ac7e17a4` |  |
+| `keyed_q30_PQ/mcl_keyed_q30_v107_dump.cpp` | `a250ee787139d8296739a671166eb5b3ac9bcabc4d3eaee02dc687e6af4469f6` |  |
+| `keyed_q30_PQ/mcl_keyed_q30_v107_verify.cpp` | `198e8f131f456b968d4cbfd923cb640a9e0a3f9bbce083d95f038c60ef53d15e` |  |
 
 ### VDF128_T4  (61 files)
 
@@ -309,7 +320,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `p5_hardened_txauth/results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `0b7b9ebbe7a1890d1f7df10fe0116f18e6b815abecd693a4136e6c075075c9bb` |  |
 | `p5_hardened_txauth/results_v3_battery_v8.1.3_20260904.txt` | `abe5f6a26a232ded5e58209bec2ac027cbd9578545d9ee2ec20a8fb510a6b08c` |  |
 
-### M1_M2_apple_verification  (44 files)
+### M1_M2_apple_verification  (40 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -318,10 +329,6 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `M1_M2_apple_verification/README.md` | `52bc35cd7e7b69acbbb01cc4eb9904b285e469ac0c41510b5d643be0335df985` | M1/M2 Apple-libm Verification — Paper 1 §III.B.3 |
 | `M1_M2_apple_verification/SHA256SUMS` | `dd28a25fb402b4e10a5e7868db5598dcd9a590f1c195a3bce10d121aada79844` |  |
 | `M1_M2_apple_verification/_engine_equivalence_20260916/ENGINE_EQUIVALENCE_20260916.md` | `c632d479dc808a877c67246200ab42ae8284a67b846a188ed697a4cf721a46a3` | Engine-equivalence check for the M1_M2 tools — v6.0.0 (engine of record) vs v8.1.3 (repository root) — 2026-09 |
-| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_hd_throughput_v6.out` | `062b791e3b4fc659b71def54eac89e0a2ab976566a3a1e0458ac7b4555309e7c` |  |
-| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_hd_throughput_v8.out` | `55767ed7d6a56a3fe2d4ccf4e5ba5f90adf1f34e279c90cad9a129515ff744ee` |  |
-| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_paper2_L2_verify_v6.out` | `1133ba55c11544c04f64b4db1631a0da3833caca63a5264569f8305aaf4df09c` |  |
-| `M1_M2_apple_verification/_engine_equivalence_20260916/mcl_paper2_L2_verify_v8.out` | `ec5f88ef63c0cb46ce1f64b4abc5bb24ba303a5658f4ca47a8860f67243facee` |  |
 | `M1_M2_apple_verification/bifsweep_coarse_apple_20260719.csv` | `a96837f02b60f6fe9669cb65d8156ab4ca9ef0d56934532d6908226efa2d3fcb` |  |
 | `M1_M2_apple_verification/bifsweep_fine_apple_20260719.csv` | `ebd7d1a3fbc58dc7952eda3e1148df94fb011de69eeb9a69e2737be3d6e73376` |  |
 | `M1_M2_apple_verification/bytezone_scan_apple_20260704.log` | `39eebdc634d11186de5331e7759cce4f9e1b3f7b725b92b8a7aa3f79cf7094fb` |  |
@@ -367,18 +374,18 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_CrossPrediction/xpred.py` | `c1654e6aee3d69b62296be0476de104bc5f9c0aa99aacf0f6a4efb293de0401a` |  |
 | `P3_CrossPrediction/xpred_sweep_20260822.log` | `26b870062dfa5657a1be20ba6f18d1f46265db80772b811c392ff58ae474ffc7` |  |
 
-### Verification_Suite  (29 files)
+### Verification_Suite  (30 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `Verification_Suite/README.md` | `ac6a8505bfc877ff059054bf73e47cc5520ae8b9b5fe54487d7687ae8b470a8e` | Verification_Suite — legacy science/verification tests |
+| `Verification_Suite/README.md` | `562c8a6fbd78661d363e9c5461deedd7b6973c9c71d4df8475e01987455f0db0` | Verification_Suite — legacy science/verification tests |
 | `Verification_Suite/bench_diagnose.cpp` | `5852bf88575ff5011cd098b40a00ad14de278713bb50cafa31a6ecc0c726b330` |  |
 | `Verification_Suite/mcl_auth_verify.cpp` | `6290a40aa40ccd0c306f324cad7716c40ef186aff7b5ae2b61b4bdf515e7ec7e` |  |
 | `Verification_Suite/mcl_burnin_sweep.cpp` | `24982c1da2f41cc85d6e1f69e303b0f1c7fd934a832b3cc8d887cc2562ab1207` |  |
 | `Verification_Suite/mcl_decimation_sweep.cpp` | `758875ed7676185f9bc3340982ccc8a0e3f4e94d5850cd6b2ac481f175223df6` |  |
 | `Verification_Suite/mcl_gs_jacobi_independence.cpp` | `58a61680ce293f34a455367644fee005adb1fcabada260fd05b08164a34451ae` |  |
 | `Verification_Suite/mcl_hex7_proto.cpp` | `2cc74f70b92b6074140c8e350ed72f4e45eb1f808d480c7aac2024a2fe83e5a8` |  |
-| `Verification_Suite/mcl_hop_unified.cpp` | `c1d4d892bd001c4603f99bf0e44e03ac08ee37da417578c0a818159523f9adaf` |  |
+| `Verification_Suite/mcl_hop_unified.cpp` | `5831e5ffd3367f46ecb10baa687c97b96f45ffbca71a2adb4b4c2499aef5f9ee` |  |
 | `Verification_Suite/mcl_k_independence.cpp` | `51bc223d5c403654fe029d8e329098420bbe2bbd4897aefd1834b03bfa6c3dad` |  |
 | `Verification_Suite/mcl_lyap_ratio.cpp` | `31fb90c2ff7f9aaa291172a5b85bfaa59a8a73d3bfbed2a6d4c7d42deba9dde6` |  |
 | `Verification_Suite/mcl_numerical_verify.cpp` | `3e4e456f55eb096b142ab79b06102dd61648d4418272fc8b5e7ae73708762b73` |  |
@@ -392,7 +399,8 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `Verification_Suite/results/mcl_decimation_sweep.txt` | `d383c3c3943dc5ef5a8ee56a383c9d3be208ef022160227beefcdba118e451c0` |  |
 | `Verification_Suite/results/mcl_gs_jacobi_independence.txt` | `df40a4b16052e5f5a2d733cfdab0001defd16ce1c4f0f1ff8e744c694ed49010` |  |
 | `Verification_Suite/results/mcl_hex7_proto.txt` | `114ad8215f165572d0345861c5682e38324e882323db03b4ae6c3c6f43afc7f0` |  |
-| `Verification_Suite/results/mcl_hop_unified.txt` | `93126ee31ddee46bc0fefb8ea1660eaa3875809462f8fdd70b56612a248c76e2` |  |
+| `Verification_Suite/results/mcl_hop_unified.txt` | `378bff18554102a7a1a3761586049f06e07acfbc220af4d6264e76080837f5f1` |  |
+| `Verification_Suite/results/mcl_hop_unified_v6.0.0_20260526.txt` | `93126ee31ddee46bc0fefb8ea1660eaa3875809462f8fdd70b56612a248c76e2` |  |
 | `Verification_Suite/results/mcl_k_independence.txt` | `163ef48b7d19a6607e3a738c7f67e657f3d505c3d69f5bb9d34ef853a9fcecca` |  |
 | `Verification_Suite/results/mcl_lyap_ratio.txt` | `f6864c077fa4a7d0d944930833b9616d3c0cd2de491d6a7ef18b0c36384791d9` |  |
 | `Verification_Suite/results/mcl_numerical_verify.txt` | `4d0be606100e3debd45f0823ae1f6c4dc7d0c00b3c495539e635005b099ec33f` |  |
@@ -586,7 +594,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P1_ReviewMeasurements_20260909b/mcl_p1_singlewindow_bytes.cpp` | `408f13fb5c9e9ceae076841a6b0044e8504740d95fe7e04f4f3b7c5a71568c36` |  |
 | `P1_ReviewMeasurements_20260909b/singlewindow_apple_20260909.log` | `28c67568d1879e941228658951c4c17280422ea221f42f478974f1669f533f63` |  |
 
-### P3_DeskRejectMeasurements_20260905  (93 files)
+### P3_DeskRejectMeasurements_20260905  (92 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -657,7 +665,6 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_jacobi_full_lyapunov.csv` | `54dd548e169e3fd7e3543ff89ef37bbcd04713fac4e4218114d661cd5adea49b` |  |
 | `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_jacobi_full_pairs.csv` | `a8f0550c36605c2063444826b0ab3c6190aaa4d18a45e6014ac8bf1ba1149ed2` |  |
 | `P3_DeskRejectMeasurements_20260905/jacobi_orth/res_jacobi_full_summary.txt` | `0d8138aae09182ae01d2f603d4d5250c75ca668ad04fb667a813e5074c8773e7` |  |
-| `P3_DeskRejectMeasurements_20260905/pairs_dist/__pycache__/pairs_ks.cpython-313.pyc` | `074a20d0a1ee9acf7b2198de85e1b42a9907e6c47bb5e9b66a5aefc476523c01` |  |
 | `P3_DeskRejectMeasurements_20260905/pairs_dist/evidence_full_20260905.tsv` | `7746150d88a436ac0fc3ce4cf5968f4d8666fa80445e1a79b58c51181278a40f` |  |
 | `P3_DeskRejectMeasurements_20260905/pairs_dist/mcl_orth_verify_full_20260905.txt` | `9748c35958b6a52c706974da159fe68f2afec48e70ae260bf1d2a349c4cdec3f` |  |
 | `P3_DeskRejectMeasurements_20260905/pairs_dist/pairs_ks.py` | `afca5571950b4e3831056350b0d3e734b6dfeaaf128a733acf936272e48f7423` |  |
@@ -694,11 +701,10 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P3_Fig3_Regeneration_20260903/make_paper3_fig3.py` | `3281ce36d30f47b1a8c6f6fd963f99ecd1397d39bdbcdf3a55d991deea827182` |  |
 | `P3_Fig3_Regeneration_20260903/paper3_fig3.png` | `110cc7b0de4bfcea428acfdca99267cd7e505427422c5f86c33d7fbe21b8092a` |  |
 
-### P3_NonlinearDependence_20260603  (15 files)
+### P3_NonlinearDependence_20260603  (14 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P3_NonlinearDependence_20260603/.DS_Store` | `cb462ff909e4a54f274ed4db9088836bfb5a08f38361b5219f9cdc64f0a7fc63` |  |
 | `P3_NonlinearDependence_20260603/Paper3_v3_MANIFEST.md` | `562de9fd892e9cf95d71a157cbcdd3539de0cae53f002e9fbc0072d9e8a986e1` | Paper 3 v3 — Nonlinear Dependence Test Suite: MANIFEST |
 | `P3_NonlinearDependence_20260603/README.md` | `184f9bc3bd263dff657ddc6d05a615126a9a098786f7fb71c08c5d281a02bc0c` | P3_NonlinearDependence_20260603 — Paper 3 nonlinear-dependence campaign (June 2026) |
 | `P3_NonlinearDependence_20260603/mcl_block_joint_test.cpp` | `473c6247e02d7dd7237c2c02ef68007c01df600ef87fd7578b42a9cce6d497f7` |  |
@@ -763,6 +769,21 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewDev_20260925/walkdp_toy_s32_20260925.log` | `97a200bd07e9a21cb2631536aafcbac2bbf46ed7a2c5eb5bc4388649485f6f4a` |  |
 | `P4_ReviewDev_20260925/walkdp_toy_s37_MggN_20260925.log` | `572076a85660d185a1ca27a7039e60f3b0d5f29c90a3ad930bd5d55fe8363137` |  |
 
+### P4_ReviewDev_20260927  (10 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P4_ReviewDev_20260927/README.md` | `18ffb94fd622c8811952ecf8efebc29f3df7c84d552aa38a738477e45f998a3b` | P4_Dev_20260927 — (1) exhaustive translation-symmetry enumeration on reduced-width replicas of the unclocked m |
+| `P4_ReviewDev_20260927/SHA256SUMS_16.txt` | `ba9e2732bc7435ade6fe3b43254b011e5930a7f4093636101fc54da8960fb2cd` |  |
+| `P4_ReviewDev_20260927/host_20260927.txt` | `1b8ffa8cfed17f66e53dd375ab10fd3b1334cc02221b36012c4e53b5487a6c9c` |  |
+| `P4_ReviewDev_20260927/symenum.c` | `8055e85adfbde8c6beee778576e754ae2a4e88c20d08d4d951d013bbd7d727b4` |  |
+| `P4_ReviewDev_20260927/symenum_n2w8_20260927.log` | `e9f6a0bca5f91079c2ae1dfd2e118201d9e17c492e4b06da952afd9924573e04` |  |
+| `P4_ReviewDev_20260927/symenum_n3w8_20260927.log` | `ee5509e9269770ab0763870ff9b1900128bd3a8acb2cc9d4bf33fc93a980647d` |  |
+| `P4_ReviewDev_20260927/symenum_n4w6_20260927.log` | `adeb96ba049313da2939ca6c01b616931829df28c1d7b80d8f79d372f9da178f` |  |
+| `P4_ReviewDev_20260927/walkdp_sim.c` | `4a2bed6acfcc056de5da13477d148ec1f41a1388191586906c6b7938a708ef77` |  |
+| `P4_ReviewDev_20260927/walkdp_smallM_heavy_20260927.log` | `bd614fedf9cd9113791cadfc275d494fb0dabf0086641680ff50a08318c34740` |  |
+| `P4_ReviewDev_20260927/walkdp_smallM_light_20260927.log` | `df5862f2e450440b07831996ad1c815dd807e9b1359cf5c89ce3fdd383746f2e` |  |
+
 ### P4_ReviewMeasurements_20260904  (27 files)
 
 | File | SHA-256 | Note |
@@ -795,7 +816,7 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260904/vdf128_t4_standalone_linux_glibc_20260904.log` | `1dd0e0df47b2e18a7be786575e0bc00b7f8698b5f14f0faf7e4e724ccdc960e9` |  |
 | `P4_ReviewMeasurements_20260904/vector4_q30_linux_glibc_20260904.log` | `d39449f0df98ddc25b78b8f31f8558ebd69822fccaa123fde495b216c1f7d5eb` |  |
 
-### P4_ReviewMeasurements_20260905  (63 files)
+### P4_ReviewMeasurements_20260905  (62 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -828,7 +849,6 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P4_ReviewMeasurements_20260905/p4_vdf128v3_weaklane.cpp` | `7ad87bcc590444a09fe2a5b98c7b84297ebca866a74d895242119537dcad92e7` |  |
 | `P4_ReviewMeasurements_20260905/p4_vdf128v3_weakpair.cpp` | `4f374c2b8e6a154a4932781e910f771af4053f6fcf8969d1b6ba535640f2f167` |  |
 | `P4_ReviewMeasurements_20260905/q30_lut_int32le.bin` | `f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d` |  |
-| `P4_ReviewMeasurements_20260905/run_v3_all.out` | `bacc1be72b258a9cea61eba86c60ff4618c1d2f187aa36177a2413e18d55c8ce` |  |
 | `P4_ReviewMeasurements_20260905/run_v3_all.sh` | `fed8b5fe4477d931d59b70d016350f64406ad01bae1b67c9fbd5041a69156ca0` |  |
 | `P4_ReviewMeasurements_20260905/sha256_chain_bench_apple_20260905.log` | `239a4a7fbb810b510b9ebf6d8ff07dd60b361aabef55d2468316fa959bf98a87` |  |
 | `P4_ReviewMeasurements_20260905/sha256_vs_t4_bench_apple_20260905.log` | `a0331d60e0d388e0bc26f7d5b7156f2e1de36aa6f4c6f9cff9b7093478be3c6a` |  |
@@ -961,6 +981,22 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `P5_ReviewMeasurements_20260925/mcl_txauth_verifier_state.cpp` | `47cf6a97a31b8144db06a6ba6e490f421ce8c71581bdefb4138de01263b73266` |  |
 | `P5_ReviewMeasurements_20260925/verifier_state_apple_20260925.log` | `7d985522aa1dc0b314fa750442d759548c59da466e5f131e2f09b18150629b6d` |  |
 
+### Quantum_Structural_Analysis_20260927  (11 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `Quantum_Structural_Analysis_20260927/README.md` | `477aa67a5fdb71782c74648b718342bd9426bd2ace6000a62ce7dfca1f1e27d2` | Quantum_Structural_Analysis — structural inventory and Grover resource model |
+| `Quantum_Structural_Analysis_20260927/SHA256SUMS.txt` | `77c2551f0715a3b16616511b38259546d326462fd1c0dbb55ce8be4491ca3f2d` |  |
+| `Quantum_Structural_Analysis_20260927/grover_ref.py` | `785068b07f3c07398fa14676b0f028e6ff05989fd99e857b1aa32bed8fbbd57b` |  |
+| `Quantum_Structural_Analysis_20260927/grover_ref_check_20260928.log` | `4307e2142678e07d03deb2a04e52c2a80cffe352968be4de0f2e5eb7e9357df2` |  |
+| `Quantum_Structural_Analysis_20260927/grover_rev3_20260928.log` | `a2b4b511a167a30787c22a1a53714a6826bf0992af28ee5d696fc4d559bbf24e` |  |
+| `Quantum_Structural_Analysis_20260927/host_20260928.txt` | `38d5e7e4adb0c8e7be170738ed9759f20e0a18ab32a8e0080bcdedceb9ed5e5f` |  |
+| `Quantum_Structural_Analysis_20260927/mcl_grover_resource_estimate.cpp` | `e6d72996ee1bb57a5462717a802945faadea54032956a508d311ce32a9a17325` |  |
+| `Quantum_Structural_Analysis_20260927/mcl_qstruct_inventory.cpp` | `50c745ac48fcb46da98ff5d5bcd2f878fad05309a890744da2944317e2d4ab26` |  |
+| `Quantum_Structural_Analysis_20260927/qstruct_rev3_20260928.log` | `6e028fa9ffed609b577708b9f4bc1a3e22870a2c3cd8bed23cd3366bae6c50bf` |  |
+| `Quantum_Structural_Analysis_20260927/theory_rank_enumeration.py` | `4cb15218d19849c3e5c0dc60e8e1b3bc76ab9a3ca8e1e9da274bf0418a392e64` |  |
+| `Quantum_Structural_Analysis_20260927/theory_rank_enumeration_20260928.log` | `7283ebc28998f208431d97e7d025d2f31e7401c474c04d8ea687d8bc7e5e95b1` |  |
+
 ### hd_v2  (5 files)
 
 | File | SHA-256 | Note |
@@ -972,4 +1008,4 @@ Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `k
 | `hd_v2/mcl_hd_verify_v2.cpp` | `984b5ff1d35f2f8f8ea7bd349fb8f8384ae56ba12965dbfc57c247a791a321af` |  |
 
 ---
-*Generated 2026-08-22 by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860).*
+*Generated by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860), except `mcl_postquantum.cpp`, which is version 6.1.0 since v0.2.15.*

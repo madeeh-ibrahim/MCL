@@ -1,0 +1,8 @@
+A-unary  WIDE   iterT 2^23.437 oT 2^37.736 oD 2^34.909  MD40 2^287.95  prim (61, 2017, 131070, 131070)
+A-unary  NARROW iterT 2^24.182 oT 2^38.481 oD 2^35.908  MD40 2^289.69  prim (61, 2017, 131070, 131070)
+B-unary  WIDE   iterT 2^21.630 oT 2^35.929 oD 2^32.324  MD40 2^283.56  prim (31, 1024, 65535, 512)
+B-unary  NARROW iterT 2^21.680 oT 2^35.979 oD 2^32.358  MD40 2^283.64  prim (31, 1024, 65535, 512)
+B-QROAM  WIDE   iterT 2^17.907 oT 2^32.207 oD 2^27.428  MD40 2^274.94  prim (31, 1024, 3040, 512)
+B-QROAM  NARROW iterT 2^18.459 oT 2^32.759 oD 2^28.194  MD40 2^276.26  prim (31, 1024, 3040, 512)
+checked 64 values, mismatches 0
+AES JNRV log2(1.39*2^245) = 245.475  AES oracle T log2 = 17.206  gates log2 = 20.228
