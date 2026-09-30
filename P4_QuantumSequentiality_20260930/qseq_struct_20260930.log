@@ -1,0 +1,85 @@
+qseq_struct (MCL-P4-QSEQ-STRUCT-2026-0930-001) -- engine 8.1.3, VDF128-T4 v4 clocked map, probes from clock 10000
+  weights of "VDF128-T4-KAT-01": p12=279585085 q12=16285846 p13=928956068 q13=788364723 p14=516116555 q14=613731518 p23=946679299 q23=34137917 p24=351651783 q24=638991204 p34=231823904 q34=419155050
+  weights of "VDF128-T4-battery-input": p12=34498284 q12=808529583 p13=484862660 q13=741849080 p14=550800402 q14=407365630 p23=948080496 q23=1054803268 p24=665178592 q24=285826809 p34=735334702 q34=620534445
+  K = 12.0, K_phase = 8202783306
+  [CONSISTENCY] sine table in memory == ../P4_ReviewMeasurements_20260925/q30_lut_int32le.bin ok
+  [CONSISTENCY] four word updates composed == mcl_q30t4_iterate_raw (65,536 states) ok
+
+== Part 1 (N1): translations commuting with one clocked round ==
+  [COMPUTED] "VDF128-T4-KAT-01": parity rank 4 of 4 -> no non-zero translation of (Z/2^32)^4 commutes with the round (exact criterion)
+  [MEASURED] "VDF128-T4-KAT-01": 255 offsets (every word in {0,1,2,3}*2^30, 15 of them half-turns); commuting on all 4096 states: 0 half-turn, 0 other; offsets with any commuting state: 0
+  [EXPECTATION] "VDF128-T4-KAT-01": parity rank 4 and 0 of 255 offsets commute on any state as written
+  [COMPUTED] "VDF128-T4-battery-input": parity rank 4 of 4 -> no non-zero translation of (Z/2^32)^4 commutes with the round (exact criterion)
+  [MEASURED] "VDF128-T4-battery-input": 255 offsets (every word in {0,1,2,3}*2^30, 15 of them half-turns); commuting on all 4096 states: 0 half-turn, 0 other; offsets with any commuting state: 1
+  [EXPECTATION] "VDF128-T4-battery-input": parity rank 4 and 0 of 255 offsets commute on any state DIFFERS
+  control weight set (every weight of the first instance made even): parity rank 0, half-turn offsets commuting on all 4096 states: 15 of 15
+  [CONTROL] all-even weights: rank 0 and 15 of 15 half-turns commute on the engine ok
+
+== Part 1b (N1, probabilistic): offsets that change few coupling arguments ==
+  (part added after trial run 1 of 2026-09-30, whose Part 1 found one commuting state for the second instance;
+   its expectation below was written after that run, not before it)
+  [COMPUTED] table indices i with inc(i) == inc(i + m*2^14): m=1 2, m=2 2, m=3 2 (of 65,536)
+  [COMPUTED] "VDF128-T4-KAT-01": over the 255 offsets, fewest arguments moved = 2, fewest word updates touched = 2; offsets moving 1 / 2 / 3 arguments: 0 / 1 / 3
+  [MEASURED] "VDF128-T4-KAT-01" offset (00000000,00000000,00000000,80000000) moves a14(+2/4 turn) a24(+2/4 turn) -- 2 word update(s): one round commutes on 0 of 2^22 states; predicted 2^-30.00 per round = 0.00 states (z = -0.1); two rounds running: 0
+  [COMPUTED] "VDF128-T4-battery-input": over the 255 offsets, fewest arguments moved = 1, fewest word updates touched = 1; offsets moving 1 / 2 / 3 arguments: 2 / 9 / 18
+  [MEASURED] "VDF128-T4-battery-input" offset (80000000,00000000,00000000,00000000) moves a12(+2/4 turn) -- 1 word update(s): one round commutes on 132 of 2^22 states; predicted 2^-15.00 per round = 128.00 states (z = +0.4); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,40000000,00000000,00000000) moves a21(+1/4 turn) a24(+3/4 turn) -- 1 word update(s): one round commutes on 131 of 2^22 states; predicted 2^-15.00 per round = 128.00 states (z = +0.3); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,80000000,00000000,00000000) moves a21(+2/4 turn) a24(+2/4 turn) -- 1 word update(s): one round commutes on 123 of 2^22 states; predicted 2^-15.00 per round = 128.00 states (z = -0.4); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,c0000000,00000000,00000000) moves a21(+3/4 turn) a24(+1/4 turn) -- 1 word update(s): one round commutes on 135 of 2^22 states; predicted 2^-15.00 per round = 128.00 states (z = +0.6); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,00000000,40000000,00000000) moves a34(+3/4 turn) a43(+2/4 turn) -- 2 word update(s): one round commutes on 0 of 2^22 states; predicted 2^-30.00 per round = 0.00 states (z = -0.1); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,00000000,80000000,00000000) moves a34(+2/4 turn) -- 1 word update(s): one round commutes on 128 of 2^22 states; predicted 2^-15.00 per round = 128.00 states (z = +0.0); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (80000000,00000000,80000000,00000000) moves a12(+2/4 turn) a34(+2/4 turn) -- 2 word update(s): one round commutes on 0 of 2^22 states; predicted 2^-30.00 per round = 0.00 states (z = -0.1); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,00000000,c0000000,00000000) moves a34(+1/4 turn) a43(+2/4 turn) -- 2 word update(s): one round commutes on 0 of 2^22 states; predicted 2^-30.00 per round = 0.00 states (z = -0.1); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,00000000,00000000,80000000) moves a42(+2/4 turn) a43(+2/4 turn) -- 1 word update(s): one round commutes on 140 of 2^22 states; predicted 2^-15.00 per round = 128.00 states (z = +1.1); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,00000000,40000000,80000000) moves a42(+2/4 turn) a34(+3/4 turn) -- 2 word update(s): one round commutes on 0 of 2^22 states; predicted 2^-30.00 per round = 0.00 states (z = -0.1); two rounds running: 0
+  [MEASURED] "VDF128-T4-battery-input" offset (00000000,00000000,c0000000,80000000) moves a42(+2/4 turn) a34(+1/4 turn) -- 2 word update(s): one round commutes on 0 of 2^22 states; predicted 2^-30.00 per round = 0.00 states (z = -0.1); two rounds running: 0
+  [COMPUTED] census, 20000 inputs "qseq-census-00000.." through the v4 derivation: fewest word updates touched by an offset = 1 / 2 / 3 / 4 for 9906 / 8679 / 1415 / 0 weight sets; an offset moving a single argument: 6595 (32.98%)
+  reading: a weight set whose fewest-touched count is w has a one-round relation F(x + delta) = F(x) + delta of probability about 2^(-15 w)
+  [EXPECTATION] every offset moving <= 2 arguments commutes at the table-predicted rate (5 sd); never two rounds running as written
+
+== Part 2 (N2): additive differences (word-wise mod 2^32) through r clocked rounds ==
+  207 input differences: 64 random, 128 single-word 2^b, 15 half-turn; n = 2^14 random states per difference
+  [MEASURED] "VDF128-T4-KAT-01" r=1: largest multiplicity (of 16384) -- random 1; single-word 1 at (00000001,00000000,00000000,00000000) (0 of 128 above 2); half-turn 1 (0 of 15 above 2); most frequent 'difference unchanged' count: 0 / 0 / 0
+  [MEASURED] "VDF128-T4-KAT-01" r=2: largest multiplicity (of 16384) -- random 1; single-word 1 at (00000001,00000000,00000000,00000000) (0 of 128 above 2); half-turn 1 (0 of 15 above 2); most frequent 'difference unchanged' count: 0 / 0 / 0
+  [MEASURED] "VDF128-T4-KAT-01" r=3: largest multiplicity (of 16384) -- random 1; single-word 1 at (00000001,00000000,00000000,00000000) (0 of 128 above 2); half-turn 1 (0 of 15 above 2); most frequent 'difference unchanged' count: 0 / 0 / 0
+  [MEASURED] "VDF128-T4-battery-input" r=1: largest multiplicity (of 16384) -- random 1; single-word 1 at (00000001,00000000,00000000,00000000) (0 of 128 above 2); half-turn 2 (0 of 15 above 2); most frequent 'difference unchanged' count: 0 / 1 / 2
+  [MEASURED] "VDF128-T4-battery-input" r=2: largest multiplicity (of 16384) -- random 1; single-word 1 at (00000001,00000000,00000000,00000000) (0 of 128 above 2); half-turn 1 (0 of 15 above 2); most frequent 'difference unchanged' count: 0 / 0 / 0
+  [MEASURED] "VDF128-T4-battery-input" r=3: largest multiplicity (of 16384) -- random 1; single-word 1 at (00000001,00000000,00000000,00000000) (0 of 128 above 2); half-turn 1 (0 of 15 above 2); most frequent 'difference unchanged' count: 0 / 0 / 0
+  [EXPECTATION] r = 2 and r = 3: largest multiplicity <= 2 for every difference, both instances as written
+  controls on 26 of the differences, r = 1..3: engine with K_phase = 0 -> smallest multiplicity 16384, smallest 'unchanged' 16384; linear coupling -> smallest multiplicity 16384 (of 16384)
+  [CONTROL] engine with K_phase = 0 (a translation map): every difference unchanged ok
+  [CONTROL] linear-coupling sweep (affine map): one output difference per input difference ok
+
+== Part 3 (N3): image fraction of each single-word update, all 2^32 inputs ==
+  random function on 2^32 points: E = 1 - 1/e = 0.632121, sd = 4.76e-06
+  controls: bijection v + c -> 1.000000 ; hashed random function -> 0.632116 (z = -0.90)   [time] 36.5 s
+  [CONTROL] bijection v + c: image fraction exactly 1                              ok
+  [CONTROL] hashed random function: image fraction within 1e-4 of 1 - 1/e          ok
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0930, word 1 (q = 16285846, 788364723, 613731518): image fraction 0.632126 (z = +1.2 against a random function)   [time] 45.6 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0930, word 2 (q = 16285846, 34137917, 638991204): image fraction 0.632128 (z = +1.5 against a random function)   [time] 46.0 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0930, word 3 (q = 788364723, 34137917, 419155050): image fraction 0.632130 (z = +2.0 against a random function)   [time] 44.8 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0930, word 4 (q = 613731518, 638991204, 419155050): image fraction 0.632135 (z = +3.1 against a random function)   [time] 43.8 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0931, word 1 (q = 16285846, 788364723, 613731518): image fraction 0.632113 (z = -1.7 against a random function)   [time] 50.7 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0931, word 2 (q = 16285846, 34137917, 638991204): image fraction 0.632121 (z = +0.0 against a random function)   [time] 44.7 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0931, word 3 (q = 788364723, 34137917, 419155050): image fraction 0.632111 (z = -2.1 against a random function)   [time] 45.2 s
+  [MEASURED] "VDF128-T4-KAT-01" context 31a6e0931, word 4 (q = 613731518, 638991204, 419155050): image fraction 0.632130 (z = +1.9 against a random function)   [time] 44.3 s
+  [MEASURED] "VDF128-T4-battery-input" context 31a6e0932, word 1 (q = 808529583, 741849080, 407365630): image fraction 0.632124 (z = +0.8 against a random function)   [time] 44.2 s
+  [MEASURED] "VDF128-T4-battery-input" context 31a6e0932, word 2 (q = 808529583, 1054803268, 285826809): image fraction 0.632117 (z = -0.8 against a random function)   [time] 44.0 s
+  [MEASURED] "VDF128-T4-battery-input" context 31a6e0932, word 3 (q = 741849080, 1054803268, 620534445): image fraction 0.632121 (z = +0.0 against a random function)   [time] 44.0 s
+  [MEASURED] "VDF128-T4-battery-input" context 31a6e0932, word 4 (q = 407365630, 285826809, 620534445): image fraction 0.632131 (z = +2.1 against a random function)   [time] 42.9 s
+  range over the 12 enumerations: 0.632111 .. 0.632135
+  [EXPECTATION] every single-word image fraction within 0.01 of 1 - 1/e            as written
+
+== Part 4 (N4): amplitude of the nonlinear term ==
+  [COMPUTED] max |sin| entry = 1073741824 (2^30 = 1073741824); one coupling term moves a phase by up to 1.9099 turns; three terms per word: up to 5.7296 turns
+  reading: the nonlinear term wraps the circle; there is no small-parameter regime in which the round is close to affine
+
+== Part 5 (N5): birthday probe of one clocked round ==
+  [MEASURED] 2^24 random states, one clocked round: 0 repeated outputs (random function on 2^128: expected 2^-81)   [time] 4.9 s
+  control: the same round with its output cut to 20 bits: 15728640 repeated outputs
+  [CONTROL] 20-bit output cut: repeated outputs found by the same code             ok
+  [EXPECTATION] one clocked round, 2^24 states: 0 repeated outputs                 as written
+
+== Summary ==
+  controls 6 of 6 ok; consistency checks 2 of 2 ok; expectations written before the run: 6 compared, 1 differ
+  [time] total 587.7 s
