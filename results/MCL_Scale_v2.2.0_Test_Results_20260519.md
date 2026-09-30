@@ -997,7 +997,7 @@ The four-lens framework gives a consistent reading at both extreme scale points:
   ./mcl_scale --5m    (Run C)
   ./mcl_scale --10m   (Run D)
   ```
-- **Working directory**: `/Users/madeehibrahim/Desktop/MCL Project/Main Core`
+- **Working directory**: `Main Core/` of the project tree (local path removed)
 - **Run dates**: May 13-19, 2026
 - **Total wall time across four runs**: 18,310.6 seconds (~ 5.09 hours)
 - **Threads**: 1 (single-thread, no OpenMP) in all four runs

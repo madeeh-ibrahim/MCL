@@ -1,0 +1,17 @@
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+tent mu=1.2000: l1=+0.1910 per=0 acf max64=0.984@4 tail=0.957@68 far=0.893@4088
+tent mu=1.2500: l1=+0.2316 per=0 acf max64=0.970@4 tail=0.920@68 far=0.883@4014
+tent mu=1.3000: l1=+0.2723 per=0 acf max64=0.937@4 tail=0.893@166 far=0.859@4070
+tent mu=1.3500: l1=+0.3108 per=0 acf max64=0.893@1 tail=0.836@70 far=0.175@4095
+tent mu=1.4000: l1=+0.3389 per=0 acf max64=0.861@1 tail=0.285@65 far=0.016@4094
+tent mu=1.4500: l1=+0.3680 per=0 acf max64=0.827@1 tail=0.034@73 far=0.016@4087
+tent mu=1.5000: l1=+0.3957 per=0 acf max64=0.794@1 tail=0.027@505 far=0.022@4020
+tent mu=1.5500: l1=+0.4193 per=0 acf max64=0.761@1 tail=0.015@134 far=0.019@4001
+tent mu=1.6000: l1=+0.4448 per=0 acf max64=0.726@1 tail=0.016@322 far=0.015@4091
+tent mu=1.6500: l1=+0.4699 per=0 acf max64=0.677@1 tail=0.014@373 far=0.016@4091
+tent mu=1.7000: l1=+0.4910 per=0 acf max64=0.618@1 tail=0.016@156 far=0.010@4071
+tent mu=1.7500: l1=+0.5138 per=0 acf max64=0.585@1 tail=0.013@474 far=0.011@4021
+tent mu=1.8000: l1=+0.5362 per=0 acf max64=0.552@1 tail=0.012@480 far=0.011@4093
+tent mu=1.8500: l1=+0.5630 per=0 acf max64=0.495@1 tail=0.014@75 far=0.011@4054
+tent mu=1.9000: l1=+0.5902 per=0 acf max64=0.437@1 tail=0.011@500 far=0.010@4084
+tent mu=1.9500: l1=+0.6157 per=0 acf max64=0.354@1 tail=0.013@129 far=0.010@4015

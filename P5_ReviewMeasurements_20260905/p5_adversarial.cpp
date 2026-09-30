@@ -101,11 +101,14 @@ int main(int argc,char**argv){
             double pab=swt[(size_t)a*TB+b]/N; double r=(pab-pa*pb)/std::sqrt(pa*(1-pa)*pb*(1-pb));
             if(std::fabs(r)>maxabs){ maxabs=std::fabs(r); ma=a; mb=b; } } }
     double zmax=maxabs/nf;
-    // Bonferroni over 92,160 tests at alpha=0.001 -> two-sided threshold ~4.6 sigma
+    // Bonferroni over 92,160 tests at alpha=0.001 -> two-sided threshold 5.72 sigma
+    // (2026-09-30: the line printed "~4.6 sigma" in the 2026-09-05 record; 4.6 sigma is a
+    //  family-wise alpha of ~0.39, not 0.001. The verdict logic was and is a comparison against the label only;
+    //  the maxima are deterministic and unchanged. Expected null maximum for 92,160 independent tests: 4.52 sigma.)
     std::printf("   noise floor 1/sqrt(N) = %.5f ; max |r| = %.5f at (weight bit %d [lane %d bit %d], tag bit %d) = %.2f sigma\n",
         nf, maxabs, ma, ma/30, ma%30, mb, zmax);
-    std::printf("   Bonferroni threshold over 92,160 tests at alpha=0.001 is ~4.6 sigma -> %s\n",
-        zmax<4.6? "NO first-order weight leak detected":"LEAK CANDIDATE -- investigate");
-    std::printf("   A2 verdict (BURNIN=%d): %s\n", BURNIN, zmax<4.6? "negative result: the tag reveals no weight bit at first order":"POSITIVE -- see above");
+    std::printf("   Bonferroni threshold over 92,160 tests at alpha=0.001 is 5.72 sigma (expected null maximum 4.52 sigma) -> %s\n",
+        zmax<5.72? "NO first-order weight leak detected":"LEAK CANDIDATE -- investigate");
+    std::printf("   A2 verdict (BURNIN=%d): %s\n", BURNIN, zmax<5.72? "negative result: the tag reveals no weight bit at first order":"POSITIVE -- see above");
     return 0;
 }

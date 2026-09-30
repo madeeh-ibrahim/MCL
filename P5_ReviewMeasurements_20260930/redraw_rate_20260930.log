@@ -1,0 +1,4 @@
+# host: 18:31  up 1 day, 19:14, 1 user, load averages: 4.97 5.83 23.92
+# 2026-09-30 record for the SS-X.9 re-draw census (program redraw_rate.cpp unchanged, v0.2.15, built with -I.. -I../keyed_q30_PQ; CommonCrypto SHA-256 on macOS); engine v8.1.3 416ad145e79c095b, keyed sidecar v1.0.6 71a0dbaf84725ac7
+random K_tx: 200000 | raw weight sets with reachable symmetry: 395 (0.198%, expected ~0.174%) | after deterministic re-draw: 0
+./redraw_rate  0.94s user 0.00s system 83% cpu 1.134 total

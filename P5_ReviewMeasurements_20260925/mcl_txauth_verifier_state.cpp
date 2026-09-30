@@ -8,7 +8,7 @@
  *   (harness v3.2, struct Verifier) do under (S1) unsynchronised replicas,
  *   (S2) a crash before c_last is persisted, (S3) a restore from an older backup,
  *   (S4) a lost acknowledgement, (S5) a device restored from an old snapshot?
- * Method: the device model, ctx, tag_v3 (Claim-4 route, MCL_T4_Q30 twelve Q30
+ * Method: the device model, ctx, tag_v3 (derivation route, MCL_T4_Q30 twelve Q30
  *   weights, K_eff = KDF(K,"MCL-KeyDevice-v1",S_device)), ct_equal and struct
  *   Verifier are copied VERBATIM from mcl_txauth_v3_battery_q30.cpp (harness
  *   v3.2, Doc ID MCL-P5-V3BATTERY-Q30-2026-0904-003). State loss is modelled by
@@ -108,7 +108,7 @@ static void obs(const char* scenario, const char* what, bool accepted, const cha
 }
 int main() {
     std::printf("MCL Paper-5 verifier state-loss record | Doc ID MCL-P5-VERIFIERSTATE-2026-0925-001\n");
-    std::printf("engine mcl_core.hpp %s | tag = MCL_T4_Q30 Claim-4 route (harness v3.2 code, verbatim)\n", MCL_VERSION_STRING);
+    std::printf("engine mcl_core.hpp %s | tag = MCL_T4_Q30 derivation route (harness v3.2 code, verbatim)\n", MCL_VERSION_STRING);
     const uint64_t V1=0x5601;
     Device A=dev_of(1);
     auto msg=[&](uint64_t c){ Tx t=tx_of(c); t.nonce=c; return std::make_pair(t, tag_v3(A,t,V1)); };

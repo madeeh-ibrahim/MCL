@@ -27,13 +27,13 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `header_patch.diff` | `bfb2255376963a20713be61f1299a1c4` |
 | `mcl_hd_throughput.cpp` | `b6f03a61af6e4d6645d51846dd7aacbf` |
 | `p5_G_entropy.cpp` | `5acc317b5a423c70d754361034383167` |
-| `p5_adversarial.cpp` | `3e1e7f34eb40d2c50ada0695457a5616` |
+| `p5_adversarial.cpp` | `6b2ef7893f783622b0618e1aa79a1ef6` |
 | `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
 | `p5_burnin_curve_v2.cpp` | `ccabbe1d049a54a7d42f46dd4df9e220` |
 | `p5_ct_sine_cost.cpp` | `59a64bab93e56f71418669cd1c800dbe` |
 | `p5_parity_lock.cpp` | `c65e07ffe370ebbc0e65c20da699b638` |
 | `p5_resonance_control.cpp` | `708270a63754b5a746898c32775a4d42` |
-| `p5_system_eval.cpp` | `f5974ee0c591a3308cd3bf1b34bd9ed9` |
+| `p5_system_eval.cpp` | `be9bc099597d5e56a7ac1b1533c8d0d9` |
 | `p5_v2_coprime_parity.cpp` | `28e5232de3e49a7ecf8f5ad35f426396` |
 | `p5_weight_probe.cpp` | `30e3643026aed65609f8b26bef017427` |
 | `redraw_rate.cpp` | `c8bc17a69ac89160f0c7b3376173ee1b` |
@@ -45,7 +45,7 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `system_eval_20260905.log` | `9a35ae9ee5322c8510e5aa77dd00cda9` |
 | `v2_coprime_parity_20260905.log` | `f9e601051a0897a6b57b530e50d6d22c` |
 | `weight_probe_20260905.log` | `8050e87ac004fcf915bf5cbcda41dea4` |
-| `weight_probe_sidecar_scratch_ctor.diff` | `162e6c220969c6c70e5da1d705127dbc` |
+| `weight_probe_sidecar_scratch_ctor.diff` | `5082ab10c614283d030c706c0f82d97a` |
 
 ---
 ## 2026-09-05 (evening) — deep-examiner findings S1: parity lock + sibling recovery (engine of record, unmodified)
@@ -65,13 +65,13 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `header_patch.diff` | `bfb2255376963a20713be61f1299a1c4` |
 | `mcl_hd_throughput.cpp` | `b6f03a61af6e4d6645d51846dd7aacbf` |
 | `p5_G_entropy.cpp` | `5acc317b5a423c70d754361034383167` |
-| `p5_adversarial.cpp` | `3e1e7f34eb40d2c50ada0695457a5616` |
+| `p5_adversarial.cpp` | `6b2ef7893f783622b0618e1aa79a1ef6` |
 | `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
 | `p5_burnin_curve_v2.cpp` | `ccabbe1d049a54a7d42f46dd4df9e220` |
 | `p5_ct_sine_cost.cpp` | `59a64bab93e56f71418669cd1c800dbe` |
 | `p5_parity_lock.cpp` | `c65e07ffe370ebbc0e65c20da699b638` |
 | `p5_resonance_control.cpp` | `708270a63754b5a746898c32775a4d42` |
-| `p5_system_eval.cpp` | `f5974ee0c591a3308cd3bf1b34bd9ed9` |
+| `p5_system_eval.cpp` | `be9bc099597d5e56a7ac1b1533c8d0d9` |
 | `p5_v2_coprime_parity.cpp` | `28e5232de3e49a7ecf8f5ad35f426396` |
 | `p5_weight_probe.cpp` | `30e3643026aed65609f8b26bef017427` |
 | `redraw_rate.cpp` | `c8bc17a69ac89160f0c7b3376173ee1b` |
@@ -83,7 +83,7 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `system_eval_20260905.log` | `9a35ae9ee5322c8510e5aa77dd00cda9` |
 | `v2_coprime_parity_20260905.log` | `f9e601051a0897a6b57b530e50d6d22c` |
 | `weight_probe_20260905.log` | `8050e87ac004fcf915bf5cbcda41dea4` |
-| `weight_probe_sidecar_scratch_ctor.diff` | `162e6c220969c6c70e5da1d705127dbc` |
+| `weight_probe_sidecar_scratch_ctor.diff` | `5082ab10c614283d030c706c0f82d97a` |
 - `redraw_rate.cpp` (2026-09-05 night) — empirical weak-key re-draw rate of `mcl_t4_q30_params_from_key` over 200,000 random 256-bit keys: **395 raw weight sets with a reachable translation symmetry (0.198 %, ≈ 2⁻⁹) → 0 after the sidecar's deterministic re-draw.** Confirms Tech Guide §308 (re-draw, not rejection) against Paper 5 §X.9 ("rejected"); implies ≈ 270 silent re-draws inside the Q30 battery. md5 `c8bc17a69ac89160f0c7b3376173ee1b`.
 
 
@@ -114,13 +114,13 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `header_patch.diff` | `bfb2255376963a20713be61f1299a1c4` |
 | `mcl_hd_throughput.cpp` | `b6f03a61af6e4d6645d51846dd7aacbf` |
 | `p5_G_entropy.cpp` | `5acc317b5a423c70d754361034383167` |
-| `p5_adversarial.cpp` | `3e1e7f34eb40d2c50ada0695457a5616` |
+| `p5_adversarial.cpp` | `6b2ef7893f783622b0618e1aa79a1ef6` |
 | `p5_burnin_curve.cpp` | `9f18a9a3b6dceb9b56f3aa1bff1cffc4` |
 | `p5_burnin_curve_v2.cpp` | `ccabbe1d049a54a7d42f46dd4df9e220` |
 | `p5_ct_sine_cost.cpp` | `59a64bab93e56f71418669cd1c800dbe` |
 | `p5_parity_lock.cpp` | `c65e07ffe370ebbc0e65c20da699b638` |
 | `p5_resonance_control.cpp` | `708270a63754b5a746898c32775a4d42` |
-| `p5_system_eval.cpp` | `f5974ee0c591a3308cd3bf1b34bd9ed9` |
+| `p5_system_eval.cpp` | `be9bc099597d5e56a7ac1b1533c8d0d9` |
 | `p5_v2_coprime_parity.cpp` | `28e5232de3e49a7ecf8f5ad35f426396` |
 | `p5_weight_probe.cpp` | `30e3643026aed65609f8b26bef017427` |
 | `redraw_rate.cpp` | `c8bc17a69ac89160f0c7b3376173ee1b` |
@@ -132,4 +132,11 @@ Built once per B ∈ {0, 1, 10, 50, 100, 500, 1000, 5000, 10000} against a **scr
 | `system_eval_20260905.log` | `9a35ae9ee5322c8510e5aa77dd00cda9` |
 | `v2_coprime_parity_20260905.log` | `f9e601051a0897a6b57b530e50d6d22c` |
 | `weight_probe_20260905.log` | `8050e87ac004fcf915bf5cbcda41dea4` |
-| `weight_probe_sidecar_scratch_ctor.diff` | `162e6c220969c6c70e5da1d705127dbc` |
+| `weight_probe_sidecar_scratch_ctor.diff` | `5082ab10c614283d030c706c0f82d97a` |
+
+## 2026-09-30 — corrections
+- `p5_adversarial.cpp`: the printed Bonferroni label said «~4.6 sigma»; the two-sided threshold for 92,160 tests at α = 0.001 is **5.72σ** (4.6σ ≈ family-wise α 0.39). Re-run 2026-09-30 with the same scratch engine (v8.1.3 + `header_patch.diff`) and keyed sidecar **v1.0.6** (`71a0dbaf84725ac7`): `adversarial_20260930.log` — every A1 row and both A2 maxima (0.03090 = 4.37σ at B = 10,000; 0.02981 = 4.22σ at B = 0) **byte-identical** to the 2026-09-05 record apart from the header and the label line. The 2026-09-05 log is kept unchanged.
+- The «expected null maximum ≈ 4.92σ» quoted above is √(2 ln 2n), the leading-order asymptotic; the exact expectation of the maximum of 92,160 independent |Z| is **4.52σ** (median 4.48σ; P(max ≥ 4.37σ) = 0.68). Conclusions unchanged.
+- `p5_system_eval.cpp`: one comment on the tag row — K is passed as both K and S_device; the timing is value-independent. No re-run (timing row unchanged).
+- md5 rows above updated for the two sources; `SHA256SUMS` regenerated for them and extended by the new log.
+- `redraw_rate.cpp` **v2 (2026-09-30)**: SHA-256 now from the engine (`mcl_sha256`) instead of Apple CommonCrypto, so the program builds on macOS and Linux; the census is unchanged (395 raw symmetric sets of 200,000 → 0 after the re-draw; record `../P5_ReviewMeasurements_20260930/redraw_rate_v2_20260930.log`). The 2026-09-05 census had no archived output; `../P5_ReviewMeasurements_20260930/redraw_rate_20260930.log` (v1 build) and `parity_lock_20260930.log` are the records for §X.9 and §III.B of Paper 5.

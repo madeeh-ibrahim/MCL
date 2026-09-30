@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.15, 2026-09-28)
+# MCL — Public Code Archive · MANIFEST (v0.2.16, 2026-09-30)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.7** (2026-09-28) — SHA-256 `05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29`  
@@ -20,13 +20,13 @@ g++ -O3 -std=c++17 -march=native -Wall -Wextra -Wpedantic -Wshadow -Wconversion 
     -DMCL_UNSAFE_ALLOW_INVALID -o <name> <name>.cpp -lm   # root programs (+ -lpthread where noted)
 clang++ -std=c++17 -O3 -I. -I keyed_q30_PQ -I VDF128_T4 <folder>/<name>.cpp -o <name>   # sub-folder programs
 ```
-Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` and `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR/GMP (`-I/opt/homebrew/include -L/opt/homebrew/lib -lmpfr -lgmp` on macOS); `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` needs `-DHDR='"mcl_keyed_q30.hpp"'`; all programs in `p2_hardened_auth/`, `p5_hardened_txauth/` and `P3_CrossPrediction/mcl_gen_series.cpp` use Apple CommonCrypto (macOS only — the engine itself is portable). Python helpers need numpy (and scikit-learn for `xpred.py`). The `results/*.txt` of the 23 root programs are the June-2026 records (engine 6.0.0, KAT-identical to 8.1.3); only the 8.1.3 / v1.0.6 / v1.0.7 re-runs named above were regenerated; `mcl_postquantum` and `Verification_Suite/mcl_hop_unified` are version 6.1.0 with their June outputs kept beside the new ones (`QUANTUM_SCOPE_NOTE.md`). Every program that includes the keyed sidecar (42 files) was syntax-checked against v1.0.7 on 2026-09-28; `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` needs the scratch-constructor patch shipped in its folder, which applies to v1.0.6 and to v1.0.7.
+Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` and `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR/GMP (`-I/opt/homebrew/include -L/opt/homebrew/lib -lmpfr -lgmp` on macOS); `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` needs `-DHDR='"mcl_keyed_q30.hpp"'`; all programs in `p2_hardened_auth/` and `P3_CrossPrediction/mcl_gen_series.cpp` use Apple CommonCrypto (macOS only — the engine itself is portable; the `p5_hardened_txauth/` v3.2 harnesses and `P5_ReviewMeasurements_20260905/redraw_rate.cpp` v2 use the engine's own SHA-256). Python helpers need numpy (and scikit-learn for `xpred.py`). The `results/*.txt` of the 23 root programs are the June-2026 records (engine 6.0.0, KAT-identical to 8.1.3); only the 8.1.3 / v1.0.6 / v1.0.7 re-runs named above were regenerated; `mcl_postquantum` and `Verification_Suite/mcl_hop_unified` are version 6.1.0 with their June outputs kept beside the new ones (`QUANTUM_SCOPE_NOTE.md`). Every program that includes the keyed sidecar (42 files) was syntax-checked against v1.0.7 on 2026-09-28; `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` needs the scratch-constructor patch shipped in its folder, which applies to v1.0.6 and to v1.0.7.
 
 ## NOT in this archive
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 807 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 985 files (+ this MANIFEST), SHA-256 of every file
 
 Files that the repository's `.gitignore` excludes are not part of the repository and are not listed.
 
@@ -36,8 +36,8 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `4be7c1b1127511c9f5e184cb73e8a43d99da68b2b069dee8e6cdb76f0c2ccfc7` |  |
-| `CITATION.cff` | `4ca0f2f5768b85de990ef1c582e9614be871ca1c3222a7bd8e785467ab4ae13b` |  |
+| `CHANGELOG.md` | `bd50727e1202087cdae1514abf1d238cd16d5b03aef00d85bd2b5f297a94b005` |  |
+| `CITATION.cff` | `f1fd946fc5d6c33a86c63bce062f69d69b785fcc87c58427e1cd86fd9d6bb439` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -48,7 +48,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
 | `QUANTUM_SCOPE_NOTE.md` | `981d4f9518b13d2c47960d5b73d20b31f1fd51d9cc03bca14f5125039231ffdb` |  |
-| `README.md` | `392dd5bacf7302c294a898ba7e23af74f54b44e85649e8e02f45fb21987b44b5` |  |
+| `README.md` | `f7e54e3ead323b21d681375650ca5248f5648dba6165974f2addc60e62daa471` |  |
 | `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
@@ -76,7 +76,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `mcl_reference.cpp` | `140ee9a39a3224e8faf9c0323fc0ba66f5eaadaf23fce6c33e6bcf28dea9167d` | Canonical reference implementation of the MCL coupled chaotic |
 | `mcl_safe_zone_verify.cpp` | `13e2893008f1591bf9bf88943a99de6ea0e80b5b3d43c930ee2a1377f5569214` | Empirically characterizes the Safe Zone bit-extraction regions of |
 | `mcl_scale.cpp` | `740a207f27e301b8650c74ffc4f0502eff3a73083c389c32dc41a7c08c988526` | Verify MCL scales from 20 to 1M+ simultaneous orthogonal |
-| `mcl_txn_verify.cpp` | `b839edf5edebeac19ba6861100c80975ea4ad27f0f254c070cb46f775697c1b7` | Experimental verification of non-replayable transaction |
+| `mcl_txn_verify.cpp` | `4d5e7dbe29a1596da37033cd9268e9d4e41e60338719d689de88be81ce8d500c` | Experimental verification of non-replayable transaction |
 | `mcl_vdf_falsification.cpp` | `25f24508227e4e41481291976d350e370d7291d1c1c3bdf6e1000df2aa9fa40c` | Four-attack falsifiability battery for MCL-VDF open problems OP1 (sequentiality), |
 | `mcl_vdf_verify.cpp` | `c7e517e33647d802f8f485e5e2104d838b70de059fb32a1e29c24e339008e1ac` | Experimental verification of the MCL Verifiable Delay Function |
 | `q30_macos_validation.cpp` | `d58b0c11796a4036e6b3a216b1a4d4784d7840385358b10c9a30c93fd32354f3` | Validate MCL Q30 (fixed-point engine) cross-platform bit-exactness |
@@ -86,7 +86,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` | `463fa96454594d69b7fcd6de7b8b3200049c27eed0cc8204834b4579b9ed68d4` | Consolidated documentation of FOUR independent runs of mcl_scale |
+| `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` | `c19d1e14d0312e199b3545294fba17e42f537d68bc0b4cdc19e43e42fa0493f8` | Consolidated documentation of FOUR independent runs of mcl_scale |
 | `results/beff_deep_audit.txt` | `0fa5baf9f152d39af5b23f3bd3d2602d326ea141198a144ad272f9d436ecd11e` |  |
 | `results/kat_gen_macos.txt` | `959fa8bde760d0957c18e5617c251025b012d21665f1d9e56fd89f9cbfe01733` |  |
 | `results/kat_gen_macos_v8.1.3_20260822.txt` | `00732e5077696d503de2f01b31f3facf51c44bdf8f7230d98f3409a3a4a07f34` |  |
@@ -118,11 +118,12 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `results/self_test.txt` | `f77482b4c178ed4ec759e09e1d68ef183f24387117b98dbf043bc0c2f95630c6` |  |
 | `results/self_test_v8.1.3_20260822.txt` | `ec20df38c1630e6a60109c99908137cc3d8d0d23108796ccbf5b8bac57eaf92a` |  |
 
-### keyed_q30_PQ  (39 files)
+### keyed_q30_PQ  (40 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `keyed_q30_PQ/CASCADE_GUARD_V107_RECORD_20260928.md` | `b0dde6ce84b0816da962ca4cdcf6766a3c79013d1dd31a7dc9dd24e3b626f86f` | Sidecar v1.0.7 — cascade symmetry check and opt-in seed rule — record |
+| `keyed_q30_PQ/CASCADE_GUARD_V107_RECORD_20260928.md` | `3e4727b475f2f176a83cbe777d78ea603a2aee6e360e4af9ddc7277e202bf500` | Sidecar v1.0.7 — cascade symmetry check and opt-in seed rule — record |
+| `keyed_q30_PQ/CT_SINE_CODE_EVIDENCE_20260919.txt` | `e00d26b1906cd68fa36eeec10a6f265a054f6ea977b052c47b1d8cdc0b457cfa` |  |
 | `keyed_q30_PQ/M0_CODEGEN_CLAIM13_20260612.txt` | `94091cd667e5dce60ede9e292741d19c112cc4a68b53c190feb01100cd3e67ac` |  |
 | `keyed_q30_PQ/MCL_CAPACITY_REALIZATION_20260812.txt` | `1e40229ab6b8c2e65d8a4e13e38ab1cdead5f5e707dbf6e965507ad4c22206c9` |  |
 | `keyed_q30_PQ/MCL_CAPACITY_REALIZATION_20260812_v1.1.0.txt` | `672535dc365e7046bf88065efa44a56146ce949b5579c8d3fa4ddc68ca636726` |  |
@@ -139,25 +140,25 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `keyed_q30_PQ/MCL_KEYED_Q30_V107_COMPARE_20260928.txt` | `1f2111c5154a29fdde6d7ccfeb6e0751eeb8224b272fb2c127aec409aba106ff` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_V107_VERIFY_20260928.txt` | `709a441a6803b340100bcca42b175c206ab580faf1b56e8b0d19aef62e7570c3` |  |
 | `keyed_q30_PQ/NOSYM_V106_RECORD_20260822.md` | `bc56e7eb28a32ccf61947d87a1417ae87eba7c57e80cfe34a85ea6df9ce1abdb` | sidecar v1.0.6 — رفض التناظر القابل للوصول من البذرة في `mcl_t4_q30_params_from_key` — 2026-08-22 |
-| `keyed_q30_PQ/README.md` | `dfa2af9bf100b200c98e60eea8b381e1bd41ce4373a62029f25c1ad351bb9283` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
-| `keyed_q30_PQ/STATUS.md` | `c5164b936ecf8290882ef7b91b4288535173528e694d43fc7f009344883c1b49` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
+| `keyed_q30_PQ/README.md` | `188e812689a4afc6b16e2928638bb15b4a38737d6869454c9d2c65ee0a13c146` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
+| `keyed_q30_PQ/STATUS.md` | `efa158570a83c0376ca2552ae2b3805f02b4a0f58c088959536bb5d414d6e8de` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
 | `keyed_q30_PQ/dump_keyN.cpp` | `ef0a8649cd46f413b631188b12b8457457b51464d0aca832a587010675d11672` |  |
 | `keyed_q30_PQ/lyap_2osc_signcheck.py` | `c34b8e36fcbc2c773ad444e7f7b676a01789c32704873a0b66aa328d3922291d` |  |
 | `keyed_q30_PQ/lyap_independent_check.py` | `77199d6bf3d0a46250daede2a1019eb5af03d5b17508a5cb1ce0730aebc5d8fc` |  |
-| `keyed_q30_PQ/m0_codegen_probe.c` | `80c52b0977ec2fd6d35e7888685568c6fb7e237468f36bc117cd6b4cc9516606` |  |
+| `keyed_q30_PQ/m0_codegen_probe.c` | `14281a7140a24bd711edc215725041ef664d943d3d92c2877de97fa63786e0d2` |  |
 | `keyed_q30_PQ/m0_probe.s` | `68dd9d08e9ec22bed614d9971d3b0d72163d26f8cb7dd711e0c9eca2ab04df50` |  |
-| `keyed_q30_PQ/mcl_capacity_realization.cpp` | `a8fd2f87517f7ef13d19a51fa10ae4af236ec55343d4b83c4e535771b0041fc1` |  |
+| `keyed_q30_PQ/mcl_capacity_realization.cpp` | `8853337a453eb4c3f33b9587a56664a79ac31c1eed1e50ba25945a1303464972` |  |
 | `keyed_q30_PQ/mcl_keyed_q30.hpp` | `05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_ct_test.cpp` | `6a56233a56c3ce1574cdc23f0d04e688bda2b73ab7441df75b97847137999db3` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` | `f09a2460cdf8e8e26d2f200363e16125949da1cd777db1337521148b0fd07f79` |  |
-| `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` | `f354a9c90fea2484f848361e78bf8b1cfcb46bd3b8134e26391a050d0661cf72` |  |
-| `keyed_q30_PQ/mcl_keyed_q30_measure.cpp` | `9eac29e89a6ebaa0311dd779f8333c1275b393b32254e4902e38b4bc6a9ad356` |  |
+| `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` | `b156f89cb99cf3e1daf425c12b77728531e139eab4bdd585298bc43a93904258` |  |
+| `keyed_q30_PQ/mcl_keyed_q30_measure.cpp` | `8c4e76c8d06d6a1d7c9bcda7cb8055e7184dc9cb55565e0b1e5bc99c36c379ee` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_mpfr_lyap.cpp` | `20c29a2a9b3e913cd7b6490febf0f0c7263ed197272fbaa7387e5b3f79d4343b` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_nosym_verify.cpp` | `95551bcc1a48c8921184375e64e85fa64f12b4e915aa1edf83e4622458536ee2` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_science.cpp` | `5a33ab998204419c5eb608e9671f5dd9b55e59024c6651b83f90434fe1b0c6ac` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_science2.cpp` | `87e4b9ef6e2580b1642b5deba531d02f7c66310314b0ef2aad254493a43342dd` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_science3.cpp` | `9ca5703dc844fec31302e0f35b417afb502f3c3062646ab6b6881815e7d232d3` |  |
-| `keyed_q30_PQ/mcl_keyed_q30_test.cpp` | `a123a0a667a8612f9b6e2092c72fc935807a0bc2fd82ee0deb781ccd8bc3d273` |  |
+| `keyed_q30_PQ/mcl_keyed_q30_test.cpp` | `48545db0b55bd3fe27e69b13f704a7d247923b18cbb4121da10563ad7b2d7ebe` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_v107_compare.py` | `95dd482b4d9d1415752a7e724903637fbec88f4ae78fc726c1af2862ac7e17a4` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_v107_dump.cpp` | `a250ee787139d8296739a671166eb5b3ac9bcabc4d3eaee02dc687e6af4469f6` |  |
 | `keyed_q30_PQ/mcl_keyed_q30_v107_verify.cpp` | `198e8f131f456b968d4cbfd923cb640a9e0a3f9bbce083d95f038c60ef53d15e` |  |
@@ -232,7 +233,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `T4_CycleStructure/README.md` | `dc74d47a8cb0894dec7e771e03da8fc132d460485f50368d60ca77c5c725ae0d` | T4_CycleStructure — دراسة دورات محرك T4-Q30 بعرض حالة مُصغَّر |
+| `T4_CycleStructure/README.md` | `38f541cd1f31ff4646ba7030e901279ed133c964e9954727c6599b37d81604ce` | T4_CycleStructure — دراسة دورات محرك T4-Q30 بعرض حالة مُصغَّر |
 | `T4_CycleStructure/T4_CYCLE_RECORD_20260822.md` | `165b1fc554afbd1fd3387d191c9bef560963f8806547f8182648d7199116d420` | سجل دراسة دورات محرك T4-Q30 بعرض مُصغَّر + اكتشاف التناظر الانتقالي — 2026-08-22 |
 | `T4_CycleStructure/cycle_translates_apple_20260822.log` | `9eaa8796227727dac5713c693afa8854194a9fadd20e79169ed5aea52344e8f5` |  |
 | `T4_CycleStructure/cycle_translates_v1_SUPERSEDED_apple_20260822.log` | `53ee2f02606103b3446deca9d5384fb73611658f814225ed2b7714b28e75e17c` |  |
@@ -261,7 +262,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `ReturnMap_Attack/README.md` | `e7c890c3e0765571dea9ea094b18d256f4cced0c81e7301db5c1af33c5e40f55` | ReturnMap_Attack — محاولات الهجمات الخاصة بالفوضى (Rule 13 / Rule 7) |
+| `ReturnMap_Attack/README.md` | `6c4fcea85df50052acf7f5eff96d52861c62f0161426fe1ed0daf2b181a00215` | ReturnMap_Attack — محاولات الهجمات الخاصة بالفوضى (Rule 13 / Rule 7) |
 | `ReturnMap_Attack/RETURNMAP_RECORD_20260822.md` | `4c28ef4d1a8ab286b118173e90b9890a8fae86e10b71e04924b718ab8523c829` | سجل محاولات الهجمات الخاصة بالفوضى (Rule 13 / Rule 7) — 2026-08-22 |
 | `ReturnMap_Attack/mcl_returnmap_attack.cpp` | `9abf251f10cc6d9919bbc195045d60b6846614f92031c4e72b54aca517f7a5f6` |  |
 | `ReturnMap_Attack/returnmap_apple_20260822.log` | `87832b71220f7e0eac39cc806f356379fd390a7863d0a250936a1c47a6b7da0b` |  |
@@ -274,7 +275,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `p2_hardened_auth/FAR_CAMPAIGN_RECORD_20260821.md` | `c1142f22f3840f1141afb17067bceb5d7550b90d0b73c71ef2c41c28d15978fe` | الورقة 2 — حملة FAR على الملف المصلَّد v2 — 2026-08-21 |
 | `p2_hardened_auth/FAR_V4_KEYED_RECORD_20260822.md` | `692caa453a5e8491d23572b8404d011c1c76f7834d420d3b7a8d71053cbfb06e` | الورقة 2 — حملة FAR على المسار المفتاحي (بيانات الاعتماد = مفتاح جهاز 256-بت → 12 وزناً) — 2026-08-21/22 |
 | `p2_hardened_auth/README.md` | `f7c82e38464e5a2c716bede4da7e17253e5ba6b4727244b23d6183e58d54f90b` | p2_hardened_auth — الملف المصلَّد لمصادقة الورقة 2 (v2) + بطاريته العدائية |
-| `p2_hardened_auth/SIMSWAP_V3_RECORD_20260821.md` | `28377126f3ea52f419335b58fae94daba561f0664a6594d45c5efb9393511744` | حملة SIM-swap على مسار الاشتقاق — الورقة 2 §V.B — 2026-08-21 |
+| `p2_hardened_auth/SIMSWAP_V3_RECORD_20260821.md` | `ef4e28be49ef868617bed62f09d766f855feb4e66801d69e7b15659fa5942b36` | حملة SIM-swap على مسار الاشتقاق — الورقة 2 §V.B — 2026-08-21 |
 | `p2_hardened_auth/avalanche_1e6_20260821.log` | `b44bbeeeefaa25c250169be7869f6fa9eabf6da687218bb26716455168e970bd` |  |
 | `p2_hardened_auth/engine_sensitivity_20260821.log` | `d1eedca6b3954f0e4a75e3f61f5d5326b13656539ee038a8f49daa2eb4ba9d83` |  |
 | `p2_hardened_auth/far_campaign_1e6_20260821.log` | `b82f60d81c5b52b38cbd251128dd2deb5e1bcb3300fa9213b96fc608cb8c8de5` |  |
@@ -285,26 +286,24 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `p2_hardened_auth/far_v4_keyed_20260821.log` | `cbde581d367c934aca0622bc8ab7ed573ea74fa9dbc89fe2c6e57acf3d347426` |  |
 | `p2_hardened_auth/mcl_auth_avalanche.cpp` | `ee252092357b01650faf373a33a54a2cc216127c4b6c5873bc542cfd54e8367d` |  |
 | `p2_hardened_auth/mcl_auth_far_campaign.cpp` | `84bf48c3bf248952d2a44f0aa4beaf80c7037db63f2362155d8dca132fc28326` |  |
-| `p2_hardened_auth/mcl_auth_far_v4_keyed.cpp` | `905342683fbb07c142ba85124479668d1d2c059a92cf06b71c13d1b9733517d7` |  |
+| `p2_hardened_auth/mcl_auth_far_v4_keyed.cpp` | `f2c373b592fc8157b830c74dea2e0d5c8be06e5976180aa6de876fd5549fbe44` |  |
 | `p2_hardened_auth/mcl_auth_hardened.cpp` | `8823800937297dafcbdd0cdfb04f00db46668e66859e936046f48d8d6da0a1cc` |  |
 | `p2_hardened_auth/mcl_engine_sensitivity.cpp` | `5f89de5413a606bde798194fa20a7f67f2e956b5292e4b45e46b524f13385564` |  |
 | `p2_hardened_auth/results_20260821.txt` | `bf65fa9fc185d4f9e9e22d5f47374bb0e04908f6978944b208d5604b079fc905` |  |
 
-### p5_hardened_txauth  (25 files)
+### p5_hardened_txauth  (23 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `p5_hardened_txauth/ARCHITECTURAL_FINDING_20260821.md` | `6157f5386b774fb27e981bed15b37169ed5233dfdecc663ac663ab3ceb389ffe` | الإصلاح المطلوب وأثره على البراءة — الورقة 5 (والورقة 2 بالقياس) — 2026-08-21 |
-| `p5_hardened_txauth/ARCHITECTURAL_FINDING_20260821_SUPERSEDED.md` | `491a17e6231b7737cdd8b60431f19de82ccd7a5dd67e7f2c56c429163abd3eeb` | نتيجة معمارية لازمة عن إصلاح D1 — الورقة 5 (والورقة 2 بالقياس) |
-| `p5_hardened_txauth/README.md` | `f42a00c3d4ff3188118ae4311a3053288f3c8023dbba6a2bd9dad8c7f65b2b27` | p5_hardened_txauth — مسار الورقة 5 المصلَّد (v2) + بطاريته الكاملة |
+| `p5_hardened_txauth/README.md` | `8a1de8753500660eff988ef833b4ca8ee6406cb0bab853f61ecf2ff4d0a2428b` | p5_hardened_txauth — مسار الورقة 5 المصلَّد (v2) + بطاريته الكاملة |
 | `p5_hardened_txauth/_v311_backup_mcl_txauth_v3_battery_q30.cpp.txt` | `e825f1daaa6f7053a751fe0242a13d805f88b1ef40e87d22185266fab0006a29` |  |
 | `p5_hardened_txauth/_v31_backup_mcl_txauth_v3_battery.cpp.txt` | `f9ac7d3e2e8e12a83ff1e1aa61cccdc1fb0dd00f56c1d8a1c564ea7b75a40e30` |  |
 | `p5_hardened_txauth/d1_collision_20260821.log` | `4c59d1fe0824525316554bce3cd6d7aa72aca0700bca51235ce545dfcf47d087` |  |
 | `p5_hardened_txauth/mcl_d1_collision.cpp` | `6eedb6294d75d9020401f1f026e5806af56267e5d267a05fb0467e0673ae3b88` |  |
 | `p5_hardened_txauth/mcl_txauth_hardened.cpp` | `1c8d66d063e18fb1b2673a55073de00da149301ffbf03e5be8354cb2d538af04` |  |
-| `p5_hardened_txauth/mcl_txauth_v3_battery.cpp` | `c3909a1fbc0ec2da19c2b05f6bee04fb703f8816d8e6b765efdbd83e997e21cc` |  |
-| `p5_hardened_txauth/mcl_txauth_v3_battery_q30.cpp` | `35009daa07447cd28ac680cf0bb2e191678b762b9f9af098fc23a0407dc96fd2` |  |
-| `p5_hardened_txauth/mcl_txauth_v3_claim4.cpp` | `016843ee8949e0bac4bbcf21ca17f0e4cb1ef40147f08f4482ce99f8f72806ca` |  |
+| `p5_hardened_txauth/mcl_txauth_v3_battery.cpp` | `343fd97fa05aea9a445ceadb7d5123072e2b8e593274b44f88ecf8a1313875f0` |  |
+| `p5_hardened_txauth/mcl_txauth_v3_battery_q30.cpp` | `9cd21e45c0be89cc9971bddba9afc2df4ff5ace3c8e936801a10b76c6b08fe78` |  |
+| `p5_hardened_txauth/mcl_txauth_v3_claim4.cpp` | `32f117afaf93314f7d92edf8b274b2eb4571974b3a5286b23b7b6a3cdace4c97` |  |
 | `p5_hardened_txauth/quiet_rerun_conditions_20260905.txt` | `a69fada04a9ae7f8780736449d226deadcd09cb89aa245a07af4fa7a53fccf4d` |  |
 | `p5_hardened_txauth/quiet_rerun_double_conditions_20260905.txt` | `07d01208233a6b903c05ff4822c067f639cdd2a8bd0c233fd71e2d63e432cd1a` |  |
 | `p5_hardened_txauth/results_20260821.txt` | `c127d31be9ac8758c02dbd7e729e662d7f8f65ff7b533f4782d8b934824f2ed8` |  |
@@ -327,7 +326,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `M1_M2_apple_verification/NIST_STS_CAMPAIGN_README_20260721.md` | `610ed641ec7022923913a8f3c75a069f1c86335d61d3733740574c091b189d1b` | NIST SP 800-22 Full Campaign — Doc ID MCL-NIST-STS-2026-0721-001 |
 | `M1_M2_apple_verification/PAPER2_L2_VERIFY_RESULTS.md` | `ea19992131a69107115f9cc96f940ab4e6067f9c0e82270cbd3ff556016e390c` | Paper-2 L2 re-verification — definitive results (2026-07-06) |
 | `M1_M2_apple_verification/README.md` | `52bc35cd7e7b69acbbb01cc4eb9904b285e469ac0c41510b5d643be0335df985` | M1/M2 Apple-libm Verification — Paper 1 §III.B.3 |
-| `M1_M2_apple_verification/SHA256SUMS` | `dd28a25fb402b4e10a5e7868db5598dcd9a590f1c195a3bce10d121aada79844` |  |
+| `M1_M2_apple_verification/SHA256SUMS` | `e2f70228448bb423a985672e31d6e68154720e3a193cfc03128d11e48a6e6507` |  |
 | `M1_M2_apple_verification/_engine_equivalence_20260916/ENGINE_EQUIVALENCE_20260916.md` | `c632d479dc808a877c67246200ab42ae8284a67b846a188ed697a4cf721a46a3` | Engine-equivalence check for the M1_M2 tools — v6.0.0 (engine of record) vs v8.1.3 (repository root) — 2026-09 |
 | `M1_M2_apple_verification/bifsweep_coarse_apple_20260719.csv` | `a96837f02b60f6fe9669cb65d8156ab4ca9ef0d56934532d6908226efa2d3fcb` |  |
 | `M1_M2_apple_verification/bifsweep_fine_apple_20260719.csv` | `ebd7d1a3fbc58dc7952eda3e1148df94fb011de69eeb9a69e2737be3d6e73376` |  |
@@ -335,7 +334,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `M1_M2_apple_verification/detj_verify_apple_20260703.log` | `6e498469a9c65a0f51b782f7a3792f4003c82097d07b1d14b9e649858aa30ee2` |  |
 | `M1_M2_apple_verification/fig1_arnold_sweep_apple_20260817.csv` | `c3e5c1a81eb4fe7d6d4680d221b9ec76008fe621ec560d68191f438761de57e4` |  |
 | `M1_M2_apple_verification/hd_throughput_apple_20260817.log` | `79e302bc35e2da6b6d02cfbaf7adf97b501672c2e46d488e1e35e434f30b7a44` |  |
-| `M1_M2_apple_verification/make_paper3_fig1_20260817.py` | `18a23837eb019afdff99f884c74d339cd190936a4d15ddfe2e58b9aff6e03b6f` |  |
+| `M1_M2_apple_verification/make_paper3_fig1_20260817.py` | `ae6215ca8a5738ebea5c86335d8848ae3d62587fc2a7e25396092b15a2939283` |  |
 | `M1_M2_apple_verification/mcl_bifurcation_sweep.cpp` | `aac797454872144d50443765b845b19a538791a3fa9d715f0832abcf4a2de449` |  |
 | `M1_M2_apple_verification/mcl_bytezone_scan.cpp` | `0447cdc839b82331dbb1a5ef720a506b6e38d74eefa855d2a1940fd011ba3ef9` |  |
 | `M1_M2_apple_verification/mcl_detj_verify.cpp` | `1530b2b6f582286cf83f695cbf84002cf83f416b31575ecb2945a918cb109d0a` |  |
@@ -380,7 +379,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 |---|---|---|
 | `Verification_Suite/README.md` | `562c8a6fbd78661d363e9c5461deedd7b6973c9c71d4df8475e01987455f0db0` | Verification_Suite — legacy science/verification tests |
 | `Verification_Suite/bench_diagnose.cpp` | `5852bf88575ff5011cd098b40a00ad14de278713bb50cafa31a6ecc0c726b330` |  |
-| `Verification_Suite/mcl_auth_verify.cpp` | `6290a40aa40ccd0c306f324cad7716c40ef186aff7b5ae2b61b4bdf515e7ec7e` |  |
+| `Verification_Suite/mcl_auth_verify.cpp` | `c4b229a99b5808fc2ce84aba99c6e0b400afa15d80156f309eb9b76b14b6980b` |  |
 | `Verification_Suite/mcl_burnin_sweep.cpp` | `24982c1da2f41cc85d6e1f69e303b0f1c7fd934a832b3cc8d887cc2562ab1207` |  |
 | `Verification_Suite/mcl_decimation_sweep.cpp` | `758875ed7676185f9bc3340982ccc8a0e3f4e94d5850cd6b2ac481f175223df6` |  |
 | `Verification_Suite/mcl_gs_jacobi_independence.cpp` | `58a61680ce293f34a455367644fee005adb1fcabada260fd05b08164a34451ae` |  |
@@ -447,8 +446,8 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | File | SHA-256 | Note |
 |---|---|---|
 | `P1_CSF_Measurements_20260905/README.md` | `9eb2082e8e90e48ac7fecd4e04ea71b06be7f0a21f200162a8a65a183368be67` | Paper 1 — cross-system Safe-Zone, logistic cycle structure and XOR-healing controls (2026-09-05/06) |
-| `P1_CSF_Measurements_20260905/RECORD_P1_CSF_MEASUREMENTS_20260905.md` | `795ce23e8af5a8a1f672f1b61fd9f92a311e69f929f178fa2d901b5fd9d6aa19` | RECORD — P1 CS&F revision measurements · 2026-09-05 / audited and re-run canonically 2026-09-06 |
-| `P1_CSF_Measurements_20260905/SHA256SUMS` | `10eccc9641facfaab70c27f198ac9fb489321d624082d917fb94b64ed3a5edd5` |  |
+| `P1_CSF_Measurements_20260905/RECORD_P1_CSF_MEASUREMENTS_20260905.md` | `2646438f8571bb5e3a6775f3a1b4ae4bd341f02c5530b754d130d7b394c9bb72` | RECORD — P1 CS&F revision measurements · 2026-09-05 / audited and re-run canonically 2026-09-06 |
+| `P1_CSF_Measurements_20260905/SHA256SUMS` | `d2bc3992d1dd7b564dd2b203b12a9e8a4ba755f3f5939c388a75d4c97bcbb5d2` |  |
 | `P1_CSF_Measurements_20260905/attractor_dump_seed12345678901234_M1Pro_20260905.log` | `bd7274ef87c8f0c9101af6a7bb584d0a1190ca7b58e1456ca771d85a537cf226` |  |
 | `P1_CSF_Measurements_20260905/attractor_points_12345678901234.csv` | `c67515ab5f7763be605543fb7a71a10213c724c8b7198bb02f9475f2bea42d15` |  |
 | `P1_CSF_Measurements_20260905/attractor_points_98765432109876.csv` | `d5240f825853f3526fdc86858a3d762f403125aff94ff082644ec30d647740f4` |  |
@@ -691,6 +690,166 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `P3_DeskRejectMeasurements_20260905/window_control/window_trace.cpp` | `4cd1e031f9d9872b6cc531060722ef5e9a742f437ba03ce12051049401d881dc` |  |
 | `P3_DeskRejectMeasurements_20260905/window_control/window_trace_run.log` | `fddb6c566627750507a3f3aabca34a090f1990def0544e11528d6a3835124ab5` |  |
 
+### P3_FamilyGeneralization_20260930  (155 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P3_FamilyGeneralization_20260930/RECORD_P3_FAMILY_GENERALIZATION_20260930.md` | `a8f1eb2aa9a668cf37e3423964afab23bdae02f87b3fb0aa02ebba1ae5e112d2` | Paper 3 — ت-309: the time scale and the boundary in the three additional coupled families — 2026-09-30 |
+| `P3_FamilyGeneralization_20260930/SHA256SUMS` | `7bf6353dbd61895b609cb635d736b7b02bd1bbdf9f5462b6955211566b9fe425` |  |
+| `P3_FamilyGeneralization_20260930/analysis_run.txt` | `2a15eaac50bbeb8340b16cbd125cb9682548cac98c644a62f580220b8ea6d09b` |  |
+| `P3_FamilyGeneralization_20260930/analyze_family.py` | `14d3416116fc809a72cf9b4a87f7180d05c8978842b9b5f0581fe40880cd9e20` |  |
+| `P3_FamilyGeneralization_20260930/decorr/decorr_fit_table.csv` | `2e997be30d4a856c92703bfb3ac1a61c9e0d7375597bee64e502d4ac79e1395f` |  |
+| `P3_FamilyGeneralization_20260930/decorr/decorr_summary.txt` | `42cdfa6068285f04a02ae362e55386c551fe47a490c31999cf774953320ea968` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.28_K_steps.csv` | `d2d51f3cf87c68f2620f36ffabe9e85137abf4d061b9f5db1b7082a60ef06d1f` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.28_K_summary.csv` | `51e9d46c1bfdeed368ddffef42b64d28d64d7e31ffa14ebfad968e77a6f5fc8b` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.28_param_steps.csv` | `564001d2296dca494765ba1bca20514af7271b85533060f129b9b36cce3c03e4` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.28_param_summary.csv` | `b56145a5e97d6343b4fca8a34f2de471c7bee94106aa45c98f89e70891661a4d` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.3_K_steps.csv` | `4363a4059bd3d859bcd0dbfc20c493418ab36fc3a6a227632f7828da6e9b9e5e` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.3_K_summary.csv` | `87361f8ba672c5619426f22463e5e603d9c327a97575a0b5f38c446c618d9d93` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.3_param_steps.csv` | `25503c11b7b89c33c26692fc24266fa6439d9a33fdda464554b1191a4dfbe6f5` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.3_param_summary.csv` | `cb30dd80805ec19fa26311d6c5fb1e665de13afeb5e9dbb7df4a5bbd3b3ff6a5` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_K_steps.csv` | `baa1c44c703bb516c3f911f26388abb328d5ca8bba1cc9d7980c2b6de01beec2` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_K_summary.csv` | `debfe02ce1b30d3155125f0212fd577273397c247d688e4aa7e5054ae2c86ec0` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_param_steps.csv` | `4c76ebd2ae0be7375018ce534dd250906ad0ce181ae834de4d11c2c03ef17cea` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_param_summary.csv` | `60309bef015e88674efb1c1cad2473c43c1116d05d4bb4326b906e388953bed7` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_pq_steps.csv` | `9b07254644b4f495fe055f508bd54a3dbceba566cceb02c298173a1bac227418` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_pq_summary.csv` | `f86389fea4c9eb8f0c1031d14f4744610882e31b625dcfa7e05c809956163a4d` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_zero_steps.csv` | `9bb892b349f56f530198bc676a6d04ded0893ece4523e6e3f57e817a478a3cb4` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_henon_a1.4_zero_summary.csv` | `0b70067564a4b58978d574d3373a884456dc4144cc4751fad6c4a444de5fe60f` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.7_K_steps.csv` | `abacab6c3f9637314c333d56154760705eae06d50d956a97bed91d72cda01051` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.7_K_summary.csv` | `fb5efcbfa12c2c5b77b51868d8eda28244a7125698f98be5a161fbaee762e79d` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.7_param_steps.csv` | `4b19245707674a2ea1d24628ec8f777546e3211c9725f82b2e6b48ba2fe75be0` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.7_param_summary.csv` | `0f00d6d069709f16731c5db11e3503f5c22f1b575cb00da5d118414898106c96` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.9_K_steps.csv` | `d976dc8a6d841a88ee7008dbf76e8e83758a7f0fe2d9f5981c5d4990a96df21d` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.9_K_summary.csv` | `88f2e5c69b3fd5f2889ea7a58344f567b93763e95a481662d94ea491a853c75c` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.9_param_steps.csv` | `6d785a3e819d97a3dddc800da9fa8404cbb7a1af190069987fe18a3c06579346` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r3.9_param_summary.csv` | `8d1493782bcbcf63db0dbfcfec217059989a727c757e6dcf6486c9afc3b8ed94` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_K_steps.csv` | `425ff93f3a3e3fb521630d1877a4401d5ce73df61bc3060d1742aeb7032b2236` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_K_summary.csv` | `2706cf9a66ec52130cbdaa3f793c6889bbee9e930e423bcffd16f779c0bd9b13` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_param_23_steps.csv` | `aba242cf2bc43e177563a605f7cb96f9a38f0ffe232fa1e38fba1eb10fd588ef` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_param_23_summary.csv` | `7a062ce89a0ba757131af6c455ae37cfc467459b690fe869130a586e0edcb90b` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_param_burnin0_steps.csv` | `87febb5fbc46428321bd83a1cfd4f986fe4eb1844e681d6d74053850737a3f06` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_param_burnin0_summary.csv` | `baf4a49546f915acc72f3eb3f5754a4f4888de3eaa24152af18a8c1232f00c1c` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_param_steps.csv` | `8f1880bac05b6ea646d3d3b6fd4f6680d173471e3803c901ec023e337c07495e` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_param_summary.csv` | `df9f4a05f9fdc980c659a1a93fa5a081a8c66d96b3dacb483bc7b7272878a9d9` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_pq_steps.csv` | `dc40f78b7201b5ebc393087fd67c7e8244dfa767049c5bd4147bc43810609900` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_pq_summary.csv` | `da9fb719eb29eca185f296311e1a33fb0c1ad1246f6562a13ad4a20e9dedafab` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_zero_steps.csv` | `5c8366a60720f1b5cec720711624d22ba911548b6c56b43a35cdd537cd50f516` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_logistic_r4.0_zero_summary.csv` | `c899cb285fab9350e1de03e46342a199bac44ffed9adc57fad9dba6504e66a7e` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.3_K_steps.csv` | `6f9fc388cd94062f0916916de8a78ae3ff04201655e9198659727055ee75c6df` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.3_K_summary.csv` | `4e3783e7307ad33b1ad23092d50d12d1fd6927842241e29758e54754c0b8e662` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.3_param_steps.csv` | `d57759970741af61112e526c0743458632ad785f4e7a4b9e99b88f9cd225f8cd` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.3_param_summary.csv` | `9c8ac8e96e66316f7e01d3d0e6ec59411819bec5b2202fcf3de59cf0df46f540` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.6_K_steps.csv` | `9af7c649a29746b688dc3ff583bf2fb0987e41ab15611483f470d7afb37bbc00` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.6_K_summary.csv` | `a55fdbb2c6f8fb31ffbbe32a82d8a3de6ae27872dcb41bebe2346ccec85e8865` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.6_param_steps.csv` | `581d55b049bd6a8524652c9407cf3fd16ce44085f23bd5db3b11d2051de7e744` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu1.6_param_summary.csv` | `d9085afc9448f99d72d4799fb41622c8b66c5095a9d19e048680a79099e9fe4c` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_K_steps.csv` | `87319568d9803ea8a8597e1af41ced577d67a8fce56fec60af1f425e7dd479d5` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_K_summary.csv` | `fcc9af26943999b4347723de3d8688de85a7aaa4c38cc4ab699b08fea8b21af9` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_param_steps.csv` | `733d34417e2b008600582cd9ac62cbea022331a6f7c1fc2332c6396a25f462e4` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_param_summary.csv` | `1ff825aec6257fc817613d4676007018d782f0499b2b01317c3c75634d6d1858` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_pq_steps.csv` | `b50079be8a248f5047be1dab95b10e023a340bd9bd6ccf7daa8a997797dd7934` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_pq_summary.csv` | `26b43fad18ef2f0068701dd7d2fa913bc951c383d85b3097b023e9aff67cde3b` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_zero_steps.csv` | `1799b129c26187932a6399cbc1665b94ef390e3974d4f02af6747da50fcd0d5d` |  |
+| `P3_FamilyGeneralization_20260930/decorr/res_tent_mu2.0_zero_summary.csv` | `0dea292dbcf84173da2e64ab2351518f23de146e6c40bec924c8b715370caf8c` |  |
+| `P3_FamilyGeneralization_20260930/decorr/run_decorr_20260930_175634.log` | `5a4a2ae429f16c7e10cc63716fe3a328404803f6f413e982637a8097986a7759` |  |
+| `P3_FamilyGeneralization_20260930/family_decorr.cpp` | `64f37bc862701aa4213ee21d90d235316a305a68c09983cf08f742ef82f7e839` |  |
+| `P3_FamilyGeneralization_20260930/family_maps.hpp` | `e89dbca61f6419147045cc99be07d834e8fdcd62773aa8065bd75d9cacbdb2ef` |  |
+| `P3_FamilyGeneralization_20260930/family_mixing.cpp` | `9af29e7959e2bffb95788ba74a9251451b7da8e72a927f3e8132b646708589ea` |  |
+| `P3_FamilyGeneralization_20260930/family_window.cpp` | `1f29752da8e9b51bc358b25b09753a25746c5609a69cc088b2d3b8f1fecf1564` |  |
+| `P3_FamilyGeneralization_20260930/mixing/_v1/henon_a_K0.01_mixing.csv` | `dee2e23bb2b10cbb522c02a1f1c2ea7c14cc2681a656542b02ce4d3e6d29ebd1` |  |
+| `P3_FamilyGeneralization_20260930/mixing/_v1/logistic_r_K0.005_mixing.csv` | `0120db091f1ddee8002c24284e0bc6eacbf7d97b8a8de1a031c0009d6d58f5f6` |  |
+| `P3_FamilyGeneralization_20260930/mixing/_v1/logistic_r_K0.05_mixing.csv` | `26d51488b5b225f05b615fdc2bb15554ea6a06c8007a22c883e0033928779a7a` |  |
+| `P3_FamilyGeneralization_20260930/mixing/_v1/tent_mu_K0.05_mixing.csv` | `ddc93b9442d3c028d01ee75d15731ac06d5144940027b2f70ab2ce1f8a4c5159` |  |
+| `P3_FamilyGeneralization_20260930/mixing/basepoints_henon.csv` | `b9c37ac897d6b39baa6cd68671556bd5a679962481d7453d1ee1c73c5c27a3b5` |  |
+| `P3_FamilyGeneralization_20260930/mixing/basepoints_logistic.csv` | `ed2e956c86b265d187634c57fd0c3c080f347170a385d8f7e0a01ed039734e94` |  |
+| `P3_FamilyGeneralization_20260930/mixing/basepoints_logistic23.csv` | `abd6cb97066876c888e0e6fe9a7abab2c535b6ff7c12c19d0e7a9f41ff6791e8` |  |
+| `P3_FamilyGeneralization_20260930/mixing/basepoints_tent.csv` | `91cb9a64bbe8da6ecb7e2b641e26709f0456236bb7e25284d1bed7ff915666cb` |  |
+| `P3_FamilyGeneralization_20260930/mixing/henon.err` | `2f703d92ff5dcc38809df2d040dfc8f79f064a3881519ae32e3978bc7bb3b35c` |  |
+| `P3_FamilyGeneralization_20260930/mixing/henon_a_K0.01_mixing.csv` | `cd2b25c3ec290909ff3737d8da4c8ac7255251692bf66028bc72310970ef89cf` |  |
+| `P3_FamilyGeneralization_20260930/mixing/log005.err` | `e2e4e2f0638c42e3c52e18e7d2245b3098f1410261930ddf6107a97bf2ce76d1` |  |
+| `P3_FamilyGeneralization_20260930/mixing/log05.err` | `217372464d1c8d274f45f05f4fc9b2dd69e86a097d5c655653427277d5e0e3a8` |  |
+| `P3_FamilyGeneralization_20260930/mixing/logistic_r_K0.005_mixing.csv` | `dd87acfb2be2d4e7183b079cddd6260f5398e95c7bf706aeae7a68b5ce3fcbac` |  |
+| `P3_FamilyGeneralization_20260930/mixing/logistic_r_K0.05_mixing.csv` | `652847931f81257ec78beff8dcd019e1dba0d048a710a4dfad6d487c0cb6067d` |  |
+| `P3_FamilyGeneralization_20260930/mixing/tent.err` | `95d809f64be4faedb18381b1b8e8a270fea2f918d305437083e32bbbec7980e1` |  |
+| `P3_FamilyGeneralization_20260930/mixing/tent_mu_K0.05_mixing.csv` | `b149c4b02409bf0ef25971f6df37255c9a35cbc713f3418740fad410236c88a8` |  |
+| `P3_FamilyGeneralization_20260930/paper3_fig6.png` | `0d62bd6681e4e418e2e5d6501a0ef562d39e132808c012686237107948ab40ce` |  |
+| `P3_FamilyGeneralization_20260930/run_all.sh` | `3c437e613bdac5e440b5896f70853a98b43b6e6f25fc146981b1dbf159e37c62` |  |
+| `P3_FamilyGeneralization_20260930/run_decorr.sh` | `4136e7dcb92b536c784444e47a1d97c0601131d0674b3dd17dc63b9b7e67d35c` |  |
+| `P3_FamilyGeneralization_20260930/run_mixing.sh` | `7a2eb7a59f635fe1fc5e9fcd795eda5a5512b07e4ae762ed9b60335e80b19dde` |  |
+| `P3_FamilyGeneralization_20260930/run_windows.sh` | `5381acdeb137af61cca5806c8df1c73fb53eadd27f40eac6bb18792e987a8def` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01.csv` | `7d103483a6ade8f2fef358f3c1b71eb5c8597b440f0114baed9a6f47364ca3e4` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice0.csv` | `ddc25cb8ecb82036e4c95f2637d5872f4ebe3f1a40292ebf4a07a0eef24117c1` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice0.err` | `f7f538f74ecd1778edf6d95f7db41483bf332bbaf97697a2b5e60069ec5c2428` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice1.csv` | `2411ad77d4974660adc2ded19f977531a934699bb8e41781ec9f4d2a3baa166d` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice1.err` | `c3b57201b5df5874f8e70981e51e6abbf7fa9a61bfd8a32cdf219a977f79fd9f` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice2.csv` | `9d5fcad09c4dd39286c3ec06e676bb0cdfe507d4fd27838867ce812d3a2ae111` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice2.err` | `3b5ed966c5f251ffb00da0165b9dbd5537d0aeb6481f8ec2f5e8e0456937cc20` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice3.csv` | `6493ea18f9c1e26aebf721d1eacd8d41f279cbb61d64c2bac88289e29e1ef055` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice3.err` | `a4aecf46ca3a6a1c12bf79fbbe5604f9d03dddca4378af5b7f380eb328ff8945` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice4.csv` | `d2a21253f34bf3a5b0424e1872146a608e12fd704e73dfab7cca1d447912dfde` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice4.err` | `454f8ae8d9fe349d07e0c4a757b4f373408dbb4d98c6e7cb057ac7f3c97e67ed` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice5.csv` | `0d4572090eb42d4592fe45eb9f19d60030d200e42782883bbe70550b0a6a8e99` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice5.err` | `28837361564bdb1f0d3daf4b890369d83a33766488c38e3bcc27b6ecc556810b` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice6.csv` | `9ee38904f5286d0688ad7dda79c4972846d8e8296cebd40fda33a36d0dad3ad1` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice6.err` | `2dac30a672d14df3e0c32788e1ab40fb20e8628f3352e334cef7a1a3b2ced67d` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice7.csv` | `ff9aa3ff9887c8aec318fcc8ac7faec43763f84a20139a7e1aad7fefcd1b348e` |  |
+| `P3_FamilyGeneralization_20260930/window/henon_a_K0.01_slice7.err` | `39d7cfbce2aa6451fbcd9d6e6532d941863714e8bf25e843c1414e9206126462` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005.csv` | `c75ba0171edfb33e4ab16159278c7efa1f9e2c76b315037a3f4c0b66a01c3f22` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice0.csv` | `f693c54c877219c1a89b242216e8edc1dcc7eb4ab3edc1e79c490ab1dac51fad` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice0.err` | `69b90c5619ec3f111d5f8bc28fb05d0f80c3548f81e8ac7640b6c816caccbfca` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice1.csv` | `f7906dc47d17fbfafa55284ed680e964bae87b9c32ff462f48cba1909738db0c` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice1.err` | `ac4e1f16c2908b089806fb05eeb9f8338b080a00d223724ecda49d4c3d66a1a4` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice2.csv` | `370fd66128c7c02d30fa7b4e549bee97fc2d1e6939a5b3e57a52a9a4c40b61fb` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice2.err` | `4a81433ea78540c22ba2aa895b7dc22b696ff3a29ff95dd2326c0199c9369a05` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice3.csv` | `31cccf56f1cc97be6f85e02d48459f5e79f16f1194521fb8cc8ab526cbca53e2` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice3.err` | `a989826645e47e348dda021c79678560e1d67a0213ade281b79289da482d45fa` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice4.csv` | `9484e15877df956d577d7315cbb502ba5010b73902c2e2ee35cd0cc37d53335a` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice4.err` | `8b51a0bccdaf425df700b8430cb3dfded470b59da2a671ded1e57b55ec9c0973` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice5.csv` | `a0f6dc98930c338d903e88dbc74d28ae97b8616a38f52e76f1a8b2dc11cf2666` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice5.err` | `10b0c9837ee5bd42e0831e9df00b3999f7cf4692bb0e96bfb1639588d1ce9a59` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice6.csv` | `a7c770e989c1fae6cdd45b3dbaa6815b918a14f53b27a97e086595dafbcba8ea` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice6.err` | `4b5bcc8215d5cef171f7a8cc5ba23a5b29d82ea80611ae018f660fcbff970f28` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice7.csv` | `d5c42c12a00c49e7fb855a4c23893878c3368434b945689102a4df6c0630a2bf` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.005_slice7.err` | `a0ce05cc157a3abc84d35ef2e1a7b4f3803292add4dfda72ccc67dacd30a1850` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05.csv` | `6e79d6454fb6f278eda60379fd42357a7b3b26e4a8671eb6b3fc0c3000495e36` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice0.csv` | `2c3ed120aebfd68add13dacec171c4a26ee783d8fbc6639ad6d5a5f24eedba22` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice0.err` | `230e2d55c26ffea0bfd5bc43f61fe803f5760e29f2068fff9631cfbd51449ca8` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice1.csv` | `59b1e98ea6da33e68170a10882d1886f05a459abe363283e0402ce526f712566` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice1.err` | `b0217a951812ca158ed7df54ffd4bfa0668fdd7aa4494d6c401f06fff23eea29` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice2.csv` | `e89ec776fb988a55da048e8e5b8144807b06a78653cea9547d9f9b219af9b4e3` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice2.err` | `91abc36eb1970c353f4fcdf87e10e61d2f4553bda54da73da4dad545ec04ed88` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice3.csv` | `0e8651af878215f134887550b9cc37574f37045a35ace5e00eb4996d25804438` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice3.err` | `7e37340aca44b4551e8864d6e1715c1e82ecf979941661395a0570e70c37c1dc` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice4.csv` | `6f5247d0c0038b7570673fbeab685e7e09ef6926a402f5b98afd28f40e079933` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice4.err` | `c626bef5317a55aa21c6a09290ab6c71320da2626dccead606b1016e1cca5e83` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice5.csv` | `b19e196225a2b399c236b6a79690f6bdf603230f172732b2ba6676b254c63166` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice5.err` | `f98ccf5345e96b1b9ce224cad1028148060208f1213a6a865a3d70f4eec567e9` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice6.csv` | `d51e21b8d049ebfa8b30f764955e4100f9f3eaa268d68eb809e78a6f6840584c` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice6.err` | `487beb3b04e8ff7aa31a0e0f65034a3345cb0d622bb41fabfbf055abbfcd20e2` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice7.csv` | `f2d038fddca3eaace71c7e00fde19add633a6ee05823fbcca6efa8a23065e5c3` |  |
+| `P3_FamilyGeneralization_20260930/window/logistic_r_K0.05_slice7.err` | `680b7c87e174e949c7ec9bfd60c2a7bf4a250078f087727d6d1d1d894d7e56b6` |  |
+| `P3_FamilyGeneralization_20260930/window/run_windows_20260930_175545.log` | `26f503a298565c0920e038665c501767e95691e697c04aaf854b7ea7b4eea60b` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05.csv` | `b48ea30b31e404f700060443e7c114c385edf2b2df32e605d48f4a6f97770063` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice0.csv` | `e408ad38a5daf00350fc423d9fb4439a167b3602caaeba219382ee8951d4bf0c` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice0.err` | `133422354046904d5ed06817752e99e17dc38238dd09451800a8cc069cb65b65` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice1.csv` | `3c44f88184523ff15fab8378767be99322bdce19f990d75b18f125753c85d59b` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice1.err` | `2b12c9a3da33b651cec079adec15e2b196e9db294aff5974d638277a1b215dd2` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice2.csv` | `70b0e73913653108f2993d9983faeeb813b2b77643c7c67ba27f015259a3783f` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice2.err` | `34be32068c3d517b2ae20d9e192c13e5a74f73123a81744b091042f0ee0ede28` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice3.csv` | `2616b3d3860f7939042a4a1db5186fd70304837ea8bfabf45f07ef006ca11d6c` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice3.err` | `266fb08df47d2485ab517c350feecda0777299f73cd8588d9621191b6c122c45` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice4.csv` | `46aa7777e73d95a74d3d599ff8a47765a820c9100be6b13caf291a53621cec80` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice4.err` | `ddd0fa6337878781a79cea6a14e4b705b2dcd7c5b2a5236dc81e03c65b7b3338` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice5.csv` | `f620106e30f20b138cebaa6ed5c45de5d6a7ad6293f4a0a02ee5e307f01b3ec9` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice5.err` | `37acf72910c4d743c3fe16bb9bc9b2efe4f388a1d3994bd1ba0d0d50614e5d89` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice6.csv` | `a3731d1637fec26d2510ec7032bb1be2f8d7ffbb8b4106c2d9a7197e53c14bd9` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice6.err` | `0874858569d6ca399808315195164a4660547378a220102e13dec18ed66c466f` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice7.csv` | `3855f091662571bf0089c3282dc00b07bc9e38b3ee668e3011f6eed25459c527` |  |
+| `P3_FamilyGeneralization_20260930/window/tent_mu_K0.05_slice7.err` | `7d12e93a3f1c5f7d8d3a2c77196b21f2d7a92a215bf4773a54284176fdb72b91` |  |
+| `P3_FamilyGeneralization_20260930/window/window_summary.txt` | `ace696f57bf3d3e31a0172fdec7bd079babc2d9fb4f69a559b5a4466affa371f` |  |
+| `P3_FamilyGeneralization_20260930/window/window_table.md` | `9f44962529065d87ff67696e627c9871dcdb1fa620660309cd11d07bc5ec8a05` |  |
+
 ### P3_Fig3_Regeneration_20260903  (5 files)
 
 | File | SHA-256 | Note |
@@ -748,8 +907,8 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewDev_20260925/README.md` | `85a18e7aaba29eaea0c9b79679a1d71089e4129b21ce1a24c6b6844d9a5b35ae` | P4_Dev_20260925 — measurements behind review #16 (adjudication + development) |
-| `P4_ReviewDev_20260925/SHA256SUMS_16.txt` | `5cc509434f4e798846a8036f10fd7a8f26efde33647f60842f74cfc757e56118` |  |
+| `P4_ReviewDev_20260925/README.md` | `e807e49b8eda9f3788b15ef706ac9986696095d6d9745c72aa1eef671f9d1f23` | P4_Dev_20260925 — measurements behind review #16 (adjudication + development) |
+| `P4_ReviewDev_20260925/SHA256SUMS_16.txt` | `bc9e1d8ffd7a0c6f7e4046a5741a1ab807489603789c9ce2a64d6b1ccf0cbb88` |  |
 | `P4_ReviewDev_20260925/SHA256SUMS_20260925.txt` | `1866714667d195edfd054b7f0c88e21e989d94343aa951eddff8dce36f11d460` |  |
 | `P4_ReviewDev_20260925/argstate_rt.cpp` | `01e2442974f8928a112d03b4415005948fc5c9f240b9f7d4eeb9a0d2135ed62b` |  |
 | `P4_ReviewDev_20260925/argstate_rt_20260925.log` | `a1c486cad21793a0af9945f5382aa85984b68e65472a28f2c7b8080395214ede` |  |
@@ -769,32 +928,47 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `P4_ReviewDev_20260925/walkdp_toy_s32_20260925.log` | `97a200bd07e9a21cb2631536aafcbac2bbf46ed7a2c5eb5bc4388649485f6f4a` |  |
 | `P4_ReviewDev_20260925/walkdp_toy_s37_MggN_20260925.log` | `572076a85660d185a1ca27a7039e60f3b0d5f29c90a3ad930bd5d55fe8363137` |  |
 
-### P4_ReviewDev_20260927  (10 files)
+### P4_ReviewDev_20260927  (24 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewDev_20260927/README.md` | `18ffb94fd622c8811952ecf8efebc29f3df7c84d552aa38a738477e45f998a3b` | P4_Dev_20260927 — (1) exhaustive translation-symmetry enumeration on reduced-width replicas of the unclocked m |
-| `P4_ReviewDev_20260927/SHA256SUMS_16.txt` | `ba9e2732bc7435ade6fe3b43254b011e5930a7f4093636101fc54da8960fb2cd` |  |
-| `P4_ReviewDev_20260927/host_20260927.txt` | `1b8ffa8cfed17f66e53dd375ab10fd3b1334cc02221b36012c4e53b5487a6c9c` |  |
+| `P4_ReviewDev_20260927/README.md` | `c2c5f4859ed1cd873ecff551c696b814f8b9b0ff966f59ef048d88f8385f7f10` | P4_Dev_20260927 — (1) exhaustive translation-symmetry enumeration on reduced-width replicas of the unclocked m |
+| `P4_ReviewDev_20260927/SHA256SUMS_16.txt` | `11bda880a04006c7c3989b90d26596c7b60c10e1e2d0842b481769c7577f90d8` |  |
+| `P4_ReviewDev_20260927/clocksep_structured.cpp` | `761737cfd0d09781bd7d8b17977d7b919360fd956675e4f12bb448b5c2582e3c` |  |
+| `P4_ReviewDev_20260927/clocksep_structured_20260928.log` | `412e60ecc30d60157b835d67e02ee40e235dd0a43ca810cf888aec6db4f17d0f` |  |
+| `P4_ReviewDev_20260927/clocksep_structured_20260930.log` | `3618274cc94e180bfc74ac6aa20ee9c322ab0cc274eb1385d5a55a42571e6365` |  |
+| `P4_ReviewDev_20260927/clocksep_word1.cpp` | `d46bbf27f306530e04ea9ee58a9e23e39201abf71cc312aa1809ac96345b87a7` |  |
+| `P4_ReviewDev_20260927/clocksep_word1_20260928.log` | `5bdffb275c59740f0c550fa8659cb9895ceb9df015f5d5952665307e9e8cf2fe` |  |
+| `P4_ReviewDev_20260927/clocksep_word1_20260930.log` | `0f84b87d9939b63e6d9f19a22c20f84294dd472103f38c7c88db65a6e5796f85` |  |
+| `P4_ReviewDev_20260927/fig2_gs_jacobi_divergence.cpp` | `6c08c6887eca00edc4e9d257ac72469f8568cbd44be7a52de98a375821a9e1c5` |  |
+| `P4_ReviewDev_20260927/fig2_gs_jacobi_divergence_20260930.csv` | `b63007c27cf86568785af14028916154bc94257384f9475694f60d47f1d29c65` |  |
+| `P4_ReviewDev_20260927/fig2_gs_jacobi_divergence_20260930.log` | `2ac4028c4ceffcc36447cc93474dea689073a7f501298de2e68bd44c5e6a6eb4` |  |
+| `P4_ReviewDev_20260927/host_20260927.txt` | `66553457dd382e83d343a6eaf46e34368c8a71fd6793e45656a2d99d80618f45` |  |
+| `P4_ReviewDev_20260927/linux_env_20260928v4.txt` | `0e1953bf1d23ed0b06bc362e88225055c5fd5457eb21be4663c9731a02584078` |  |
+| `P4_ReviewDev_20260927/run_linux_v4.sh` | `04c5869e128fa95a388059c7baa55e8ddd070ec8aaf8c7fb1937e65449f3138f` |  |
 | `P4_ReviewDev_20260927/symenum.c` | `8055e85adfbde8c6beee778576e754ae2a4e88c20d08d4d951d013bbd7d727b4` |  |
 | `P4_ReviewDev_20260927/symenum_n2w8_20260927.log` | `e9f6a0bca5f91079c2ae1dfd2e118201d9e17c492e4b06da952afd9924573e04` |  |
 | `P4_ReviewDev_20260927/symenum_n3w8_20260927.log` | `ee5509e9269770ab0763870ff9b1900128bd3a8acb2cc9d4bf33fc93a980647d` |  |
 | `P4_ReviewDev_20260927/symenum_n4w6_20260927.log` | `adeb96ba049313da2939ca6c01b616931829df28c1d7b80d8f79d372f9da178f` |  |
+| `P4_ReviewDev_20260927/vdf128_t4v4_standalone_linux_glibc_20260928.log` | `2baa6ed38868ba2188d7c2a2041750186567b1e6df431f2621b73b3b87909543` |  |
+| `P4_ReviewDev_20260927/vdf128v4_kat_linux_glibc_20260928.log` | `933c8c00fea6926f4f003dc20057414d49e396673b40ea8716b40c8e3d1b45ea` |  |
+| `P4_ReviewDev_20260927/vdf128v4_xplat_linux_glibc_20260928.log` | `e101ea2c0aa4895b1c646ebea9af1adb64026124f82217d84381d35aecf8d81c` |  |
 | `P4_ReviewDev_20260927/walkdp_sim.c` | `4a2bed6acfcc056de5da13477d148ec1f41a1388191586906c6b7938a708ef77` |  |
 | `P4_ReviewDev_20260927/walkdp_smallM_heavy_20260927.log` | `bd614fedf9cd9113791cadfc275d494fb0dabf0086641680ff50a08318c34740` |  |
 | `P4_ReviewDev_20260927/walkdp_smallM_light_20260927.log` | `df5862f2e450440b07831996ad1c815dd807e9b1359cf5c89ce3fdd383746f2e` |  |
 
-### P4_ReviewMeasurements_20260904  (27 files)
+### P4_ReviewMeasurements_20260904  (28 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260904/README.md` | `52971016848040c4e9bfdb82b81174bbb77f8da802d210aeb20755dcffcbc6e1` | P4 review measurements — 2026-09-04 |
-| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `de56565726bba2617fbc856f9ed8aaa1805ebf91faf34a68c70c2722e32cc5d8` |  |
+| `P4_ReviewMeasurements_20260904/README.md` | `1fdc33dfb01c135fe1f6875f8712eb305ebd51dc150b7d57db2d92298ddcc936` | P4 review measurements — 2026-09-04 |
+| `P4_ReviewMeasurements_20260904/SHA256SUMS` | `0ff3cf81180350750cd75f11c1de17e83534d1cbc5c99bbc2b0af35ffed36b2d` |  |
 | `P4_ReviewMeasurements_20260904/appendix_vectors_apple_20260904.log` | `6842ff30259895bb4836956b36518b4a5124c389ef106e6c4e8ad2a9feb18f20` |  |
 | `P4_ReviewMeasurements_20260904/appendix_vectors_linux_glibc_20260904.log` | `c5b5a94512468305913eaa863d764a3518e835b0d5931049a24f6f9ea4f6bfd8` |  |
 | `P4_ReviewMeasurements_20260904/det_ratio_apple_20260904.log` | `8b00e2651a4fba5f9ee595e061195d00a5cf2a6ae5dc6d722667bb5493d1c15a` |  |
 | `P4_ReviewMeasurements_20260904/gs_jacobi_pearson_apple_20260904.log` | `e4c63f7170891a98f7cc858a635ce732697d9504fbe158cf0bea64e7f02916cc` |  |
 | `P4_ReviewMeasurements_20260904/lut_digest_apple_20260904.log` | `0251d06c8c2bd85489c80cfbf49135a326156aec43e50f0503540ddbf8ea1620` |  |
+| `P4_ReviewMeasurements_20260904/mcl_core.hpp` | `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` |  |
 | `P4_ReviewMeasurements_20260904/p4_appendix_vectors.cpp` | `e072a116d36a30341240ad9d9ad793692ba5f0ff132131e6751f9f9d1483f100` |  |
 | `P4_ReviewMeasurements_20260904/p4_det_ratio.cpp` | `3ba54583d37308d5176747a78bd3ba755f3ee8c8ca6230cdcd5b1f95c482b984` |  |
 | `P4_ReviewMeasurements_20260904/p4_gs_jacobi_pearson.cpp` | `85e40b0cbce20acd039923ec8a8cc2e705d09b4b101f343188b0d13a016b3944` |  |
@@ -820,8 +994,8 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260905/README.md` | `98f24f93d171296b0df30ab50b46481df7cc6715ff411d39f97b13e1fd31f556` | P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights) |
-| `P4_ReviewMeasurements_20260905/SHA256SUMS` | `29793f78b120ab923423623207efa4959b59560c4b109aa3ec049d14e1dd9710` |  |
+| `P4_ReviewMeasurements_20260905/README.md` | `3507fc4c78d475fb1d92d873fd4c3c1066c51da427f419c3db1f2ae516fea625` | P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights) |
+| `P4_ReviewMeasurements_20260905/SHA256SUMS` | `e8411af1969771ac0f63a8ecac979182e6b03ab41bd3ea697185bb860201a03b` |  |
 | `P4_ReviewMeasurements_20260905/linux_env_gha_20260905v3.txt` | `5b249afb3b6d63d3d3205f24a9ea6421211976e5de064d9b548441e3031a38bb` |  |
 | `P4_ReviewMeasurements_20260905/linux_provenance_20260905v3.txt` | `2c893eb49813088c136fdbf087dc93d623e8a7c5610fabca06bfd0c3b7cceade` |  |
 | `P4_ReviewMeasurements_20260905/mcl_core.hpp` | `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` |  |
@@ -887,7 +1061,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P4_ReviewMeasurements_20260925/README.md` | `6134493a6e3434b2d6dc890a957c129f4d07a4d698900e667bc5660d2f0e4f87` | P4 review measurements — 2026-09-25 (ت-134(أ): VDF128-T4 **version 4**, clocked map) |
+| `P4_ReviewMeasurements_20260925/README.md` | `da37c30419a132cf317f6aa3056e9c57f7404e99565f563d75a836e9875913eb` | P4 review measurements — 2026-09-25 (ت-134(أ): VDF128-T4 **version 4**, clocked map) |
 | `P4_ReviewMeasurements_20260925/SHA256SUMS` | `610f317ac4bf239e6ef093fc96d4140cc83b4603a9d1fac6dca4762c4cbcd545` |  |
 | `P4_ReviewMeasurements_20260925/_run1_direct_clock/vdf128v4_battery_apple_20260925v4.log` | `e6d824ad68e5cf259cc7b39e0616e0ade27d3f5c71c684858dda7593a1121dc6` |  |
 | `P4_ReviewMeasurements_20260925/_run1_direct_clock/vdf128v4_bench_apple_20260925v4.log` | `bbb80939cd7115081f41861179451091e41e203ae5254796020f13f4ed804e61` |  |
@@ -928,22 +1102,23 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P5_HDVerify_FULL_20260904/README.md` | `6cc92fcb144f4d7baa09f308fa5947a9c0fb21c64af82e4a7fe1366c5dcde642` | P5 §IV.E — حملة FULL (9,702 مرشّحاً) على محرّك السجل v8.1.3 |
+| `P5_HDVerify_FULL_20260904/README.md` | `ec89b56572427f07ccf414a3be831391a0920995676cf415376284523ad983be` | P5 §IV.E — حملة FULL (9,702 مرشّحاً) على محرّك السجل v8.1.3 |
 | `P5_HDVerify_FULL_20260904/coprime_frac.cpp` | `13b5a35c58f29dfa9e745dc0794af30cbc5e33bc86b270374281f3dce9250d48` |  |
 | `P5_HDVerify_FULL_20260904/coprime_frac_2e5.log` | `492a54a6847e75e3d2f5f8707fb19bad8bf0dba0bcf7b3bccf99feb6d6fe8126` |  |
 | `P5_HDVerify_FULL_20260904/hd_throughput_v8.1.3_M1Pro_20260904_run1.log` | `129820ecec072eee763c17681b9b98d7bb7c6f26038bef1cce34e51883af37e9` |  |
 | `P5_HDVerify_FULL_20260904/hd_throughput_v8.1.3_M1Pro_20260904_run2.log` | `fdc0166e1c7c7fc77b555e09b7a7be961fa45bc259b9f364f086be5856841335` |  |
 | `P5_HDVerify_FULL_20260904/hd_verify_FULL_v8.1.3_20260904.log` | `dc7e440a5f757d8e1c202bc83c7af6e8f93e9222952d20b8fa91c5943f074ec0` |  |
 
-### P5_ReviewMeasurements_20260905  (32 files)
+### P5_ReviewMeasurements_20260905  (33 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
 | `P5_ReviewMeasurements_20260905/G_entropy_20260905.log` | `c3bace30d5eb921d5e689fa06e807992afce63d87a1f87e4ef861d5c28687225` |  |
-| `P5_ReviewMeasurements_20260905/README.md` | `ee5f4b82c1706617f44fab35389026c1349b662aad3aba40bcc57d539c13d144` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
-| `P5_ReviewMeasurements_20260905/README_EN.md` | `6dae4e849ca2716ea92683526277eaa13951895ebb19423e823f22022193192e` | P5 review measurements — 2026-09-05 (English summary; Arabic detail in README.md) |
-| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `3f0908cc80caf56f28f4c5e4ebb96cf3d1fb439e912a376f4b1a65f33a1692ff` |  |
+| `P5_ReviewMeasurements_20260905/README.md` | `604c944cb798a6711ff063c3ab6423121d4c212dd01cb110d0abcc533c01b5cb` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
+| `P5_ReviewMeasurements_20260905/README_EN.md` | `c8f8d557d47afaa899cb7bc377d854598d56134c32a8df59af31d672e2132293` | P5 review measurements — 2026-09-05 (English summary; Arabic detail in README.md) |
+| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `64100640b3cd5f65e8ec986dd7946e08d334616e55522350d5c317ed1f1f69ab` |  |
 | `P5_ReviewMeasurements_20260905/adversarial_20260905.log` | `91d8551f6bfae8ed65dd48c1296c6c8816cbd58e40f20802b58568106dacfe4e` |  |
+| `P5_ReviewMeasurements_20260905/adversarial_20260930.log` | `3b6a5fd80e5582d6283562fb9d89a30d682f1046528646b5e9130db9c8b90c79` |  |
 | `P5_ReviewMeasurements_20260905/burnin_curve_20260905.log` | `3755e13cceef723688d1716518a52d1bf35c9590047e019660c049fea5c5cf57` |  |
 | `P5_ReviewMeasurements_20260905/burnin_curve_v2_20260905.log` | `2898fa58a7fa45afff950cccdb2b282a853a71a63b0f15f9d25c9abcd39b709e` |  |
 | `P5_ReviewMeasurements_20260905/ct_sine_cost_20260905.log` | `08af81ad5332b04c1fe62a15a9c7269d925d51d9ab81219b3a85e178cabc585e` |  |
@@ -952,16 +1127,16 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `P5_ReviewMeasurements_20260905/header_patch.diff` | `1a06b57111ab4ec4a27d3c4d3a31a791157817ec2b5fa29fddb8af80d93575d3` |  |
 | `P5_ReviewMeasurements_20260905/mcl_hd_throughput.cpp` | `7d922b50ea6b6d041f8a8a5a978f4dce48757d0352b6b2fff9f7c22320caebd4` |  |
 | `P5_ReviewMeasurements_20260905/p5_G_entropy.cpp` | `d8232c4eecb747ae7ec07ee6f7d5c28096fb95413aec467f2de9a5f5879440d9` |  |
-| `P5_ReviewMeasurements_20260905/p5_adversarial.cpp` | `9c28e9ed8b840a3fafa08dddd661a9413b52aad75bdb70b1fbc07c4d05ddc7ab` |  |
+| `P5_ReviewMeasurements_20260905/p5_adversarial.cpp` | `c1c7925899d6962b71ac12df4635455c6bd8e87b5e836eea182ace22e2d111bf` |  |
 | `P5_ReviewMeasurements_20260905/p5_burnin_curve.cpp` | `99cadc2c5956b2a4bfd2a0ba72c2eaa186f4861829d02b9b1cb740326f3719b0` |  |
 | `P5_ReviewMeasurements_20260905/p5_burnin_curve_v2.cpp` | `f2c39c4936f4cec3ed5b15c800c5de5f96e62fa3ffd0bf9a2ddef8a081563a2e` |  |
 | `P5_ReviewMeasurements_20260905/p5_ct_sine_cost.cpp` | `32b5a2bb058169eacb6598d75d260e5c002b62c5284a05f28f00ed33ad71518b` |  |
 | `P5_ReviewMeasurements_20260905/p5_parity_lock.cpp` | `80e447142df634d6742be9395cdb6b1f31205a4e215b9c6f97210bc841c72642` |  |
 | `P5_ReviewMeasurements_20260905/p5_resonance_control.cpp` | `aed41340b9385ff47b72e94f11e30df644b916d467ac1b58f8d33044b07e5691` |  |
-| `P5_ReviewMeasurements_20260905/p5_system_eval.cpp` | `2cb19ed21fb5744bf98442e55c99c2138b4cd25787e680f62547701cf37d9f3c` |  |
+| `P5_ReviewMeasurements_20260905/p5_system_eval.cpp` | `9c95a26e2830932eaed838a226b22bd653987eddb37f2a6479932c4f14942ba0` |  |
 | `P5_ReviewMeasurements_20260905/p5_v2_coprime_parity.cpp` | `38eb19642c0d1171c3f600cc1039c85265ec6efad4f2d272b0369f53d7ea6949` |  |
 | `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` | `08a270fa30d6db9bbc8deeaceb8cac7aa28c21e4ae6daa73e55205f02945a75a` |  |
-| `P5_ReviewMeasurements_20260905/redraw_rate.cpp` | `d2973fc15160973aa998657485c6ee7951bd6cee80cc66a5c3ed257ce68cdab0` |  |
+| `P5_ReviewMeasurements_20260905/redraw_rate.cpp` | `674a1140c67efcb0d72bab48ee0d4cdabc3119fa4b0b8ef5007a3eaa4e1d4fce` |  |
 | `P5_ReviewMeasurements_20260905/resonance_control_20260905.log` | `fa44244a920762747ea9f0f81cbb250ccf4315ed85105eab9d6dee4e9279473d` |  |
 | `P5_ReviewMeasurements_20260905/results_v3_battery_q30_v8.1.3_20260905_arm64.txt` | `e063f867f69b6fe135d0bcdd9249763b867d85f01ffa28c857920016b22c5add` |  |
 | `P5_ReviewMeasurements_20260905/results_v3_battery_q30_v8.1.3_20260905_x86_64.txt` | `0b7b9ebbe7a1890d1f7df10fe0116f18e6b815abecd693a4136e6c075075c9bb` |  |
@@ -970,16 +1145,29 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `P5_ReviewMeasurements_20260905/system_eval_20260905.log` | `199730e36baa526c82980c3da0cf7fe6488890cd910b6cb274dab029a3ffd01a` |  |
 | `P5_ReviewMeasurements_20260905/v2_coprime_parity_20260905.log` | `021b8c1307227f57b71167e7e3e6e2f863ab89b0413c1307c324eee268a5e0d5` |  |
 | `P5_ReviewMeasurements_20260905/weight_probe_20260905.log` | `9d41d84e3f0cb88cba6330a3fd64ca31f66cc579abe2f63eb0afd5df9f38b782` |  |
-| `P5_ReviewMeasurements_20260905/weight_probe_sidecar_scratch_ctor.diff` | `617f1ef29095331a96ce1c598553762b4c1b324e45065eb4b745b7c6a7e5dfc4` |  |
+| `P5_ReviewMeasurements_20260905/weight_probe_sidecar_scratch_ctor.diff` | `b10a8d5135577bbc0b3f55a8a0bd4341eb2129c3a83d31bd519ca495e496c53c` |  |
 
 ### P5_ReviewMeasurements_20260925  (4 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P5_ReviewMeasurements_20260925/README.md` | `709c1f8b77489e8ed61bf812e7d1f6492fb9932f67a3606ee119032301ee0ffe` | P5_ReviewMeasurements_20260925 — Paper 5 §V.A verifier under state loss |
-| `P5_ReviewMeasurements_20260925/SHA256SUMS` | `0b6229ea5842f10cc5b6090d6cf1f2babc67c8e2dc3cc4a5ef00c2de0d243cbb` |  |
-| `P5_ReviewMeasurements_20260925/mcl_txauth_verifier_state.cpp` | `47cf6a97a31b8144db06a6ba6e490f421ce8c71581bdefb4138de01263b73266` |  |
+| `P5_ReviewMeasurements_20260925/README.md` | `5a30cd7724ff989c83a455c57b2049081736fa5a1f7e8c3773b1ee3c251d8b1a` | P5_ReviewMeasurements_20260925 — Paper 5 §V.A verifier under state loss |
+| `P5_ReviewMeasurements_20260925/SHA256SUMS` | `3ead0d6cf6d595046c682f922819736ae6e7ef1832f8e11ba023e3d8dff730d2` |  |
+| `P5_ReviewMeasurements_20260925/mcl_txauth_verifier_state.cpp` | `905ce2c1718cce6c966b8659e7eaf2a352ba6a4e68751ea266ee9a8079fb57d1` |  |
 | `P5_ReviewMeasurements_20260925/verifier_state_apple_20260925.log` | `7d985522aa1dc0b314fa750442d759548c59da466e5f131e2f09b18150629b6d` |  |
+
+### P5_ReviewMeasurements_20260930  (8 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P5_ReviewMeasurements_20260930/README.md` | `2164e19c2679425931215e38ca2da3a3edba2171503de57b39be3a0f5217db39` | P5_ReviewMeasurements_20260930 — records produced during the fresh-examiner read of Paper 5 (2026-09-30) |
+| `P5_ReviewMeasurements_20260930/SHA256SUMS` | `b8164ea6a2f2ae004c9c0d0b459180f1986941d079997ba949fb803d27855ffe` |  |
+| `P5_ReviewMeasurements_20260930/derive_v2_identity_collision.py` | `d91c358c1547dc4eb52b583b2119cb66d5963c8f276c1be5ba8970376d7045ee` |  |
+| `P5_ReviewMeasurements_20260930/derive_v2_identity_collision_20260930.txt` | `1929a83f8314c5771a8c68cb21c6c92e3b9393073f43fb1dc01f80ee1b3a3fc6` |  |
+| `P5_ReviewMeasurements_20260930/parity_lock_20260930.log` | `451fc6353438458eeaa3f4cb081741e743fef40a5db81993bee6e87e6b938393` |  |
+| `P5_ReviewMeasurements_20260930/redraw_rate_20260930.log` | `55f240e70ac52da48b809ac5cc60597a7e95c3a7f57352afcecfed5dc17d47f9` |  |
+| `P5_ReviewMeasurements_20260930/redraw_rate_v2_20260930.log` | `24a7adca0ccf8959828bc1b6ae4ac31c39b116689ec768205bdf0df6b440c43d` |  |
+| `P5_ReviewMeasurements_20260930/results_v32_q30_native_arm64_FAR1e6_20260930.txt` | `79f882424a313bd3575d42f5e7211bc290d2c20cb1091bccfee3ec207d4f2598` |  |
 
 ### Quantum_Structural_Analysis_20260927  (11 files)
 
@@ -1003,9 +1191,9 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 |---|---|---|
 | `hd_v2/README.md` | `00ce5e1bff39ef63e9682faad18783132df0f41cbe210acc815da5d15284702c` | hd_v2 — Hierarchical channel-identity derivation, version 2 (additive sidecar) |
 | `hd_v2/hd_verify_v2_FULL_v8.1.3_20260905.log` | `c6657165de79147c7b88bbf275825bd83c0ac69089ec9e14f3811094782c8260` |  |
-| `hd_v2/mcl_hd_throughput_v2.cpp` | `62bb756009c16d20bdc8eb4f0b6091863efd75bbbfdfe47707e3b85ae34e1405` |  |
+| `hd_v2/mcl_hd_throughput_v2.cpp` | `96fbe730155af70ecc8c31930e63d9ce57801d05c096d30b7e84b655fc8022a8` |  |
 | `hd_v2/mcl_hd_v2.hpp` | `e000af267d131e734d4c84a49272acaa7c6a6c53519d9d580a1feb7cbce97b7c` |  |
-| `hd_v2/mcl_hd_verify_v2.cpp` | `984b5ff1d35f2f8f8ea7bd349fb8f8384ae56ba12965dbfc57c247a791a321af` |  |
+| `hd_v2/mcl_hd_verify_v2.cpp` | `12f9d5f868ec6959907db243be4e2ee77086338154632d986b09faa66b56532a` |  |
 
 ---
-*Generated by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860), except `mcl_postquantum.cpp`, which is version 6.1.0 since v0.2.15.*
+*Generated by `gen_manifest.py` (kept in the staging `_build/` folder, not part of the repository). The 23 root `.cpp` files differ from v0.1.0 only in the `Patent Pending` banner line(s) (+ PCT/IB2026/058860), except `mcl_postquantum.cpp`, which is version 6.1.0 since v0.2.15, and `mcl_txn_verify.cpp`, whose comments were reworded in v0.2.16 (no code change).*

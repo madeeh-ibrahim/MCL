@@ -47,7 +47,7 @@
  *   7. Hamming distance: wrong device -> ~50% hamming (no gradient)
  *      Dual-tier: 29 in-range pairs (MCL_T2 evaluated) + 7 out-of-range
  *      pairs (structural-failure negative controls) = 36 attempts
- *      matching Patent 3 §[0030] Phase 3 baseline.
+ *      matching the Phase 3 baseline.
  *   8. Throughput: operations per second measurement
  *   9. Double-spend prevention: 3 INDEPENDENT attack layers each tested
  *      in isolation (counter check / tag check / registry check)
@@ -67,7 +67,7 @@
  *                          registry) each tested in isolation;
  *                          ~50% hamming, no gradient across 36 attempts
  *                          [29 in-range + 7 structural-failure negative
- *                          controls per Patent 3 §[0030]]).
+ *                          controls per the Phase 3 baseline]).
  *
  * REFERENCES:
  *   - Paper 5 §V.A:  Authentication protocol (Eq. 3)
@@ -160,13 +160,13 @@ static const int T6_N_VERIFY = 100;
 // Sweep (dp, dq) in [-3, 3] gives 7x7 = 49 raw pairs; after filtering
 // exact-match (1) and ap==aq (5) yields 43 candidate pairs. The candidate
 // set is partitioned into two tiers:
-//   - Tier A (29 pairs): ap >= 2 AND aq >= 2 — within Patent 1 [0017]
+//   - Tier A (29 pairs): ap >= 2 AND aq >= 2 — within the specified range
 //     operational range. MCL_T2 evaluates these normally.
-//   - Tier B (7 pairs): ap == 1 — outside Patent 1 [0017]. Engine refuses
+//   - Tier B (7 pairs): ap == 1 — outside the specified range. Engine refuses
 //     to instantiate; recorded as 100% Hamming (structural-failure
 //     negative control). These pairs are STRUCTURALLY UNREACHABLE by an
 //     attacker.
-// Combined: 29 + 7 = 36 attempts, matching Patent 3 §[0030] Phase 3
+// Combined: 29 + 7 = 36 attempts, matching the Phase 3
 // baseline. The dual-tier presentation strengthens the no-gradient
 // claim by documenting two independent attacker obstacles:
 // (1) within-range: ~50% Hamming, no partial match information;
@@ -681,7 +681,7 @@ static void test_07_hamming_no_gradient() {
     double min_ham_tier_a = 100.0, max_ham_tier_a = 0.0;
 
     // ====================================================================
-    // DUAL-TIER ATTEMPT REPORTING (matches Patent 3 §[0030] Phase 3)
+    // DUAL-TIER ATTEMPT REPORTING (matches the Phase 3)
     // ====================================================================
     // Sweep [-T7_DP_RANGE, +T7_DP_RANGE] in both dp and dq -> 7x7 = 49
     // raw pairs. After filtering exact-match (1) and ap==aq (5), 43
@@ -689,12 +689,12 @@ static void test_07_hamming_no_gradient() {
     // device, these split into:
     //
     //   Tier A (in-range, MCL_T2 evaluated): 29 pairs with ap>=2, aq>=2.
-    //     Within Patent 1 [0017] operational range. MCL_T2 evaluates
+    //     Within the specified operational range. MCL_T2 evaluates
     //     each; we record actual Hamming distance against the correct
     //     tag. Expected: ~50% Hamming, no gradient.
     //
     //   Tier B (out-of-range, structural-failure negative control): 7
-    //     pairs with ap=1. Outside Patent 1 [0017] range. The MCL_T2
+    //     pairs with ap=1. Outside the specified range. The MCL_T2
     //     engine refuses to instantiate (mcl_core.hpp v4.x assertion);
     //     these pairs are STRUCTURALLY UNREACHABLE by any attacker. We
     //     record them as 100% Hamming distance (full failure: zero
@@ -702,17 +702,17 @@ static void test_07_hamming_no_gradient() {
     //     candidate tag).
     //
     // Combined: 29 (Tier A) + 7 (Tier B) = 36 nearby parameter attempts,
-    // exactly matching the Phase 3 baseline cited in Patent 3 §[0030].
+    // exactly matching the Phase 3 baseline of the reference campaign.
     //
     // The dual-tier presentation STRENGTHENS the no-gradient claim by
     // documenting two independent attacker obstacles:
     //   (1) within-range: no gradient (~50% Hamming) means iterative
     //       refinement is impossible;
     //   (2) cross-range: structural unreachability means the search
-    //       space is bounded by the engine's Patent 1 [0017]
+    //       space is bounded by the engine's specified
     //       enforcement at the construction layer itself.
     //
-    // Patent 1 [0017] compliance is fully maintained: Tier B pairs are
+    // Range compliance is fully maintained: Tier B pairs are
     // NOT executed inside MCL_T2; they are documented as unreachable
     // and accounted for in the negative-control statistic.
     // ====================================================================
@@ -764,18 +764,18 @@ static void test_07_hamming_no_gradient() {
             // Tier B = pairs JUST below the operational range (ap == 1
             // or aq == 1). Pairs with ap <= 0 or aq <= 0 are not "nearby"
             // and were also rejected by Phase 3 v1.0.0; we exclude them
-            // here to match the Patent 3 §[0030] count of 36 exactly.
+            // here to match the Phase 3 count of 36 exactly.
             if (ap <= 0 || aq <= 0) continue;
             if (ap != 1 && aq != 1) continue;                // safety: only edge cases
 
             // Tier B: structural failure — engine rejects, recorded as 100% Hamming
-            // (Patent 1 [0017] enforcement: pair UNREACHABLE by attacker)
+            // (range enforcement: pair UNREACHABLE by attacker)
             const double h = 100.0;
             total_ham += h;
             n_attempts++;
             n_tier_b++;
 
-            std::printf("    (%lld,%lld)%*s  %.1f%% (UNREACHABLE: outside [0017])\n",
+            std::printf("    (%lld,%lld)%*s  %.1f%% (UNREACHABLE: outside the specified range)\n",
                 static_cast<long long>(ap), static_cast<long long>(aq),
                 static_cast<int>(14 - std::to_string(ap).size()
                                     - std::to_string(aq).size()),

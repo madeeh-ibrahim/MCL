@@ -15,7 +15,8 @@
 
 ## البناء (لا يشغّل شيئاً)
 ```bash
-cd "/Users/madeehibrahim/Desktop/MCL Project Stage 2/02_Engine_Code" && clang++ -std=c++17 -O3 -DNDEBUG -I. T4_CycleStructure/mcl_t4_cycle_reducedwidth.cpp -o T4_CycleStructure/mcl_t4_cycle_reducedwidth
+# from the repository root
+clang++ -std=c++17 -O3 -DNDEBUG -I. T4_CycleStructure/mcl_t4_cycle_reducedwidth.cpp -o T4_CycleStructure/mcl_t4_cycle_reducedwidth
 ```
 
 ## التشغيل (عند الموافقة فقط)

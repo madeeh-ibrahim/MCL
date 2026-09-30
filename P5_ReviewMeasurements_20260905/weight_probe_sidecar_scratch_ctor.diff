@@ -1,4 +1,4 @@
---- /Users/madeehibrahim/Desktop/MCL Project Stage 2/02_Engine_Code/keyed_q30_PQ/mcl_keyed_q30.hpp	2026-08-22 17:15:42
+--- keyed_q30_PQ/mcl_keyed_q30.hpp	2026-08-22 17:15:42
 +++ mcl_keyed_q30.hpp	2026-09-05 10:57:27
 @@ -424,6 +424,19 @@
          t4_ = (uint32_t)((s * (uint64_t)mcl_q30_omega4()) & 0xFFFFFFFFULL);

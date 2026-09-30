@@ -1,0 +1,16 @@
+# host: Linux 6.10.14-linuxkit x86_64
+# os: "Debian GNU/Linux 12 (bookworm)"
+# gcc: g++ (GCC) 13.4.0
+# glibc: ldd (Debian GLIBC 2.36-9+deb12u14) 2.36
+# container: gcc:13 (linux/amd64) on Docker Desktop, Apple M1 Pro host; network none; sources read-only
+# date: 2026-09-28T07:33:07Z
+# inputs (sha256, first 16 hex):
+#   416ad145e79c095b  ../mcl_core.hpp
+#   05c01cf8a15626c0  ../keyed_q30_PQ/mcl_keyed_q30.hpp
+#   e08f702e2da92221  mcl_vdf128_t4.hpp
+#   b46f1a1329ccbc4d  mcl_vdf128_t4_v3.hpp
+#   209458cd6e04c568  mcl_vdf128_t4_v4.hpp
+#   86b46950565fc1ca  p4_vdf128v4_kat.cpp
+#   167d3639bbd9ee7a  vdf128_t4v4_standalone.cpp
+#   05ea43751e42c9c6  mcl_vdf128v4_xplat.cpp
+#   f78c9584e5686cb1  q30_lut_int32le.bin

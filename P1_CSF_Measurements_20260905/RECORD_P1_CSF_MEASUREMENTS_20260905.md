@@ -28,7 +28,7 @@
 
 **Build line (canonical):** `c++ -O3 -std=c++17 -ffp-contract=off -o <tool> <tool>.cpp -lm` (binaries `*_nofma`; `x0_hex_nofma` prints the exact initial conditions).
 
-**Headline outcome (classified per 08_PROGRESS_VS_CONTRADICTION):** the Paper-1 statement «single logistic map (r = 4.0) Safe Zone [19, 31] = 13, seed-stable» and the derived «+161% architectural advantage» are **not reproducible under the stated protocol** (فئة 1): eight seed-derived and ten decimal initial conditions give 0–7 positions at N = 10⁸ because the binary64 orbit enters a 5,638,349-cycle or a fixed point (Persohn–Povinelli [40]); scanned cycle-free, the map has a clean low band and fails from ≈22 upward, so [19,31] is inside its failing band. XOR of two standard-map streams gives 34–37 positions, i.e. the widening is generic (piling-up lemma), not architectural. Paper 1 §6.2 withdraws the figure. Both numbers are marked 📄 in 04_EVIDENCE_INDEX (WOSA §2.4) — patent-side handling pending author/attorney (05_DECISION_LOG DEC-21).
+**Headline outcome (classified per 08_PROGRESS_VS_CONTRADICTION):** the Paper-1 statement «single logistic map (r = 4.0) Safe Zone [19, 31] = 13, seed-stable» and the derived «+161% architectural advantage» are **not reproducible under the stated protocol** (فئة 1): eight seed-derived and ten decimal initial conditions give 0–7 positions at N = 10⁸ because the binary64 orbit enters a 5,638,349-cycle or a fixed point (Persohn–Povinelli [40]); scanned cycle-free, the map has a clean low band and fails from ≈22 upward, so [19,31] is inside its failing band. XOR of two standard-map streams gives 34–37 positions, i.e. the widening is generic (piling-up lemma), not architectural. Paper 1 §6.2 withdraws the figure.
 
 ## File hashes (MD5)
 

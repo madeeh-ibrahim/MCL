@@ -1,7 +1,7 @@
 /*
  * MCL Keyed Q30 -- lambda_2 GRID SWEEP at 256-bit precision (MPFR)
  * ----------------------------------------------------------------------------
- * Supports Patent-4 Claim 27 / [0036]: "enforce q>p => lambda_2>0 for every key."
+ * Supports the design rule "enforce q>p => lambda_2>0 for every key."
  * The 6-key MPFR run established lambda_2 in [2.10,6.49]; this generalizes it to
  * (A) a DENSE sweep over random key-derived 12-weight configs (the realistic
  *     derivation distribution), and (B) a BOUNDARY probe compressing every pair

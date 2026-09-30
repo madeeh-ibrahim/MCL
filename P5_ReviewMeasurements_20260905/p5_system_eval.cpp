@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 
     // ---------------- R2 authenticate: tag generation ----------------
     { auto t0=Clock::now(); uint8_t tag[32];
-      for(int i=0;i<REP;i++){ uint8_t keff[32],ktx[32]; mcl_keff_from_key_device(K,K,keff);
+      for(int i=0;i<REP;i++){ uint8_t keff[32],ktx[32]; mcl_keff_from_key_device(K,K,keff);   // K is passed as both K and S_device: the timing is value-independent (comment added 2026-09-30); the statistics of Paper 5 SS-VI use distinct credentials
         mcl_kdf256(keff,"MCL-TxChallenge-v1",ctx,32,ktx,32);
         MCL_T4_Q30 e(ktx,0,PUBLIC_SEED,K_DEFAULT); e.gen_bytes(tag,32); }
       double a=ms_since(t0)/REP; std::printf("\nR2 auth        MCL tag, Eqs. (3a)-(3), Q30      : %10.6f ms  (n=%d)\n", a, REP); sink^=tag[0]; }

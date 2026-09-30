@@ -49,6 +49,6 @@ fig.text(0.5, 0.012,
   "step-0.02 grid, 500 KB per (K, seed)  |  Tongue density decreases with p+q",
   ha="center", fontsize=15.5)
 plt.tight_layout(rect=(0, 0.035, 1, 1))
-out = "/Users/madeehibrahim/Desktop/MCL Project Stage 2/05_Scientific_Papers/paper3_fig1.png"
+out = "paper3_fig1.png"   # written to the current directory
 plt.savefig(out, dpi=200, facecolor="white", bbox_inches="tight")
 print("saved", out)

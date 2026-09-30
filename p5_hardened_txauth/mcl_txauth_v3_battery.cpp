@@ -1,14 +1,14 @@
 /*
  * ============================================================================
  * mcl_txauth_v3_battery.cpp — Paper-5 SS-VI battery re-executed on profile v3
- *                             (patent Claim-4 route: TX -> derivation input)
+ *                             (derivation route: TX -> derivation input)
  * Doc ID: MCL-P5-V3BATTERY-2026-0821-001
  * ============================================================================
  * Produces exactly the rows Paper 5 SS-VI reports, on the v3 tag construction:
  *   ctx   = SHA-256( canon(TX) || LE64(nonce) || LE64(account) || LE64(verifier) )
- *   K_eff = KDF(K,     "MCL-KeyDevice-v1",   S_device)      [Claim 28]
- *   K_tx  = KDF(K_eff, "MCL-TxChallenge-v1", ctx)           [Claim 4]
- *   tag   = MCL_T4(public seed, weights(K_tx)).gen_bytes(32) [Claim 8: public seed]
+ *   K_eff = KDF(K,     "MCL-KeyDevice-v1",   S_device)      [device secret]
+ *   K_tx  = KDF(K_eff, "MCL-TxChallenge-v1", ctx)           [public challenge]
+ *   tag   = MCL_T4(public seed, weights(K_tx)).gen_bytes(32) [public seed]
  * Engine mcl_core.hpp UNMODIFIED (banner prints the linked version). Deterministic (fixed seeds).
  * Build: clang++ -std=c++17 -O3 -DNDEBUG mcl_txauth_v3_battery.cpp -o mcl_txauth_v3_battery
  * Usage: ./mcl_txauth_v3_battery [far_trials=100000] [threads=2]
@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
     const uint64_t FAR_TRIALS = (argc>1)?std::strtoull(argv[1],nullptr,10):100000ull;
     const unsigned THREADS = (argc>2)?(unsigned)std::atoi(argv[2]):2u;
     std::printf("================================================================\n");
-    std::printf("  Paper-5 SS-VI battery on profile v3 (patent Claim-4 route) -- harness v3.2\n");
+    std::printf("  Paper-5 SS-VI battery on profile v3 (derivation route) -- harness v3.2\n");
     std::printf("  MCL-P5-V32BATTERY-2026-0905-001 (harness v3.2)  engine mcl_core v%s UNMODIFIED\n", MCL_VERSION_STRING);
 #if defined(MCL_TX_COMBINER)
     std::printf("  tag construction: PRF-XOR COMBINER (HMAC-SHA-256 arm keyed by K, engine arm keyed by S_device)\n");

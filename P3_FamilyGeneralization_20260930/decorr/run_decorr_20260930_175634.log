@@ -1,0 +1,205 @@
+=== START 2026-09-30T14:56:34Z host=Madeehs-MacBook-Pro.local engine md5=5d8b49ee11aa0bfb8b0bda3f47fa16e3 ===
+ProductName:		macOS
+ProductVersion:		14.5
+Apple clang version 16.0.0 (clang-1600.0.26.6)
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.4: lambda1=0.42945 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.951  ln d_inf=0.189  t_sat=65  t_dec=264  slope=0.4301 (pts 59)  slope/l1=1.0015  r(T)=-0.0000  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.346  ln d_inf=0.193  t_sat=54  t_dec=389  slope=0.4308 (pts 48)  slope/l1=1.0031  r(T)=0.0059  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.741  ln d_inf=0.189  t_sat=43  t_dec=189  slope=0.4324 (pts 37)  slope/l1=1.0068  r(T)=0.0158  esc=0
+  delta=1.000e-06  <ln d>(1)=-14.136  ln d_inf=0.191  t_sat=32  t_dec=141  slope=0.4348 (pts 26)  slope/l1=1.0124  r(T)=-0.0014  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.530  ln d_inf=0.192  t_sat=21  t_dec=33  slope=0.4401 (pts 15)  slope/l1=1.0247  r(T)=-0.0058  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.228  ln d_inf=0.190  t_sat=15  t_dec=199  slope=0.4436 (pts 10)  slope/l1=1.0329  r(T)=-0.0062  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.925  ln d_inf=0.186  t_sat=10  t_dec=39  slope=0.4347 (pts 5)  slope/l1=1.0123  r(T)=-0.0118  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.4: lambda1=0.42945 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.741  ln d_inf=0.189  t_sat=65  t_dec=317  slope=0.4305 (pts 58)  slope/l1=1.0023  r(T)=-0.0083  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.136  ln d_inf=0.189  t_sat=54  t_dec=93  slope=0.4311 (pts 47)  slope/l1=1.0038  r(T)=0.0139  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.530  ln d_inf=0.190  t_sat=43  t_dec=57  slope=0.4325 (pts 36)  slope/l1=1.0072  r(T)=-0.0012  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.925  ln d_inf=0.191  t_sat=32  t_dec=176  slope=0.4341 (pts 26)  slope/l1=1.0109  r(T)=0.0100  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.320  ln d_inf=0.191  t_sat=21  t_dec=127  slope=0.4396 (pts 15)  slope/l1=1.0236  r(T)=-0.0049  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.018  ln d_inf=0.192  t_sat=15  t_dec=392  slope=0.4445 (pts 9)  slope/l1=1.0349  r(T)=0.0055  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.3: lambda1=0.33799 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.943  ln d_inf=0.116  t_sat=85  t_dec=111  slope=0.3370 (pts 76)  slope/l1=0.9971  r(T)=-0.0173  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.339  ln d_inf=0.119  t_sat=71  t_dec=95  slope=0.3375 (pts 62)  slope/l1=0.9985  r(T)=-0.0049  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.734  ln d_inf=0.117  t_sat=56  t_dec=83  slope=0.3387 (pts 48)  slope/l1=1.0020  r(T)=-0.0087  esc=0
+  delta=1.000e-06  <ln d>(1)=-14.129  ln d_inf=0.119  t_sat=42  t_dec=187  slope=0.3415 (pts 34)  slope/l1=1.0105  r(T)=-0.0000  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.524  ln d_inf=0.121  t_sat=27  t_dec=238  slope=0.3528 (pts 19)  slope/l1=1.0438  r(T)=0.0027  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.221  ln d_inf=0.117  t_sat=20  t_dec=399  slope=0.3602 (pts 12)  slope/l1=1.0657  r(T)=0.0007  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.919  ln d_inf=0.122  t_sat=12  t_dec=37  slope=0.3562 (pts 6)  slope/l1=1.0538  r(T)=-0.0003  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.3: lambda1=0.33799 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.741  ln d_inf=0.118  t_sat=84  t_dec=321  slope=0.3378 (pts 75)  slope/l1=0.9995  r(T)=-0.0014  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.136  ln d_inf=0.119  t_sat=70  t_dec=169  slope=0.3386 (pts 61)  slope/l1=1.0019  r(T)=-0.0120  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.530  ln d_inf=0.120  t_sat=55  t_dec=399  slope=0.3404 (pts 47)  slope/l1=1.0071  r(T)=-0.0034  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.925  ln d_inf=0.118  t_sat=41  t_dec=395  slope=0.3444 (pts 33)  slope/l1=1.0189  r(T)=-0.0168  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.320  ln d_inf=0.117  t_sat=26  t_dec=45  slope=0.3589 (pts 18)  slope/l1=1.0617  r(T)=0.0016  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.017  ln d_inf=0.119  t_sat=18  t_dec=169  slope=0.3670 (pts 12)  slope/l1=1.0858  r(T)=0.0037  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.28: lambda1=0.28015 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.998  ln d_inf=0.133  t_sat=113  t_dec=312  slope=0.2667 (pts 98)  slope/l1=0.9520  r(T)=0.0182  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.393  ln d_inf=0.134  t_sat=94  t_dec=163  slope=0.2662 (pts 80)  slope/l1=0.9502  r(T)=-0.0054  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.787  ln d_inf=0.138  t_sat=75  t_dec=398  slope=0.2661 (pts 62)  slope/l1=0.9497  r(T)=-0.0114  esc=0
+  delta=1.000e-06  <ln d>(1)=-14.182  ln d_inf=0.132  t_sat=56  t_dec=384  slope=0.2696 (pts 43)  slope/l1=0.9624  r(T)=0.0098  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.577  ln d_inf=0.133  t_sat=36  t_dec=86  slope=0.2787 (pts 25)  slope/l1=0.9950  r(T)=-0.0038  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.274  ln d_inf=0.136  t_sat=26  t_dec=264  slope=0.2945 (pts 15)  slope/l1=1.0512  r(T)=-0.0037  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.972  ln d_inf=0.137  t_sat=15  t_dec=88  slope=0.3098 (pts 7)  slope/l1=1.1057  r(T)=-0.0027  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.28: lambda1=0.28015 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.720  ln d_inf=0.137  t_sat=112  t_dec=171  slope=0.2670 (pts 97)  slope/l1=0.9532  r(T)=-0.0062  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.115  ln d_inf=0.135  t_sat=93  t_dec=161  slope=0.2666 (pts 79)  slope/l1=0.9516  r(T)=0.0009  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.510  ln d_inf=0.139  t_sat=74  t_dec=171  slope=0.2665 (pts 61)  slope/l1=0.9513  r(T)=0.0150  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.905  ln d_inf=0.137  t_sat=55  t_dec=122  slope=0.2701 (pts 42)  slope/l1=0.9641  r(T)=-0.0024  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.300  ln d_inf=0.137  t_sat=35  t_dec=86  slope=0.2788 (pts 24)  slope/l1=0.9953  r(T)=0.0032  esc=0
+  delta=1.000e-03  <ln d>(1)=-6.997  ln d_inf=0.138  t_sat=24  t_dec=348  slope=0.2964 (pts 14)  slope/l1=1.0582  r(T)=0.0132  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.4: lambda1=0.42945 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e+00  <ln d>(1)=-5.216  ln d_inf=0.189  t_sat=11  t_dec=22  slope=0.4490 (pts 5)  slope/l1=1.0455  r(T)=0.0052  esc=0
+  delta=2.000e+00  <ln d>(1)=-5.203  ln d_inf=0.191  t_sat=10  t_dec=383  slope=0.4551 (pts 5)  slope/l1=1.0597  r(T)=-0.0034  esc=0
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] henon (3,5) K=0.01 a=1.4: lambda1=0.42945 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=0.000e+00  <ln d>(1)=-inf  ln d_inf=nan  t_sat=-1  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=1.0000  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=4: lambda1=0.55287 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-29.175  ln d_inf=-0.760  t_sat=51  t_dec=84  slope=0.5555 (pts 45)  slope/l1=1.0048  r(T)=0.0099  esc=0
+  delta=1.000e-10  <ln d>(1)=-24.570  ln d_inf=-0.760  t_sat=42  t_dec=50  slope=0.5567 (pts 37)  slope/l1=1.0070  r(T)=-0.0012  esc=0
+  delta=1.000e-08  <ln d>(1)=-19.965  ln d_inf=-0.757  t_sat=34  t_dec=273  slope=0.5589 (pts 28)  slope/l1=1.0109  r(T)=-0.0049  esc=0
+  delta=1.000e-06  <ln d>(1)=-15.360  ln d_inf=-0.758  t_sat=25  t_dec=231  slope=0.5632 (pts 20)  slope/l1=1.0186  r(T)=-0.0127  esc=0
+  delta=1.000e-04  <ln d>(1)=-10.755  ln d_inf=-0.761  t_sat=17  t_dec=356  slope=0.5767 (pts 12)  slope/l1=1.0431  r(T)=0.0041  esc=0
+  delta=1.000e-03  <ln d>(1)=-8.447  ln d_inf=-0.760  t_sat=12  t_dec=19  slope=0.5941 (pts 7)  slope/l1=1.0746  r(T)=-0.0089  esc=0
+  delta=1.000e-02  <ln d>(1)=-6.111  ln d_inf=-0.766  t_sat=8  t_dec=13  slope=0.6385 (pts 3)  slope/l1=1.1549  r(T)=-0.0099  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=4: lambda1=0.55287 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.702  ln d_inf=-0.758  t_sat=48  t_dec=57  slope=0.5553 (pts 43)  slope/l1=1.0044  r(T)=0.0010  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.097  ln d_inf=-0.759  t_sat=40  t_dec=372  slope=0.5562 (pts 34)  slope/l1=1.0061  r(T)=-0.0064  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.492  ln d_inf=-0.759  t_sat=31  t_dec=397  slope=0.5579 (pts 26)  slope/l1=1.0091  r(T)=-0.0005  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.887  ln d_inf=-0.759  t_sat=23  t_dec=189  slope=0.5627 (pts 18)  slope/l1=1.0178  r(T)=-0.0020  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.281  ln d_inf=-0.759  t_sat=14  t_dec=20  slope=0.5753 (pts 9)  slope/l1=1.0406  r(T)=-0.0018  esc=0
+  delta=1.000e-03  <ln d>(1)=-6.974  ln d_inf=-0.760  t_sat=10  t_dec=15  slope=0.5904 (pts 5)  slope/l1=1.0678  r(T)=0.0110  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.644  ln d_inf=-0.768  t_sat=6  t_dec=10  slope=nan (pts 1)  slope/l1=nan  r(T)=0.0143  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=3.9: lambda1=0.44605 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-29.100  ln d_inf=-0.892  t_sat=63  t_dec=179  slope=0.4467 (pts 56)  slope/l1=1.0015  r(T)=0.0041  esc=0
+  delta=1.000e-10  <ln d>(1)=-24.495  ln d_inf=-0.891  t_sat=52  t_dec=64  slope=0.4471 (pts 46)  slope/l1=1.0025  r(T)=-0.0162  esc=0
+  delta=1.000e-08  <ln d>(1)=-19.890  ln d_inf=-0.892  t_sat=41  t_dec=52  slope=0.4483 (pts 35)  slope/l1=1.0051  r(T)=-0.0069  esc=0
+  delta=1.000e-06  <ln d>(1)=-15.284  ln d_inf=-0.893  t_sat=31  t_dec=375  slope=0.4497 (pts 25)  slope/l1=1.0082  r(T)=-0.0040  esc=0
+  delta=1.000e-04  <ln d>(1)=-10.679  ln d_inf=-0.888  t_sat=20  t_dec=28  slope=0.4535 (pts 15)  slope/l1=1.0166  r(T)=-0.0084  esc=0
+  delta=1.000e-03  <ln d>(1)=-8.377  ln d_inf=-0.890  t_sat=15  t_dec=31  slope=0.4575 (pts 10)  slope/l1=1.0257  r(T)=0.0004  esc=0
+  delta=1.000e-02  <ln d>(1)=-6.074  ln d_inf=-0.898  t_sat=10  t_dec=306  slope=0.4630 (pts 5)  slope/l1=1.0380  r(T)=0.0170  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=3.9: lambda1=0.44605 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.687  ln d_inf=-0.892  t_sat=60  t_dec=148  slope=0.4459 (pts 53)  slope/l1=0.9996  r(T)=-0.0087  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.081  ln d_inf=-0.890  t_sat=50  t_dec=111  slope=0.4460 (pts 43)  slope/l1=1.0000  r(T)=-0.0067  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.476  ln d_inf=-0.891  t_sat=39  t_dec=395  slope=0.4470 (pts 32)  slope/l1=1.0022  r(T)=0.0002  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.871  ln d_inf=-0.892  t_sat=28  t_dec=38  slope=0.4477 (pts 22)  slope/l1=1.0037  r(T)=0.0135  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.266  ln d_inf=-0.892  t_sat=18  t_dec=26  slope=0.4499 (pts 11)  slope/l1=1.0086  r(T)=-0.0045  esc=0
+  delta=1.000e-03  <ln d>(1)=-6.963  ln d_inf=-0.892  t_sat=13  t_dec=352  slope=0.4496 (pts 6)  slope/l1=1.0079  r(T)=0.0041  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.661  ln d_inf=-0.891  t_sat=7  t_dec=150  slope=nan (pts 1)  slope/l1=nan  r(T)=-0.0080  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=3.7: lambda1=0.28708 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-28.940  ln d_inf=-2.138  t_sat=94  t_dec=-1  slope=0.2854 (pts 84)  slope/l1=0.9941  r(T)=0.8229  esc=0
+  delta=1.000e-10  <ln d>(1)=-24.335  ln d_inf=-2.138  t_sat=78  t_dec=-1  slope=0.2849 (pts 68)  slope/l1=0.9924  r(T)=0.8217  esc=0
+  delta=1.000e-08  <ln d>(1)=-19.730  ln d_inf=-2.139  t_sat=60  t_dec=-1  slope=0.2841 (pts 52)  slope/l1=0.9896  r(T)=0.8240  esc=0
+  delta=1.000e-06  <ln d>(1)=-15.124  ln d_inf=-2.138  t_sat=44  t_dec=-1  slope=0.2815 (pts 36)  slope/l1=0.9804  r(T)=0.8233  esc=0
+  delta=1.000e-04  <ln d>(1)=-10.519  ln d_inf=-2.142  t_sat=28  t_dec=-1  slope=0.2736 (pts 20)  slope/l1=0.9529  r(T)=0.8215  esc=0
+  delta=1.000e-03  <ln d>(1)=-8.217  ln d_inf=-2.138  t_sat=19  t_dec=-1  slope=0.2626 (pts 12)  slope/l1=0.9149  r(T)=0.8258  esc=0
+  delta=1.000e-02  <ln d>(1)=-5.914  ln d_inf=-2.177  t_sat=11  t_dec=-1  slope=0.1401 (pts 2)  slope/l1=0.4880  r(T)=0.8375  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=3.7: lambda1=0.28708 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.784  ln d_inf=-2.141  t_sat=92  t_dec=-1  slope=0.2842 (pts 81)  slope/l1=0.9901  r(T)=0.8230  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.178  ln d_inf=-2.135  t_sat=76  t_dec=-1  slope=0.2833 (pts 65)  slope/l1=0.9869  r(T)=0.8213  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.573  ln d_inf=-2.136  t_sat=58  t_dec=-1  slope=0.2817 (pts 49)  slope/l1=0.9811  r(T)=0.8214  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.968  ln d_inf=-2.140  t_sat=42  t_dec=-1  slope=0.2775 (pts 32)  slope/l1=0.9667  r(T)=0.8262  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.363  ln d_inf=-2.140  t_sat=24  t_dec=-1  slope=0.2677 (pts 16)  slope/l1=0.9325  r(T)=0.8230  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.060  ln d_inf=-2.140  t_sat=16  t_dec=-1  slope=0.2539 (pts 7)  slope/l1=0.8843  r(T)=0.8254  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.759  ln d_inf=-2.146  t_sat=8  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=0.8311  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=4: lambda1=0.55287 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e+00  <ln d>(1)=-3.613  ln d_inf=-0.704  t_sat=4  t_dec=8  slope=nan (pts 0)  slope/l1=nan  r(T)=-0.0065  esc=0
+  delta=2.000e+00  <ln d>(1)=-3.516  ln d_inf=-0.730  t_sat=4  t_dec=246  slope=nan (pts 0)  slope/l1=nan  r(T)=-0.0062  esc=0
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=4: lambda1=0.55287 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=0.000e+00  <ln d>(1)=-inf  ln d_inf=nan  t_sat=-1  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=1.0000  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=2: lambda1=0.64220 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-28.560  ln d_inf=-0.936  t_sat=43  t_dec=186  slope=0.6426 (pts 38)  slope/l1=1.0007  r(T)=0.0027  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.955  ln d_inf=-0.935  t_sat=36  t_dec=392  slope=0.6427 (pts 31)  slope/l1=1.0007  r(T)=-0.0074  esc=0
+  delta=1.000e-08  <ln d>(1)=-19.350  ln d_inf=-0.935  t_sat=29  t_dec=214  slope=0.6430 (pts 24)  slope/l1=1.0012  r(T)=0.0029  esc=0
+  delta=1.000e-06  <ln d>(1)=-14.745  ln d_inf=-0.936  t_sat=22  t_dec=209  slope=0.6433 (pts 17)  slope/l1=1.0018  r(T)=0.0128  esc=0
+  delta=1.000e-04  <ln d>(1)=-10.140  ln d_inf=-0.936  t_sat=14  t_dec=344  slope=0.6438 (pts 10)  slope/l1=1.0025  r(T)=0.0106  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.836  ln d_inf=-0.936  t_sat=11  t_dec=378  slope=0.6453 (pts 6)  slope/l1=1.0049  r(T)=0.0099  esc=0
+  delta=1.000e-02  <ln d>(1)=-5.526  ln d_inf=-0.942  t_sat=7  t_dec=336  slope=0.6346 (pts 3)  slope/l1=0.9882  r(T)=-0.0160  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=2: lambda1=0.64220 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.725  ln d_inf=-0.934  t_sat=42  t_dec=45  slope=0.6425 (pts 37)  slope/l1=1.0005  r(T)=0.0077  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.119  ln d_inf=-0.937  t_sat=35  t_dec=165  slope=0.6426 (pts 30)  slope/l1=1.0007  r(T)=0.0023  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.514  ln d_inf=-0.935  t_sat=28  t_dec=359  slope=0.6427 (pts 23)  slope/l1=1.0008  r(T)=0.0024  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.909  ln d_inf=-0.936  t_sat=20  t_dec=119  slope=0.6430 (pts 16)  slope/l1=1.0012  r(T)=0.0194  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.304  ln d_inf=-0.935  t_sat=13  t_dec=16  slope=0.6432 (pts 9)  slope/l1=1.0016  r(T)=0.0037  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.001  ln d_inf=-0.936  t_sat=10  t_dec=98  slope=0.6450 (pts 5)  slope/l1=1.0043  r(T)=0.0056  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.696  ln d_inf=-0.944  t_sat=6  t_dec=10  slope=nan (pts 1)  slope/l1=nan  r(T)=-0.0017  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=1.6: lambda1=0.44439 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-28.227  ln d_inf=-1.708  t_sat=60  t_dec=386  slope=0.4448 (pts 53)  slope/l1=1.0010  r(T)=0.0125  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.621  ln d_inf=-1.706  t_sat=50  t_dec=55  slope=0.4447 (pts 43)  slope/l1=1.0007  r(T)=-0.0126  esc=0
+  delta=1.000e-08  <ln d>(1)=-19.016  ln d_inf=-1.710  t_sat=39  t_dec=239  slope=0.4445 (pts 33)  slope/l1=1.0002  r(T)=-0.0029  esc=0
+  delta=1.000e-06  <ln d>(1)=-14.411  ln d_inf=-1.709  t_sat=29  t_dec=251  slope=0.4444 (pts 22)  slope/l1=1.0000  r(T)=-0.0091  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.806  ln d_inf=-1.707  t_sat=18  t_dec=25  slope=0.4431 (pts 12)  slope/l1=0.9970  r(T)=-0.0060  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.503  ln d_inf=-1.707  t_sat=13  t_dec=254  slope=0.4402 (pts 7)  slope/l1=0.9906  r(T)=0.0005  esc=0
+  delta=1.000e-02  <ln d>(1)=-5.201  ln d_inf=-1.721  t_sat=8  t_dec=335  slope=0.4289 (pts 2)  slope/l1=0.9652  r(T)=-0.0017  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=1.6: lambda1=0.44439 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.537  ln d_inf=-1.708  t_sat=59  t_dec=65  slope=0.4444 (pts 51)  slope/l1=1.0001  r(T)=0.0071  esc=0
+  delta=1.000e-10  <ln d>(1)=-22.931  ln d_inf=-1.710  t_sat=48  t_dec=56  slope=0.4442 (pts 41)  slope/l1=0.9996  r(T)=0.0003  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.326  ln d_inf=-1.708  t_sat=38  t_dec=280  slope=0.4441 (pts 30)  slope/l1=0.9993  r(T)=-0.0012  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.721  ln d_inf=-1.708  t_sat=28  t_dec=34  slope=0.4435 (pts 20)  slope/l1=0.9980  r(T)=0.0117  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.116  ln d_inf=-1.708  t_sat=17  t_dec=238  slope=0.4405 (pts 10)  slope/l1=0.9913  r(T)=-0.0029  esc=0
+  delta=1.000e-03  <ln d>(1)=-6.813  ln d_inf=-1.708  t_sat=12  t_dec=324  slope=0.4352 (pts 5)  slope/l1=0.9793  r(T)=0.0142  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.508  ln d_inf=-1.718  t_sat=7  t_dec=169  slope=nan (pts 0)  slope/l1=nan  r(T)=0.0105  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=1.3: lambda1=0.27233 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-28.056  ln d_inf=-3.682  t_sat=92  t_dec=-1  slope=0.2680 (pts 80)  slope/l1=0.9840  r(T)=0.9027  esc=0
+  delta=1.000e-10  <ln d>(1)=-23.451  ln d_inf=-3.685  t_sat=75  t_dec=-1  slope=0.2665 (pts 64)  slope/l1=0.9785  r(T)=0.9014  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.845  ln d_inf=-3.687  t_sat=58  t_dec=-1  slope=0.2641 (pts 46)  slope/l1=0.9699  r(T)=0.9012  esc=0
+  delta=1.000e-06  <ln d>(1)=-14.240  ln d_inf=-3.685  t_sat=41  t_dec=-1  slope=0.2600 (pts 29)  slope/l1=0.9547  r(T)=0.9001  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.635  ln d_inf=-3.687  t_sat=23  t_dec=-1  slope=0.2513 (pts 12)  slope/l1=0.9229  r(T)=0.9017  esc=0
+  delta=1.000e-03  <ln d>(1)=-7.333  ln d_inf=-3.687  t_sat=14  t_dec=-1  slope=0.2402 (pts 3)  slope/l1=0.8819  r(T)=0.9031  esc=0
+  delta=1.000e-02  <ln d>(1)=-5.030  ln d_inf=-3.711  t_sat=5  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=0.9034  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=1.3: lambda1=0.27233 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-27.427  ln d_inf=-3.684  t_sat=91  t_dec=-1  slope=0.2664 (pts 79)  slope/l1=0.9781  r(T)=0.8991  esc=0
+  delta=1.000e-10  <ln d>(1)=-22.822  ln d_inf=-3.684  t_sat=75  t_dec=-1  slope=0.2646 (pts 62)  slope/l1=0.9715  r(T)=0.9010  esc=0
+  delta=1.000e-08  <ln d>(1)=-18.217  ln d_inf=-3.685  t_sat=57  t_dec=-1  slope=0.2620 (pts 45)  slope/l1=0.9620  r(T)=0.9007  esc=0
+  delta=1.000e-06  <ln d>(1)=-13.611  ln d_inf=-3.684  t_sat=40  t_dec=-1  slope=0.2569 (pts 28)  slope/l1=0.9433  r(T)=0.9002  esc=0
+  delta=1.000e-04  <ln d>(1)=-9.006  ln d_inf=-3.686  t_sat=22  t_dec=-1  slope=0.2411 (pts 10)  slope/l1=0.8854  r(T)=0.9008  esc=0
+  delta=1.000e-03  <ln d>(1)=-6.703  ln d_inf=-3.688  t_sat=13  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=0.9033  esc=0
+  delta=1.000e-02  <ln d>(1)=-4.395  ln d_inf=-3.625  t_sat=1  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=0.8612  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=2: lambda1=0.64220 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e+00  <ln d>(1)=-3.759  ln d_inf=-0.971  t_sat=4  t_dec=371  slope=nan (pts 0)  slope/l1=nan  r(T)=-0.0063  esc=0
+  delta=2.000e+00  <ln d>(1)=-3.745  ln d_inf=-0.890  t_sat=4  t_dec=43  slope=nan (pts 0)  slope/l1=nan  r(T)=-0.0065  esc=0
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] tent (3,5) K=0.05 mu=2: lambda1=0.64220 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=0.000e+00  <ln d>(1)=-inf  ln d_inf=nan  t_sat=-1  t_dec=-1  slope=nan (pts 0)  slope/l1=nan  r(T)=1.0000  esc=0
+### control: split at the seed state (no burn-in), logistic r=4 param axis
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (3,5) K=0.05 r=4: lambda1=0.55287 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=0
+  delta=1.000e-12  <ln d>(1)=-28.880  ln d_inf=-0.760  t_sat=50  t_dec=302  slope=0.5547 (pts 45)  slope/l1=1.0032  r(T)=-0.0066  esc=0
+  delta=1.000e-10  <ln d>(1)=-24.275  ln d_inf=-0.759  t_sat=42  t_dec=53  slope=0.5558 (pts 36)  slope/l1=1.0054  r(T)=0.0208  esc=0
+  delta=1.000e-08  <ln d>(1)=-19.670  ln d_inf=-0.759  t_sat=33  t_dec=44  slope=0.5579 (pts 28)  slope/l1=1.0090  r(T)=-0.0071  esc=0
+  delta=1.000e-06  <ln d>(1)=-15.065  ln d_inf=-0.759  t_sat=25  t_dec=31  slope=0.5619 (pts 19)  slope/l1=1.0163  r(T)=0.0002  esc=0
+  delta=1.000e-04  <ln d>(1)=-10.459  ln d_inf=-0.758  t_sat=16  t_dec=22  slope=0.5749 (pts 11)  slope/l1=1.0398  r(T)=0.0052  esc=0
+  delta=1.000e-03  <ln d>(1)=-8.148  ln d_inf=-0.761  t_sat=12  t_dec=17  slope=0.5897 (pts 7)  slope/l1=1.0667  r(T)=0.0080  esc=0
+  delta=1.000e-02  <ln d>(1)=-5.780  ln d_inf=-0.766  t_sat=8  t_dec=330  slope=0.6337 (pts 3)  slope/l1=1.1461  r(T)=0.0046  esc=0
+### control: second topology (2,3), logistic r=4 param axis
+[ok] fstep(logistic,(2,3)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+[lyap] logistic (2,3) K=0.05 r=4: lambda1=0.61987 (Benettin, 1e6 steps), period<=256: 0, burn-in before split B=10000
+  delta=1.000e-12  <ln d>(1)=-29.241  ln d_inf=-0.699  t_sat=46  t_dec=55  slope=0.6225 (pts 40)  slope/l1=1.0043  r(T)=-0.0037  esc=0
+  delta=1.000e-10  <ln d>(1)=-24.636  ln d_inf=-0.695  t_sat=38  t_dec=118  slope=0.6241 (pts 33)  slope/l1=1.0068  r(T)=0.0082  esc=0
+  delta=1.000e-08  <ln d>(1)=-20.031  ln d_inf=-0.697  t_sat=31  t_dec=37  slope=0.6272 (pts 25)  slope/l1=1.0119  r(T)=-0.0093  esc=0
+  delta=1.000e-06  <ln d>(1)=-15.426  ln d_inf=-0.699  t_sat=23  t_dec=30  slope=0.6340 (pts 18)  slope/l1=1.0227  r(T)=-0.0015  esc=0
+  delta=1.000e-04  <ln d>(1)=-10.821  ln d_inf=-0.698  t_sat=15  t_dec=21  slope=0.6510 (pts 10)  slope/l1=1.0502  r(T)=0.0060  esc=0
+  delta=1.000e-03  <ln d>(1)=-8.514  ln d_inf=-0.699  t_sat=11  t_dec=285  slope=0.6725 (pts 7)  slope/l1=1.0850  r(T)=0.0022  esc=0
+  delta=1.000e-02  <ln d>(1)=-6.175  ln d_inf=-0.702  t_sat=8  t_dec=244  slope=0.7260 (pts 4)  slope/l1=1.1712  r(T)=0.0042  esc=0
+=== END 2026-09-30T15:06:34Z ===

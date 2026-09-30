@@ -1,0 +1,4 @@
+engine 8.1.3; 200 seeds x 10000 iterations from a common post-burn-in state
+mean over the 200 seeds at t = 1, 2, 3, 5, 10, 100: 0.995 2.015 2.150 2.125 2.021 2.142
+mean of the 200-seed average over t = 101..10000: 2.0942  (2*pi/3 = 2.0944)
+Part-4 measurement of the post-quantum test program (separate burn-ins, seed 12345678901234): 2.0888

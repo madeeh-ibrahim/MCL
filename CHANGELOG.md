@@ -5,6 +5,21 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.16 — 2026-09-30
+
+**Paper 5 review records · corrected labels · staged items of 2026-09-28.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar **v1.0.7 unchanged**. No measured number of an earlier record changes.
+
+- **`P5_ReviewMeasurements_20260930/`** (new; Doc ID MCL-P5-FRESHEXAM-2026-0930-001): the 10⁶-trial wrong-device repetition on Q30 with harness v3.2 unchanged (`results_v32_q30_native_arm64_FAR1e6_20260930.txt`: 0 accepts, mean Hamming 127.982/256, z = −2.25); the §III.B parity-lock census record (`parity_lock_20260930.log`: 100,005 / 99,995 / 0; q odd 91.80 %) and the §X.9 re-draw census record (`redraw_rate_20260930.log`, `redraw_rate_v2_20260930.log`: 395 → 0) — the two programs had been archived in v0.2.15 without their outputs. Also the exact identity-collision constant of the version-2 derivation map (`derive_v2_identity_collision.py` and `_20260930.txt`: 2.146/M² per pair, ≈ 1.07 colliding pairs at 10⁶ identities with M = 10⁶), used in Paper 5 §VII.A.
+- **`P5_ReviewMeasurements_20260905/`**: `p5_adversarial.cpp` prints the correct Bonferroni threshold (5.72σ; the 2026-09-05 record said "~4.6 sigma") and `adversarial_20260930.log` is its re-run — every A1 row and both A2 maxima byte-identical to the 2026-09-05 record, which is kept; `p5_system_eval.cpp` gains a comment on the tag row (K passed as both K and S_device; timing value-independent); `redraw_rate.cpp` v2 uses the engine's `mcl_sha256` (builds on Linux); README rows corrected (quiet-host derivation latencies; CT-sine 0.552 ms / ≈ 7,300×).
+- **`keyed_q30_PQ/CT_SINE_CODE_EVIDENCE_20260919.txt`** (new): machine-code evidence that the opt-in constant-time sine is oblivious on arm64 only (x86-64 clang -O2/-O3 emits a secret-dependent branch); sidecar not changed.
+- `hd_v2/` banners: the printed "6.0.0" is the verification program's document version, not the engine version (comment only).
+- `P5_HDVerify_FULL_20260904/README.md`: note that (41475, 955466) is the version-1 child; the paper's §IV.E value is the version-2 child (827778, 933019).
+- Staged on 2026-09-28 and now merged: `P4_ReviewDev_20260927/` clock-separation programs and logs, Linux cell for VDF128-T4 v4, GS/Jacobi divergence figure data; `keyed_q30_PQ/CASCADE_GUARD_V107_RECORD_20260928.md` interoperability paragraph; local-path clean-ups in READMEs and a diff header; `P4_ReviewMeasurements_2026090{4,5}/`, `P4_ReviewMeasurements_20260925/` README/SHA256SUMS refreshes.
+- **`P3_FamilyGeneralization_20260930/`** (new, from the Paper 3 stream): family-generalization measurements (decorrelation, mixing, window sweeps on further map families) — see `RECORD_P3_FAMILY_GENERALIZATION_20260930.md`.
+- `P4_ReviewMeasurements_20260904/mcl_core.hpp` (added): the read-only engine copy that the folder's README and `SHA256SUMS` already listed (sha256 `416ad145e79c095b…`, identical to the root engine 8.1.3) but that earlier releases did not ship.
+- Wording: comments, printed program banners and folder notes in `p5_hardened_txauth/`, `p2_hardened_auth/`, `keyed_q30_PQ/`, `P5_ReviewMeasurements_20260925/`, `P1_CSF_Measurements_20260905/`, `Verification_Suite/mcl_auth_verify.cpp` and `mcl_txn_verify.cpp` now describe the transaction-authentication route and the engine properties by function ("derivation route", "public challenge", "device secret") instead of by document references; the two internal design memos `p5_hardened_txauth/ARCHITECTURAL_FINDING_20260821*.md` are withdrawn (their conclusion is Paper 5 §V). No computed value, no engine or sidecar byte and no measurement record changes; the two affected folder `SHA256SUMS` files are updated.
+- `CITATION.cff` 0.2.16; MANIFEST regenerated (repository files only).
+
 ## v0.2.15 — 2026-09-28
 
 **Scope of the quantum statements · keyed sidecar v1.0.7 · structural inventory and Grover resource model.**
@@ -447,7 +462,7 @@ vectors `0xC8AFD74A/0x0DB2BAC6`, `0x6F88C52E/0xE06C516C`, LUT `0xDE1340CF`).
 - `T4_CycleStructure/` — reduced-width cycle study (λ₁₂₈ ≈ 2^62.3 ± 0.2), exact translation-symmetry group computation, symmetry impact on the retired raw VDF, weak-key parity check, Float64-path symmetry check (combinatorial class exists but is numerically unstable and not seed-reachable), full record `T4_CYCLE_RECORD_20260822.md`.
 - `ReturnMap_Attack/` — Rule-13/Rule-7 chaos-specific attack battery (2-D return-map occupancy, conditional entropy, EFA) on the keyed stream, commit words and raw state; record `RETURNMAP_RECORD_20260822.md`.
 - `p2_hardened_auth/` — Paper 2 hardened authentication profile v2 (12/12), keyed 12-weight credential FAR campaigns (10⁶/10⁷, keyed v4 4 devices × 10⁶/10⁷), avalanche 10⁶, engine-sensitivity 17 strategies × 2.5 M (0/42 500 002), records and logs. (`mcl_simswap_v3.cpp` gated — see `TOOLKIT_ACCESS_POLICY.md` addendum; its record/logs are here.)
-- `p5_hardened_txauth/` — Paper 5 hardened transaction-authentication v2 (16/16), v3 Claim-4 route (11/11) and v3 battery (18/18), `mcl_d1_collision.cpp` Brent search (1.63×10¹⁰ trials) producing a real colliding payload pair on the retired 64-bit-fold path, architectural-finding record.
+- `p5_hardened_txauth/` — Paper 5 hardened transaction-authentication v2 (16/16), v3 derivation route (11/11) and v3 battery (18/18), `mcl_d1_collision.cpp` Brent search (1.63×10¹⁰ trials) producing a real colliding payload pair on the retired 64-bit-fold path.
 - `M1_M2_apple_verification/` — Paper 1 §III.B.3 (ψ-equidistribution, det-J), Tables 9/10 (multi-seed), Appendix A NIST STS campaign (188/188, archive zip), per-bit MSB flank, safe-zone hold-out, τ_int; Paper 3 Fig. 1 Arnold-tongue sweep generator + CSV. Engine copy of v6.0.0 omitted (it is git tag `v0.1.0`).
 - `P3_CrossPrediction/` — ridge-regression cross-prediction (R²) sweep over K showing deterministic predictability at K=0.70 and none at K≥6 (record `XPRED_RECORD_20260822.md`).
 - `Verification_Suite/` (14 legacy programs + results), `Layer_Combiner/` (robust-combiner demo).

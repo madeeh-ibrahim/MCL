@@ -13,12 +13,14 @@ A تيار بايتات T4-Q30 المفتاحي (`gen_byte`، بذرة عامة�
 
 ## البناء (لا يشغّل شيئاً)
 ```bash
-cd "/Users/madeehibrahim/Desktop/MCL Project Stage 2/02_Engine_Code" && clang++ -std=c++17 -O3 -DNDEBUG -I. ReturnMap_Attack/mcl_returnmap_attack.cpp -o ReturnMap_Attack/mcl_returnmap_attack
+# from the repository root
+clang++ -std=c++17 -O3 -DNDEBUG -I. ReturnMap_Attack/mcl_returnmap_attack.cpp -o ReturnMap_Attack/mcl_returnmap_attack
 ```
 
 ## التشغيل (عند الموافقة فقط)
 ```bash
-cd "/Users/madeehibrahim/Desktop/MCL Project Stage 2/02_Engine_Code/ReturnMap_Attack" && ./mcl_returnmap_attack > returnmap_apple_$(date +%Y%m%d).log
+# from the repository root
+cd ReturnMap_Attack && ./mcl_returnmap_attack > returnmap_apple_$(date +%Y%m%d).log
 ```
 زمن تقريبي: دقائق (§3 هو O(nsub²) عند nsub=3000 ×2 (سلسلة+بديل) ×4 أهداف؛ §5 ≈ ثانية). خيارات: `--n [4096,2^24]` `--nsub [64,12000]` (~290 MB عند الحد الأقصى) `--G` `--sections 1245` `--R`.
 

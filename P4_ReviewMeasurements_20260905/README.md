@@ -1,5 +1,7 @@
 # P4 review measurements — 2026-09-05 (referee-eye round R4: VDF128-T4 **version 2**, per-input weights)
 
+> Section, table and figure numbers quoted in this README refer to the draft of the paper of its date (2026-09-05); the current numbering is in the paper. (Note added 2026-09-30.)
+
 **Doc ID:** MCL-P4-REVIEWMEAS-2026-0905-002 · **Engine:** root `mcl_core.hpp` v8.1.3 + sidecar `mcl_keyed_q30.hpp` v1.0.6 + `mcl_vdf128_t4.hpp` v1 (copies in this folder, read-only; sha256 in `SHA256SUMS`) · **New (additive):** `mcl_vdf128_t4_v2.hpp` · **Platforms:** Apple M1 Pro / macOS (Apple clang 16, 8 logical cores) and x86_64 Linux — Debian 12 `gcc:13` container (GCC 13.4.0, glibc 2.36) · **Purpose:** execute finding R4-1 (option b) of the referee-eye review of Paper 4 (`05_Scientific_Papers/Paper_4_IACR_CiC/Reviews/P4_PrePub_Review_20260904.md`, Round 4) and re-measure every VDF128-T4 number on the new realization. Nothing in the engine was modified.
 
 ## Why version 2

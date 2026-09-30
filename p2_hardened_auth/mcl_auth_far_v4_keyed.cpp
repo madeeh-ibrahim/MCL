@@ -2,7 +2,7 @@
  * mcl_auth_far_v3.cpp — Paper-2 FAR campaign on the DERIVATION-ROUTE protocol
  * Doc ID: MCL-P2-FARV3-2026-0821-001
  * ---------------------------------------------------------------------------
- * Protocol under test (Paper 2 SS-IV.B as now specified; patent Claim 4 route):
+ * Protocol under test (Paper 2 SS-IV.B as now specified; derivation route):
  *     ctx    = SHA-256( C || IMSI || verifier_id )        // full-width challenge
  *     params = KDF( p||q , "MCL-Challenge-v1", ctx )      // challenge -> DERIVATION
  *     R      = MCL(seed_pub, params).gen_bytes(32)        // public seed
@@ -36,7 +36,7 @@ static const uint64_t SEED_PUB = 12345678901234ULL;
 // Deployed protocol (Paper 2 §IV.B, keyed twelve-weight mode — the mode §VIII
 // itself declares production requires). The stored credential is a 256-bit
 // device key; the session context enters the SAME derivation as the public
-// challenge value of patent Claim 4. The searchable secret is therefore the
+// challenge value of the derivation. The searchable secret is therefore the
 // 256-bit key carried in the twelve map-defining weights (2^128 post-Grover),
 // not a ~59.8-bit coupling pair — which is what closes the transcript-based
 // offline-enumeration exposure (referee gap G2) BY WIDTH rather than by a

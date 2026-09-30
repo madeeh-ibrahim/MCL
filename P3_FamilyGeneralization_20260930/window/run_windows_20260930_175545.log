@@ -1,0 +1,14 @@
+=== START 2026-09-30T14:55:45Z host=Madeehs-MacBook-Pro.local engine md5=5d8b49ee11aa0bfb8b0bda3f47fa16e3 ===
+### henon_a_K0.01: henon (3,5) K=- param in [1.000,1.399] step 0.001, delta=0.0005, n=2048 T=10000 W=200 N=100000  14:55:45
+    rows: 400   14:57:38
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+### logistic_r_K0.05: logistic (3,5) K=- param in [3.500,3.999] step 0.001, delta=0.0005, n=2048 T=10000 W=200 N=100000  14:57:38
+    rows: 500   15:00:41
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+### logistic_r_K0.005: logistic (3,5) K=0.005 param in [3.500,3.999] step 0.001, delta=0.0005, n=2048 T=10000 W=200 N=100000  15:00:41
+    rows: 500   15:03:50
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+### tent_mu_K0.05: tent (3,5) K=- param in [1.200,1.999] step 0.001, delta=0.0005, n=2048 T=10000 W=200 N=100000  15:03:50
+    rows: 800   15:08:20
+[ok] fstep(tent,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+=== END 2026-09-30T15:08:20Z ===

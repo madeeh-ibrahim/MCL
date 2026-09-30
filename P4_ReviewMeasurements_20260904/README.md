@@ -1,5 +1,7 @@
 # P4 review measurements — 2026-09-04
 
+> Section, table and figure numbers quoted in this README refer to the draft of the paper of its date (2026-09-04); the current numbering is in the paper. (Note added 2026-09-30.)
+
 **Doc ID:** MCL-P4-REVIEWMEAS-2026-0904-001 · **Engine:** root `mcl_core.hpp` v8.1.3 (copy in this folder, read-only; sha256 in `SHA256SUMS`) · **Platforms:** Apple Silicon macOS (Apple clang 16.0.0, Apple-libm) and x86_64 Linux — Debian 12 `gcc:13` container under Docker Desktop (GCC 13.4.0, glibc 2.36-9+deb12u14, kernel 6.10.14-linuxkit) · **Purpose:** close the provenance gaps found in the Paper 4 pre-publication review (items 20–26 of `05_Scientific_Papers/Paper_4_IACR_CiC/Reviews/P4_PrePub_Review_20260904.md`). Nothing in the engine was modified.
 
 | Harness | Log | Result | Paper 4 locus |
@@ -16,4 +18,4 @@
 
 **What these records replace.** The paper previously quoted |r| = 0.000044 / Hamming 49.997 % (unarchived Python harness), Appendix byte strings that the archived engine does not reproduce (the CRCs did), an 18-test matrix and entropy/χ² pair with no consolidated log, an "11 Fourier modes / density ratio 1.55" ergodicity statement with no record (the archived `mcl_dynamical_signatures` EXP 3 gives max/min 2.10, now cited instead), and "0.4455 ± 0.0005 / 0.4461" with no record. The Linux/glibc side of the Appendix is now measured in full (glibc 2.36); the only survivor of the May-2026 Linux run, the CRC 0xF5E977E0, is quoted as a third, build-specific stream.
 
-Reproduce: `clang++ -std=c++17 -O3 -DNDEBUG -o X X.cpp && ./X` (or `g++` on Linux) for the four single-file harnesses; `./run_q30_matrix.sh` (macOS) / `./run_q30_matrix_linux.sh` (Linux) for the matrix. The Linux run used `docker run --rm --platform linux/amd64 -v "$PWD":/w -w /w gcc:13 …`.
+Reproduce: `clang++ -std=c++17 -O3 -DNDEBUG -o X X.cpp && ./X` (or `g++` on Linux) for the four single-file harnesses (`p4_vdf128_kat_avalanche.cpp` needs `-I../P4_ReviewMeasurements_20260905` for the keyed header); `./run_q30_matrix.sh` (macOS) / `./run_q30_matrix_linux.sh` (Linux) for the matrix. The Linux run used `docker run --rm --platform linux/amd64 -v "$PWD":/w -w /w gcc:13 …`.

@@ -4,7 +4,9 @@
  * MCL (Madeeh Chaotic Lock) — Cryptographic Reference Implementation
  * ============================================================================
  *
- * Document ID:   MCL-HD-VERIFY-2026-0526-001
+ * Document ID:   MCL-HD-VERIFY-2026-0526-001 (v1 program; the v2 program is MCL-HD-VERIFY-V2-2026-0905-001)
+ *                NOTE 2026-09-30: the printed DOC_VERSION "6.0.0" is this program's document version, not the engine version;
+ *                the engine is whatever mcl_core.hpp is linked at build time (8.1.3 in the archived FULL record).
  * Version:       6.0.0
  * Date:          May 26, 2026, 10:00 UTC
  * Author:        Madeeh Ibrahim, Independent Researcher, Cairo, Egypt

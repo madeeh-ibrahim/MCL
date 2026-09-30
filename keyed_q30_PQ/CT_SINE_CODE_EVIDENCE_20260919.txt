@@ -1,0 +1,145 @@
+RECORD  MCL-SCA-CTSINE-2026-0919-001 — machine-code evidence for the opt-in constant-time sine (mcl_q30_sin_ct)
+date        2026-09-19
+kind        CODE INSPECTION of compiler output + functional identity test. NOT a statistical timing measurement
+            (no dudect/TVLA-style test has been run on any platform) and NOT a power/EM measurement.
+host        Apple M1 Pro, macOS 14.5, Apple clang version 16.0.0 (clang-1600.0.26.6)
+            x86-64 listings are cross-compiled on this host (-arch x86_64); they are compiler output, not an x86 run.
+engine      mcl_core.hpp v8.1.3            sha256 416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80
+            keyed_q30_PQ/mcl_keyed_q30.hpp v1.0.6  sha256 71a0dbaf84725ac77d0b3f1eab5a40ba90c088e88df7d41aab19aed39a6f6512   (NOT modified by this record)
+sources     ct_probe.cpp (wraps mcl_q30_sin_ct / sin_q30 as non-inlined functions)  sha256 e4b76964822b69100488f4225155676ce0b3ddffbe87b85e3f82d60201132456
+            ct_barrier_prototype.cpp (scratch prototype, not engine code)          sha256 20e8422d7987ec9443a3eb88021435b899a8e8e620b7c076ea5d75ffa9f36cbe
+commands    c++ -std=c++17 <-O2|-O3|-Os> -arch <arm64|x86_64> -I .. -I ../keyed_q30_PQ -S ct_probe.cpp
+            c++ -std=c++17 -O2 [-DMCL_Q30_CONSTANT_TIME_SIN] -I .. -I ../keyed_q30_PQ ../keyed_q30_PQ/mcl_keyed_q30_ct_test.cpp
+
+=== 1. Functional identity (arm64 native, both builds run to completion) ===
+default build : sine-primitive: BYTE-IDENTICAL (0 mismatches over 65536*4 angles) · FP=e11d4237807ef1dd mode=FAST_LUT      first8=2c950643a5a908ec
+CT build      : sine-primitive: BYTE-IDENTICAL (0 mismatches over 65536*4 angles) · FP=e11d4237807ef1dd mode=CONSTANT_TIME first8=2c950643a5a908ec   (16.0 s user)
+
+=== 2. arm64, -O2 (identical at -O3 and -Os): the property HOLDS in the emitted code ===
+--- fast path: ONE load at the secret index ---
+_probe_sin_fast:                        ; @probe_sin_fast
+	lsr	w8, w1, #16
+	ldr	w0, [x0, w8, uxtw #2]
+	ret
+--- constant-time path: 65,536 sequential loads, branchless select (csel), the only branch tests the public counter ---
+_probe_sin_ct:                          ; @probe_sin_ct
+	mov	x8, x0
+	mov	x9, #0                          ; =0x0
+	mov	w0, #0                          ; =0x0
+	lsr	w10, w1, #16
+	ubfiz	x10, x10, #2, #32
+LBB0_1:                                 ; =>This Inner Loop Header: Depth=1
+	ldr	w11, [x8, x9]
+	cmp	x10, x9
+	csel	w11, w11, wzr, eq
+	orr	w0, w11, w0
+	add	x9, x9, #4
+	cmp	x9, #64, lsl #12                ; =262144
+	b.ne	LBB0_1
+	ret
+
+=== 3. x86-64, -O2 (same at -O3): the property DOES NOT HOLD in the emitted code ===
+The LLVM IR is correct (unconditional "load volatile" + select). The x86 back end's cmov-conversion pass then turns each
+select into a compare-and-branch and sinks the load into the taken block, so the table is read ONLY at the secret index
+and the branch outcome depends on the secret index:
+_probe_sin_ct:                          ## @probe_sin_ct
+	pushq	%rbp
+	movq	%rsp, %rbp
+	shrl	$16, %esi
+	xorl	%ecx, %ecx
+	xorl	%eax, %eax
+	jmp	LBB0_1
+	.p2align	4, 0x90
+LBB0_9:                                 ##   in Loop: Header=BB0_1 Depth=1
+	orl	%r9d, %r10d
+	orl	%edx, %eax
+	orl	%r8d, %eax
+	orl	%r10d, %eax
+	addq	$4, %rcx
+	cmpq	$65536, %rcx                    ## imm = 0x10000
+	je	LBB0_10
+LBB0_1:                                 ## =>This Inner Loop Header: Depth=1
+	movl	$0, %edx
+	cmpq	%rcx, %rsi
+	jne	LBB0_3
+	movl	(%rdi,%rcx,4), %edx
+LBB0_3:                                 ##   in Loop: Header=BB0_1 Depth=1
+	leaq	1(%rcx), %r9
+	movl	$0, %r8d
+	cmpq	%rsi, %r9
+	jne	LBB0_5
+	movl	4(%rdi,%rcx,4), %r8d
+LBB0_5:                                 ##   in Loop: Header=BB0_1 Depth=1
+	leaq	2(%rcx), %r10
+	movl	$0, %r9d
+	cmpq	%rsi, %r10
+	jne	LBB0_7
+	movl	8(%rdi,%rcx,4), %r9d
+LBB0_7:                                 ##   in Loop: Header=BB0_1 Depth=1
+	leaq	3(%rcx), %r11
+	movl	$0, %r10d
+	cmpq	%rsi, %r11
+	jne	LBB0_9
+	movl	12(%rdi,%rcx,4), %r10d
+	jmp	LBB0_9
+LBB0_10:
+	popq	%rbp
+	retq
+The same pattern is present in the real translation unit (mcl_keyed_q30_ct_test.cpp, -DMCL_Q30_CONSTANT_TIME_SIN, -arch x86_64 -O2):
+18 of 18 scan loops bounded by 65,536 contain no cmov and guard every table load with "cmp <secret index>; jne".
+--- control: same source, same compiler, with -mllvm -x86-cmov-converter=false — loads unconditional, cmov select ---
+_probe_sin_ct:                          ## @probe_sin_ct
+	pushq	%rbp
+	movq	%rsp, %rbp
+	shrl	$16, %esi
+	xorl	%ecx, %ecx
+	xorl	%edx, %edx
+	xorl	%eax, %eax
+	.p2align	4, 0x90
+LBB0_1:                                 ## =>This Inner Loop Header: Depth=1
+	cmpq	%rdx, %rsi
+	movl	(%rdi,%rdx,4), %r8d
+	cmovnel	%ecx, %r8d
+	orl	%eax, %r8d
+	leaq	1(%rdx), %rax
+	... (pattern repeats for the 4x-unrolled body)
+
+=== 4. Prototype of a source-level remedy (scratch only — the pinned sidecar is unchanged) ===
+An optimizer value barrier on the mask ( __asm__("" : "+r"(a)) ), as used by constant-time libraries, keeps the mask opaque,
+so no select is formed. Emitted x86-64 -O2 code: one unconditional load per iteration, one branch (the public loop counter):
+_sin_ct_barrier:                        ## @sin_ct_barrier
+	pushq	%rbp
+	movq	%rsp, %rbp
+	shrl	$16, %esi
+	xorl	%ecx, %ecx
+	xorl	%eax, %eax
+	.p2align	4, 0x90
+LBB0_1:                                 ## =>This Inner Loop Header: Depth=1
+	movl	(%rdi,%rcx,4), %edx
+	movl	%esi, %r8d
+	xorl	%ecx, %r8d
+	decl	%r8d
+	sarl	$31, %r8d
+	andl	%edx, %r8d
+	orl	%r8d, %eax
+	incq	%rcx
+	cmpq	$65536, %rcx                    ## imm = 0x10000
+	jne	LBB0_1
+	popq	%rbp
+	retq
+Functional check of the prototype: all 65,536 indices return lut[idx] (arm64 native run). arm64 output keeps the same shape.
+Adopting it is an ENGINE change (sidecar v1.0.6 -> next), to be ordered by the author; outputs would stay byte-identical
+because the barrier does not change any computed value.
+
+=== 5. What this record establishes, and what it does not ===
+ESTABLISHES  (a) arm64 / Apple clang 16.0.0 at -O2, -O3, -Os: the CT build emits no secret-indexed load and no secret-dependent
+                 branch in the sine evaluator; output byte-identical to the default build.
+             (b) x86-64 / Apple clang 16.0.0 at -O2, -O3: the CT build, as compiled, reads the table only at the secret index
+                 behind a secret-dependent branch. On that target the opt-in build does NOT close the cache-timing surface.
+DOES NOT     - any other compiler (GCC, MSVC, other clang versions) or target (Cortex-M, RISC-V): not inspected;
+ESTABLISH    - timing behaviour measured on hardware: no statistical timing test exists for any target;
+             - anything about power/EM leakage (see RESULTS.txt and RESULTS_MULTI_20260919.txt: modeled CPA, leakage present);
+             - the cascade path (mcl_cascade_q30 still uses the core fast LUT) and N-2 (data-dependent gcd at key set-up).
+CONSEQUENCE  Statements of the form "closed by an opt-in constant-time sine build" are supported for the arm64 build inspected
+             here and are NOT supported for x86-64 builds with this compiler until the remedy of section 4 (or an equivalent)
+             is adopted and its machine code re-inspected per target.

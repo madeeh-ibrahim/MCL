@@ -1,14 +1,13 @@
 /*
- * mcl_keyed_q30_measure.cpp -- measurement runner for the seven [MEASURE]
- * anchors of PCT-04 Description v4 (and the Claim-15 quarter-wave CRC proof
- * requested in the attorney notes).
+ * mcl_keyed_q30_measure.cpp -- measurement runner for seven measurement
+ * anchors of the keyed integer engine (and the quarter-wave CRC proof).
  *
- * [M1] LUT geometry + CRC + quarter-wave reconstruction bit-identity   ([0027]/[0046], Claim 15)
- * [M2] Working-memory footprint (engine state, schedule, table)        ([0043], Claim 22)
- * [M3] Per-term scaling overflow bounds (analytic + empirical)         ([0031], Claim 17)
- * [M4] Latency: full auth op, cascade op, raw iterate, keystream       ([0046])
- * [M5] Cascade capacity / effective post-quantum bits                  ([0047])
- * [M6] MATRIX-KAT line for the cross-platform bit-identity matrix      ([0033], Claim 11)
+ * [M1] LUT geometry + CRC + quarter-wave reconstruction bit-identity
+ * [M2] Working-memory footprint (engine state, schedule, table)
+ * [M3] Per-term scaling overflow bounds (analytic + empirical)
+ * [M4] Latency: full auth op, cascade op, raw iterate, keystream
+ * [M5] Cascade capacity / effective post-quantum bits
+ * [M6] MATRIX-KAT line for the cross-platform bit-identity matrix
  *
  * Build exactly like the harness (assert path included, as in the recorded
  * 0x58C99E3E [T4] / 0xF7C81BC4 [cascade, SHA-256-hashed since 2026-06-15] CRCs):
@@ -65,7 +64,7 @@ int main() {
     // ------------------------------------------------------------------
     // [M1] LUT geometry, CRC, quarter-wave reconstruction bit-identity
     // ------------------------------------------------------------------
-    std::printf("\n[M1] Sine LUT geometry + quarter-wave compression (Claim 15)\n");
+    std::printf("\n[M1] Sine LUT geometry + quarter-wave compression\n");
     const MCL_Q30_Table& tab = mcl_q30_table();
     {
         const uint32_t full_crc =
@@ -112,11 +111,11 @@ int main() {
     // ------------------------------------------------------------------
     // [M2] Working-memory footprint
     // ------------------------------------------------------------------
-    std::printf("\n[M2] Working memory (Claim 22 / [0043])\n");
+    std::printf("\n[M2] Working memory\n");
     {
         std::printf("    sizeof(MCL_T4_Q30) engine object   = %zu B "
                     "(4x uint32 state + 12x uint32 weights + int64 K_phase; "
-                    "uint32 weights => native 32x32 multiply, Claim 13)\n",
+                    "uint32 weights => native 32x32 multiply)\n",
                     sizeof(MCL_T4_Q30));
         const size_t casc_state = 2 * sizeof(uint32_t);
         const size_t casc_sched7 = 7 * sizeof(std::pair<int64_t,int64_t>);
@@ -129,9 +128,9 @@ int main() {
     }
 
     // ------------------------------------------------------------------
-    // [M3] Per-term scaling overflow bounds (Claim 17 / [0031])
+    // [M3] Per-term scaling overflow bounds
     // ------------------------------------------------------------------
-    std::printf("\n[M3] Per-term scaling overflow analysis (Claim 17)\n");
+    std::printf("\n[M3] Per-term scaling overflow analysis\n");
     {
         // per-term:  |K_phase * sin_q30| <= K_phase * 2^30 must fit int64.
         // K_phase = K * 2^32 / 2pi  ->  K_max = INT64_MAX * 2pi / 2^62 = 4pi.
@@ -227,7 +226,7 @@ int main() {
     // ------------------------------------------------------------------
     // [M5] Cascade capacity / effective post-quantum accounting
     // ------------------------------------------------------------------
-    std::printf("\n[M5] Cascade capacity accounting ([0047])\n");
+    std::printf("\n[M5] Cascade capacity accounting\n");
     {
         const double pair_bits = mcl_q30_pair_bits();
         std::printf("    ordered coprime (p,q) pair in [2,2^30): %.2f bits/epoch\n", pair_bits);
@@ -244,7 +243,7 @@ int main() {
     // ------------------------------------------------------------------
     // [M6] MATRIX-KAT -- one line to diff across {arch x compiler x -O}
     // ------------------------------------------------------------------
-    std::printf("\n[M6] Bit-identity KATs ([0033])\n");
+    std::printf("\n[M6] Bit-identity KATs\n");
     {
         uint8_t a[32], ow[32], c7[32], c5[32];
         { MCL_T4_Q30 e(key); e.commit32(a); }

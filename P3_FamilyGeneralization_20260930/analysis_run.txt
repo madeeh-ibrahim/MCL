@@ -1,0 +1,108 @@
+== henon_a_K0.01: henon (p,q)=(3,5) K=0.01, a in [1.000,1.399] step 0.001, partner a+0.0005; cells 400 (escaped 0); n_seeds 2048, T 10000, W 200, N 100000; mixing diagnostic joined (non-mixing = acf tail >= 0.1 or locked)
+   non-mixing cells (A) 189 in 3 runs: locked 104, banded-chaotic (λ₁>0.02, tail>=0.1) 85; mixing cells 211
+   pairs: both non-mixing 189 -> fail 185; both mixing 209 -> fail 0; mixed 2 -> fail 0
+   paper's λ-criterion alone: locked&locked 97 -> fail 97; chaotic&chaotic 290 -> fail 76 (the failures among λ₁>0.02 cells are the banded ones)
+   mixing-cell maxima: |r_lag| 0.1228, MI 0.0204 bit, |r_ens| 0.0895 (expected extreme of 200x209 null values at n=2048: 0.102)
+   acf FAR-tail distribution (τ ∈ [4001,4096]): <0.05 208, 0.05-0.1 3, 0.1-0.3 2, >=0.3 187 (0.05-0.3: 5 cells); near tail [65,512] >= 0.1: 225 cells
+   failure rate of pairs by min(far tail of the two members): [0,0.05): 0/208; [0.05,0.1): 0/3; [0.1,0.3): 0/2; [0.3,0.6): 1/2; [0.6,0.9): 46/47; [0.9,1.01): 138/138
+   slowly-decaying (mixing) cells: near tail >= 0.1 but far tail < 0.1: 36 cells, of which fail 0
+   non-mixing run a = 1.000 .. 1.139 (140 cells; locked 64, banded 76; median λ₁ +0.054) periods [4, 8, 24, 32] band-cycle lags [4, 6, 8, 16, 24, 40]
+   non-mixing run a = 1.224 .. 1.266 (43 cells; locked 36, banded 7; median λ₁ -0.042) periods [7, 14, 28, 42, 98] band-cycle lags [7, 14, 28, 35, 42]
+   non-mixing run a = 1.311 .. 1.316 (6 cells; locked 4, banded 2; median λ₁ -0.023) periods [7, 14] band-cycle lags [7, 14]
+   EXCEPTION a=1.1360: class NN fail=0 l1A=+0.2503 perA=0 tailA=0.650 | l1B=+0.2510 perB=0 tailB=0.650 | r_ens=0.042 rlag=0.221 MI=0.051
+   EXCEPTION a=1.1370: class NN fail=0 l1A=+0.2546 perA=0 tailA=0.374 | l1B=+0.2547 perB=0 tailB=0.374 | r_ens=0.079 rlag=0.075 MI=0.007
+   EXCEPTION a=1.1380: class NN fail=0 l1A=+0.2559 perA=0 tailA=0.211 | l1B=+0.2573 perB=0 tailB=0.211 | r_ens=0.045 rlag=0.036 MI=0.002
+   EXCEPTION a=1.1390: class NN fail=0 l1A=+0.2593 perA=0 tailA=0.195 | l1B=+0.2593 perB=0 tailB=0.195 | r_ens=0.094 rlag=0.037 MI=0.001
+== logistic_r_K0.005: logistic (p,q)=(3,5) K=0.005, r in [3.500,3.999] step 0.001, partner r+0.0005; cells 500 (escaped 0); n_seeds 2048, T 10000, W 200, N 100000; mixing diagnostic joined (non-mixing = acf tail >= 0.1 or locked)
+   non-mixing cells (A) 229 in 7 runs: locked 109, banded-chaotic (λ₁>0.02, tail>=0.1) 120; mixing cells 271
+   pairs: both non-mixing 229 -> fail 224; both mixing 265 -> fail 0; mixed 6 -> fail 0
+   paper's λ-criterion alone: locked&locked 105 -> fail 105; chaotic&chaotic 386 -> fail 113 (the failures among λ₁>0.02 cells are the banded ones)
+   mixing-cell maxima: |r_lag| 0.0402, MI 0.0026 bit, |r_ens| 0.0925 (expected extreme of 200x265 null values at n=2048: 0.103)
+   acf FAR-tail distribution (τ ∈ [4001,4096]): <0.05 271, 0.05-0.1 0, 0.1-0.3 0, >=0.3 229 (0.05-0.3: 0 cells); near tail [65,512] >= 0.1: 234 cells
+   failure rate of pairs by min(far tail of the two members): [0,0.05): 0/271; [0.05,0.1): 0/0; [0.1,0.3): 0/0; [0.3,0.6): 0/0; [0.6,0.9): 76/79; [0.9,1.01): 148/150
+   slowly-decaying (mixing) cells: near tail >= 0.1 but far tail < 0.1: 5 cells, of which fail 0
+   non-mixing run r = 3.500 .. 3.682 (183 cells; locked 80, banded 103; median λ₁ +0.100) periods [4, 6, 8, 12, 16, 32] band-cycle lags [4, 6, 8, 10, 12, 14, 16, 18, 20, 24]
+   non-mixing run r = 3.709 .. 3.709 (1 cells; locked 0, banded 1; median λ₁ +0.081) periods - band-cycle lags [14]
+   non-mixing run r = 3.748 .. 3.753 (6 cells; locked 4, banded 2; median λ₁ -0.029) periods [5, 10] band-cycle lags [5, 10, 15]
+   non-mixing run r = 3.778 .. 3.778 (1 cells; locked 0, banded 1; median λ₁ +0.036) periods - band-cycle lags [7]
+   non-mixing run r = 3.842 .. 3.877 (36 cells; locked 23, banded 13; median λ₁ -0.021) periods [3, 6, 9, 12] band-cycle lags [3, 6, 9, 12, 18]
+   non-mixing run r = 3.926 .. 3.926 (1 cells; locked 1, banded 0; median λ₁ -0.234) periods - band-cycle lags [5]
+   non-mixing run r = 3.981 .. 3.981 (1 cells; locked 1, banded 0; median λ₁ -0.052) periods [16] band-cycle lags [4]
+   EXCEPTION r=3.6820: class NN fail=0 l1A=+0.3297 perA=0 tailA=0.615 | l1B=+0.3327 perB=0 tailB=0.615 | r_ens=0.064 rlag=0.067 MI=0.006
+   EXCEPTION r=3.7090: class NN fail=0 l1A=+0.0812 perA=0 tailA=0.850 | l1B=+0.3575 perB=0 tailB=0.850 | r_ens=0.060 rlag=0.007 MI=-0.000
+   EXCEPTION r=3.7530: class NN fail=0 l1A=+0.0973 perA=0 tailA=0.959 | l1B=+0.3210 perB=0 tailB=0.959 | r_ens=0.067 rlag=0.024 MI=0.002
+   EXCEPTION r=3.7780: class NN fail=0 l1A=+0.0361 perA=0 tailA=0.883 | l1B=+0.3798 perB=0 tailB=0.883 | r_ens=0.056 rlag=0.008 MI=0.000
+   EXCEPTION r=3.9810: class NN fail=0 l1A=-0.0523 perA=16 tailA=0.960 | l1B=+0.5957 perB=0 tailB=0.960 | r_ens=0.071 rlag=0.006 MI=0.000
+== logistic_r_K0.05: logistic (p,q)=(3,5) K=0.05, r in [3.500,3.999] step 0.001, partner r+0.0005; cells 500 (escaped 0); n_seeds 2048, T 10000, W 200, N 100000; mixing diagnostic joined (non-mixing = acf tail >= 0.1 or locked)
+   non-mixing cells (A) 223 in 5 runs: locked 121, banded-chaotic (λ₁>0.02, tail>=0.1) 102; mixing cells 277
+   pairs: both non-mixing 223 -> fail 218; both mixing 272 -> fail 0; mixed 5 -> fail 0
+   paper's λ-criterion alone: locked&locked 116 -> fail 116; chaotic&chaotic 373 -> fail 96 (the failures among λ₁>0.02 cells are the banded ones)
+   mixing-cell maxima: |r_lag| 0.0550, MI 0.0020 bit, |r_ens| 0.0950 (expected extreme of 200x272 null values at n=2048: 0.103)
+   acf FAR-tail distribution (τ ∈ [4001,4096]): <0.05 276, 0.05-0.1 1, 0.1-0.3 1, >=0.3 222 (0.05-0.3: 2 cells); near tail [65,512] >= 0.1: 242 cells
+   failure rate of pairs by min(far tail of the two members): [0,0.05): 0/276; [0.05,0.1): 0/1; [0.1,0.3): 0/1; [0.3,0.6): 1/1; [0.6,0.9): 77/77; [0.9,1.01): 140/144
+   slowly-decaying (mixing) cells: near tail >= 0.1 but far tail < 0.1: 19 cells, of which fail 0
+   non-mixing run r = 3.500 .. 3.713 (214 cells; locked 114, banded 100; median λ₁ -0.008) periods [4, 8, 12, 16, 20, 24, 32, 36] band-cycle lags [4, 6, 8, 10, 12, 14, 16, 20, 24, 32]
+   non-mixing run r = 3.757 .. 3.757 (1 cells; locked 1, banded 0; median λ₁ -0.000) periods - band-cycle lags [7]
+   non-mixing run r = 3.763 .. 3.763 (1 cells; locked 1, banded 0; median λ₁ +0.012) periods - band-cycle lags [11]
+   non-mixing run r = 3.802 .. 3.803 (2 cells; locked 2, banded 0; median λ₁ -0.072) periods [7] band-cycle lags [7, 14]
+   non-mixing run r = 3.822 .. 3.826 (5 cells; locked 3, banded 2; median λ₁ +0.000) periods [5] band-cycle lags [5, 10, 15]
+   EXCEPTION r=3.7130: class NN fail=0 l1A=+0.3250 perA=0 tailA=0.144 | l1B=+0.3235 perB=0 tailB=0.144 | r_ens=0.063 rlag=0.008 MI=0.002
+   EXCEPTION r=3.7570: class NN fail=0 l1A=-0.0000 perA=0 tailA=0.960 | l1B=+0.3338 perB=0 tailB=0.960 | r_ens=0.072 rlag=0.005 MI=0.000
+   EXCEPTION r=3.7630: class NN fail=0 l1A=+0.0121 perA=0 tailA=0.960 | l1B=+0.3393 perB=0 tailB=0.960 | r_ens=0.055 rlag=0.007 MI=0.000
+   EXCEPTION r=3.8030: class NN fail=0 l1A=+0.0198 perA=0 tailA=0.960 | l1B=+0.3314 perB=0 tailB=0.960 | r_ens=0.067 rlag=0.011 MI=0.001
+   EXCEPTION r=3.8260: class NN fail=0 l1A=+0.0426 perA=0 tailA=0.960 | l1B=+0.2326 perB=0 tailB=0.960 | r_ens=0.057 rlag=0.122 MI=0.052
+== tent_mu_K0.05: tent (p,q)=(3,5) K=0.05, μ in [1.200,1.999] step 0.001, partner μ+0.0005; cells 800 (escaped 0); n_seeds 2048, T 10000, W 200, N 100000; mixing diagnostic joined (non-mixing = acf tail >= 0.1 or locked)
+   non-mixing cells (A) 153 in 2 runs: locked 0, banded-chaotic (λ₁>0.02, tail>=0.1) 153; mixing cells 647
+   pairs: both non-mixing 153 -> fail 147; both mixing 646 -> fail 0; mixed 1 -> fail 0
+   paper's λ-criterion alone: locked&locked 0 -> fail 0; chaotic&chaotic 800 -> fail 147 (the failures among λ₁>0.02 cells are the banded ones)
+   mixing-cell maxima: |r_lag| 0.2191, MI 0.0481 bit, |r_ens| 0.1002 (expected extreme of 200x646 null values at n=2048: 0.107)
+   acf FAR-tail distribution (τ ∈ [4001,4096]): <0.05 639, 0.05-0.1 8, 0.1-0.3 4, >=0.3 149 (0.05-0.3: 12 cells); near tail [65,512] >= 0.1: 218 cells
+   failure rate of pairs by min(far tail of the two members): [0,0.05): 0/639; [0.05,0.1): 0/8; [0.1,0.3): 0/4; [0.3,0.6): 0/2; [0.6,0.9): 99/99; [0.9,1.01): 48/48
+   slowly-decaying (mixing) cells: near tail >= 0.1 but far tail < 0.1: 65 cells, of which fail 0
+   non-mixing run μ = 1.200 .. 1.351 (152 cells; locked 0, banded 152; median λ₁ +0.252) periods - band-cycle lags [4, 6]
+   non-mixing run μ = 1.354 .. 1.354 (1 cells; locked 0, banded 1; median λ₁ +0.314) periods - band-cycle lags [4]
+   EXCEPTION μ=1.3470: class NN fail=0 l1A=+0.3089 perA=0 tailA=0.492 | l1B=+0.3093 perB=0 tailB=0.501 | r_ens=0.153 rlag=0.004 MI=0.004
+   EXCEPTION μ=1.3480: class NN fail=0 l1A=+0.3094 perA=0 tailA=0.501 | l1B=+0.3097 perB=0 tailB=0.501 | r_ens=0.090 rlag=0.066 MI=0.006
+   EXCEPTION μ=1.3490: class NN fail=0 l1A=+0.3102 perA=0 tailA=0.100 | l1B=+0.3105 perB=0 tailB=0.175 | r_ens=0.060 rlag=0.062 MI=0.004
+   EXCEPTION μ=1.3500: class NN fail=0 l1A=+0.3108 perA=0 tailA=0.175 | l1B=+0.3111 perB=0 tailB=0.175 | r_ens=0.035 rlag=0.099 MI=0.012
+   EXCEPTION μ=1.3510: class NN fail=0 l1A=+0.3120 perA=0 tailA=0.110 | l1B=+0.3117 perB=0 tailB=0.110 | r_ens=0.063 rlag=0.057 MI=0.004
+   EXCEPTION μ=1.3540: class NN fail=0 l1A=+0.3136 perA=0 tailA=0.160 | l1B=+0.3133 perB=0 tailB=0.160 | r_ens=0.068 rlag=0.096 MI=0.008
+
+| sweep | cells | non-mixing cells (runs) | of which locked (λ₁ ≤ 0.02 or periodic) / banded chaos (λ₁ > 0.02) | both non-mixing: n / fail | both mixing: n / fail | mixed pair: n / fail | mixing-cell maxima \|r_lag\| / MI (bit) / \|r_ens\| | expected null extreme \|r_ens\| |
+|---|---:|---|---|---|---|---|---|---|
+| henon K=0.01 (a ∈ [1.000, 1.399]) | 400 | 189 (3) | 104 / 85 | 189 / 185 | 209 / 0 | 2 / 0 | 0.123 / 0.020 / 0.089 | 0.102 |
+| logistic K=0.005 (r ∈ [3.500, 3.999]) | 500 | 229 (7) | 109 / 120 | 229 / 224 | 265 / 0 | 6 / 0 | 0.040 / 0.003 / 0.093 | 0.103 |
+| logistic K=0.05 (r ∈ [3.500, 3.999]) | 500 | 223 (5) | 121 / 102 | 223 / 218 | 272 / 0 | 5 / 0 | 0.055 / 0.002 / 0.095 | 0.103 |
+| tent K=0.05 (μ ∈ [1.200, 1.999]) | 800 | 153 (2) | 0 / 153 | 153 / 147 | 646 / 0 | 1 / 0 | 0.219 / 0.048 / 0.100 | 0.107 |
+
+family    (p,q)       K   param axis        λ1    growth/λ1 min–max (n)  slope·λ1    t0 tdec−tsat far-tail  τ_c                   t_dec list
+henon     (3,5)   0.01    1.28 K       0.2802    0.9513–1.0582 (6)     1.242 54.61     48.33    0.011   78        159 149 120 104 81 70
+henon     (3,5)   0.01    1.28 param   0.2802    0.9497–1.1057 (7)     1.028 58.00     52.86    0.011   78     162 142 124 108 86 80 83
+henon     (3,5)   0.01     1.3 K       0.3380    0.9995–1.0858 (6)     1.159 18.52     18.67    0.010   29           104 91 76 59 42 34
+henon     (3,5)   0.01     1.3 param   0.3380    0.9971–1.0657 (7)     1.088 20.42     20.43    0.010   29        107 91 76 64 46 38 34
+henon     (3,5)   0.01     1.4 K       0.4294    1.0023–1.0350 (6)     1.125 11.32     11.67    0.009   14            79 66 57 43 30 25
+henon     (3,5)   0.01     1.4 param   0.4294    1.0015–1.0329 (7)     1.077 10.64     11.57    0.009   14         78 66 55 44 33 25 20
+logistic  (3,5)   0.05     3.7 K       0.2871    0.8843–0.9901 (6)       nan   nan       nan    0.728   -1         -1 -1 -1 -1 -1 -1 -1   <- NON-MIXING base point (banded): separation grows at λ₁ but r_ens never collapses
+logistic  (3,5)   0.05     3.7 param   0.2871    0.9148–0.9941 (6)       nan   nan       nan    0.728   -1         -1 -1 -1 -1 -1 -1 -1   <- NON-MIXING base point (banded): separation grows at λ₁ but r_ens never collapses
+logistic  (3,5)   0.05     3.9 K       0.4461    0.9996–1.0086 (6)     1.069  5.98      8.57    0.009    3         70 59 48 37 26 20 15
+logistic  (3,5)   0.05     3.9 param   0.4461    1.0015–1.0380 (7)     1.097  4.81      8.14    0.009    3         72 62 51 39 27 22 16
+logistic  (3,5)   0.05       4 K       0.5529    1.0044–1.0678 (6)     1.084  3.39      5.71    0.007    3          55 46 38 29 20 15 9
+logistic  (2,3)   0.05       4 param   0.6199    1.0043–1.1712 (7)     1.103  4.10      6.00    0.008    5         53 45 37 30 21 17 11
+logistic  (3,5)   0.05       4 param   0.5529    1.0032–1.1461 (7)     1.080  3.56      6.00    0.007    3         57 49 40 31 22 17 12
+logistic  (3,5)   0.05       4 param   0.5529    1.0048–1.1549 (7)     1.093  3.59      6.14    0.007    3         58 50 40 32 22 17 13
+tent      (3,5)   0.05     1.3 K       0.2723    0.8854–0.9781 (5)       nan   nan       nan    0.859   -1         -1 -1 -1 -1 -1 -1 -1   <- NON-MIXING base point (banded): separation grows at λ₁ but r_ens never collapses
+tent      (3,5)   0.05     1.3 param   0.2723    0.8819–0.9841 (6)       nan   nan       nan    0.859   -1         -1 -1 -1 -1 -1 -1 -1   <- NON-MIXING base point (banded): separation grows at λ₁ but r_ens never collapses
+tent      (3,5)   0.05     1.6 K       0.4444    0.9793–1.0001 (6)     1.008  3.19      6.43    0.015    6         65 55 45 34 24 18 13
+tent      (3,5)   0.05     1.6 param   0.4444    0.9906–1.0010 (6)     0.972  2.49      6.14    0.015    6         66 55 44 35 24 21 15
+tent      (3,5)   0.05       2 K       0.6422    1.0005–1.0043 (6)     0.998  1.66      2.86    0.010    3         45 38 30 23 16 12 10
+tent      (3,5)   0.05       2 param   0.6422    0.9882–1.0049 (7)     1.015  2.93      4.29    0.010    3         48 40 33 26 19 15 11
+control henon pq delta=1.000e+00: <ln d>(1)=-5.2156 t_dec=22 r(T)=0.005237
+control henon pq delta=2.000e+00: <ln d>(1)=-5.2034 t_dec=19 r(T)=-0.003449
+control henon zero delta=0.000e+00: <ln d>(1)=-inf t_dec=-1 r(T)=1.000000
+control logistic pq delta=1.000e+00: <ln d>(1)=-3.6129 t_dec=8 r(T)=-0.006491
+control logistic pq delta=2.000e+00: <ln d>(1)=-3.5163 t_dec=9 r(T)=-0.006167
+control logistic zero delta=0.000e+00: <ln d>(1)=-inf t_dec=-1 r(T)=1.000000
+control tent pq delta=1.000e+00: <ln d>(1)=-3.7592 t_dec=7 r(T)=-0.006308
+control tent pq delta=2.000e+00: <ln d>(1)=-3.7451 t_dec=8 r(T)=-0.006479
+control tent zero delta=0.000e+00: <ln d>(1)=-inf t_dec=-1 r(T)=1.000000
+figure written: paper3_fig6.png

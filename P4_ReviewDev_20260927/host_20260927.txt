@@ -3,3 +3,7 @@ Apple clang version 16.0.0 (clang-1600.0.26.6)
 Sun Sep 27 07:58:42 UTC 2026
 visit order: (tv*0x9E3779B1) mod 2^(n*w) — full permutation (v2)
 walkdp small-memory runs (Part 2): same host, Sun Sep 27 2026; light run 57 s, four heavy runs 73 s each, concurrent
+clock separation at structured offsets (Part 3): same host, Mon Sep 28 2026; single-threaded, 53 s
+Linux cell of version 4 (Part 4): gcc:13 container on the same host, Mon Sep 28 2026; environment in linux_env_20260928v4.txt
+clock separation on forty inputs (Part 3, rerun): same host, Wed Sep 30 2026; about 4 min + 40 s
+Figure 2 data (Part 5): same host, Wed Sep 30 2026; about 10 s

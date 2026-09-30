@@ -1,0 +1,9 @@
+[ok] fstep(henon,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+henon a=1.0000: l1=-0.0988 per=4 acf max64=1.000@4 tail=0.999@68 far=0.960@4004
+henon a=1.0500: l1=-0.0326 per=8 acf max64=1.000@8 tail=0.999@72 far=0.960@4008
+henon a=1.1000: l1=+0.1768 per=0 acf max64=0.952@4 tail=0.896@66 far=0.850@4002
+henon a=1.1500: l1=+0.2805 per=0 acf max64=0.713@1 tail=0.359@65 far=0.033@4032
+henon a=1.2000: l1=+0.3268 per=0 acf max64=0.642@1 tail=0.025@190 far=0.025@4012
+henon a=1.2500: l1=-0.0015 per=14 acf max64=1.000@7 tail=0.999@70 far=0.960@4004
+henon a=1.3000: l1=+0.3386 per=0 acf max64=0.432@7 tail=0.015@506 far=0.010@4093
+henon a=1.3500: l1=+0.3840 per=0 acf max64=0.402@1 tail=0.014@353 far=0.009@4007

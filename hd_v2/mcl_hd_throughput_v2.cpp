@@ -1,5 +1,5 @@
 // mcl_hd_throughput.cpp — Doc ID MCL-HD-THROUGHPUT-V2-2026-0905-001
-// Paper 5 item F6 (E5-6): HD derivation throughput, frozen engine v6.0.0.
+// Paper 5 item F6 (E5-6): HD derivation throughput. Engine = whatever mcl_core.hpp is linked (8.1.3 in the archived quiet-host records); the banner formerly said "frozen engine v6.0.0", which was the June engine, not the engine of record.
 // Measures derive_child (bare: burn-in + 32 bytes + index mix + map/gcd)
 // and derive_child_safe (adds Step-4 resonance validation, 100,000 bytes).
 #include "mcl_core.hpp"

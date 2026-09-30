@@ -1,0 +1,11 @@
+[ok] fstep(logistic,(3,5)) byte stream bit-identical to the engine class over 100000 bytes (200000 iterations)
+logistic r=3.5000: l1=-0.0667 per=4 acf max64=1.000@4 tail=0.999@68 far=0.960@4004
+logistic r=3.5500: l1=-0.2901 per=4 acf max64=1.000@4 tail=0.999@68 far=0.960@4004
+logistic r=3.6000: l1=-0.0236 per=16 acf max64=1.000@16 tail=0.999@80 far=0.960@4016
+logistic r=3.6500: l1=+0.2100 per=0 acf max64=0.928@4 tail=0.900@94 far=0.864@4046
+logistic r=3.7000: l1=+0.2877 per=0 acf max64=0.819@1 tail=0.760@78 far=0.728@4094
+logistic r=3.7500: l1=+0.3277 per=0 acf max64=0.794@1 tail=0.043@66 far=0.018@4057
+logistic r=3.8000: l1=+0.3609 per=0 acf max64=0.745@1 tail=0.017@164 far=0.011@4056
+logistic r=3.8500: l1=+0.3908 per=0 acf max64=0.652@1 tail=0.014@245 far=0.011@4040
+logistic r=3.9000: l1=+0.4462 per=0 acf max64=0.581@1 tail=0.012@391 far=0.010@4018
+logistic r=3.9500: l1=+0.5062 per=0 acf max64=0.380@1 tail=0.012@295 far=0.008@4023

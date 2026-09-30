@@ -1,6 +1,6 @@
 // ============================================================================
 // mcl_txauth_v3_claim4.cpp — Paper-5 tx-auth profile v3: full-width transaction
-//                            binding THROUGH THE DERIVATION (patent Claim 4 route)
+//                            binding THROUGH THE DERIVATION (derivation route)
 // ============================================================================
 // Date: 2026-08-21.  Engine: mcl_core.hpp v8.1.1 (UNMODIFIED, header-only).
 //
@@ -8,17 +8,15 @@
 //   v2 closed defect D1 (the 64-bit seed fold) by moving the transaction hash
 //   into an HMAC wrap, which left the engine output constant per device and
 //   demoted the engine to a key-derivation function. That was one route, not
-//   the only one. The FILED patent (PCT/IB2026/058860) supplies a better one:
+//   the only one. A better one (patent pending, PCT/IB2026/058860):
 //
-//     Claim 4  — "receiving a public challenge value and including said public
-//                 challenge value in the input to said deterministic derivation
-//                 function, whereby said map-defining parameters, and hence said
-//                 cryptographic output data, are cryptographically bound to said
-//                 public challenge value without exposing said secret key."
-//     Claim 28 — the device-bound secret enters the SAME derivation input.
-//     Claim 8  — the seed is public; no secret is carried solely in the state.
-//     [0005]   — the initial state cannot represent a wide secret at all
-//                 (N*w bits); the PARAMETER space is what is sized to carry it.
+//     - a public challenge value enters the input of the deterministic
+//       derivation, so the map-defining parameters -- and hence the output --
+//       are bound to it without exposing the secret key;
+//     - the device-bound secret enters the SAME derivation input;
+//     - the seed is public; no secret is carried solely in the state, which
+//       cannot represent a wide secret at all (N*w bits) -- the PARAMETER space
+//       is what is sized to carry it.
 //
 //   A transaction hash is exactly a "public challenge value". Routing it into
 //   the DERIVATION rather than the seed binds the tag to the full 256 bits and
@@ -26,9 +24,9 @@
 //
 // PROFILE v3
 //   ctx   = SHA-256( canon(TX) || LE64(nonce) || LE64(account) || LE64(verifier) )
-//   K_eff = KDF(K,     "MCL-KeyDevice-v1",   S_device)      // Claim 28
-//   K_tx  = KDF(K_eff, "MCL-TxChallenge-v1", ctx)           // Claim 4
-//   weights = twelve coupling weights derived from K_tx     // [0018]-[0019]
+//   K_eff = KDF(K,     "MCL-KeyDevice-v1",   S_device)      // device secret
+//   K_tx  = KDF(K_eff, "MCL-TxChallenge-v1", ctx)           // public challenge
+//   weights = twelve coupling weights derived from K_tx
 //   tag   = MCL_T4(public_seed, weights).gen_bytes(32)      // engine IS the MAC
 //
 //   Offline enumeration (referee gap G2) is closed by width, not by a wrapper:
@@ -75,15 +73,15 @@ static Bytes canon(const Tx& t) {
 }
 struct Device { Key256 K, S_device; uint64_t account; };
 
-static const uint64_t PUBLIC_SEED = 12345678901234ULL;   // public, per Claim 8
+static const uint64_t PUBLIC_SEED = 12345678901234ULL;   // public seed
 
 static Bytes tag_v3(const Device& d, const Tx& tx, uint64_t verifier) {
     Bytes pre = canon(tx);
     put_u64(pre, tx.nonce); put_u64(pre, d.account); put_u64(pre, verifier);
     Bytes ctx = sha256(pre);                                  // 256-bit public challenge
     uint8_t keff[32], ktx[32];
-    mcl_keff_from_key_device(d.K.data(), d.S_device.data(), keff);        // Claim 28
-    mcl_kdf256(keff, "MCL-TxChallenge-v1", ctx.data(), ctx.size(), ktx, 32); // Claim 4
+    mcl_keff_from_key_device(d.K.data(), d.S_device.data(), keff);        // device secret
+    mcl_kdf256(keff, "MCL-TxChallenge-v1", ctx.data(), ctx.size(), ktx, 32); // public challenge
     CouplingSextet cs = mcl_t4_params_from_key(ktx, 0);
     Bytes tag(32);
     { MCL_T4 eng(PUBLIC_SEED, cs, K_DEFAULT); eng.gen_bytes(tag.data(), 32); }
@@ -97,7 +95,7 @@ static void check(const char* n, bool ok) {
 }
 
 int main() {
-    std::printf("mcl_txauth_v3_claim4 — Paper-5 profile v3 (patent Claim 4 route)\n");
+    std::printf("mcl_txauth_v3_claim4 — Paper-5 profile v3 (derivation route)\n");
     std::printf("engine: MCL v%s (%s), UNMODIFIED\n\n", MCL_VERSION_STRING, MCL_VERSION_DATE);
     std::mt19937_64 rng(20260821);
     auto key = [&]{ Key256 k; uint64_t* w=(uint64_t*)k.data(); for(int i=0;i<4;i++) w[i]=rng(); return k; };
@@ -191,8 +189,8 @@ int main() {
     std::printf("\nRESULT: %d PASS / %d FAIL\n", pass, fail);
     std::printf(fail == 0
         ? "v3 closes D1 at full width WITHOUT demoting the engine: the transaction\n"
-          "enters the derivation as the public challenge of Claim 4, the device secret\n"
-          "as the device-bound value of Claim 28, and the seed stays public per Claim 8.\n"
+          "enters the derivation as the public challenge, the device secret\n"
+          "as the device-bound value, and the seed stays public.\n"
         : "FAILURES PRESENT.\n");
     return fail == 0 ? 0 : 1;
 }

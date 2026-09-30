@@ -518,7 +518,7 @@ int main(int argc, char** argv) {
  // # coprime pairs (p,q <= N_max) ~ (6/pi^2) * N_max^2
  //
  // Note on KEY_SPACE_PMAX:
- //   Patent 1 [0017] specifies the FULL range 2 <= p,q <= 2^62, yielding
+ //   The engine specification gives the FULL range 2 <= p,q <= 2^62, yielding
  //   ~2^123.3 coprime pairs WITHOUT including K. Here we use a more
  //   conservative analytical estimate KEY_SPACE_PMAX=10^6 to demonstrate
  //   that even with a much-restricted pair range, the combined keyspace

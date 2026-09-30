@@ -123,22 +123,16 @@ c++ -std=c++17 -O3 -Wall -Wextra -I ../MCL_publish \
 
 ## Patent-support mapping (planned 4th PCT)
 
-This folder is the working code support for the draft claims in
-`../MCL_publish/Final Papers/10 June 2026/PCT_04_Draft_Claims_Keyed_PQ_Integer_Engine.md`:
+What the code in this folder covers:
 
-- **Group II (integer FPU-free engine), claims 11–18** ← `mcl_q30t4_iterate_raw`,
-  the integer LUT, per-term phase scaling (claim 17), endian-independent commit
-  (claim 18a). Closes the "planned mcl_t4_q30 specification" anchor with built,
-  measured code.
-- **Group I capacity (claims 1c, 6, 7)** ← 12×30 = 360-bit capacity proof
-  (test [4]/[7]); each weight < 2³⁰ is below the 2⁵³ collapse onset (claim 7).
-- **Group V cascade (claims 27–28)** ← `mcl_cascade_q30`: joint-space dependency
-  (test [5]), no intermediate output (construction), non-invertibility evidence
-  (test [6]). **Filing caveat:** claim 27's "whereby recovery requires joint
-  search" is **evidentiary** (rests on the measured b_eff > 1, not a proof) — the
-  description must state the non-invertibility assumption and mandate m ≥ 7, and
-  the claim should add a non-invertibility limitation (b_eff > 1) so it does not
-  assert a security level the construction delivers only conditionally.
+- **Integer FPU-free engine** ← `mcl_q30t4_iterate_raw`, the integer LUT,
+  per-term phase scaling, endian-independent commit — built and measured code.
+- **Capacity** ← 12×30 = 360-bit capacity (test [4]/[7]); each weight < 2³⁰ is
+  below the 2⁵³ collapse onset.
+- **Cascade** ← `mcl_cascade_q30`: joint-space dependency (test [5]), no
+  intermediate output (construction), non-invertibility evidence (test [6]).
+  Joint-search recovery is **evidentiary** (rests on the measured b_eff > 1, not
+  a proof); use m ≥ 7.
 
 ## Scientific verification (`mcl_keyed_q30_science.cpp`) — findings & corrections
 
@@ -262,3 +256,6 @@ Both risks were investigated to a definitive answer (not closed by hand-waving):
 
 - **2026-08-22 v1.0.6:** `mcl_t4_q30_has_reachable_symmetry()` + deterministic re-draw in `mcl_t4_q30_params_from_key` — see NOSYM_V106_RECORD_20260822.md
 - **2026-09-28 v1.0.7:** `mcl_cascade_q30_has_reachable_symmetry()` + deterministic re-draw in `mcl_cascade_q30_params_from_key` (about 2^−14 of keys at m = 7); opt-in seed rule `MCL_Q30_SeedInit::Hashed` (default `Legacy`, unchanged); `mcl_keyed_q30_self_test()` with six known-answer values. Known-answer values of record unchanged (`0x58C99E3E`, `0xF7C81BC4`) — see CASCADE_GUARD_V107_RECORD_20260928.md
+
+## Constant-time sine — machine-code evidence (added 2026-09-30, v0.2.16)
+`CT_SINE_CODE_EVIDENCE_20260919.txt` (record MCL-SCA-CTSINE-2026-0919-001): the opt-in constant-time sine (`-DMCL_Q30_CONSTANT_TIME_SIN`) compiles to an oblivious table scan on **arm64** (Apple clang 16, -O2/-O3/-Os) but to a secret-dependent branch plus a single load on **x86-64** at -O2/-O3 (the cmov-conversion pass sinks the volatile load). Output is byte-identical on both, so no functional test detects it. The mitigation is therefore build-specific and must be verified per target from the machine code; a value-barrier fix is prototyped in the record but **not** applied to the sidecar (v1.0.7 unchanged).

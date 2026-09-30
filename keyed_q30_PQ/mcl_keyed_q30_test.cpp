@@ -150,7 +150,7 @@ int main() {
         for (int i = 0; i < 12; i++) {
             MCL_Q30_Sextet wm = w;
             // 12 contiguous uint32_t weights (struct is now uint32-typed, 72-B
-            // engine / native-word multiply, Claim 13). Pun as uint32_t*, not
+            // engine / native-word multiply). Pun as uint32_t*, not
             // int64_t* -- the old int64 punning read pairs and ran off the end.
             uint32_t* wmp = reinterpret_cast<uint32_t*>(&wm);
             wmp[i] ^= 1; // flip the lowest bit of weight i (stays in range, != pair)

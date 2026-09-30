@@ -34,6 +34,9 @@ adversarial analysis**.
 
 ---
 
+## What's new in v0.2.16 (30 September 2026)
+Paper 5 review records (`P5_ReviewMeasurements_20260930/`: 10⁶-trial wrong-device repetition, parity-lock and re-draw census records), corrected threshold label and re-run of the adversarial evaluation, `redraw_rate.cpp` portable, the constant-time-sine machine-code evidence (`keyed_q30_PQ/CT_SINE_CODE_EVIDENCE_20260919.txt`: oblivious on arm64 only), the items staged on 2026-09-28, and `P3_FamilyGeneralization_20260930/`. Engine 8.1.3 and sidecar v1.0.7 unchanged; see `CHANGELOG.md`.
+
 ## What's new in v0.2.15 (28 September 2026)
 
 Scope of the quantum statements: [`QUANTUM_SCOPE_NOTE.md`](QUANTUM_SCOPE_NOTE.md) lists the sentences of this
@@ -129,7 +132,7 @@ artifact under active validation.
 | `T4_CycleStructure/` | Reduced-width cycle study, translation-symmetry group, weak-key parity check, float-path symmetry check (+ logs) |
 | `ReturnMap_Attack/` | Chaos-specific attack attempts (return-map reconstruction, conditional entropy, EFA) against the keyed stream and raw state |
 | `p2_hardened_auth/` | Paper 2 hardened authentication profile (v2) + FAR / avalanche / engine-sensitivity / keyed-FAR campaigns and records |
-| `p5_hardened_txauth/` | Paper 5 hardened transaction-authentication path (v2, v3 / Claim-4 route) + batteries + D1 collision evidence |
+| `p5_hardened_txauth/` | Paper 5 hardened transaction-authentication path (v2, v3 / derivation route) + batteries + D1 collision evidence |
 | `M1_M2_apple_verification/` | Paper 1 §III.B.3 / Tables 9–10 / Appendix A provenance logs (Apple-libm), NIST STS campaign archive, Paper 3 Fig. 1 sweep |
 | `P3_CrossPrediction/` | Paper 3 cross-prediction (R²) experiment: determinism vs. apparent randomness |
 | `P1_CSF_Measurements_20260905/` | Paper 1 cross-system Safe-Zone campaign (standard map, Hénon, logistic; XOR controls; cycle searches), engine of record v6.0.0 |

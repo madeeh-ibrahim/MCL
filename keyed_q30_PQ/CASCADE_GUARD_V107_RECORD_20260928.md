@@ -42,6 +42,14 @@ in 129.7 of 256 bits on average (18 keys). It is a property of the derived
 weights, removed here at its source, as v1.0.6 did for the four-oscillator
 path (`NOSYM_V106_RECORD_20260822.md`).
 
+**Interoperability between versions.** For a key of this class — about one key in
+16,384 at m = 7 — v1.0.7 derives a different q for the first epoch than v1.0.6 and
+earlier, so the cascade output of such a key differs between the two versions: a
+prover and a verifier must run the same version of this file. For every other key
+the two versions give the same cascade output, and the four-oscillator path is
+unchanged for every key (§3). Whether a key is in the class is decided by
+`mcl_cascade_q30_has_reachable_symmetry(mcl_cascade_q30_derive_unchecked(key, m, challenge))`.
+
 ### 1.2 The seed interface
 
 Under the same rule the initial state is t_i = hash_seed(s)·ω_i mod 2^32, and

@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- * mcl_txauth_v3_battery_q30.cpp — Paper-5 SS-VI battery on profile v3 (Claim-4 route),
+ * mcl_txauth_v3_battery_q30.cpp — Paper-5 SS-VI battery on profile v3 (derivation route),
  *                                 FIXED-POINT Q30 realization (MCL_T4_Q30, keyed sidecar)
  * Doc ID: MCL-P5-V3BATTERY-Q30-2026-0904-003
  * Identical to mcl_txauth_v3_battery.cpp (harness v3.2) except that the tag engine is
@@ -10,9 +10,9 @@
  * ============================================================================
  * Produces exactly the rows Paper 5 SS-VI reports, on the v3 tag construction:
  *   ctx   = SHA-256( canon(TX) || LE64(nonce) || LE64(account) || LE64(verifier) )
- *   K_eff = KDF(K,     "MCL-KeyDevice-v1",   S_device)      [Claim 28]
- *   K_tx  = KDF(K_eff, "MCL-TxChallenge-v1", ctx)           [Claim 4]
- *   tag   = MCL_T4_Q30(public seed, Q30 weights(K_tx)).gen_bytes(32) [Claim 8: public seed]
+ *   K_eff = KDF(K,     "MCL-KeyDevice-v1",   S_device)      [device secret]
+ *   K_tx  = KDF(K_eff, "MCL-TxChallenge-v1", ctx)           [public challenge]
+ *   tag   = MCL_T4_Q30(public seed, Q30 weights(K_tx)).gen_bytes(32) [public seed]
  * Engine mcl_core.hpp UNMODIFIED (banner prints the linked version). Deterministic (fixed seeds).
  * Build: clang++ -std=c++17 -O3 -DNDEBUG -I.. mcl_txauth_v3_battery_q30.cpp -o mcl_txauth_v3_battery_q30   (-I.. lets the sidecar find mcl_core.hpp)
  * Usage: ./mcl_txauth_v3_battery_q30 [far_trials=100000] [threads=2]
@@ -165,7 +165,7 @@ int main(int argc, char** argv) {
     const uint64_t FAR_TRIALS = (argc>1)?std::strtoull(argv[1],nullptr,10):100000ull;
     const unsigned THREADS = (argc>2)?(unsigned)std::atoi(argv[2]):2u;
     std::printf("================================================================\n");
-    std::printf("  Paper-5 SS-VI battery on profile v3 (patent Claim-4 route) -- harness v3.2, Q30 realization\n");
+    std::printf("  Paper-5 SS-VI battery on profile v3 (derivation route) -- harness v3.2, Q30 realization\n");
     std::printf("  MCL-P5-V32BATTERY-Q30-2026-0905-002 (harness v3.2)  engine mcl_core v%s + keyed sidecar mcl_keyed_q30 UNMODIFIED (MCL_T4_Q30, no FP)\n", MCL_VERSION_STRING);
 #if defined(MCL_TX_COMBINER)
     std::printf("  tag construction: PRF-XOR COMBINER (HMAC-SHA-256 arm keyed by K, engine arm keyed by S_device)\n");

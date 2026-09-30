@@ -1,0 +1,49 @@
+VDF128-T4 v4 -- first-updated word at structured clock offsets, one iteration, 2^18 states per cell, lo + k below 2^32
+
+input 0 "VDF128-T4-battery-input"   parity of p - q for the pairs 12 13 14: odd even even
+   k = 2^31    word-1 difference: most frequent 0x4f7796bd in     23 of 262144 states (32756 distinct values)   flipped bits per word 16.48 16.00 15.99 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x0181429d in     20 of 262144 states (32751 distinct values)   flipped bits per word 16.04 16.00 16.00 16.00   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0x61f3ed6e in     21 of 262144 states (32760 distinct values)   flipped bits per word 16.03 15.99 16.00 16.01   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x0ce7a3d2 in      2 of 262144 states (262137 distinct values)   flipped bits per word 16.00 16.00 16.01 16.01   equal outputs 0
+input 1 "VDF128-T4-KAT-01"   parity of p - q for the pairs 12 13 14: odd odd odd
+   k = 2^31    word-1 difference: most frequent 0x0c60626b in      2 of 262144 states (262131 distinct values)   flipped bits per word 16.51 15.99 16.00 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x4963c061 in      2 of 262144 states (262138 distinct values)   flipped bits per word 16.00 16.00 16.01 16.01   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0x18b68902 in      2 of 262144 states (262135 distinct values)   flipped bits per word 16.01 15.99 16.00 16.01   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x0b7dc7fd in      2 of 262144 states (262135 distinct values)   flipped bits per word 15.99 15.99 15.99 16.00   equal outputs 0
+input 2 "VDF128-T4-clock-probe-0"   parity of p - q for the pairs 12 13 14: even even even
+   k = 2^31    word-1 difference: most frequent 0x80000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.00 16.49 15.99 16.01   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x40000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.50 16.03 16.00 16.00   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0xc0000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.50 16.04 16.00 16.01   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x20000000 in      8 of 262144 states (262061 distinct values)   flipped bits per word 15.50 16.00 16.00 16.01   equal outputs 0
+input 3 "VDF128-T4-clock-probe-1"   parity of p - q for the pairs 12 13 14: odd even even
+   k = 2^31    word-1 difference: most frequent 0x28ed91c5 in     20 of 262144 states (32753 distinct values)   flipped bits per word 16.47 15.99 16.00 15.99   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x11d66c03 in      2 of 262144 states (262134 distinct values)   flipped bits per word 16.00 16.00 16.01 16.00   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0x588514e0 in      2 of 262144 states (262137 distinct values)   flipped bits per word 16.00 16.00 16.00 15.99   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x26b60aa0 in      2 of 262144 states (262134 distinct values)   flipped bits per word 16.00 15.99 16.01 16.00   equal outputs 0
+input 4 "VDF128-T4-clock-probe-2"   parity of p - q for the pairs 12 13 14: even odd even
+   k = 2^31    word-1 difference: most frequent 0xb26a467d in     22 of 262144 states (32762 distinct values)   flipped bits per word 16.48 16.00 16.01 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x07435401 in      2 of 262144 states (262108 distinct values)   flipped bits per word 16.00 16.00 16.00 16.00   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0x02532b3d in      2 of 262144 states (262102 distinct values)   flipped bits per word 16.00 16.00 16.01 15.99   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x0a9ee916 in      2 of 262144 states (262140 distinct values)   flipped bits per word 16.00 16.00 16.00 16.00   equal outputs 0
+input 5 "VDF128-T4-clock-probe-3"   parity of p - q for the pairs 12 13 14: odd odd odd
+   k = 2^31    word-1 difference: most frequent 0x033199a3 in      2 of 262144 states (262128 distinct values)   flipped bits per word 16.50 16.00 16.00 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x50111e78 in      2 of 262144 states (262136 distinct values)   flipped bits per word 16.01 16.00 16.01 16.01   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0x007a8b16 in      2 of 262144 states (262138 distinct values)   flipped bits per word 16.00 16.01 16.01 16.01   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x02bcf22d in      2 of 262144 states (262136 distinct values)   flipped bits per word 16.00 16.00 16.00 16.00   equal outputs 0
+input 6 "VDF128-T4-clock-probe-4"   parity of p - q for the pairs 12 13 14: even even even
+   k = 2^31    word-1 difference: most frequent 0x80000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.00 16.48 16.00 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x40000000 in      9 of 262144 states (262057 distinct values)   flipped bits per word 15.49 16.00 16.00 15.99   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0xc0000000 in     10 of 262144 states (262060 distinct values)   flipped bits per word 15.50 16.01 16.01 16.00   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x20000000 in     11 of 262144 states (262051 distinct values)   flipped bits per word 15.99 16.00 16.00 16.00   equal outputs 0
+input 7 "VDF128-T4-clock-probe-5"   parity of p - q for the pairs 12 13 14: even odd odd
+   k = 2^31    word-1 difference: most frequent 0x80000000 in      9 of 262144 states (262042 distinct values)   flipped bits per word 15.50 16.00 16.00 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x679b2a29 in      2 of 262144 states (262136 distinct values)   flipped bits per word 16.00 16.01 16.01 16.01   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0x1179392a in      2 of 262144 states (262140 distinct values)   flipped bits per word 16.00 16.00 16.00 16.00   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x008886c7 in      2 of 262144 states (262138 distinct values)   flipped bits per word 16.01 16.00 16.00 16.01   equal outputs 0
+input 8 "VDF128-T4-clock-probe-7"   parity of p - q for the pairs 12 13 14: even even even
+   k = 2^31    word-1 difference: most frequent 0x80000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.00 16.48 16.00 16.00   equal outputs 0
+   k = 2^30    word-1 difference: most frequent 0x40000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.50 16.02 16.00 16.00   equal outputs 0
+   k = 3*2^30  word-1 difference: most frequent 0xc0000000 in 262144 of 262144 states (1 distinct values)   flipped bits per word  1.50 16.03 16.00 15.99   equal outputs 0
+   k = 2^29    word-1 difference: most frequent 0x20000000 in     10 of 262144 states (262044 distinct values)   flipped bits per word 15.49 16.00 16.00 16.01   equal outputs 0
+
+SUMMARY: 9 inputs x 4 offsets x 2^18 states; equal outputs in all: 0

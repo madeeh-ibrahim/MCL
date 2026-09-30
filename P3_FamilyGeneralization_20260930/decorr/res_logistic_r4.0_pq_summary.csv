@@ -1,0 +1,3 @@
+family,mode,p,q,K,param,delta,ln_inv_delta,lambda1,mean_ln_d1,ln_d_inf,t_sat,t_dec,r_floor,growth_slope,growth_pts,r_at_T,n_seeds,burnin,n_escaped
+logistic,pq,3,5,0.05,4,1.000e+00,nan,0.55287,-3.6129,-0.7038,4,8,0.0234,nan,0,-0.006491,16384,10000,0
+logistic,pq,3,5,0.05,4,2.000e+00,nan,0.55287,-3.5163,-0.7300,4,246,0.0234,nan,0,-0.006167,16384,10000,0

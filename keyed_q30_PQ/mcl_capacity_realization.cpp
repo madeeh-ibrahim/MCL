@@ -5,8 +5,8 @@
  * Document ID:   MCL-CAPACITY-REALIZATION-2026-0812-001
  * Version:       1.1.0 (2026-08-12; review fixes -- see CHANGELOG below)
  * Engine:        mcl_core.hpp v8.1.0 + keyed_q30_PQ/mcl_keyed_q30.hpp
- * Supports:      PCT-04 Aspect 1 — capacity relation [0019]-[0020], [0044]-[0045];
- *                inventive-step distinction over Alvarez & Li 2006 ([0010], [0053]).
+ * Supports:      the capacity relation of the keyed engine and its distinction
+ *                from the key-space analysis of Alvarez & Li 2006.
  *
  * CHANGELOG
  * ---------
@@ -24,7 +24,7 @@
  *     - Part 4 widened from 1 to 8 sampled tuples + family chi-square gate.
  *     - Part 2 rows decorrelated: c folded into the key salt AND the KDF
  *       challenge (v1.0.0 rows reused the same KDF bytes across c).
- *     - Part 6 "key-bound" qualified per [0053]; header wording aligned.
+ *     - Part 6 "key-bound" qualified per the stated effect; header wording aligned.
  *     - M_PI (POSIX) -> MCL_PI (engine constant) for ISO-C++ portability.
  *   v1.0.0: initial version; measured run archived at
  *           MCL_CAPACITY_REALIZATION_20260812.txt (superseded record).
@@ -45,7 +45,7 @@
  * the key-search bound IMPOSED BY THE PARAMETER REPRESENTATION (2^60 vs 2^256).
  * Config A holds 60 bits of capacity against a 256-bit key; config B holds 360,
  * so the representation no longer reduces the key space below L -- precisely the
- * [0053] technical effect ("recoverable key-search space is not reduced below
+ * technical effect ("recoverable key-search space is not reduced below
  * the full key width by the parameter representation").
  *
  * It also measures the step that is NOT automatic and that a counting argument
@@ -62,7 +62,7 @@
  *    reachable capacity and then extrapolated analytically. The full-capacity
  *    collision event (2^-360) is NOT observed and is NOT claimed to be observed.
  *  - Part 5 establishes ABSENCE of collisions over the sampled budget only.
- *  - "Key-bound" in Part 6 means exactly the [0053] effect: the parameter
+ *  - "Key-bound" in Part 6 means exactly the stated effect: the parameter
  *    representation does not reduce the key-search space below L. It is NOT a
  *    claim that 2^256 is the realized security of the whole system against
  *    every other attack surface (state width, output filter, implementation
@@ -104,8 +104,8 @@ static void make_key(uint64_t idx, uint64_t salt, uint8_t key[32]) {
 }
 
 // Derive n_weights coupling weights, each in [2, 2^bits), from a 256-bit key.
-// Mirrors the reference derivation of [0018] (KDF -> field split -> reduce into
-// range -> pairwise-distinctness bump [0023]); `bits` is the only knob, so the
+// Mirrors the reference derivation (KDF -> field split -> reduce into
+// range -> pairwise-distinctness bump); `bits` is the only knob, so the
 // SAME code path produces both the reduced and the full-width configurations.
 static void derive_tuple(const uint8_t key[32], int n_weights, int bits,
                          uint64_t challenge, std::vector<uint32_t>& out) {
@@ -122,7 +122,7 @@ static void derive_tuple(const uint8_t key[32], int n_weights, int bits,
             v |= (uint64_t)kd[(size_t)i * 8 + (size_t)b] << (b * 8);
         out[(size_t)i] = (uint32_t)(2 + (v % range));
     }
-    // [0023] in-range bump. Note for the Part-2 counting model: the bump
+    // in-range bump. Note for the Part-2 counting model: the bump
     // excludes p == q and doubles the mass of (p, p+1), scaling the birthday
     // collision rate by ~(1 + 2/R) -- a < 0.4% shift in the expected first
     // collision even at the smallest tested range (R = 254), negligible
@@ -194,7 +194,7 @@ static void run_t4_keystream(const MCL_Q30_Sextet& w, uint64_t seed,
 }
 
 // The smallest admissible single-weight step: +1 within [2, 2^30), wrapping at
-// the top -- the same in-range step the [0023] bump uses.
+// the top -- the same in-range step the distinctness bump uses.
 static uint32_t bump30(uint32_t w) {
     const uint64_t range = ((uint64_t)1 << 30) - 2;
     return (uint32_t)(2 + (((uint64_t)w - 2 + 1) % range));
@@ -231,7 +231,7 @@ static double hamming_pct(const uint8_t* a, const uint8_t* b, size_t n) {
 
 // ================================================================== PART 1 ===
 static void part1_nominal_accounting(double& cap_2var, double& cap_4var) {
-    std::printf("\n[1] NOMINAL CAPACITY ACCOUNTING (analytic, [0019]-[0020], [0044])\n");
+    std::printf("\n[1] NOMINAL CAPACITY ACCOUNTING (analytic)\n");
     const int L = 256;
     cap_2var = capacity_bits(2, 30);    // 2 coupled variables -> 1 pair -> 2 weights
     cap_4var = capacity_bits(12, 30);   // 4 coupled variables -> 6 pairs -> 12 weights
@@ -243,7 +243,7 @@ static void part1_nominal_accounting(double& cap_2var, double& cap_4var) {
     check(cap_2var < (double)L,
           "config A capacity < L  => a 256-bit key CANNOT be represented (the deficiency)");
     check(cap_4var >= (double)L,
-          "config B capacity >= L => the capacity relation of [0019] is satisfied");
+          "config B capacity >= L => the capacity relation is satisfied");
 }
 
 // ================================================================== PART 2 ===
@@ -358,12 +358,12 @@ static void part3_equivalent_keys() {
 }
 
 // ================================================================== PART 4 ===
-// The control that matters for the prior-art argument: the SAME capacity-
+// The control that matters for the comparison with earlier designs: the SAME capacity-
 // deficient configuration passes the statistical/"fully chaotic" style checks.
 // v1.1.0: widened from one sampled tuple to eight (same derivation family as
 // Part 3) plus a family-level chi-square consistency gate. Note the derivation
-// -- mirroring the production T4 path -- enforces only pairwise distinctness
-// [0023], NOT coprimality (coprimality is an Aspect-4 cascade-path
+// -- mirroring the production T4 path -- enforces only pairwise distinctness,
+// NOT coprimality (coprimality is a cascade-path
 // requirement), so tuples with gcd > 1 are admissible here by design.
 static void part4_statistical_control() {
     std::printf("\n[4] STATISTICAL CONTROL — the deficient configuration still looks good\n");
@@ -409,7 +409,7 @@ static void part4_statistical_control() {
           "family mean chi-square consistent with df = 255 (within 4 sigma)");
     std::printf("    => statistical quality and a fully-chaotic range do NOT reveal the\n"
                 "       capacity deficiency. Requirement-level rules cannot detect it;\n"
-                "       only the sizing relation of [0019]-[0020] does.\n");
+                "       only the sizing relation does.\n");
 }
 
 // ================================================================== PART 5 ===
@@ -540,7 +540,7 @@ static void part5_realized_full_config() {
             uint32_t* f[12] = { &wp.p12, &wp.q12, &wp.p13, &wp.q13, &wp.p14, &wp.q14,
                                 &wp.p23, &wp.q23, &wp.p24, &wp.q24, &wp.p34, &wp.q34 };
             *f[lane] = bump30(*f[lane]);
-            if (*f[lane] == *f[lane ^ 1])            // preserve the [0023] invariant
+            if (*f[lane] == *f[lane ^ 1])            // preserve the distinctness invariant
                 *f[lane] = bump30(*f[lane]);
             run_t4_keystream(wp, DEFAULT_SEED, pert.data(), DN);
             hd[lane] = hamming_pct(base.data(), pert.data(), DN);
@@ -577,7 +577,7 @@ static void part6_summary(double cap_2var, double cap_4var) {
     std::printf("    | A: 2 vars /  2 wts   | 256 bits  | %6.1f b  | %-21s|\n", cap_2var, cellA);
     std::printf("    | B: 4 vars / 12 wts   | 256 bits  | %6.1f b  | %-21s|\n", cap_4var, cellB);
     std::printf("    +----------------------+-----------+-----------+----------------------+\n");
-    std::printf("    * key-bound per [0053]: the parameter representation does not reduce\n"
+    std::printf("    * key-bound per the stated effect: the parameter representation does not reduce\n"
                 "      the recoverable key-search space below the key width L -- a measured\n"
                 "      property of the REPRESENTATION, not a claim about attack surfaces\n"
                 "      other than the representation (see the header disclaimer).\n");

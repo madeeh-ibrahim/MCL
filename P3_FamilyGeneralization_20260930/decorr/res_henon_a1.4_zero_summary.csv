@@ -1,0 +1,2 @@
+family,mode,p,q,K,param,delta,ln_inv_delta,lambda1,mean_ln_d1,ln_d_inf,t_sat,t_dec,r_floor,growth_slope,growth_pts,r_at_T,n_seeds,burnin,n_escaped
+henon,zero,3,5,0.01,1.4,0.000e+00,nan,0.42945,-inf,nan,-1,-1,0.0234,nan,0,1.000000,16384,10000,0

@@ -6,7 +6,7 @@
 
 **Question.** Paper 5 §V.A states that the per-account last-accepted counter c_last "prevents replay of any previously accepted transaction". That holds only while the verifier's state is durable, updated atomically before the acceptance takes effect, and shared by every replica (cf. IETF draft-ietf-seat-use-cases-01 and arXiv:2609.16214). What does the *reference* verifier do when those conditions fail?
 
-**Method.** The device model, ctx, `tag_v3` (Claim-4 route, twelve Q30 weights), the constant-time comparison and `struct Verifier` are copied verbatim from the Paper 5 battery harness v3.2 (`p5_hardened_txauth/mcl_txauth_v3_battery_q30.cpp`, Doc ID MCL-P5-V3BATTERY-Q30-2026-0904-003). State loss is modelled by copying the verifier value (a snapshot) and restoring it; a shared store is modelled by two verifiers referencing one counter map.
+**Method.** The device model, ctx, `tag_v3` (derivation route, twelve Q30 weights), the constant-time comparison and `struct Verifier` are copied verbatim from the Paper 5 battery harness v3.2 (`p5_hardened_txauth/mcl_txauth_v3_battery_q30.cpp`, Doc ID MCL-P5-V3BATTERY-Q30-2026-0904-003). State loss is modelled by copying the verifier value (a snapshot) and restoring it; a shared store is modelled by two verifiers referencing one counter map.
 
 **Result (`verifier_state_apple_20260925.log`, 21 observations).**
 

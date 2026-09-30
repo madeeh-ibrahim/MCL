@@ -70,21 +70,21 @@
 | ~~"Raw Q30 keystream state-recoverable (b_eff=1)"~~ | 🔁 **RETRACTED** | My earlier "confirmed weakness" was a **misinterpretation**. b_eff=1.00 at 8-bit is the GENERIC arithmetic of small b_2D + 8-bit byte: a width-scaling re-audit gives b_eff = 1.92/1.33/1.00/1.00 at k=1/2/4/8 ≈ `1+(b_2D−1)/2^k`. An ~invertible state map is NORMAL for a keystream generator; "state-recoverable from keystream" does NOT follow from b_eff=1 (it was never tested, and dieharder/ent show no weakness). |
 | Does low b_2D affect any MCL use? | ✅ | NO. It matters only for *map-based one-wayness* (HD directly on the bare map). MCL's HD uses the Float64 engine; keyed Q30 (T4/cascade) gets one-wayness from SHA-256, and T4-auth security is Grover over the 256-bit key. The cascade's back-peel block needs only b_2D>1 (3.25>1 ✓). |
 
-## 6) PCT-04 measurement round + Claim-13 native-multiply realization (2026-06-12)
+## 6) Measurement round + native-multiply realization (2026-06-12)
 
-Resolved all seven `[MEASURE]` flags in PCT-04 Description v4 from the in-hand build
+Resolved all seven open measurement items from the in-hand build
 (runner `mcl_keyed_q30_measure.cpp`, record `MCL_KEYED_Q30_MEASURE_20260612.txt`),
 then made one output-preserving code change that turned a *describable* enablement
 claim into a *measured-in-code* one.
 
 | Item | Status | What it PROVES (and its limit) |
 |---|---|---|
-| Quarter-wave LUT bit-identity (Claim 17) | ✅ | Full 65,536-entry table (262,144 B) reconstructed from 16,385-entry quarter-wave (65,540 B, 4.0×): **0 mismatches**, both CRC `0xDE1340CF`. |
-| Per-term overflow bounds (Claim 19 / [0033]) | ✅ | Per-term scaling admits K ≤ 4π≈12.566 (overflow onset); sum-first fails beyond 4π/3≈4.189; enforced cap K=12 has 4.7% margin (worst product 0.955·INT64_MAX). |
-| Cross-platform bit-identity (Claim 13 / [0035]) | ✅ | 6 KATs (LUT, T4 commit, T4 oneway, cascade m=5, m=7, 1 MiB keystream) **identical** across arm64 + x86_64 × -O0/-O2/-O3. |
-| Working memory (Claim 24 / [0047]) | ✅ | MCL_T4_Q30 = **72 B** (was 120 B); cascade 120 B; commit 32 B; LUT 262,144 B (→65,540 B quarter-wave) in ROM. Fixed-size, output-length-independent. |
+| Quarter-wave LUT bit-identity | ✅ | Full 65,536-entry table (262,144 B) reconstructed from 16,385-entry quarter-wave (65,540 B, 4.0×): **0 mismatches**, both CRC `0xDE1340CF`. |
+| Per-term overflow bounds | ✅ | Per-term scaling admits K ≤ 4π≈12.566 (overflow onset); sum-first fails beyond 4π/3≈4.189; enforced cap K=12 has 4.7% margin (worst product 0.955·INT64_MAX). |
+| Cross-platform bit-identity | ✅ | 6 KATs (LUT, T4 commit, T4 oneway, cascade m=5, m=7, 1 MiB keystream) **identical** across arm64 + x86_64 × -O0/-O2/-O3. |
+| Working memory | ✅ | MCL_T4_Q30 = **72 B** (was 120 B); cascade 120 B; commit 32 B; LUT 262,144 B (→65,540 B quarter-wave) in ROM. Fixed-size, output-length-independent. |
 | Latency (host only) | ⚠️ | T4-Q30 full auth 0.38 ms, cascade m=7 0.24 ms, raw iterate 38 ns — **on arm64 host, NOT target M0**. M0 figure = analytic or real-silicon, NOT QEMU. |
-| **Claim 15 native-word multiply — realized in code** | ✅ | uint32 weights ⇒ coupling-argument multiply compiles on ARMv6-M (Cortex-M0) to **2× native `muls` + `subs`, ZERO `__aeabi_lmul`, ZERO FPU**. The former int64 form emitted `__aeabi_lmul` (multi-word). So Claim 15 / [0032] is now literally true *of the reference code*, not just *possible*. Evidence: `M0_CODEGEN_CLAIM13_20260612.txt`, `m0_codegen_probe.c`, `m0_probe.s`. |
+| **Native-word multiply — realized in code** | ✅ | uint32 weights ⇒ coupling-argument multiply compiles on ARMv6-M (Cortex-M0) to **2× native `muls` + `subs`, ZERO `__aeabi_lmul`, ZERO FPU**. The former int64 form emitted `__aeabi_lmul` (multi-word). So the native-word property is now true *of the reference code*, not just *possible*. Evidence: `M0_CODEGEN_CLAIM13_20260612.txt`, `m0_codegen_probe.c`, `m0_probe.s`. |
 | Output-preserving proof (not sample) | ✅ | uint32 form ≡ int64 form by the ring identity (P−Q) mod 2³² ≡ ((P mod 2³²)−(Q mod 2³²)) mod 2³², **sign-agnostic** (holds when q·b>p·a). CRCs unchanged (0x58C99E3E / 0xAC441A9A — cascade value as of that 12-Jun change; later → 0xF7C81BC4 after the §7 hashing) = confirmation of no coding slip, NOT the proof. |
 | Test bug fixed | ✅ | `mcl_keyed_q30_test.cpp` [4] punned the 48-B struct as `int64_t*` (read pairs, ran off end after the type change) → fixed to `uint32_t*`. Now 9/9 pass, 12/12 weights affect output, ASan/UBSan clean. |
 
@@ -113,7 +113,7 @@ A faithful adversarial re-run (`../Verfications codes June 2026/`, `gen_states.c
 - **Central claim SURVIVES:** one epoch's `(p,q)` ≠ the 256-bit key — every epoch is derived via SHA-256 (`mcl_kdf256`), preimage-resistant. So **the Category-5 / key claim is unaffected**; only a derived per-epoch secret leaks.
 - `commit32_oneway` (hashed) ✅ safe. **`MCL_T4_Q30 commit32` — now TESTED (`08_attack_t4_commit32.py`): the 2-osc vector does NOT port.** Two structural blockers: (1) the osc-1 increment is a SUM of 3 sines (single-term high-16 leak = mean 0.000 candidates — gone); (2) `commit32` exposes only `t2^t3^t4`, never the individual coupled states the coupling arguments need. Flagship `commit32` resists this attack (independent audit still warranted; `commit32_oneway` remains the safe default).
 
-**IMPLICATION (load-bearing) + hardening:** "never expose raw Q30 state" is **proven**; PCT-04 non-invertibility Claims 20/29/31 + [0034]/[0041] are **load-bearing** (strengthens their inventive step). **Concrete fix (DONE):** `mcl_cascade_q30` now **hashes its final commitment** (raw → SHA-256; CRC 0xAC441A9A→0xF7C81BC4), and `commit32_oneway` is **mandatory** for secret-bearing tags. Remaining caveat: still one adversary / one framework — now self-audited (`09`) and hardened to **256/256 on fpylll** (`10`,`11`), so the residual is independent review, not scale. Show an independent cryptanalyst as **"found, hardened, mitigated."** Full write-up: `FINDINGS_20260615.md`.
+**IMPLICATION (load-bearing) + hardening:** "never expose raw Q30 state" is **proven**; the non-invertibility requirement is **load-bearing**. **Concrete fix (DONE):** `mcl_cascade_q30` now **hashes its final commitment** (raw → SHA-256; CRC 0xAC441A9A→0xF7C81BC4), and `commit32_oneway` is **mandatory** for secret-bearing tags. Remaining caveat: still one adversary / one framework — now self-audited (`09`) and hardened to **256/256 on fpylll** (`10`,`11`), so the residual is independent review, not scale. Show an independent cryptanalyst as **"found, hardened, mitigated."** Full write-up: `FINDINGS_20260615.md`.
 
 ---
 
@@ -138,8 +138,8 @@ Epistemic status = same as hash-chain VDFs (conditional theorem + failed-attack 
 - Shor inapplicable; VDF quantum-robust; default (p,q) is sub-PQ.
 - T4-Q30 and the cascade reach **NIST Category 5 via the 256-bit key space** (256-bit key = AES-256-equivalent = 128 post-Grover bits = the **highest** category; the earlier "Level 1" label was wrong by four categories — see Tech Guide §4 / `mcl_core.hpp` `meets_category5`).
 - Both run **FPU-free** (deployable on SIM/eSIM secure elements); **0 FPU ops confirmed at ARMv6-M instruction level** (§6).
-- **Claim 15 native-word multiply realized IN CODE** (uint32 weights ⇒ 2× native `muls`, no `__aeabi_lmul` on M0); engine working set **72 B** (§6).
-- All seven PCT-04 `[MEASURE]` flags resolved from the in-hand build (§6).
+- **Native-word multiply realized IN CODE** (uint32 weights ⇒ 2× native `muls`, no `__aeabi_lmul` on M0); engine working set **72 B** (§6).
+- All seven open measurement items resolved from the in-hand build (§6).
 - Excellent keystream statistics; capacity (256-bit key) genuinely carried.
 - Correct, sanitizer-clean implementation; a one-way output (`commit32_oneway`) exists.
 - **HYPERCHAOS proven** (λ₂>0 in **100/100** key-derived configs, 256-bit MPFR grid sweep; min≈1.5; robust to q=p+1).
@@ -179,7 +179,7 @@ to be a problem.)
 cd 20260611_keyed_q30
 c++ -std=c++17 -O3 -Wall -Wextra -I ../MCL_publish -o t   mcl_keyed_q30_test.cpp      && ./t   # 9/9 pass
 c++ -std=c++17 -O3 -Wall -Wextra -I ../MCL_publish -o m   mcl_keyed_q30_measure.cpp   && ./m   # [MEASURE] runner (72 B, CRCs, matrix)
-# Claim-13 ARMv6-M codegen evidence (clang is a cross-compiler; no install needed):
+# ARMv6-M codegen evidence (clang is a cross-compiler; no install needed):
 clang -target thumbv6m-none-eabi -mcpu=cortex-m0 -ffreestanding -O2 -S m0_codegen_probe.c -o m0_probe.s
 c++ -std=c++17 -O3 -Wall -Wextra -I ../MCL_publish -o s1  mcl_keyed_q30_science.cpp   && ./s1
 c++ -std=c++17 -O3 -Wall -Wextra -I ../MCL_publish -o s2  mcl_keyed_q30_science2.cpp  && ./s2
@@ -193,8 +193,8 @@ c++ -std=c++17 -O2 -I ../MCL_publish -I /opt/homebrew/opt/mpfr/include -I /opt/h
 Saved outputs: `MCL_KEYED_Q30_RESULTS_20260611.txt`, `MCL_KEYED_Q30_SCIENCE_20260611.txt`,
 `MCL_KEYED_Q30_SCIENCE2_20260611.txt`, `MCL_KEYED_Q30_SCIENCE3_20260611.txt`,
 `MCL_KEYED_Q30_MPFR_LYAP_20260611.txt` (the definitive hyperchaos proof),
-`MCL_KEYED_Q30_MEASURE_20260612.txt` (PCT-04 [MEASURE] runner: 72 B, CRCs, overflow bounds, cross-platform matrix),
-`M0_CODEGEN_CLAIM13_20260612.txt` + `m0_probe.s` (ARMv6-M Claim-13 evidence: native muls, 0 FPU, 0 __aeabi_lmul for the coupling argument).
+`MCL_KEYED_Q30_MEASURE_20260612.txt` (measurement runner: 72 B, CRCs, overflow bounds, cross-platform matrix),
+`M0_CODEGEN_CLAIM13_20260612.txt` + `m0_probe.s` (ARMv6-M evidence: native muls, 0 FPU, 0 __aeabi_lmul for the coupling argument).
 
 ## VDF128_T4 — 128-bit-state integer VDF path (2026-08-17, adjacent artifact)
 

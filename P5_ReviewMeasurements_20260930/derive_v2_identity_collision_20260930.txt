@@ -1,0 +1,6 @@
+M=500: C = R^2*sum P^2 = 2.1393
+M=1000: C = R^2*sum P^2 = 2.1452
+M=2000: C = R^2*sum P^2 = 2.1459
+M=1e+06, n=1e+06: expected colliding pairs = 1.073 (uniform-over-all-pairs formula: 0.500)
+M=1e+06, n=1e+07: expected colliding pairs = 107.293 (uniform-over-all-pairs formula: 50.000)
+M=1e+09, n=1e+09: expected colliding pairs = 1.073 (uniform-over-all-pairs formula: 0.500)

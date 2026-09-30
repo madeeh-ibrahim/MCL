@@ -1,4 +1,4 @@
-/* Freestanding Cortex-M0 codegen probe for Claim 13 (native-word multiply,
+/* Freestanding Cortex-M0 codegen probe for the native-word multiply (
  * no FPU, no wider-than-native multiply for the COUPLING ARGUMENT).
  * Mirrors the exact arithmetic of mcl_q30t4_iterate_raw's arg() and inc().
  * Compile to assembly for thumbv6m (ARMv6-M = Cortex-M0, no UMULL, no FPU):
@@ -8,14 +8,14 @@
 #include <stdint.h>
 
 /* --- coupling argument: (uint32_t)(p*a - q*b), p/q are key weights < 2^30,
- *     a/b are phase words. Only the low 32 bits are kept (Claim 13 / [0030]). */
+ *     a/b are phase words. Only the low 32 bits are kept. */
 uint32_t mcl_arg(int64_t p, uint32_t a, int64_t q, uint32_t b) {
     return (uint32_t)((int64_t)p * (int64_t)a - (int64_t)q * (int64_t)b);
 }
 
-/* Same, but written with the Claim-13-optimal 32-bit multiply (low 32 bits
+/* Same, but written with the optimal 32-bit multiply (low 32 bits
  * of p*a equal the low 32 bits of (uint32_t)p * a). This is the form the
- * claim asserts is sufficient; the probe shows whether the int64 form above
+ * design asserts is sufficient; the probe shows whether the int64 form above
  * already lowers to this, or pulls in __aeabi_lmul. */
 uint32_t mcl_arg_w32(uint32_t p, uint32_t a, uint32_t q, uint32_t b) {
     return (uint32_t)(p * a - q * b);
@@ -23,7 +23,7 @@ uint32_t mcl_arg_w32(uint32_t p, uint32_t a, uint32_t q, uint32_t b) {
 
 /* --- increment scaling: (int32_t)((K_phase * sinval) >> 30). This one
  *     genuinely needs the high bits, so a 64-bit product is expected (this
- *     is the [0031] scaling multiply, NOT the Claim-13 coupling argument). */
+ *     is the scaling multiply, NOT the coupling argument). */
 uint32_t mcl_inc(int64_t K_phase, int32_t sinval) {
     return (uint32_t)(int32_t)(((int64_t)K_phase * (int64_t)sinval) >> 30);
 }
