@@ -1,0 +1,37 @@
+Host record -- P4_QuantumSequentiality_20260930, record runs of 2026-09-30
+
+machine   : Intel(R) Xeon(R) Processor @ 2.10GHz, 4 cores, x86_64 (cloud container)
+system    : Ubuntu 24.04.4 LTS, Linux 6.18.44-fc-v50
+compiler  : g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+python    : Python 3.11.15
+
+program 1 : ./qseq_struct > qseq_struct_20260930.log
+            started 2026-09-30 20:47:25 UTC, ended 2026-09-30 20:57:12 UTC, exit code 0
+            wall 587.701 s, user 2176.129 s, sys 18.327 s
+            memory: four 512 MiB bitmaps in Part 3 (2 GiB), freed after each enumeration
+program 2 : python3 qseq_bound.py > qseq_bound_20260930.log   (deterministic arithmetic), exit code 0
+program 3 : python3 qseq_lfactor.py > qseq_lfactor_20260930.log   (seeded simulation, deterministic), exit code 0
+
+Earlier runs of program 1 on the same day, not quoted: trial run 1 (without Part 1b; its Part 1
+found the commuting state that Part 1b explains) and a second trial (Part 1b without the per-word
+breakdown and the census), stopped in Part 3. Every line they printed before stopping is identical
+to the corresponding line of the record log, apart from [time] lines and the Part 1b rows that changed.
+
+SHA-256 of the sources and headers, identical before and after the runs:
+e0271bb9a975ea095e661702d59d27722f02d063c78091c2ce269db654ad114a  qseq_struct.cpp
+914e697dccca071e2502bbc170b12a402e2510f69e3525297e7dccdf97cecc64  qseq_bound.py
+5ae9a96a20bf61fa491caa35c7ff788ea7a472fe8427d5784d6dc2edeed4bf26  qseq_lfactor.py
+416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80  ../mcl_core.hpp
+05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29  ../keyed_q30_PQ/mcl_keyed_q30.hpp
+e08f702e2da92221588285a6a61ee2e48edfb63afbde8220fc3632fd2180ed0d  ../P4_ReviewMeasurements_20260925/mcl_vdf128_t4.hpp
+b46f1a1329ccbc4dc4eac02b930be7b71f74847800ed7c01358163d80f615439  ../P4_ReviewMeasurements_20260925/mcl_vdf128_t4_v3.hpp
+209458cd6e04c56895f93ebf4131528d8b69ff6bac29ac87b07578c9047ce9a2  ../P4_ReviewMeasurements_20260925/mcl_vdf128_t4_v4.hpp
+f78c9584e5686cb1f54f382b1bfcf87c3399ae19f987e7761f339bdb3bd7dd1d  ../P4_ReviewMeasurements_20260925/q30_lut_int32le.bin
+a2b4b511a167a30787c22a1a53714a6826bf0992af28ee5d696fc4d559bbf24e  ../Quantum_Structural_Analysis_20260927/grover_rev3_20260928.log
+
+build line:
+  g++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic -Wshadow -pthread -I.. qseq_struct.cpp -o qseq_struct
+no compiler diagnostic with these flags; -Wconversion -Wsign-conversion add 34 warnings in qseq_struct.cpp,
+all implicit conversions of indices and counters: int -> size_t (29), uint64_t -> unsigned long long in
+printf arguments (4), long -> double (1).
+No sanitizer run (Part 3 enumerates 2^32 inputs per row).

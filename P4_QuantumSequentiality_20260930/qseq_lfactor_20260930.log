@@ -1,0 +1,12 @@
+qseq_lfactor (MCL-P4-QSEQ-LFACTOR-2026-0930-001) -- classical 'guess ahead' attack, toy size
+s = 20 bits, 5000 trials per row; win = reach y_L within L - 1 layers
+
+   L     Q   single-function: wins  rate    predicted             |  per-position: wins  rate    predicted
+    16  4096                          306  0.06120   0.05691 [DERIVED]      |                24  0.00480   0.00390 [DERIVED]
+    64  4096                         1156  0.23120   0.21816 [DERIVED]      |                13  0.00260   0.00390 [DERIVED]
+   256  1024                         1202  0.24040   0.22046 [DERIVED]      |                 3  0.00060   0.00098 [DERIVED]
+    64  1024                          297  0.05940   0.05967 [DERIVED]      |                 5  0.00100   0.00098 [DERIVED]
+
+[MEASURED] rows: the factor L appears in the single-function model and not in the per-position one.
+It is a property of the model, attained by a classical attack, and not an artefact of the proof.
+Saving one iteration is all this attack does; it says nothing about saving a fraction of L (QSEQ_PROOF.md 5.3).

@@ -5,6 +5,12 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## Unreleased — staged 2026-09-30
+
+**Quantum sequentiality of VDF128-T4 v4 (Paper 4, OP2; `QUANTUM_SCOPE_NOTE.md` §2.7).** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar **v1.0.7 unchanged**; no header and no measured number of an earlier record changes. Draft for the author's review.
+
+- **`P4_QuantumSequentiality_20260930/`** (new; Doc ID MCL-P4-QSEQ-2026-0930-001). `QSEQ_PROOF.md`: **Proposition Q1**. In the ideal model (a uniformly random round function shared by all positions, the clock added to its input, queries in superposition), an adversary of query depth d ≤ L − 1 outputs the final state with probability at most L(L−1)/2^(s+1) + (2^(−s/2) + 2Σ_k √(q_k(L−k)/2^s))², which is about 4·d·q·L/2^s. The proof uses one-way-to-hiding hybrids (Ambainis–Hamburg–Unruh 2019, Theorem 3) over a lazy form of the chain. The quantum bound is weaker than the classical one from the same proof by a factor of (32/9)·L; at s = 128 it certifies little for N ≥ 10^10 (`qseq_bound.py`, `qseq_bound_20260930.log`). Remark 5.1 notes that the single-function model carries a factor L that the figure (q+1)/2^s quoted for Paper 4's Theorem 1 does not; `qseq_lfactor.py` shows the factor is attained by a classical attack at toy size (a property of the model, not of the proof). `qseq_struct.cpp` and `qseq_struct_20260930.log` hold structural probes of the concrete map against known fast-forwarding mechanisms (translations, additive differences, full-width single-word image fractions, nonlinear amplitude, birthday). They also record a **new one-round relation**: about half of v4 weight sets (9,906 of 20,000 in a census) have a quarter- or half-turn offset δ with F(x + δ) = F(x) + δ on a fraction 2^−15 of states, measured at the rate the sine table predicts and never for two rounds running. It does not shorten depth; a derivation rule is proposed for the author's decision. Scope note §2.7 stays open for the concrete map; items 15 and 17 stay withdrawn.
+
 ## v0.2.16 — 2026-09-30
 
 **Paper 5 review records · corrected labels · staged items of 2026-09-28.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar **v1.0.7 unchanged**. No measured number of an earlier record changes.
