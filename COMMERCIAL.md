@@ -32,8 +32,8 @@ A negotiated commercial agreement will generally cover:
 1. **Copyright license** — for the agreed commercial scope (term or perpetual;
    named entity; affiliate coverage).
 2. **Commercial patent license** — under PCT/IB2026/052737, PCT/IB2026/053253,
-   PCT/IB2026/053673, and any patents issuing from them, co-extensive with the
-   grant scope.
+   PCT/IB2026/053673, PCT/IB2026/058860, and any patents issuing from them,
+   co-extensive with the grant scope.
 3. **Scope and restrictions** — defined fields of use; sublicensing limits.
 4. **Fees** — one-time, per-deployment, or annual subscription.
 5. **Term and termination** — material-breach termination with a cure period;

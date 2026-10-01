@@ -4,9 +4,12 @@ MCL Channel Scaling v2.2.0 — Consolidated Cross-Platform Test Results
 ============================================================================
 
 Copyright (c) 2026 Madeeh Ibrahim
-SPDX-License-Identifier: Apache-2.0 (test report only)
+SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+License line corrected on 2026-10-01: copies published before that date carry
+"Apache-2.0 (test report only)" here in error; this report is under the same
+license as the rest of the repository (LICENSE, SECURITY-RESEARCH-GRANT.md).
 Patent Pending: PCT/IB2026/052737 + PCT/IB2026/053253 + PCT/IB2026/053673
-Contact: [email protected]
+Contact: madeeh.chaotic.lock@gmail.com
 ORCID:   https://orcid.org/0009-0002-8562-8325
 
 Report Document ID:     MCL-SCALE-2026-0519-001

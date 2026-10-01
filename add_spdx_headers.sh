@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# REUSE-IgnoreStart  (the SPDX lines below are patterns and templates, not declarations;
+#                     this file's own license is given by REUSE.toml)
 # add_spdx_headers.sh  (v2 — handles pre-existing Apache/old license lines)
 #
 # PURPOSE
@@ -150,3 +152,4 @@ echo "Summary: fixed-legacy=$modified, prepended=$prepended, already-ok=$ok, war
 echo "After review:"
 echo "    grep -rn 'Apache-2.0\\|Limited Research' .   # should be empty"
 echo "    rm -f *.bak"
+# REUSE-IgnoreEnd

@@ -36,16 +36,16 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `bd50727e1202087cdae1514abf1d238cd16d5b03aef00d85bd2b5f297a94b005` |  |
+| `CHANGELOG.md` | `0ba892dfa73b5800e11091d20e28a48cdbe1e02439057dd68088d14e733d266c` |  |
 | `CITATION.cff` | `f1fd946fc5d6c33a86c63bce062f69d69b785fcc87c58427e1cd86fd9d6bb439` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
-| `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
+| `COMMERCIAL.md` | `d3233e9f03ea2e82acb8144414b83ad760beb396dd6e6e2407065157e7bae0ab` |  |
 | `CONTRIBUTING.md` | `238434c313a101b7ada8073ddfbf5fd4eec0b2248f4d3932641249dba1e705b9` |  |
 | `GOVERNANCE.md` | `4e1cf312a4805452d4f41c9bc402add0b0e8547cc24b1cb64a7eea9c0704c1e6` |  |
 | `HALL_OF_FAME.md` | `fb4eaf6b0b33659a57d9f553efb09e5c9c3e98fd19702275433d5fd30d911117` |  |
 | `LICENSE` | `839932d57880e179074222334b1a3d1ae7117feaea0f36020580dc73f6a9f76f` |  |
-| `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
+| `NOTICE` | `4d42df4771c2f8c7b6f983eb29b28b81b7fec01917d30ea063c2e0dcb512af2e` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
 | `QUANTUM_SCOPE_NOTE.md` | `981d4f9518b13d2c47960d5b73d20b31f1fd51d9cc03bca14f5125039231ffdb` |  |
 | `README.md` | `f7e54e3ead323b21d681375650ca5248f5648dba6165974f2addc60e62daa471` |  |
@@ -56,7 +56,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `TOOLKIT_ACCESS_AGREEMENT.md` | `3cf1b9ac0ecf0b2b3aeebb98728dbedaabb1e9342106662fd661215b16d7c08e` |  |
 | `TOOLKIT_ACCESS_POLICY.md` | `83a93bc5db57c8a49c18df96a36772c725fab173984fca543dac525d618e1433` |  |
 | `TOOLKIT_ACCESS_REQUEST_TEMPLATE.md` | `2da1c63b20eadbb243d187550b0f7372ebaccebb16a56abccb57eb1ee4ef9225` |  |
-| `add_spdx_headers.sh` | `74ee8ace7e6a8f65957d57b6860acfd7f4eebc370d0f8e46a9b9cbd793cc7c2b` |  |
+| `add_spdx_headers.sh` | `3a985c3332a513fdd925100e5cfed287964f9f48321e6f9042744d99d53173db` |  |
 | `beff_deep_audit.cpp` | `16b3c502be19b71c918898d5e0ae6f3d51a7af3835eb752cf13df41c6f8b73c6` | Audit the b_eff backward-inversion claim underpinning Paper 5 X one-wayness. |
 | `kat_gen_macos.cpp` | `c6b6da6c0f3589d6d0d953e4e33f53a3185976db3a8a951ab9837b2b02e6f971` | Generate Known Answer Test (KAT) CRC-32 vectors for MCL_T2 engine |
 | `mcl_beff_compounding.cpp` | `24329fea6fe2fbb92caf2d63968c341ad3a4b9d0353daeda7efb7d0a3325a76e` | Test whether the per-step keystream-constrained backward branching |
@@ -86,7 +86,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` | `c19d1e14d0312e199b3545294fba17e42f537d68bc0b4cdc19e43e42fa0493f8` | Consolidated documentation of FOUR independent runs of mcl_scale |
+| `results/MCL_Scale_v2.2.0_Test_Results_20260519.md` | `e47c80e57a08ff886aa6aed9e74d3c568161925505af288387269c0b6206fcd3` | Consolidated documentation of FOUR independent runs of mcl_scale |
 | `results/beff_deep_audit.txt` | `0fa5baf9f152d39af5b23f3bd3d2602d326ea141198a144ad272f9d436ecd11e` |  |
 | `results/kat_gen_macos.txt` | `959fa8bde760d0957c18e5617c251025b012d21665f1d9e56fd89f9cbfe01733` |  |
 | `results/kat_gen_macos_v8.1.3_20260822.txt` | `00732e5077696d503de2f01b31f3facf51c44bdf8f7230d98f3409a3a4a07f34` |  |

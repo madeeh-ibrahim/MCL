@@ -5,6 +5,17 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## Unreleased — staged 2026-10-01 (licence notices)
+
+**One wrong licence tag corrected; the patent lists of `NOTICE` and `COMMERCIAL.md` completed.** No code, engine, sidecar or measured value changes.
+
+- **`results/MCL_Scale_v2.2.0_Test_Results_20260519.md`**: its header gave the SPDX licence identifier as `Apache-2.0 (test report only)`, the only Apache tag left in the repository after `add_spdx_headers.sh`, which covers source files and not this `.md` report. It now reads `PolyForm-Noncommercial-1.0.0`, and a dated line in the header says that copies published before 2026-10-01, including the archived releases, carry the Apache line in error. The same header's contact line, garbled into "[email protected]" by an e-mail obfuscator, now gives the address. The report body is unchanged.
+- **`NOTICE`**: lists PCT/IB2026/058860 (filed 21 August 2026) beside the three earlier applications, as `PATENTS.md`, `README.md`, `CITATION.cff` and the engine header already do.
+- **`COMMERCIAL.md`**: the commercial patent licence it describes now names PCT/IB2026/058860 beside the three earlier applications, by the owner's decision of 2026-10-01.
+- **`add_spdx_headers.sh`**: wrapped in `REUSE-IgnoreStart` / `REUSE-IgnoreEnd`. The SPDX lines it contains are search patterns and templates, which `reuse lint` read as six invalid licence expressions. Behaviour unchanged.
+- `reuse lint` now reports no invalid expression. The one remaining message, "unused license `LicenseRef-MCL-Security-Research-Grant`", follows from the deliberate choice recorded in `REUSE.toml` not to encode the grant as an SPDX expression.
+- `MANIFEST.md`: the hashes of the four changed files and of this `CHANGELOG.md` are updated; no other row changes.
+
 ## Unreleased — staged 2026-09-30
 
 **Quantum sequentiality of VDF128-T4 v4 (Paper 4, OP2; `QUANTUM_SCOPE_NOTE.md` §2.7).** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar **v1.0.7 unchanged**; no header and no measured number of an earlier record changes. Draft for the author's review.
