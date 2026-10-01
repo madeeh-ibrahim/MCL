@@ -1,0 +1,10 @@
+# 2026-10-01 record — cross-system check with the version-2 derivation (Doc ID MCL-P5-PREUPLOAD-2026-1001-004); engine 8.1.3 416ad145e79c095b; build: clang++ -std=c++17 -O3 -DNDEBUG -I.. -I../hd_v2 p5_crosssystem_v2.cpp (Apple clang version 16.0.0 (clang-1600.0.26.6)); host arm64 Apple M1 Pro, single thread; load at start: { 3.44 4.08 15.74 } (deterministic output; the header was regenerated on re-run, 2026-10-01)
+cross-system check, version-2 derivation, max_val = 1000, 1000000 bytes per stream, seed 12345678901234
+(a) reproduction of the 2026-09-05 Test 9 rows (version-1 mask helper):
+  Logistic  parent(3,5) -> child (970,423) gcd 1 | |r| = 0.001830  p = 0.0673  (Bonferroni alpha/135 = 7.41e-06: no rejection)
+  Tent      parent(3,5) -> child (442,13) gcd 13 | |r| = 0.000508  p = 0.6111  (Bonferroni alpha/135 = 7.41e-06: no rejection)
+(b) version-2 derivation:
+  Logistic  parent(3,5) -> child (7,867) gcd 1 | |r| = 0.000351  p = 0.7259  (Bonferroni alpha/135 = 7.41e-06: no rejection)
+  Tent      parent(3,5) -> child (204,581) gcd 1 | |r| = 0.000941  p = 0.3467  (Bonferroni alpha/135 = 7.41e-06: no rejection)
+  Henon     excluded (narrow attractor basin; as in Test 9)
+# load at end: { 3.49 4.08 15.68 }

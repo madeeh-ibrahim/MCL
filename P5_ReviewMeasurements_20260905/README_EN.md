@@ -16,9 +16,16 @@ compile-time knob, a scratch copy was patched and the unified diff is archived b
 | `p5_v2_coprime_parity.cpp` | derive_child_v2 census at parent (3,5), M = 10⁶, 2×10⁵ indices | 39.29 % raw non-coprime (39.21 % expected); no parity lock (3 classes 2:1:1) |
 | `p5_ct_sine_cost.cpp` | cost of the opt-in constant-time sine (oblivious 65,536-entry scan) on the Eq. (3) tag | identical fingerprint; 4.03 s/tag vs 0.552 ms (3-tag means, ≈ 7,300×) — a full battery is infeasible |
 | `mcl_hd_throughput.cpp`, `../hd_v2/mcl_hd_throughput_v2.cpp` | derivation latency, v1 and v2, two runs each, near-idle machine | quiet-host re-measurement (2026-09-06, `hd_throughput_v{1,2}_quiet_20260905.log`): v1 0.82 / 20.56–20.58 ms; v2 0.82–0.83 / 20.60–20.61 ms (the first-day loaded-host figures 1.08 / 27 ms are superseded) |
-| `p5_burnin_curve_v2.cpp` | burn-in sweep with the v3.2 avalanche method (random bit of canon(TX)) | all statistics at null; latency 0.007 → 0.482 ms (loaded machine) |
+| `p5_burnin_curve_v2.cpp` | burn-in sweep with the v3.2 avalanche method (random bit of canon(TX)) | all statistics within 1.6 null SE except the avalanche at B = 0, 2, 4, 8 and 16 (+2.1…+2.7 SE; B = 1 at −0.35; one shared input set; on one fresh set of 10⁵ inputs z ≤ +1.53 for B ≤ 16, `../P5_ReviewMeasurements_20261001/`); latency 0.007 → 0.482 ms (loaded machine). The header's build line names `p5_burnin_curve.cpp`; for this file use `p5_burnin_curve_v2.cpp`. |
 
-Platform: Apple M1 Pro, macOS, Apple clang 16; single-thread unless stated. Build lines are in each program's header.
+Platform: Apple M1 Pro, macOS, Apple clang 16; single-thread unless stated. Build lines are in each program's header, except for these five (verified 2026-10-01 against engine 8.1.3 and sidecar v1.0.7):
+
+| Program | Build |
+|---|---|
+| `sibling_recovery.cpp`, `p5_parity_lock.cpp`, `p5_resonance_control.cpp`, `mcl_hd_throughput.cpp` | `clang++ -std=c++17 -O3 -DNDEBUG -I.. <file>.cpp` |
+| `p5_weight_probe.cpp` | `mkdir _w && cp ../mcl_core.hpp ../keyed_q30_PQ/mcl_keyed_q30.hpp _w/ && (cd _w && patch -p0 mcl_keyed_q30.hpp < ../weight_probe_sidecar_scratch_ctor.diff) && clang++ -std=c++17 -O3 -DNDEBUG -I_w p5_weight_probe.cpp` |
+
+The burn-in and entropy programs build against a scratch copy of the engine patched with `header_patch.diff` (`-DMCL_BURNIN_OVERRIDE=<B>`); the engine of record is never modified.
 
 ## 2026-09-30 — corrections
 - `p5_adversarial.cpp`: the printed Bonferroni label said «~4.6 sigma»; the two-sided threshold for 92,160 tests at α = 0.001 is **5.72σ** (4.6σ ≈ family-wise α 0.39). Re-run 2026-09-30 with the same scratch engine (v8.1.3 + `header_patch.diff`) and keyed sidecar **v1.0.6** (`71a0dbaf84725ac7`): `adversarial_20260930.log` — every A1 row and both A2 maxima (0.03090 = 4.37σ at B = 10,000; 0.02981 = 4.22σ at B = 0) **byte-identical** to the 2026-09-05 record apart from the header and the label line. The 2026-09-05 log is kept unchanged.

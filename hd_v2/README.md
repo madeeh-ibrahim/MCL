@@ -19,4 +19,4 @@ The Tech Guide (rev. 1.2, line 304) had recorded the fix as "SHAKE-256 over (par
 | `hd_verify_v2_FULL_v8.1.3_20260905.log` | full-range campaign (Test 4 over [2,100]², 9,702 candidates) — Paper 5 §IV / Table 1. **Result 2026-09-05: VERDICT PASS, 135 pairs / 0 Bonferroni rejections (threshold 7.41 × 10⁻⁶, smallest p = 0.0199), depth-3 max\|r\| = 0.002327, 9,702 candidates → 0 spurious collisions, resonance screen 20/20 chaotic at K = 1.0, Logistic/Tent families independent.** |
 | `mcl_hd_throughput_v2.cpp` | v1 throughput program with the calls redirected to v2 (Doc ID MCL-HD-THROUGHPUT-V2-2026-0905-001); logs in `../P5_ReviewMeasurements_20260905/hd_throughput_v{1,2}_quiet_20260905.log` |
 
-Build: `clang++ -O3 -std=c++17 -I.. mcl_hd_verify_v2.cpp -o mcl_hd_verify_v2 && ./mcl_hd_verify_v2 --full` (≈ 31 min on Apple M1 Pro).
+Build: `clang++ -O3 -std=c++17 -I.. mcl_hd_verify_v2.cpp -o mcl_hd_verify_v2 && ./mcl_hd_verify_v2 --full` (the record's run took 5,060.8 s ≈ 84 min — the log's summary line; machine and load are not recorded in the log; the version-1 FULL run of `../P5_HDVerify_FULL_20260904/` took 31 min).

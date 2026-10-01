@@ -1,4 +1,4 @@
-# MCL — Public Code Archive · MANIFEST (v0.2.16, 2026-09-30)
+# MCL — Public Code Archive · MANIFEST (v0.2.17, 2026-10-01)
 
 **Engine:** `mcl_core.hpp` — Version **8.1.3** (2026-08-22) — SHA-256 `416ad145e79c095b8295497ca85cf2593c0cb0fabd029b3353d0013daab4ff80` — MD5 `5d8b49ee11aa0bfb8b0bda3f47fa16e3`  
 **Keyed integer sidecar:** `keyed_q30_PQ/mcl_keyed_q30.hpp` — **v1.0.7** (2026-09-28) — SHA-256 `05c01cf8a15626c0e6f892103868afc11f36b07bad3a27472b9a8d608f396a29`  
@@ -20,13 +20,13 @@ g++ -O3 -std=c++17 -march=native -Wall -Wextra -Wpedantic -Wshadow -Wconversion 
     -DMCL_UNSAFE_ALLOW_INVALID -o <name> <name>.cpp -lm   # root programs (+ -lpthread where noted)
 clang++ -std=c++17 -O3 -I. -I keyed_q30_PQ -I VDF128_T4 <folder>/<name>.cpp -o <name>   # sub-folder programs
 ```
-Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` and `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR/GMP (`-I/opt/homebrew/include -L/opt/homebrew/lib -lmpfr -lgmp` on macOS); `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` needs `-DHDR='"mcl_keyed_q30.hpp"'`; all programs in `p2_hardened_auth/` and `P3_CrossPrediction/mcl_gen_series.cpp` use Apple CommonCrypto (macOS only — the engine itself is portable; the `p5_hardened_txauth/` v3.2 harnesses and `P5_ReviewMeasurements_20260905/redraw_rate.cpp` v2 use the engine's own SHA-256). Python helpers need numpy (and scikit-learn for `xpred.py`). The `results/*.txt` of the 23 root programs are the June-2026 records (engine 6.0.0, KAT-identical to 8.1.3); only the 8.1.3 / v1.0.6 / v1.0.7 re-runs named above were regenerated; `mcl_postquantum` and `Verification_Suite/mcl_hop_unified` are version 6.1.0 with their June outputs kept beside the new ones (`QUANTUM_SCOPE_NOTE.md`). Every program that includes the keyed sidecar (42 files) was syntax-checked against v1.0.7 on 2026-09-28; `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` needs the scratch-constructor patch shipped in its folder, which applies to v1.0.6 and to v1.0.7.
+Build notes (syntax-checked 2026-08-22, Apple clang 16, all 87 `.cpp` files): `keyed_q30_PQ/mcl_keyed_q30_lyap_sweep.cpp` and `mcl_keyed_q30_mpfr_lyap.cpp` need GNU MPFR/GMP (`-I/opt/homebrew/include -L/opt/homebrew/lib -lmpfr -lgmp` on macOS); `keyed_q30_PQ/mcl_keyed_q30_dump_weights.cpp` needs `-DHDR='"mcl_keyed_q30.hpp"'`; all programs in `p2_hardened_auth/` and `P3_CrossPrediction/mcl_gen_series.cpp` use Apple CommonCrypto (macOS only — the engine itself is portable; the `p5_hardened_txauth/` v3.2 harnesses and `P5_ReviewMeasurements_20260905/redraw_rate.cpp` v2 use the engine's own SHA-256; `P5_ReviewMeasurements_20261001/p5_bip32_cost.cpp` uses CommonCrypto for HMAC-SHA512, and the burn-in program of that folder builds against a scratch engine copy patched with `P5_ReviewMeasurements_20260905/header_patch.diff`). Python helpers need numpy (and scikit-learn for `xpred.py`). The `results/*.txt` of the 23 root programs are the June-2026 records (engine 6.0.0, KAT-identical to 8.1.3); only the 8.1.3 / v1.0.6 / v1.0.7 re-runs named above were regenerated; `mcl_postquantum` and `Verification_Suite/mcl_hop_unified` are version 6.1.0 with their June outputs kept beside the new ones (`QUANTUM_SCOPE_NOTE.md`). Every program that includes the keyed sidecar (42 files) was syntax-checked against v1.0.7 on 2026-09-28; `P5_ReviewMeasurements_20260905/p5_weight_probe.cpp` needs the scratch-constructor patch shipped in its folder, which applies to v1.0.6 and to v1.0.7.
 
 ## NOT in this archive
 - Gated adversarial toolkit (7 files; `TOOLKIT_ACCESS_POLICY.md`): `mcl_attack_suite`, `mcl_steganalysis`, `mcl_adv_attack`, `mcl_simswap_verify`, `mcl_extraction_security`, `mcl_neural_distinguish.py`, `mcl_simswap_v3` (record + logs of the last one ARE public in `p2_hardened_auth/`).
 - Out of scope (as in v0.1.0): June-2026 lattice/return-map attack scripts, `SideChannel_Screen/` CPA tooling, the nine `VDF_security/` probe programs. Compiled binaries and the duplicate v6.0.0 engine copy of `M1_M2_apple_verification/` are not shipped.
 
-## File inventory — 985 files (+ this MANIFEST), SHA-256 of every file
+## File inventory — 998 files (+ this MANIFEST), SHA-256 of every file
 
 Files that the repository's `.gitignore` excludes are not part of the repository and are not listed.
 
@@ -36,8 +36,8 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 |---|---|---|
 | `.gitignore` | `01d1a768f05574888f32c708956076a85d1daf4112e0452c1823f4976f115464` |  |
 | `APPLY_GUIDE.md` | `754cbc1d15713c292648e686d643e919882653dfe2cd88fc791c641baa96b957` |  |
-| `CHANGELOG.md` | `bd50727e1202087cdae1514abf1d238cd16d5b03aef00d85bd2b5f297a94b005` |  |
-| `CITATION.cff` | `f1fd946fc5d6c33a86c63bce062f69d69b785fcc87c58427e1cd86fd9d6bb439` |  |
+| `CHANGELOG.md` | `fc8c477648c3525f977eb2013bd67936104fa64dca76027839e68358ec84d4da` |  |
+| `CITATION.cff` | `bee5bba3194412495070a8ec979ec692ca37ee39b65f0daeb09d441b0d1d1e38` |  |
 | `CLA.md` | `975fe9c31ca4bb96cdcb427f2c62ed2fb46a3df443bff8a80f294aa619d06129` |  |
 | `CODE_OF_CONDUCT.md` | `da98355a1277938de1cfededa9beaaa2a56e63dba34f97f65e5a05a2d3102c43` |  |
 | `COMMERCIAL.md` | `712b2c98fcfb0a75f80df9c4f0ab3461339777da9e57b5408974ca83a22a97e5` |  |
@@ -48,7 +48,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `NOTICE` | `2c5b00f021de5d1a79bcd5598a46f2cf62e4738a2719025850479fdead8e6399` |  |
 | `PATENTS.md` | `c8034b61bd795351ae67d04395940de782c5e82f9cf2856a3f7d03cf2a101bb3` |  |
 | `QUANTUM_SCOPE_NOTE.md` | `981d4f9518b13d2c47960d5b73d20b31f1fd51d9cc03bca14f5125039231ffdb` |  |
-| `README.md` | `f7e54e3ead323b21d681375650ca5248f5648dba6165974f2addc60e62daa471` |  |
+| `README.md` | `3452a9019b9651dbc9997ae3f64b561a0b5b15153f931ae6c9de604d1e28839e` |  |
 | `RETIRED_mcl_txn_verify.md` | `589742fcc12b80332c2478e21e51658bd243e6de9308e08ac22d90d1bffbddd0` |  |
 | `REUSE.toml` | `805bea6173d163f417b8097f162d2978deae445f1c21e3ea62cd284c2b40768b` |  |
 | `SECURITY-RESEARCH-GRANT.md` | `24a8609549aec66bbb18126a015e3513332bc665b7dd1154501707e70ac816e3` |  |
@@ -118,7 +118,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `results/self_test.txt` | `f77482b4c178ed4ec759e09e1d68ef183f24387117b98dbf043bc0c2f95630c6` |  |
 | `results/self_test_v8.1.3_20260822.txt` | `ec20df38c1630e6a60109c99908137cc3d8d0d23108796ccbf5b8bac57eaf92a` |  |
 
-### keyed_q30_PQ  (40 files)
+### keyed_q30_PQ  (42 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
@@ -140,8 +140,10 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `keyed_q30_PQ/MCL_KEYED_Q30_V107_COMPARE_20260928.txt` | `1f2111c5154a29fdde6d7ccfeb6e0751eeb8224b272fb2c127aec409aba106ff` |  |
 | `keyed_q30_PQ/MCL_KEYED_Q30_V107_VERIFY_20260928.txt` | `709a441a6803b340100bcca42b175c206ab580faf1b56e8b0d19aef62e7570c3` |  |
 | `keyed_q30_PQ/NOSYM_V106_RECORD_20260822.md` | `bc56e7eb28a32ccf61947d87a1417ae87eba7c57e80cfe34a85ea6df9ce1abdb` | sidecar v1.0.6 — رفض التناظر القابل للوصول من البذرة في `mcl_t4_q30_params_from_key` — 2026-08-22 |
-| `keyed_q30_PQ/README.md` | `188e812689a4afc6b16e2928638bb15b4a38737d6869454c9d2c65ee0a13c146` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
+| `keyed_q30_PQ/README.md` | `c3f4a1f99c97699063fa777e31f83b7ce01fda46f6401e8d911ca7792de61c1b` | MCL Keyed Q30 — FPU-free, key-bound, post-quantum extension |
 | `keyed_q30_PQ/STATUS.md` | `efa158570a83c0376ca2552ae2b3805f02b4a0f58c088959536bb5d414d6e8de` | MCL Post-Quantum / Keyed-Q30 — STATUS truth table |
+| `keyed_q30_PQ/ct_barrier_prototype.cpp` | `20e8422d7987ec9443a3eb88021435b899a8e8e620b7c076ea5d75ffa9f36cbe` |  |
+| `keyed_q30_PQ/ct_probe.cpp` | `e4b76964822b69100488f4225155676ce0b3ddffbe87b85e3f82d60201132456` |  |
 | `keyed_q30_PQ/dump_keyN.cpp` | `ef0a8649cd46f413b631188b12b8457457b51464d0aca832a587010675d11672` |  |
 | `keyed_q30_PQ/lyap_2osc_signcheck.py` | `c34b8e36fcbc2c773ad444e7f7b676a01789c32704873a0b66aa328d3922291d` |  |
 | `keyed_q30_PQ/lyap_independent_check.py` | `77199d6bf3d0a46250daede2a1019eb5af03d5b17508a5cb1ce0730aebc5d8fc` |  |
@@ -229,11 +231,12 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `VDF128_T4/vdf128v3_xplat_apple_20260905v3.log` | `01468d7882a04fe10c64dda48e4c0dc1c5b4bc4236c4dafbbf8e4e84195a01c4` |  |
 | `VDF128_T4/vdf128v3_xplat_linux_glibc_20260905v3.log` | `d308f061a3b5e1d21c069bdd5193416bba5ee8c88db771ce9223de2f369b57f8` |  |
 
-### T4_CycleStructure  (24 files)
+### T4_CycleStructure  (25 files)
 
 | File | SHA-256 | Note |
 |---|---|---|
 | `T4_CycleStructure/README.md` | `38f541cd1f31ff4646ba7030e901279ed133c964e9954727c6599b37d81604ce` | T4_CycleStructure — دراسة دورات محرك T4-Q30 بعرض حالة مُصغَّر |
+| `T4_CycleStructure/README_EN.md` | `c7ef458a9d7546e039fc9419ce14f3ff6c72763661b70fa5b999c674a6ace97a` | T4_CycleStructure — cycle structure of the T4-Q30 engine at reduced state width (English summary) |
 | `T4_CycleStructure/T4_CYCLE_RECORD_20260822.md` | `165b1fc554afbd1fd3387d191c9bef560963f8806547f8182648d7199116d420` | سجل دراسة دورات محرك T4-Q30 بعرض مُصغَّر + اكتشاف التناظر الانتقالي — 2026-08-22 |
 | `T4_CycleStructure/cycle_translates_apple_20260822.log` | `9eaa8796227727dac5713c693afa8854194a9fadd20e79169ed5aea52344e8f5` |  |
 | `T4_CycleStructure/cycle_translates_v1_SUPERSEDED_apple_20260822.log` | `53ee2f02606103b3446deca9d5384fb73611658f814225ed2b7714b28e75e17c` |  |
@@ -295,7 +298,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `p5_hardened_txauth/README.md` | `8a1de8753500660eff988ef833b4ca8ee6406cb0bab853f61ecf2ff4d0a2428b` | p5_hardened_txauth — مسار الورقة 5 المصلَّد (v2) + بطاريته الكاملة |
+| `p5_hardened_txauth/README.md` | `63fb95e1574261820b9552f4b212075e1317bab0822e17bfce91a19be48028a3` | p5_hardened_txauth — مسار الورقة 5 المصلَّد (v2) + بطاريته الكاملة |
 | `p5_hardened_txauth/_v311_backup_mcl_txauth_v3_battery_q30.cpp.txt` | `e825f1daaa6f7053a751fe0242a13d805f88b1ef40e87d22185266fab0006a29` |  |
 | `p5_hardened_txauth/_v31_backup_mcl_txauth_v3_battery.cpp.txt` | `f9ac7d3e2e8e12a83ff1e1aa61cccdc1fb0dd00f56c1d8a1c564ea7b75a40e30` |  |
 | `p5_hardened_txauth/d1_collision_20260821.log` | `4c59d1fe0824525316554bce3cd6d7aa72aca0700bca51235ce545dfcf47d087` |  |
@@ -1102,7 +1105,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P5_HDVerify_FULL_20260904/README.md` | `ec89b56572427f07ccf414a3be831391a0920995676cf415376284523ad983be` | P5 §IV.E — حملة FULL (9,702 مرشّحاً) على محرّك السجل v8.1.3 |
+| `P5_HDVerify_FULL_20260904/README.md` | `8cc7dc6dcc4040ebb494794d4150a51ecfb2f383d491c638583b083c6af20a13` | P5 §IV.E — حملة FULL (9,702 مرشّحاً) على محرّك السجل v8.1.3 |
 | `P5_HDVerify_FULL_20260904/coprime_frac.cpp` | `13b5a35c58f29dfa9e745dc0794af30cbc5e33bc86b270374281f3dce9250d48` |  |
 | `P5_HDVerify_FULL_20260904/coprime_frac_2e5.log` | `492a54a6847e75e3d2f5f8707fb19bad8bf0dba0bcf7b3bccf99feb6d6fe8126` |  |
 | `P5_HDVerify_FULL_20260904/hd_throughput_v8.1.3_M1Pro_20260904_run1.log` | `129820ecec072eee763c17681b9b98d7bb7c6f26038bef1cce34e51883af37e9` |  |
@@ -1114,9 +1117,9 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | File | SHA-256 | Note |
 |---|---|---|
 | `P5_ReviewMeasurements_20260905/G_entropy_20260905.log` | `c3bace30d5eb921d5e689fa06e807992afce63d87a1f87e4ef861d5c28687225` |  |
-| `P5_ReviewMeasurements_20260905/README.md` | `604c944cb798a6711ff063c3ab6423121d4c212dd01cb110d0abcc533c01b5cb` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
-| `P5_ReviewMeasurements_20260905/README_EN.md` | `c8f8d557d47afaa899cb7bc377d854598d56134c32a8df59af31d672e2132293` | P5 review measurements — 2026-09-05 (English summary; Arabic detail in README.md) |
-| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `64100640b3cd5f65e8ec986dd7946e08d334616e55522350d5c317ed1f1f69ab` |  |
+| `P5_ReviewMeasurements_20260905/README.md` | `d3b6a9d6d8a13f453496fab72c280b86fc2c71159dc420fcd1887226c74e6955` | P5 review measurements — 2026-09-05 (TOPS-referee items Q3, Q4) |
+| `P5_ReviewMeasurements_20260905/README_EN.md` | `a0501b4c099ac9e04c1e54304783093266b9ff2196e861b31eb7e15e9aefd046` | P5 review measurements — 2026-09-05 (English summary; Arabic detail in README.md) |
+| `P5_ReviewMeasurements_20260905/SHA256SUMS` | `084244bf77949e5811710b1f0dc155b3c6e908a57a71f051b8a9793c79aca8a4` |  |
 | `P5_ReviewMeasurements_20260905/adversarial_20260905.log` | `91d8551f6bfae8ed65dd48c1296c6c8816cbd58e40f20802b58568106dacfe4e` |  |
 | `P5_ReviewMeasurements_20260905/adversarial_20260930.log` | `3b6a5fd80e5582d6283562fb9d89a30d682f1046528646b5e9130db9c8b90c79` |  |
 | `P5_ReviewMeasurements_20260905/burnin_curve_20260905.log` | `3755e13cceef723688d1716518a52d1bf35c9590047e019660c049fea5c5cf57` |  |
@@ -1151,8 +1154,8 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `P5_ReviewMeasurements_20260925/README.md` | `5a30cd7724ff989c83a455c57b2049081736fa5a1f7e8c3773b1ee3c251d8b1a` | P5_ReviewMeasurements_20260925 — Paper 5 §V.A verifier under state loss |
-| `P5_ReviewMeasurements_20260925/SHA256SUMS` | `3ead0d6cf6d595046c682f922819736ae6e7ef1832f8e11ba023e3d8dff730d2` |  |
+| `P5_ReviewMeasurements_20260925/README.md` | `8b947494df4e3ba6d35d9cb7073e79852c9a9f6abe39c48b13e22659274bb5b6` | P5_ReviewMeasurements_20260925 — Paper 5 §V.A verifier under state loss |
+| `P5_ReviewMeasurements_20260925/SHA256SUMS` | `38f987f233c2589bfd5024cc339f245172cd9961040ad31a7d1e6cc2a9474fa4` |  |
 | `P5_ReviewMeasurements_20260925/mcl_txauth_verifier_state.cpp` | `905ce2c1718cce6c966b8659e7eaf2a352ba6a4e68751ea266ee9a8079fb57d1` |  |
 | `P5_ReviewMeasurements_20260925/verifier_state_apple_20260925.log` | `7d985522aa1dc0b314fa750442d759548c59da466e5f131e2f09b18150629b6d` |  |
 
@@ -1168,6 +1171,21 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 | `P5_ReviewMeasurements_20260930/redraw_rate_20260930.log` | `55f240e70ac52da48b809ac5cc60597a7e95c3a7f57352afcecfed5dc17d47f9` |  |
 | `P5_ReviewMeasurements_20260930/redraw_rate_v2_20260930.log` | `24a7adca0ccf8959828bc1b6ae4ac31c39b116689ec768205bdf0df6b440c43d` |  |
 | `P5_ReviewMeasurements_20260930/results_v32_q30_native_arm64_FAR1e6_20260930.txt` | `79f882424a313bd3575d42f5e7211bc290d2c20cb1091bccfee3ec207d4f2598` |  |
+
+### P5_ReviewMeasurements_20261001  (10 files)
+
+| File | SHA-256 | Note |
+|---|---|---|
+| `P5_ReviewMeasurements_20261001/README.md` | `05758432a98e4cce1b5380f57323eb5f59fe77cf3adb7a86826a1bad55a26057` | P5_ReviewMeasurements_20261001 — Paper 5, records of 1 October 2026 |
+| `P5_ReviewMeasurements_20261001/SHA256SUMS` | `ff9d7c02f6ad3525b8c2221c242b658943333205d192f0351a779fae8e34ded1` |  |
+| `P5_ReviewMeasurements_20261001/bip32_cost_20261001.log` | `450eb2109fc5901cbab7a48413a7d4a60e7addf605f287f40713aa26b467486a` |  |
+| `P5_ReviewMeasurements_20261001/burnin_avalanche_large_20261001.log` | `334a6dc552ec2e7c1c193b914b1a89c87c3b7f0ae60c4fdbd7da24783b177ce0` |  |
+| `P5_ReviewMeasurements_20261001/crosssystem_v2_20261001.log` | `b10611bd082c4609f9f2859fb5db746a87691c971bb149aaebad9a6054d698ea` |  |
+| `P5_ReviewMeasurements_20261001/p5_bip32_cost.cpp` | `747273e8467923a2fcdf001cb5b4915e3273a3ca5ef5ccdccc62ff5a761a5d22` |  |
+| `P5_ReviewMeasurements_20261001/p5_burnin_avalanche_large.cpp` | `3517b04122a18f1d458eced8dfa28046d6acdff463c1b3d02f8286a341d35527` |  |
+| `P5_ReviewMeasurements_20261001/p5_crosssystem_v2.cpp` | `ea7c316a8bd3522552684024d9aaa4127328d66edc4980b9e8a8468246a768e1` |  |
+| `P5_ReviewMeasurements_20261001/sibling_recovery_full.cpp` | `edd94d2fb7c40ad6bae247c904017036dbc1ab8b49fc905ae1100f4409484101` |  |
+| `P5_ReviewMeasurements_20261001/sibling_recovery_full_20261001.log` | `2f4ed0640234f86d18cec60aa40aaafc91c57974007bf2152de66f5a16f7dcbe` |  |
 
 ### Quantum_Structural_Analysis_20260927  (11 files)
 
@@ -1189,7 +1207,7 @@ Files that the repository's `.gitignore` excludes are not part of the repository
 
 | File | SHA-256 | Note |
 |---|---|---|
-| `hd_v2/README.md` | `00ce5e1bff39ef63e9682faad18783132df0f41cbe210acc815da5d15284702c` | hd_v2 — Hierarchical channel-identity derivation, version 2 (additive sidecar) |
+| `hd_v2/README.md` | `8aa86abaefa911e7f584ea637e3268eabec9a55d4c0db26ba0cbcf4e7277b066` | hd_v2 — Hierarchical channel-identity derivation, version 2 (additive sidecar) |
 | `hd_v2/hd_verify_v2_FULL_v8.1.3_20260905.log` | `c6657165de79147c7b88bbf275825bd83c0ac69089ec9e14f3811094782c8260` |  |
 | `hd_v2/mcl_hd_throughput_v2.cpp` | `96fbe730155af70ecc8c31930e63d9ce57801d05c096d30b7e84b655fc8022a8` |  |
 | `hd_v2/mcl_hd_v2.hpp` | `e000af267d131e734d4c84a49272acaa7c6a6c53519d9d580a1feb7cbce97b7c` |  |

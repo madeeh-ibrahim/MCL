@@ -1,6 +1,6 @@
 # P5_ReviewMeasurements_20260925 — Paper 5 §V.A verifier under state loss
 
-**Doc ID:** MCL-P5-VERIFIERSTATE-2026-0925-001 · **Engine:** repository-root `mcl_core.hpp` v8.1.3 + keyed sidecar `keyed_q30_PQ/mcl_keyed_q30.hpp` v1.0.6, both unmodified · **Platform:** Apple Silicon, Apple clang. Compiled binaries are not shipped.
+**Doc ID:** MCL-P5-VERIFIERSTATE-2026-0925-001 · **Engine:** repository-root `mcl_core.hpp` v8.1.3 + keyed sidecar `keyed_q30_PQ/mcl_keyed_q30.hpp` v1.0.6 at the time of the measurement (the release ships v1.0.7 at that path since v0.2.15, byte-identical on this code path), both unmodified · **Platform:** Apple Silicon, Apple clang. Compiled binaries are not shipped.
 
 **Build (from this directory):** `clang++ -std=c++17 -O3 -DNDEBUG -I.. mcl_txauth_verifier_state.cpp -o mcl_txauth_verifier_state` · **Run:** `./mcl_txauth_verifier_state` (deterministic, no arguments, < 1 s).
 

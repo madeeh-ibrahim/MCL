@@ -1,0 +1,5 @@
+# 2026-10-01 record — cost of one BIP-32 child derivation (Doc ID MCL-P5-PREUPLOAD-2026-1001-005); HMAC-SHA512 from Apple CommonCrypto; build: clang++ -std=c++17 -O3 -DNDEBUG p5_bip32_cost.cpp (Apple clang version 16.0.0 (clang-1600.0.26.6)); host arm64 Apple M1 Pro, single thread; load at start: { 288.47 167.76 83.19 } (shared host: the minimum over batches is the figure of record)
+BIP-32 test vector 1, m/0H private key and chain code: MATCH
+BIP-32 child derivation (HMAC-SHA512 + addition mod n), 200 x 10,000: min 0.811 us, median 1.053 us, max 3.373 us per derivation (sink 0)
+against derive_child_v2 0.82 ms (record hd_throughput_v2_quiet_20260905.log): 1011x (min) / 779x (median)
+# load at end: { 294.92 171.10 84.86 }

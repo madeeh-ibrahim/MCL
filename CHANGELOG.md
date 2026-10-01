@@ -5,6 +5,19 @@ kept verbatim in the `VERSION IDENTIFICATION` block of `mcl_core.hpp`; this file
 summarises it at release granularity. Pin artefacts by **SHA-256**, never by
 version string alone.
 
+## v0.2.17 — 2026-10-01
+
+**Paper 5 records of 1 October · corrected folder notes.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar **v1.0.7 unchanged**. No measured number of an earlier record changes.
+
+- **`P5_ReviewMeasurements_20261001/`** (new; Doc IDs MCL-P5-PREUPLOAD-2026-1001-002 … -005):
+  - `p5_burnin_avalanche_large.cpp` / `burnin_avalanche_large_20261001.log` — the avalanche test of the burn-in sweep at nine lengths, on the original 5,000 inputs (reproduces the avalanche column of the 2026-09-05 record exactly) and on one fresh set of 10⁵ inputs shared by all rows: z = +0.08 … +1.53 for B ≤ 16, −0.34 at B = 10,000; the +2.1…+2.7 SE offset of the 5,000-input rows at B = 0, 2, 4, 8 and 16 (B = 1 sits at −0.35) is not reproduced on fresh inputs.
+  - `sibling_recovery_full.cpp` / `sibling_recovery_full_20261001.log` — full sibling recovery for the archived derivation (version 1): R_lo and R_hi recovered exactly from three observed children, every unseen child 3…40 predicted in full (38/38).
+  - `p5_crosssystem_v2.cpp` / `crosssystem_v2_20261001.log` — the cross-system check with the version-2 derivation (logistic (7, 867), tent (204, 581); no rejection); part (a) reproduces the two rows of Test 9 of `hd_v2/mcl_hd_verify_v2.cpp`, whose local helper applies the version-1 mask and no coprimality step.
+  - `p5_bip32_cost.cpp` / `bip32_cost_20261001.log` — one BIP-32 child derivation (HMAC-SHA512 + addition mod n, BIP-32 test vector 1): 0.811 µs minimum over 200 × 10⁴ (CommonCrypto, macOS).
+- Folder notes corrected against their own records: `P5_ReviewMeasurements_20260905/README.md` (quiet-host derivation timings 0.82 / 20.6 ms; constant-time sine 0.552 ms 3-tag mean = 7,305×; burn-in avalanche at B = 0, 2, 4, 8 and 16; note on the MD5 snapshot tables; README now in `SHA256SUMS`) and `README_EN.md` (build lines for five programs); `hd_v2/README.md` (the FULL run took 84 min); `p5_hardened_txauth/README.md` (load conditions of the final runs; constant-time-sine basis); `P5_ReviewMeasurements_20260925/README.md` (sidecar version at measurement time); `P5_HDVerify_FULL_20260904/README.md` (English note: working-tree paths, banner-only difference of the shipped `mcl_hd_verify.cpp`); `T4_CycleStructure/README_EN.md` (new, English summary of λ₁₂₈ ≈ 2^62.3 ± 0.2); top-level `README.md` (which programs need CommonCrypto; the engine banner line vs `MCL_VERSION_STRING`).
+- `keyed_q30_PQ/ct_probe.cpp`, `keyed_q30_PQ/ct_barrier_prototype.cpp` (added): the two sources that `CT_SINE_CODE_EVIDENCE_20260919.txt` names by SHA-256.
+- `CITATION.cff` 0.2.17; MANIFEST regenerated (repository files only).
+
 ## v0.2.16 — 2026-09-30
 
 **Paper 5 review records · corrected labels · staged items of 2026-09-28.** Engine `mcl_core.hpp` **8.1.3 unchanged**; keyed sidecar **v1.0.7 unchanged**. No measured number of an earlier record changes.

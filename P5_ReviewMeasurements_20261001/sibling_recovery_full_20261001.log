@@ -1,0 +1,8 @@
+# 2026-10-01 record — full sibling recovery (p and q) for the archived derivation (version 1) (Doc ID MCL-P5-PREUPLOAD-2026-1001-003); engine 8.1.3 416ad145e79c095b; build: clang++ -std=c++17 -O3 -DNDEBUG -I.. sibling_recovery_full.cpp (Apple clang version 16.0.0 (clang-1600.0.26.6)); host arm64 Apple M1 Pro, single thread; load at start: { 215.31 116.65 56.14 } (shared host: wall-clock times are upper bounds)
+observed children (seed and parent unknown to the attacker): (18370967,758434363) (46175476,635642971) (262246623,70752905)
+R_lo: 1 survivor(s), 0x2072014f75680b21, 46.4 s
+R_hi: 1 survivor(s) at child-0 bump offset 0, 0x36bda55e4039acc9, 47.8 s (1 candidates reached the full check)
+ground truth: R_lo MATCH, R_hi MATCH
+  child 7: predicted (271945623,927476507), derive_child (271945623,927476507) MATCH
+unseen children 3..40 predicted in full (p and q): 38/38
+# load at end: { 275.49 159.17 78.71 }

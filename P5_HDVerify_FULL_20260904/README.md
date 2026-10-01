@@ -1,7 +1,9 @@
 # P5 §IV.E — حملة FULL (9,702 مرشّحاً) على محرّك السجل v8.1.3
 
 **Doc ID:** MCL-P5-HDFULL-2026-0904-001 · **التاريخ:** 2026-09-04
-**السبب:** بند 🟡 15 في `Paper_5_ACM_TOPS/Reviews/P5_PrePublication_Review_20260904.md` — كانت الورقة تُبلّغ عن 9,702 مرشّحاً بينما كل السجلات المؤرشفة في المشروع `Mode: QUICK` بنطاق [2,20] = 342 مرشّحاً فقط.
+**السبب:** بند 🟡 15 في مراجعة المؤلف قبل النشر (2026-09-04) — كانت الورقة تُبلّغ عن 9,702 مرشّحاً بينما كل السجلات المؤرشفة في المشروع `Mode: QUICK` بنطاق [2,20] = 342 مرشّحاً فقط.
+
+> **English note (2026-10-01).** This folder is the FULL campaign (9,702 candidate parents) of the **version-1** derivation `derive_child` on engine 8.1.3, Apple M-series, 1,876 s. Paths below that begin with `02_Engine_Code/`, `MCL_Public_Code/` or `Paper_5_ACM_TOPS/` are the author's working tree; in this repository they correspond to the repository root (`mcl_core.hpp`, `mcl_hd_verify.cpp`, `results/mcl_hd_verify.txt`). The `mcl_hd_verify.cpp` shipped at the repository root (MD5 `6123d635aa9eace4b1a1f14751fe9603`) differs from the MD5 `37266ea7…` listed below only in its two patent-notice lines (PCT/IB2026/058860 added). The child (41475, 955466) of this record is the version-1 child; Paper 5 §IV.E reports the version-2 child (827778, 933019) from `../hd_v2/`.
 
 ## البناء والتشغيل
 ```bash
@@ -19,7 +21,7 @@ Apple M-series · 1,876.0 ثانية (31.3 دقيقة)
 
 ## النتيجة
 - **Test 4 (FULL):** النطاق [2,100]، `p ≠ q` ⇒ **9,702 مرشّحاً** · **Exact collisions: 0** · **correlated (|r| > 2×noise floor): 0**
-- الطفل الهدف: `Derive(seed=12345678901234, 13, 19, 0) = (41475, 955466)` — **مطابق للقيمة المنشورة في §IV.E**
+- الطفل الهدف: `Derive(seed=12345678901234, 13, 19, 0) = (41475, 955466)` — طفل **الإصدار 1**، وكان القيمة المنشورة في §IV.E يوم هذا السجل؛ §IV.E الحالي ينشر طفل الإصدار 2 (827778, 933019) — انظر ملاحظة 2026-09-30 أدناه
 - **10/10 PASS** · Global Bonferroni 135 زوجاً / عتبة 7.41e-06 / 0 رفض
 
 ## التحقّق المتقاطع الحاسم
